@@ -501,7 +501,7 @@ Cohort E(D1) = Y1 *(D/T) and U = D1 – E(D1)
 
 Var(U) = $D \frac{t_1}{t}(1 - \frac{t_1}{t})$ and test statistic  $z= \frac{U}{SE(U)} = \frac{U}{\sqrt{Var(U)}} or Z^2 = \frac{U^2}{V} \textrm{, Chi square df=1}$
 
-Poisson regression is very similarly shaped to other regressions: rate = constant x timeband x exposure.  Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion.  If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then ^[an adult must be asked for help] a value (constant or distributed) can be added to the regression model to account for the departure from poisson.  The value is called the frailty and the resulting model is a negative binomial model.
+Poisson regression is very similarly shaped to other regressions: rate = constant x timeband x exposure.  Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion.  If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then ~~an adult must be asked for help~~ a value (constant or distributed) can be added to the regression model to account for the departure from poisson.  The value is called the frailty and the resulting model is a negative binomial model.
 
 ## Cox regression
 limits each timeband to that containing one event (call it a timeclick).  So rate = Changing baseline * exposure: the model assumes the exposure effect is constant (the proportional hazard assumption).  Test this graphically or by taking logs of the cumulative hazard so that the "Nelson-Aalen plot" of $\sum \lambda_{ti} = \sum \lambda_{t0} \times \theta_i$  is parallel against time, and test by fitting interaction terms of time (by arbitrary epochs or as a superimposed linear trend) and using LRT or something.
@@ -632,8 +632,310 @@ The effect of cluster, whether innate, unmeasured confounder or a true mechanist
 	, where for example ui ~ N(0, σu2) and σu2 is estimated as part of the model building.  The same information is imparted by estimating rho, the within cluster (also called "intra-class") correlation coefficient.  A cluster specific effect is estimated: the odds of an individual having the outcome if exposed, divided by the odds if not exposed. 
 	The intention is to derive a model that provides a fully specified likelihood: assuming that it has done so the LRT is appropriate.  That likelihood becomes complicated easily: a bivariate normal distribution for the likelihood is produced for a normal error plus normally distributed cluster effect, which has an algebraic solution, as does the combination of poisson error and gamma cluster effects to produce a negative binomial; but the combination of binomial error and normal cluster effects, or poisson error and normal cluster effects, produce mixture distributions without roots.  The reliability of estimates needs to be checked.
 
+Power
+    - is 1-beta and depends on the assumptions of the population structure
+	- is a function that depends on the value of mu0
+	- the distributions of the observation under H0 versus Ha hypotheses are calculated
+	- then a line is drawn across the null for alpha;
+	- at that line the extreme tail under Ha is 1-β = P	
+	
+If testing Ha: μ > μ0, $1 - \beta = P (\=X > \mu_{0} +z_{1-\alpha} \frac{\sigma}{\sqrt{n}}; \mu = \mu_{a})$ , where $\bar X \sim N(\mu_a, \sigma^2/n)$  
+	and μ0, α are known.  If 3 of the 4 unknowns μa, σ, n, β are specified the last can be calculated
+	
+If assuming only the noncentral t distribution then 
+	power is $P = (\frac {\=X - \mu_{0}} {s / \sqrt{n}} > t_{1-\alpha, n-1}; \mu = \mu_{a})$ ; note P=α at μa=μ0 ;
+On the other hand power depends only on the difference in means divided by S.E.M $\frac {\sqrt{n}(\mu_{a} - \mu_{0})}{\sigma}$,
+	and the effect size is dimensionless and can be used across contexts a bit.
+	
+# Multiple testing
+
+\begin{tabular}{| l | l | l | l | }
+\hline
+& $\beta=0$ & $\beta \neq 0$ & Hypotheses \\ \hline
+Claim $\beta = 0$ & U & T & m-R \\ \hline
+Claim $\beta \neq 0$ & V & S & R \\ \hline
+Claims & $m_{0}$ &  $m-m_{0}$ & m \\
+\hline
+\end{tabular}
+
+Control of false positives involves an error measure and a correction for it.  There are many  such systems, their use depending on the needs of the end user of the data.
+
+False positive rate $E[\frac{V}{m_{0}}]$ is the rate at which false results are called positive
+Family wise error rate $P(V \geq 1)$ which converges to 1 for multiple tests even as alpha is fixed
+	controlled by Bonferroni: $\alpha_{fwer} = \frac{\alpha} {m}$ (very conservative) or
+	calculate p-values, order them as P1 ... Pm with their null hypotheses H1 ... Hm and either
+	-(Holm, stable) let *R* be the smallest *k* such that $P_{(k)} > \frac{\alpha}{m + 1 - k}$, reject H1 to HR-1 or
+	-(Hochberg, powerful, assumes positive dependence eg in reusing data) let *R* be the largest *k* such that $P_{(k)} \leq \frac{\alpha}{m + 1 - k}$, reject H1 to HR 
+
+False discovery rate is the rate at which claims of significance are false.
+	controlled so that $\textrm{E}(\frac{V}{R})$ is below a chosen threshold q:
+		Benjamini-Hochberg order P1 ... Pm with their null hypotheses H1 ... Hm and
+			for the largest *k* such that $P_{k} \leq \alpha. \frac{k}{m}$, reject Hi where i= 1 ... k 
+				which is useful because $E[Q] \leq \frac{m_0}{m} \alpha \leq \alpha$
+Or you could report "adjusted p-values" which are no longer p-values
+	eg to control FWER for P1 ... Pm take $P_{i}^{fwer} = \max{m \times P_{i}, 1}$ and call each Pi<α significant
+
+Expected values
+	- are properties of distributions, as are variances of those distributions
+	- the population value is estimated by the relevant sample value
+	
+E(x) is linear, so E(cx) = E.c(x) and E(aX+bY) = a.E(X)+b.E(Y)
+The centre of mass from a probability mass function of discrete data gives that expected value
+	$E[X] = \sum_{x} {x.p(x)}$, extended to a sample mean where $\bar{X} = \sum_{i=0}^{n} x_{i}.p(x_{i})$, 
+	where p is independent and identically distributed and is equal to $p = \frac{1}{n}$ for every x.
+	
+For continuous variables it's an area under the function t.f(t) where f(t) is the variable's PDF
+    $E[X] = \int t.f(t)$
+	
+Given a normally distributed continuous variable X the population variance is 
+$$Var[X] = E([X- \mu]^2)  = E[X^2] - E[X]^2$$
+	
+And because binary categorical random variables have expected value
+	$$E[\bar{X}] = (1-p).x^{c} + p.x$$
+then if x is coded as 0 if a variable is not present, eg tails, and 1 if present, eg heads, so
+		$E[\bar{X}] = (1-p) \times 0 + p \times 1 = p$	and
+		$E[X^2] = (1-p) \times 0^2 + p \times 1^2 = p$ then
+		$E[Var(X)] = p - p^2 = p(1-p)$	and also from the definition of Var[X]
+		$Var[aX] = a^2.Var[X]$
+	 
+
+The sample variance is sort of analogous as $s^2 = \frac{ \sum_{i=1} (X_{i} - \={X})^2}{n-1}$ and $\frac {\sum x_i^2 - \frac{(\sum x_i)^2}{n}}{n-1}$
+
+THE SAMPLE VARIANCE ALSO HAS A DISTRIBUTION relating to the population of sample variances from which it is drawn: it is an unbiased estimator, meaning the mean of sample variances is an estimate of the population variance; and the variance of sample means is an estimate of the population variance, scaled for the sample size.  I think this is incredibly important.
+	The variance of the sample mean is the population variance divided by n
+		 $Var[\bar{X}] = \frac{\sigma^2}{n}$, so s.e.m. = $\sigma \sqrt \frac{1}{n}$, because
+		 $Var[\bar X]= Var[\frac{1}{n}.\sum X_{i}] = (\frac{1}{n^2}).Var[\sum{X_{i}}] = (\frac{1}{n^2}).\sum \sigma^2 = \frac{\sigma^2}{n}$
+
+The SE for the mean of a log transformed variable, because
+		 $log(X) \simeq log(\mu) + (X - \mu)(log'(\mu))$ and $log'(\mu) = \frac{1}{\mu}$, is
+		 $SE(log(X)) \simeq SE(X) log'(\mu) = \frac{SE(X)}{\mu}$
+		 
+For log proportions, using $\frac{SE(X)}{\mu}$, $SE(log (p)) \simeq \frac{\sqrt{\frac{(p(1-p)}{n}})}{d/n}  = \sqrt{\frac{1}{d} - \frac{1}{n}}$ so 
+	for log risk ratio, $RR = \frac{p_1}{p_2}$ so $\textrm{log(RR) = log}(p_1) - \textrm{log}(p_2)$ and
+	$\textrm{SE(log(RR))} = \sqrt{Var(\textrm{log}(p_1)) + Var(\textrm{log}(p_2))} = \sqrt{\frac{1}{d_1} - \frac{1}{n_1} + \frac{1}{d_2} - \frac{1}{n_2}}$
+	
+For log rates $\textrm{SE(log}(\lambda)) = \frac{1}{\sqrt{D}}$
+ - The log of a product is the sum of the logs
+ - The sum of the logs is the log of the products
+ - The log of a quotient is the difference of the logs
+ - The difference of the logs is the log of the quotient
+ - The exponent on the argument is the coefficient of the log
+ - The coefficient of the log is the exponent on the argument 
+
+Bootstraps
+Efron and Tibshinari.
+Permits confidence intervals without very complex maths.
+Approximate the sampling distribution of a statistic using the distribution implied by the data.
+	Use the data you have and sample within it, with replacement, B times.
+	Calculate the statistic you need to estimate for each new sample you have made.
+The resampling distribution non-parametrically approximates the population distribution, so the standard deviation of it implies the standard error of the median, confidence intervals can be generated etc.
+	Bias Corrected and Accelerated (BCA) interval performs MUCH better than the raw CI;
+	use bootstrap package to construct it
+
+Permutation tests
+Powerful and manifold: eg Rank sum test permutes ranks for the rank sum, Fisher's Exact test permutes binary groups for a hypergeometric probability, an ordinary permutation test permutes the raw data.
+Randomisation tests eg if matched data have differences with signs randomly reassigned the signed rank test is the result; or a regressor of interest might be permuted for regression testing.
+When grouped / stratified data are compared the labels are irrelevant for forming H0. 
+	So take grouped data, calculate some comparative statistic.
+	Reassort the group labels randomly across the data; calculate a statistic for each of these random bins.
+	Repeat many times; this results in a distribution of statistics 
+	Observe number of times these differences are more extreme than the initially observed data.
+	
+#Asymptotics
+Really very useful topic: the behaviour of functions as the size nears infinity, in this case
+	the behaviour of estimators as the sample size approaches infinity; eg
+Law of large numbers: sample averages converge on the population average as n increases.
+Central Limit Theorem: "the distribution of averages of i.i.d variables (properly normalised)	becomes that of a standard normal as the sample size increases"
+	So the average of samples, and their variance, converge on population values.
+	The distribution also becomes more normal-like as n rises.
+	95% of 95% confidence intervals contain μ; except see below...
+The CLT doesn't guarantee that a given n is large enough
+	eg sample proportions don't converge very fast on the population proportion, so
+	95% confidence intervals don't always contain the true value 95% of the time, but
+	somewhat less.
+"Exact" estimators eg binom.test in R, don't use the central limit theorem and are	computationally intensive and while they guarantee 95% "coverage" of the true value are a little conservative.
+
+Sample size increases precision rather than the probability that its coverage includes the true value.
+		The estimator is $\hat{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{p(1-p)}{n}}$
+		Wald or Agresti-Coull estimators (preferred) work best at p=0.5
+		Wald :	$95\% CI = \hat{p} \pm \frac{1}{\sqrt{n}}$, more generally an estimate \pm its standard error:
+				$\hat p \pm z_{\alpha / 2} . \sqrt{{\hat p \hat q} {n}}$
+				
+		Agresti-Coull adjusts n by z^2^ so if X successes in n is the proportion p,
+			and simplifying z of 1.96 as 2, adds 2 successes and 2 failures: so 
+			$\tilde{n} = n + z^2, \> \tilde{p} = \frac{1}{\tilde{n}}(X + \frac{1}{2} z^2)$ and CI for z = $\tilde{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}$
+
+Poisson also don't converge well especially for low p; again, poisson.test is exact.
+
+	A sample is Consistent if its estimate converges on the estimated value.
+		Sample means, sd and the like are consistent as well.
+
+# Variance and error terms
+
+For categorical data
+	variance is p(1-p) and sd therefore $\sqrt{p(1-p)}$ and standard error $\sqrt{\frac{p(1-p)}{n}}$
+	standard error for the difference in two proportions is $\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$
+		
+	s.e.m., eg for the representativeness of a sample mean of its normally distributed population, is
+	$$\frac{s}{\sqrt{n}} = \sqrt{\frac{s^2}{n}}$$
+			
+	and for 2 independent samples is
+			$$\textrm{sem} = \sqrt{\frac{s_{1}^2}{n_{1}} + \frac{s_{0}^2}{n_{0}}}$$
+	If it's reasonable to assume alike variance, such as for example randomised samples,
+			$$\textrm{sem} = s_{p}\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{0}}}$$
+	for which the sample size-weighted common estimate of σ assuming alike variance is
+	$$s_{p}= \sqrt{\frac{(n_{1}-1).s_{1}^2 + (n_{0}-1)s_{0}^2}{(n_{1} + n_{0} - 2)}}$$
+			
+	paired samples are modified if they are alike by rho
+			$$s = \sqrt{(s_{1}^2 + s_{2}^2 - 2 \rho . s_{1} . s_{2} )}$$
+		which simplifies to $\sqrt{(s_{1}^2+s_{2}^2)}$ if the "pairs" are nothing of the kind, and
+		not correlated at all so rho = 0
+	$$t = \frac{\bar X_{1} - \bar X_{0}}{sem}$$
+
+	and if variances are unequal the distribution of the difference of means is NOT T! 
+	it's something close to t that is well approximated by changing the degrees of freedom by
+	$$df = \frac{(\frac{S_{x}^2}{n_{x}} + \frac{S_{y}^2}{n_{y}})^2}
+	{(\frac{(\frac{S_{x}^2}{n_{x}})^2}{(n_{x}-1)}) + (\frac{(\frac{S_{y}^2}{n_{y}})^2}{(n_{y}-1)})}$$
+			  which may be non integer
+			  
+		This altered t distribution is used to create the quantiles for confidence intervals etc.
+	$$eg \bar Y - \bar X \pm t_{df} \times \sqrt{\frac{s_{x}^2}{n_{x}} + \frac{s_{y}^2}{n_{y}}}$$
+
+and for proportions
+
+	standard error for a confidence interval:
+	$$\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$$
+	standard error for a hypothesis test assumes both are from the same π so uses the common proportion (all +ve / all n) before repeating the above formula:
+	$$\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$$
+
+Paired (matched) data
+	If method A and method B are used on the same sample the discordance (r, s) is informative:
+
+This is also used in matched rather than paired data, where one can imagine ρ being quite important.
+
+Odds ratio is r/s, the ratio of discordance between the tests, and error factor is  so
+	OR with 95% CI is  	to	 
+
+the discordant proportion is  and its standard error is  
+
+	so 95% CI for an estimate of the proportional discordance is 
+
+Paired categorical data from the 2x2 agreement table tested by McNemar's test:
+	 or with the continuity correction ,
+		or by MHχ2 with pairs as strata or an exact binomial test if discordant cells <20.
+
+Rate data
+	The rate, call it λ, is estimated by , usually Events / Total time at risk 
+	S.E. for the estimate is  so 95% CI is 
+	Rate differences are 
+		Expected number of events e1 is 
+		
+		Variance for e is 
+		
+		And χ2 is , df=1,  or 
+
+	 χ2 for trend, where x  is the group score or level, is 
 
 
+Non parametric equivalents
+Wilcoxon Signed Rank for paired samples or one sample from a hypothesised median
+Assumes symmetrical distribution
+	calculate the differences
+		(of each value from the median, or across each pair): N is total nonzero differences
+		assign ranks to the absolute values of differences
+	sum the ranks of positive differences, sum the ranks of negative differences
+	the null hypothesis is that T=sum of all ranks divided by 2
+		call the smaller sum T and look it up on a table of N against p values
+	there are   possible pairs of differences, each of which has an average difference.
+		the real values of these averages are ordered  
+		where T5 is the T with probability 0.025 (the 2-sided p value of 0.05 on the tables)
+		 to  are the outer bounds of the 95% confidence interval for the difference
+
+Wilcoxon Rank Sum for the difference of medians in two samples (Mann Whitney U / MWW)
+Assumes data are i.i.d. and
+	Strong H0; distributions of two samples differ only in location
+		for continuous data
+	Less strong but valid for ordinal data H0; P(X>Y) = P(Y>X) for ordinal responses
+	
+take two samples of size N1 and N2, with a total size N
+	order all of the outcome values, rank the values in each sample as R1 and R2
+		The total rank sum is , 
+		equal values take the mean of the ranks they span
+	sum the ranks in each group
+	the null hypothesis is that the groups are identically located
+	T is the rank sum in the smaller group
+	calculate the number of possible choices of size 1, ... T from groups of size N1 and N2
+			sum the possible choices and invert for the probability
+		or look it up for tables of N1, N2
+	Ui is , and the total possible is 
+		 for ROC curves
+	95% CI by bootstrap or Hodges-Lehmann estimates of location shift 
+
+
+Spearman Rank Correlation Coefficient
+	Ranks for each observation are calculated (ties given average rank)
+	Pearson's correlation coefficient calculated for the ranks as if they were x, y coordinates
+
+
+Tidy Data
+Each observation is a row.
+Each variable is a column.
+Each "kind" of variable is a table.
+A column to allow linkage between tables.
+Also have a row with variable names, which are human readable, and save in one file per table.
+A fully coherent data set is the raw data, tidy data, a codebook and a recipe to go from one to the other.
+	The codebook is the information about the variable which is not contained in the tidy dataset, including information about units, the choices you've made in selecting or presenting data and about the design of the research.  Best as a text file with sections "codebook", "study design".
+	The script or set of instructions to process raw -> tidy data should not need parameters, 
+
+Wrong conclusions:
+Effect modification = "the association of an exposure with an outcome varies by a third factor".
+Confounding is the unequal distribution of a further risk factor between those exposed and unexposed to the exposure of interest. Confounders are
+	1 associated with the exposure in the source population
+	2 associated with the outcome in the nonexposed
+	3 not a causal intermediate from exposure to outcome.
+Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. 		Selection bias
+		Responder / Compliance, Surveillance, Follow-up / missing data
+			healthy worker effect
+	Information bias
+		Reporting, Recall, Interviewer
+		Observer: Recording, Measurement, Classification, Ascertainment
+	Reporting bias in Systematic reviews
+		Errors in Sequence generation, allocation concealment, blinding,
+			incomplete outcome data, and selective outcome reporting (Cochrane list)
+
+Control of these by
+	discarding information based on potential comparators having parameters that fall outside 	acceptable ranges: 
+	Restriction is absolute and simple but reduces potential comparisons, hence inferences
+		Matching
+		by individual (search for control with Value = case Value +/- acceptable range)
+		by group aka frequency (distribution in case group matched by that in control group)
+		re-note Case Definitions: clear method, clear boundaries, defined source population
+Or
+not discarding but instead randomising.
+	Simple random "needs a whole population list" although of course there are limits.
+	Stratified random, multiple stage random, single randomisation of the fixed point of a
+			sample system, called "systematic random".  Eg start at a random place in a
+			pseudorandom ordered list and take regular steps through to sample.
+
+To avoid: Blinding, Objective measures, randomisation, complete follow up, timely measurements, calibration under the desired circumstances eg values in true controls by eg questionnaire or BP cuff calibration.
+
+Questionnaires
+Ask about attitudes, beliefs, behaviours, experiences, attributes.  Standard introductions are important.
+Ask by Interview, Questionnaire, Diary, Observation, Routine Record Reaching, Measurements or Environmental Measurements.
+If appropriate to use a questionnaire, develop one that is easy to answer, process and analyse, minimises measurement error, preserves dignity and privacy of respondent and limits burden on respondents.  "The minimum amount of an individual's total experience that will provide sufficient information concerning the problem under study" (including exposure and covariates).
+	Burden is added by length, old information, low salience (and high sensitivity), frequent events, depth of detail, being a proxy respondent.  Too much burden causes low response, failure to complete, low quality or random responses, alienation from questionnaires.
+	Responses are meximised by low burden, trained interviewers, personalisation, storyboarded not scripted acknowledgment and introductions, SSAEs for return,face-to-face, diligent attempts to contact, incentives.
+	Responder bias is a type of selection bias, the responder odds ratio being biased unpredictably by the ratio of probabilities of selection from a contingenc table:
+		 which is from 0.8 to 1.4 times the true OR
+	Allow responses by softening or appearing to understand sensitive questions, giving an option to give a socially acceptable answer before reporting true exposure.  Start with a relevant question, leave demographics to the end.  Go by concept group, go from general to particular, go from bland to sensitive.  Give an introduction, instructions (including the logic of the questions), link parts with language and conclude with thanks, ask for comments and tell what comes next.  Make it nice to look at: clear, not cluttered or congested.  If offering a closed list, cover all possible options once.  End with a nice thank you and a request for comments or suggestions.
+	Pre-Test by expert initial review, interview, interviews or cognitive testing around different versions of a complex question (think-aloud, paraphrasis of the question, explanation for why a choice or answer was made).
+	Then pilot with a debrief of respondents, observation while responding, permutation of questions, item response distribution analysis (proportion missing / don't know / valid), validation (not always possible).  At least expert review and 20 pilot runs.
+	Are all the words understood, does the logic of order always work, are there questions that makes no sense for some people, do the questions mean the same to everyone?  Give aids to memory if possible: eg lead-in questions, possible answers to choose, a life calendar leading up to the time.  If given by interview give space for times for starting, finishing and any notes.
+	Electronic data capture (questionnaires straight into electronic format) have advantages in filling or calculating routine information, checks on format or consistency, easy skipping or contingency questioning, easy alteration or updating, complex identification and linkage, and the preservation of the data.
+		Disadvantages are in the up front work, need for networking in some implementations, desirability of the hardware, and some points that are only important if you don't have IT support.
+
+Translation needs
+	Preliminary translation (I would put Simple Clarity or Translatable before that one); Evaluation of the first translation (eg by blind back translation); cross-language equivalence eg by giving perfectly bilingual people both versions (?!); validity assessment.
 
 
 `r newthought('In his later books')`^[[Beautiful Evidence](http://www.edwardtufte.com/tufte/books_be)], Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, call the `newthought()` function in **tufte** in an _inline R expression_ `` `r ` `` as demonstrated at the beginning of this paragraph.^[Note you should not assume **tufte** has been attached to your R session. You should either `library(tufte)` in your R Markdown document before you call `newthought()`, or use `tufte::newthought()`.]
