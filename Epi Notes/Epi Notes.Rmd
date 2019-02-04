@@ -808,33 +808,45 @@ and for proportions
 	standard error for a hypothesis test assumes both are from the same π so uses the common proportion (all +ve / all n) before repeating the above formula:
 	$$\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$$
 
-Paired (matched) data
+# Paired (matched) data
 	If method A and method B are used on the same sample the discordance (r, s) is informative:
+	
+\begin{tabular}{| c |c | c | c| }
+\hline
+& +_{B} & -_{B} & \\ \hline
++_{A} &k & r & k+r \\ \hline
+-_{A} & s & m & s+m \\ \hline
+& &  & N \\
+\hline
+\end{tabular}
 
 This is also used in matched rather than paired data, where one can imagine ρ being quite important.
 
-Odds ratio is r/s, the ratio of discordance between the tests, and error factor is  so
-	OR with 95% CI is  	to	 
+Odds ratio is r/s, the ratio of discordance between the tests, and error factor is $e^{z_{0.05} \times \sqrt{\frac{1}{r} + \frac{1}{s}}}$ so
+	OR with 95% CI is $\frac{r}{s} \times e^{1.96 \times \sqrt{\frac{1}{r} + \frac{1}{s}}}$ 	to	 $\frac{r}{s} / e^{1.96 \times \sqrt{\frac{1}{r} + \frac{1}{s}}}$
 
-the discordant proportion is  and its standard error is  
+the discordant proportion is $\frac{r+s}{n}$ and its standard error is  $\frac{\sqrt{r+s}}{n}$
 
-	so 95% CI for an estimate of the proportional discordance is 
+	so 95% CI for an estimate of the proportional discordance is $\frac{r+s}{n} \pm 1.96 \frac{\sqrt{r+s}}{n}$ 
 
 Paired categorical data from the 2x2 agreement table tested by McNemar's test:
-	 or with the continuity correction ,
+$\chi^2_{pair} = \frac{(r-s)^2}{r+s}$
+	 or with the continuity correction $\frac{(|r-s|-1)^2}{r+s}, \nu = 1$,
 		or by MHχ2 with pairs as strata or an exact binomial test if discordant cells <20.
 
-Rate data
-	The rate, call it λ, is estimated by , usually Events / Total time at risk 
-	S.E. for the estimate is  so 95% CI is 
-	Rate differences are 
-		Expected number of events e1 is 
+## Rate data
+	The rate, call it λ, is estimated by $\hat \lambda$, usually Events / Total time at risk $\hat \lambda = \frac{D}{t}$
+	S.E. for the estimate is $\sqrt{\frac{\hat \lambda}{t}}$ so 95% CI is $\lambda = \hat \lambda \pm 1.96 \sqrt{\frac{\hat \lambda}{t}}$
+	Rate differences are $(\lambda_1 - \lambda_2) \pm 1.96 \sqrt{\frac{\lambda_1}{t_1} - \frac{\lambda_2}{t_2}}$
+		Expected number of events e1 is $E(D_1) = \frac{D t_1}{t} = \lambda t$
 		
-		Variance for e is 
+		Variance for e is $V(e) = \frac{Dt t_{2}}{t^2}$
 		
-		And χ2 is , df=1,  or 
+		And χ2 is $\chi ^2 = \frac{(|D_1 - E(D_1)|-0.5)^2}{V(D_1)} \textrm{, df=1}$, $H_0 = \lambda_1 - \lambda_2 = 0$ or equivalently that $\frac{\lambda_1}{\lambda_2} = 1$
 
 	 χ2 for trend, where x  is the group score or level, is 
+	 $$\frac{(\sum D_i x_i - \lambda \sum t_i x_i )^2}
+{\lambda^2 (t \sum t_i x_i^2 - (\sum t_i x_i)^2)}$$
 
 
 Non parametric equivalents
@@ -846,12 +858,13 @@ Assumes symmetrical distribution
 	sum the ranks of positive differences, sum the ranks of negative differences
 	the null hypothesis is that T=sum of all ranks divided by 2
 		call the smaller sum T and look it up on a table of N against p values
-	there are   possible pairs of differences, each of which has an average difference.
-		the real values of these averages are ordered  
+	there are $\frac{n(n + 1)}{2}$ possible pairs of differences, each of which has an average difference.
+		the real values of these averages are ordered D1 ... DT5 ... Di
 		where T5 is the T with probability 0.025 (the 2-sided p value of 0.05 on the tables)
-		 to  are the outer bounds of the 95% confidence interval for the difference
+		DT5 to Di-T5 are the outer bounds of the 95% confidence interval for the difference
 
-Wilcoxon Rank Sum for the difference of medians in two samples (Mann Whitney U / MWW)
+## Wilcoxon Rank Sum
+for the difference of medians in two samples (Mann Whitney U / MWW)
 Assumes data are i.i.d. and
 	Strong H0; distributions of two samples differ only in location
 		for continuous data
@@ -859,35 +872,35 @@ Assumes data are i.i.d. and
 	
 take two samples of size N1 and N2, with a total size N
 	order all of the outcome values, rank the values in each sample as R1 and R2
-		The total rank sum is , 
+		The total rank sum is $R_1 + R_2 = \frac{N.(N+1)}{2}$, 
 		equal values take the mean of the ranks they span
 	sum the ranks in each group
 	the null hypothesis is that the groups are identically located
 	T is the rank sum in the smaller group
-	calculate the number of possible choices of size 1, ... T from groups of size N1 and N2
+	calculate the number of possible choices of size 1 ... T from groups of size N1 and N2
 			sum the possible choices and invert for the probability
 		or look it up for tables of N1, N2
-	Ui is , and the total possible is 
-		 for ROC curves
+	Ui is $U_i = R_i - \frac{N_1 . (N_1 + 1)}{2}$, and the total possible is $U_1 + U_2 = N_1 . N_2$
+		$AUC_{ROC_1} = \frac{U_1}{N_1.N.2}$ for ROC curves
 	95% CI by bootstrap or Hodges-Lehmann estimates of location shift 
 
 
-Spearman Rank Correlation Coefficient
+## Spearman Rank Correlation Coefficient
 	Ranks for each observation are calculated (ties given average rank)
 	Pearson's correlation coefficient calculated for the ranks as if they were x, y coordinates
 
 
-Tidy Data
-Each observation is a row.
-Each variable is a column.
-Each "kind" of variable is a table.
-A column to allow linkage between tables.
+# Tidy Data
+ - Each observation is a row.
+ - Each variable is a column.
+ - Each "kind" of variable is a table.
+ - A column to allow linkage between tables.
 Also have a row with variable names, which are human readable, and save in one file per table.
 A fully coherent data set is the raw data, tidy data, a codebook and a recipe to go from one to the other.
 	The codebook is the information about the variable which is not contained in the tidy dataset, including information about units, the choices you've made in selecting or presenting data and about the design of the research.  Best as a text file with sections "codebook", "study design".
 	The script or set of instructions to process raw -> tidy data should not need parameters, 
 
-Wrong conclusions:
+## Wrong conclusions:
 Effect modification = "the association of an exposure with an outcome varies by a third factor".
 Confounding is the unequal distribution of a further risk factor between those exposed and unexposed to the exposure of interest. Confounders are
 	1 associated with the exposure in the source population
@@ -925,8 +938,8 @@ Ask by Interview, Questionnaire, Diary, Observation, Routine Record Reaching, Me
 If appropriate to use a questionnaire, develop one that is easy to answer, process and analyse, minimises measurement error, preserves dignity and privacy of respondent and limits burden on respondents.  "The minimum amount of an individual's total experience that will provide sufficient information concerning the problem under study" (including exposure and covariates).
 	Burden is added by length, old information, low salience (and high sensitivity), frequent events, depth of detail, being a proxy respondent.  Too much burden causes low response, failure to complete, low quality or random responses, alienation from questionnaires.
 	Responses are meximised by low burden, trained interviewers, personalisation, storyboarded not scripted acknowledgment and introductions, SSAEs for return,face-to-face, diligent attempts to contact, incentives.
-	Responder bias is a type of selection bias, the responder odds ratio being biased unpredictably by the ratio of probabilities of selection from a contingenc table:
-		 which is from 0.8 to 1.4 times the true OR
+	Responder bias is a type of selection bias, the responder odds ratio being biased unpredictably by the ratio of probabilities of selection from a contingency table:
+		$OR_R = \frac{P_a P_d}{P_b P_c}OR$ which is from 0.8 to 1.4 times the true OR
 	Allow responses by softening or appearing to understand sensitive questions, giving an option to give a socially acceptable answer before reporting true exposure.  Start with a relevant question, leave demographics to the end.  Go by concept group, go from general to particular, go from bland to sensitive.  Give an introduction, instructions (including the logic of the questions), link parts with language and conclude with thanks, ask for comments and tell what comes next.  Make it nice to look at: clear, not cluttered or congested.  If offering a closed list, cover all possible options once.  End with a nice thank you and a request for comments or suggestions.
 	Pre-Test by expert initial review, interview, interviews or cognitive testing around different versions of a complex question (think-aloud, paraphrasis of the question, explanation for why a choice or answer was made).
 	Then pilot with a debrief of respondents, observation while responding, permutation of questions, item response distribution analysis (proportion missing / don't know / valid), validation (not always possible).  At least expert review and 20 pilot runs.
@@ -936,6 +949,76 @@ If appropriate to use a questionnaire, develop one that is easy to answer, proce
 
 Translation needs
 	Preliminary translation (I would put Simple Clarity or Translatable before that one); Evaluation of the first translation (eg by blind back translation); cross-language equivalence eg by giving perfectly bilingual people both versions (?!); validity assessment.
+
+# Reliability
+(~= Repeatability): intra and interobserver reliability.
+Variability: continuous is partitioned into systematic and random error eg by ANOVA;
+	their ratio is the Intraclass Correlation Coefficient, *aka* reliability coefficient
+		continuous is by some correlation coefficient eg Pearson's method.
+	This gives Pearson's correlation of product-moment where for a population
+	$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$	,  $cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$
+	and using the identities
+		 $\sigma_{X}^2 = E[(X- E[\={X}]^2)] = E[X] - E[X^2]$ and
+		 $E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$, so
+		
+	$$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]}
+{\sqrt{E[X^2] - E[X]^2} \sqrt{E[Y^2]-E[Y]^2} }$$	
+
+	then the sample correlation r is
+    $$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar {x})(y_{i} - \bar {y})}
+{\sqrt{\sum_{i=1}^n (x_{i} - \bar {x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar {y})^2}}$$
+			
+
+	and can also be quoted as the mean of the standard scores of x and y:
+		$$r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \bar {x}}{s_{x}})(\frac{y_{i} - \bar {y}}{s_{y}})$$
+					
+categorical is by tabulation, eg mean pair agreement or Observed Agreement OA:
+		$$\frac {a+d}{a+b+c+d}$$
+	or Kappa statistic for excess agreement over max chance agreement  $\frac{OA-CA}{1-CA}$,	
+
+	(where CA is $\frac {E[a]+E[d]}{a+b+c+d}$ and $E[a] = \frac{Row total \times Column total}{Grand total}$ as in the χ2 )
+
+
+Regression is by $y = \beta_0 + \beta_1 x + \epsilon$ where ε is normal with SD estimated by s, below
+
+		β1 from $\hat \beta_1 = \frac{\sum_{i=1}^n(x_i - \bar X)(y_i - \bar Y)}{\sum_{i=1}^n (x_i - \bar X)^2}$, then $\hat \beta_0 = \bar Y - \hat \beta_1 \bar X$ or 
+		$$\hat \beta_1 = Cor (Y, X) \frac{SD_y}{SD_x}$$
+		
+
+Confidence intervals for the slope are $\beta_1 \pm t_{2 \times 0.975, \nu} \times s.e.$, with t statistics used to test
+	H0: coefficient = 0
+	Standard error differs for prediction of a line at x0 and for the probability of a new point at x0
+$$s.e._{line \beta_0} = \hat \sigma \sqrt{\frac{1}{n} + \frac {(x_0 - \=X)^2}{\sum_{i=1}^n (X_i - \=X)^2}}$$, 
+$$s.e._{point \beta_0} = \hat \sigma \sqrt{1 + {\frac{1}{n} + \frac {(x_0 - \=X)^2}{\sum_{i=1}^n (X_i - \=X)^2}}}$$
+		
+,	$$s.e._{\beta_1} = s{\frac{1}{\sqrt{\sum(x - \bar x)^2}}}$$
+$$s = \sqrt{\frac{\sum(y - \bar y)^2 - \beta_1^2 \sum(x - \bar x)^2}{n – 2}} \textrm{, df = } n - n_{coefficients}$$
+	
+So if the null hypothesis is that exposure is not predictive of outcome, and exposure of interest is at the head of columns, then the expected frequency of outcomes is (row total/table total) for the proportion of entries that exist in the row, times (column total) for the available number of exposed observations.
+
+	The distribution of the squared differences in observed and expected values generates a χ2 distribution scaled for the expected values, with degrees of freedom . That is, the χ2 statistic is given by , 
+	H_0 = "the distribution of observations among the categories of one variable is independent of their distribution among the categories of the other" or "there is no association between row and column variables"
+
+To repeat:
+	
+
+	 which is only from Smith et al "Field Trials" but the same shape as in the C-M-H test for trend below
+
+Chi squared is distributed as  , but that's not important right now.
+
+In the special case of a 2x2 table the χ2 statistic is
+		
+
+including Yates's continuity correction of O-E-0.5 for each cell because of a tail of the underlying binomial continuous distribution being better estimated by a point midway between that cell count and one fewer.  This sums to   for a 2x2 table with N=20-40 and no value <5.
+More generally χ2 can be used in a 2xC table if no value <1 and 80% values are >=5
+
+Otherwise Fisher's Exact:   
+	and either sum p_table across all the possible tables with lower probabilities
+	or double the sum of probabilities of lower p_table (either acceptable, both differ!)
+
+and for the test of a "trend" across scored levels of a variable which differs between groups Xi, hence having one degree of freedom as it's comparing two means-of-scores X̄1 and X̄2 is a t test squared, which is also the form of the Pearson Chi Squared:
+		 
+or if assessing against H0: increase in log(OR) per ration of x==0, which is a trend in ordinally scored variables where xi is score of a group i, di is those with an outcome in that group; ni is the total in the exposure group; O and N are the totals with the outcome and grand totals.
 
 
 `r newthought('In his later books')`^[[Beautiful Evidence](http://www.edwardtufte.com/tufte/books_be)], Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, call the `newthought()` function in **tufte** in an _inline R expression_ `` `r ` `` as demonstrated at the beginning of this paragraph.^[Note you should not assume **tufte** has been attached to your R session. You should either `library(tufte)` in your R Markdown document before you call `newthought()`, or use `tufte::newthought()`.]
