@@ -1041,6 +1041,643 @@ $\chi^2_{trend}=\frac{U^2}{V} \textrm{, df=1}$
 Increase in log odds for an increase in x is U/V; the variance of this estimate is $\sqrt{1/V}$.
 The difference between the standard Chi squared test for this table and the Chi squared test for trend is the Chi squared test for departure from linear trend with df = (number of exposure groups – 2).
 	Also $V = \sum V_i$ where $V_i = \frac{D_i H_i N_{0i} N_{1i}}{N_i^2 (N_1 -1)}$ which is called the Mantel-Haenszel Chi Squared in SM04 of EPM202.
+	
+# ANOVA
+Related to linear regression.   A table of n observations y, in k groups 
+The sum of squares of deviations from the mean, $\sum (y - \bar y)^2$, is partitioned into
+	between group $\sum n_i (\bar y_i - \bar y)^2$ with *k*-1 degrees of freedom
+	within group $\sum (n_i - 1) s_i^2$ with *n-k* degrees of freedom
+		for a line the total variability is from the 0-gradient line (null) at the mean of y,
+		the y-distance from the null line to the regression line at each xi = SSregression,
+		the y-distance from regression to point at xi = SSresidual and
+		each SS is divided by its degrees of freedom giving the mean square, $MS = \frac{SS}{df}$
+For a line, the residuals are $\sum (y - \hat{y})^2$ and the model SS is of deviations from the mean.
+The F statistic is $\frac {\textrm{Between Group} MS} {\textrm{Within Group} MS} , df = k-1, n-k$ or $\frac{regression}{residual}, df= 1, n-2$ for a line.
+		For the F test, under the null hypothesis the ratio of two variances follows the
+		F distribution and for a line, F = t^2^ .
+		This can also be used for regression diagnostics where $F = \frac{\textrm{Model MS}}{\textrm {Residual MS}}$;
+A partial F test excludes the contribution of one covariate after adjustment for others, as a LRT equivalent.
+
+The R^2^ is $\frac {Regression SS}{Total SS}$, giving a proportion of variance explained by the regression or grouping.
+
+	As $Var(X) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \=X)^2$, so 
+	$Cov(X, Y) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \=X)(Y_i - \=Y) = \frac{1}{n-1}  \sum_{i=1}^n (X_i Y_i - n \=X \=Y)$ and
+	$Cor (X, Y) = \frac{Cov(X, Y)}{S_x S_y}$
+	
+
+Mantel-Haenszel estimate of the common Odds Ratio is weighted for the non-supporting information as a proportion of stratum size
+		 $\frac{\sum ({\frac{a_i d_i} {n_i}})}{\sum ({\frac{b_i c_i} {n_i}})}$, that is $\frac{(a_{1}.d_{1} / N_{1}) + ... (a_{j}.d_{j} / N_{j})}{(b_{1}.c_{1} / N_{1}) + ... (b_{j}.c_{j} / N_{j})$ or if $w_i = \frac{b_i c_i}{n_i}$ then $OR_{MH} = \frac{\sum w_i OR_i}{\sum w_i}$
+
+and there's a corresponding Cochrane-Mantel-Haenszel Chi^2^ test of the same shape as the simple single table single stratum situation, 
+	$\chi^2_{MH} = \frac{[\sum a_{i} - \sum E (a_{i})]^2}{\sum Var[a_{i}]}$, equivalent to 
+	$\chi^2_{MH} = \frac {(|\sum{\frac{a-(a+b).(a+c)}{n}}|-0.5)^2} {\frac{\sum(a+b).(a+c).(b+d).(c+d)}{(n^3-n^2)}}$
+
+$\chi^2_{trend} = \frac{[\sum^k_{i = 1}r_i v_i – R \mu]^2}{p(1-p)[\sum^k_{i = 1} n_iv_i^2 – N \mu^2]}$
+
+$mu = \sum^k_{i = 1} \frac{n_i v_i}{N}$
+
+where each of k groups of observations are denoted as ri successes out of ni total with score vi assigned. R is the sum of all ri, N is the sum of all ni and p = R/N.
+
+
+# Linear regression
+A regression line is the line to which values "regress" in repeated observation of the parameter values.  The remaining variation in those sampled values is smaller than the variation in the whole dataset, because some of it is already modelled by the line.  Errors are unobservable true errors from known coefficients, whereas residuals are the observable errors from the estimated coefficient: so in a sense residuals are estimates of the error.
+
+Regression seeks to minimise the residuals which because they add to 0, are squared:
+
+For $Y_i = \beta_0 + \beta_1 X_i$ the sum of squares = $\sum_{i=1}^n (Y_i - \beta_0 + \beta_1 X_i)^2$ is minimised
+	when $\beta_1 = 0 , \hat \beta_0 = \=Y$ and when $\beta_0 = 0 , \hat \beta_1 = \frac{\sum_{i=1}^n X_i Y_i}{\sum_{i=1}^n X_i^2}$
+
+the estimator that minimises the sum of squares for a regression line is $\beta_1 = \frac{\sum_{i=1}^n (Y_i - \=Y)(X_i - \=X)}{\sum_{i=1}^n (X_i - \=X)^2}$
+	 , or $Cor(X,Y) \frac{sd(Y)}{sd(X)}$
+	 
+
+Model Yi = β0 + β1 Xi + ϵi where ϵi ~ N(0, σ2).  Observed outcome i is Yi at predictor Xi;
+	Predicted outcome at predictor Xi is $\hat Y_i = \hat \beta_0 + \hat \beta_1 X_i$ and residual is $e_i = Y_i - \hat Y_i$
+	Least squares minimises $\sum_{i=1}^n e_i^2$, ei being estimates of ϵi .
+
+The errors are the product of all the unmodelled confounders or modifiers acting outside the model, on the observed data, so E(ϵi )=0 ; if an intercept is included then their sum=0 and if a linear regressor is included then $\sum_{i=1}^n e_i X_i = 0$ so the residuals are very useful for investigating poor model fit such as by residual plots.
+
+ML estimate of the variance σ^2^ around the line is $\frac{1}{n} \sum_{i=1}^n e_i^2$, and $\hat \sigma^2 = \frac{1}{n-2} \sum_{i=1}^n e_i^2$ is an unbiased estimate for the population sigma based on the independent residuals.
+The numerator for total variability in response variable is $\sum_{i=1}^n (Y_i - \=Y)^2$ and is made up of the variability explained by the line and the residual variability.
+	$\sum_{i=1}^n (Y_i - \bar Y)^2 = \sum_{i=1}^n (Y_i - \hat Y_i)^2 + \sum_{i=1}^n (\hat Y_i - \bar Y)^2$ and
+
+the proportion of the total variability explained by the regression relationship is R squared:
+	
+$$R^2 = \frac {\sum_{i=1}^n (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2}$$
+
+	Which is literally the sample correlation squared.
+	Deleting data or adding terms to a regression model always increase R^2
+
+Variance around the regression line is usually replaced by its estimate.
+	$$\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$$
+
+# Multivariable regression
+Extending the line to a plane, or later to an n-dimensional plane.  Linear in the coefficients.  Least squares used again, fixing at zero (or removing ) coefficients and calculating regression through the new origin for the remainder, repeatedly.
+For a model with sum of squares $\sum (Y_i - X_{1i} \beta_1 - X_{2i} \beta_2)^2$ to estimate B2
+	define Y centred, $\~ Y_i = Y_i - X_{1i} \beta_1$ then sum of squares = $\sum (\~Y_i - X_{2i} \beta_2)^2$
+	and so $\beta_2 = \frac{\sum \~Y_i X_{2i}}{\sum X_{2i}^2}$, and so on for other coefficients.
+	and if $e_{i, a | b} = a_i -  \frac{\sum_{j=1}^n a_j b_j }{\sum_{i=1}^n b_j^2} b_i$
+So we get the minimiser $\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e_{i, X_1 | X_2} X_1}$ or $\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e^2_{i, X_1 | X_2} }$
+
+A multivariable regression coefficient is hence the expected change in response for a 1 unit change in the associated predictor, holding all the other values constant (at zero, say, as if regressing through the origin for each predictor).
+
+The model is then $Y_i = \sum_{k=1}^p x_{ik} \beta_k + \epsilon_i$ with fitted responses $\hat Y_i = \sum_{k=1}^p x_{ik} \hat \beta_k$
+	residuals are $e_i = Y_i - \hat Y_i$ and variance estimate $\hat \sigma^2 = \frac{1}{n-p} \sum_{i=1}^n e_i^2$
+	coefficients have standard errors $\hat \sigma_{\hat \beta_k}$ and H0:coeff=0 tested by the t-test $\frac{\hat \beta_k - \beta_k}{\hat \sigma_{\hat \beta_k}}$
+
+Outliers can be real or spurious, conform to the regression line or not.  Leverage is distance along the regression, influence is orthogonal distance from the line.  Influence measure diagnostics amount to leaving out a point and recalculating and all are a bit "in context".  Poor model fit includes heteroskedasticity, missing model terms, temporal patterns (find out by residuals versus collection order).  Residual Q-Q plots investigate normality.
+
+Adding spurious variables inflates the variance: as the true sigma is unknown the variance inflation factor of a predictor is the inflation of variance due to correlation of it with other variables, over the ideal situation in which it's orthogonal to all the other variables.
+Missing helpful variables out introduces bias in the estimate.
+
+# Missing (from Josse)
+Missing for various reasons 
+MCAR – P(missing) does not depend on either the missing value itself or any other value.
+MAR – P(missing) does not depend on the the value itself; but may depend on other variables (ie it's Missing At Random Within Strata)
+Multiple correspondence analysis MCA graph on a "missingness matrix" shows neighbours in missingness; but doesn't imply a missingness definition (eg broken machine probably MCAR but if broken by a high value, then MNAR).
+
+EM algorithm, os supplementary EM algorithm, allows a model that uses the observed data, then updates with the last estimate and so on.  Needs a new process for each assumed underlying model.
+
+Imputation using the mean shrinks the correlation to zero; by the regression line shrinks to 1; can impute by the regression line plus noise (stochastic regression) and preserve both the joint and marginal distribution of the data, so estimation has no bias added to the missingness bias itself.  It's an extension of this last to the multivariate case that results in the mice procedure.
+
+The impact of missingness is related to the difficulty of imputation and for the same reasons: both proportion and structure of the missingness, and of the data itself, are important in determining these. Get signposts to this by 
+
+Cross validation removes some values and repeats, checks the resulting inferences.
+
+Principal Components minimises the distance between an observation and its projection. Estimates the single best projection matrix that does so.  With missing values there is no such single estimated matrix. Use instead one of the many algorithms, eg Iteraive PCA. Iterative PCA starts with values imputed somehow, eg the mean.  Constructs a vector using the left and right singular value matrices (check) then updates the imputation; then repeats. Always converges but it's not a convex method so there are local maxima; so Josse in missMDA use a "regularized PCA".
+PCA uses the observed linear relationships between variables and so is most efficient and predictive of reality when the true relationships are linear.  So you need subject knowledge, to interpret or even to reparameterise (eg by making interactions explicit). 
+Nevertheless PCA can work when variables are collinear or n < p, while linear-based methods (mice, Amelia, joint imputations) work less well. "You inherit from the techniques of your imputation". This is because it preserves both joint and conditional distributions, as above, and so all inference based on these has no additional bias.
+
+Multiple correspondence analysis MCA is like PCA for categorical data, using an indicator matrix
+
+Low rank structures imply that you can use clusters to infer with greatest efficiency.
+
+# Logistic regression
+The quantity estimated from the model is the log(Odds), from the log(OR)(="coefficient") and log(Other Odds). SE for log odds is as usual $\sqrt{\frac{1}{x_1} + \dots}$ so SE for odds is $e^{\textrm{SE(log odds)}}$
+	log(odds) = a + b1A1 + b2A2 ...
+Hypothesis testing by Wald tests (with SE for the null hypothesis, so the SE chosen depends on th null hypothesis chosen)
+	H0: log(Odds) = 0 for each level of a potential variable for the model, $z = \frac{\textrm{coefficient}}{\textrm{SE}}$
+	Or LRS, H0: the likelihood is not significantly increased by addition of the variable
+Adjustment for other variables uses a proportional odds assumption.
+Because it's built from a square table the absolute numbers of cases and non cases determine the baseline odds (="constant"): therefore the sample fraction ratio is added to the model.
+	log(odds) = log(constant) + log(sample fraction ratio)+ log(exposure)
+	sample fraction ratio  = proportion of cases sampled / proportion of non cases sampled
+	log(constant) + log(sample fraction ratio) = constant*
+
+Logistic regression for trend across levels of a variable:
+	doesn't have to assume proportional odds (although this simplifies and gives more precision)
+		this is parameter reduction eg from 4 parameters for different levels to 1
+		this is critically altered by the choice of grouping for levels of exposure
+			eg choose the midpoint of arbitrary age bins to 
+Hypothesis tests for trend are
+	"test for linear trend": model is better with linear effect than without, then
+	"test for departure from trend": for improved prediction with many versus one parameter
+		both use LRS with df = difference in number of parameters.
+
+Interaction in the model is referred to as eg param1.param2 and is a single new parameter
+	tests for interaction are against H0: the interaction is not greater than chance, using LRS.
+
+Interaction is not detected automatically and must be added to a model then tested, so there is no way to guarantee that all meaningful interactions are detected or that interactions detected are meaningful beyond the dataset.
+
+The assumptions of a linear model imply that the residuals are normally distributed, with a constant variance across x and y.  Plots of standardised residuals (rescaled to mean = 0, sd = 1) help: density of Std Res for normality, Std Res versus corresponding fitted value for deviation from linear.
+
+# Conditional Logistic Regression
+Conditional on the membership of some stratum, such as a matched pair, the effect of a covariate is estimated.  The effect of the matching variable is not estimated (because the procedure would be different) nor is the constant term (because that would need the effect of the matching variable to be included in it).  Instead of logit(p) = log(odds) = beta + stratum + constant, we have log(OR) = beta.
+
+Confounding is assessed by excluding a covariate from the model to create nested models, which are then tested by the likelihood ratio test; interaction by stratifying and using LRT with or without strata; linear trend by a score test or by adding a linear predictor and LRT.
+
+Variables can, confusingly, be fixed or changing; if changing they can have a deterministic or stochastic relationship with the determinant of that change, such as time.  Rates that vary systematically over time are accounted by splitting into epochs and calculating rates conditional on the occurence of an event, ignoring non event containing epochs (Lexis expansion or "episode splitting").  This looks like a sort of limit case for Cox regression, allowing estimates of the rate, not only rate ratio, during each epoch as long as there are sufficient events.
+
+
+
+
+# Error
+Measurement error: Validity and Reliability....!
+For continuous variables: Correlation coefficients.  Mathematical coupling.  Agreement versus correlation.
+For categorical: Classification agreement.  Misclassification has variable effects but mostly:
+	Differential may be decisively erroneous.
+	Non-differential exposure misclassification biases estimates to null
+	Non-differential outcome underestimates alter ratios less, and bias differences to 0
+	Non-differential outcome overestimates bias ratios and differences to null
+
+# Analyse
+Stratification
+Needs accurate identification of strata: if too broad will replicate the confounding, if misclassified could unpredictably increase or decrease the confounding: "residual confounding".  If matched by strata, those strata are reported as if unmatched then results pooled somehow.  If perfectly matched for the confounder then the groups can't study the effect of the confounder unless they're also perfectly matched for another cause (resulting in tiny fractured groups, for which a solution is Bayesian Borrowing).  Stratum specific probabilities are either randomly distributed about the true total population value if there is partially controlled confounding, or are real, and display the effect modification.
+A special case is Standardisation, applying weights to observations in categories according to a standard distribution of observations expected in those categories.
+	In eg direct standardisation for age, a standard demograph weights crude population mortality for age standardised mortality: the number "deaths per thousand person years of standard population" is the "deaths per thousand person years of actual population" (crude death rate) times comparative mortality figure (CMF, ratio of rates).  I think the weight here is the area of a histogram where x=age range and y=observations, each of the steps of which are multiplied by a death rate to give a new histogram.  The area under this new histogram is the population standardised mortality rate and the ratio of its area to the original is the CMF; clearly the standard matters, especially as they insist on probabilities not odds.
+	Indirect standardisation for age uses not size but death rates as the standard.  It's the basis for the Standard Mortality Rates and hence ratio, SMR.  "Direct standardisation is subject to less bias"; why?  Because true rates are needed and so there's more finely grained data?  Maybe, because "indirect may be the only possible" if rates aren't available at each stratum or numbers are small hence standard error high.
+	So Direct uses observed rates if applied to a standard population, ("Directly standardised rates")
+	Indirect uses standard rates if applied to the observed population
+	If a confounder is misclassified its effect may remain: residual confounding
+
+Or use a model to borrow from neighbourign areas, using both a structured and unstructured geographical component, eg:
+$Y_i|P(x_i) = Binomial(N_i, P(x_i))$
+$logit(P(x_i)) = z_i \beta + S(i) + u_i$
+
+
+Where S(i) is according to some coordinate reference system CRS (UTS in Eastings + Northings; or lat/long in unstructured ellipsoid projection)
+Study designs
+Case Control sampling is either one or more tier: "internal controls" are unexposed ones from the initial sample.  If a rare exposure the initial sample must be very large; or "similar" unexposed can be selected from the same or a similar population in another sample as "external controls".  The similarity is discussed in mechanistic terms needing experts, not advice on sufficient stochastic descriptions of the similarity.
+	"If the groups are comparable they have internal validity"; "if the conclusions are applicable to other populations it has external validity"
+	"In case studies the controls are only a subset of the NonCases in the population"
+	The OR is "Odds of exposure in those with outcome"; the logical flips assumes that the sampling probability of controls is the same whether exposed or unexposed.
+
+Case definition
+	The method used to identify
+	The boundaries of cases – eg cutoff on a continuous measure, ins and outs for categorical
+	The unit of analysis – eg community, person, organ, events themselves
+
+Cohort E(D1) = Y1 *(D/Y) 
+	Exposure status is not biased by knowledge of outcome
+	Exposure status is known for all (because it's the definition of who is in)
+	Time sequence and course of events can be described	
+	More than one outcome or type of outcome can be reported
+	Consider
+		Source of controls
+		How many types of controls
+		How many controls per case (power gains fall from 4 per case)
+		Should they be matched?
+		Loss to follow up reduces power and certainty
+		Differential loss to follow up (by exposure or outcome) biases irretrievably
+		Information / classification bias if outcomes are not equally accurate by exposure
+
+Ecological studies use population values rather than individual values so n is small
+	Multi-group / Time-trend, descriptive / analytic
+	Cheap, easy, quick, maybe all that's possible, allow population inference
+		But don't allow individual inference and don't control confounders
+	"Ecological Fallacy" is extending ecological inferences to individuals.
+		Population average exposures would also have to vary by individual to account for
+			variability in outcomes per individual
+	Contextual effects of exposures: when grouped, may have effects contingent on others
+	Outcomes can become exposures for other or the same outcomes (also a contextual effect)
+	Summary / environmental / integral measures
+	Confounding is easily hidden by complexity and size and there are no opportunities to adjust
+	Associations, so confounders, may exist at population level that don't at individual level
+		Details of the distribution of confounders is often not available
+Bias: Information bias is common, often undetectable and severe
+	often due to the use of proxy, secondary or routine data at high risk of misclassification
+		"non-differential misclassification within groups in ecological studies",
+			unlike in individual level studies, "usually leads to bias away from the null"
+	Misclassification is very common and may be severe.
+	A sort of selection bias by examining exposure and (time dependent) outcome in the
+			same slice, eg measuring candidate risk factors and the cancers at
+			time t (not t+latent period).
+Correlations and regressions are the usual numbers generated after exploratory analysis.
+Having the Idea from Crombie has a holy feeling about it, for all that it was written humbly by a sharp witted amateur.
+	Review existing practice
+	Challenge accepted ideas
+	Look for conflicting ideas, ask around
+	Investigate geographical variation or interindividual variation
+	Identify Cinderella topics
+	Let loose the imagination / be kind to ideas / reject little
+Dissect the questions
+	Write
+	Discuss with colleagues over pints
+	Think in the bath
+	Read around the subject until you have read enough
+	Look upstream
+Choose the best question									
+	Will this method answer my question?
+	Evidence there is a problem							
+	Is it feasible?
+	Burden of disease									
+	Do I have the resources?
+	Big possible changes to patient outcome				
+Is method appropriate for the design?
+	Cheap solution or expensive problem
+	Question is a question other people can understand
+	An answer would be done by people
+	Urgency of good data / chance of bad practice to entrench
+	Feasibility
+Refine the question with a sharp tool and a high threshold for acceptance
+	Review as if newly seeing it
+	Is it as important as it looked?
+	Don't rush in: are you still sure that's the question?
+	Review and redo the analysis, simulate, simulate, simulate
+	Criticise mercilessly
+		Where could it go wrong?
+		Why might people not participate?
+		What necessary data might not be feasible to collect?
+		Do we have enough blood and treasure to spend?
+		Can we simplify it and still get an answer / will it be even better?
+	Be realistic
+		Ask the best version of the best question as well as you can, if you can do it well
+		Don't waste effort on getting incrementally closer to perfection
+		Don't start what you will never finish
+Qualitative
+	Seeks to interpret phenomena through the meanings people bring to them
+	When the topic is not familiar, the context is needed, rich views or the social world in which
+	others live is the goal.
+	Common features are flexibility, triangulation, contextualisation, iteration and reflexivity.
+	Techniques include interviews, focus groups, observation, participation.
+
+# Ethics
+	Beneficence, non-Maleficence, Autonomy, Justice
+	Goal-, duty- or rights-based justifications.
+	Validity, welfare, dignity (where Dignity = Confidentiality, Consent, Coercion)
+	Consequentialism, Deontology, Communitarian schemata
+	Reseach is not valueless and ethics are not universal: it's a process to ensure the dilemma is continuously resolved.
+ICH GCP principles
+	1. Do it with GCP				2. Benefit > Risk
+	3. Rights of subjects > Society		4. Info supports the trial
+	5. Protocol						6. Approved by Ethics
+	7. Supervised by Dr				8. Qualified team 
+	9. Informed consent				10. Data protected
+	11. Privacy / confidentiality AND 	GMP manufactured products
+12. Quality control in trial
+
+NIH has the...
+The Eight Ethical Principles
+    1. Collaborative Partnership 
+    2. Social Value 
+    3. Scientific Validity 
+    4. Fair subject selection 
+    5. Favorable risk-benefit ratio 
+    6. Independent review 
+    7. Informed Consent 
+    8. Respect for human subjects 
+Protocols for the NIH contain
+Précis 
+    • Introduction 
+    • Objectives 
+    • Inclusion and Exclusion Criteria 
+    • Plan for Monitoring Subjects and Criteria for Withdrawal of Subjects from the Study 
+    • Analysis of the Study 
+    • Human Subject Protections 
+        ◦ Rationale for Subject Selection 
+        ◦ Recruitment Plan and Procedures 
+        ◦ Justify the Exclusion of Women, Minorities and Children (if applicable) 
+        ◦ Evaluation of Benefits and Risks/Discomforts of Participation 
+        ◦ Description of the Consent/Assent Process 
+        ◦ Plan for Maintaining Privacy and Confidentiality of Subject Records and Data 
+    • Data and Safety Monitoring Plan 
+    • Protocol Monitoring Plan 
+    • Data Management Plan 
+    • Plan for Research Use and Storage of Human Samples, Specimens or Data 
+    • Remuneration/Compensation 
+    • Scientific References 
+
+
+
+# Community Engagement
+From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which aﬀect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."
+I thin there's a little too much of the White Mans Burden in this, where the inherent "good" of engagement is because of the researchers displaying cultural humility.  I'm sure it's nice to see but the studied community would get along just as well with nobody coming in to satisfy themselves about their cultural humility, but the conduct of a trial does change things and the focus should be on whether those changes are beneficial enough to justify doing the study there.
+Should never be prefabricated, always negotiated and always actually strengthen participants' ability to control important aspects of their own lives or "empower" them.
+Find out, acknowledge and reconcile complexities in community attitudes and internal power structures, empower the unempowered.  Pilot or engagement activities may reveal that much more work needs done just to understand the views of the community, before touching the research design.
+Locoregional administrators or governments: Smith adds special interest and religious groups to this, explicitly recommending power games and assessing factions as if it's in fucking Helmand.  Local health providers for advice and "synergy".  This is all motherhood shite.
+Frameworks Methodologies Theories Participatory
+Apparently visual aids are Participatory.
+Result feedback: considered and mediated feedback of overall results; but they also recommend using simple tests as a sop to the simple folk while sending off all the other tests.
+Surveillance
+"the ongoing systematic collection, analysis and interpretation of health data essential to the planning, implementation, and evaluation of public health practice, closely integrated with the timely dissemination of these data to those who need to know. The final link in the surveillance chain is the application of these data to prevention and control. A surveillance system includes a functional capacity for data collection, analysis and dissemination linked to public health programmes." (CDC, 1986)
+Surveillance (tracking a disease or risks) vs monitoring (tracking process and outcomes)
+	Practical, uniform, rapid; unlike epidemiological research which is one-off and specialised
+	Many data collectors with less interest or time
+	Passive (cheap, routine, patchy and dodgy data) or active (expensive, higher quality data)
+	Lab surveillance only works for some diseases and depends on referrals; or
+		serology surveillance of samples sent for other purposes
+	Save some money and approach good performance by two stage systems or sentinel systems
+Establish the objectives of the surveillance system 
+    1. Develop a case definition 
+    2. Develop a data collection mechanism 
+    3. Field test methods 
+    4. Data analysis 
+    5. Interpretation 
+    6. Dissemination of information 
+    7. Evaluation of the system 
+
+# Infectious epidemiology
+"Generation time and serial interval are the same"
+	Generation time is latent plus infectious and serial interval is time between identical clinical moments in successive cases in the same chain of transmission.
+	The corresponding – or not – clinical times are incubation and symptomatic.
+	Virulence is proportion symptomatic / having
+	SAR (Secondary Attack Rate) is proportion Exposed and Infected / Exposed and as usual is entirely contingent on things not measured for its calculation and hence not included in it: eg usually assumes **identical duration** and **intensity** of a **unique** exposure among all who are considered, such as a class or village.  SAR and transmission probability are conditional parameters and either require contact details or see below.
+	R0, (basic reproduction number) the average number of new infections per source, is an idealised value that could have been observed pragmatically if perfect knowledge of all exposed individuals were available. Generally it's most useful as a threshold: if R0<1 in a population the disease can't expand.  Compartments in populations behave differently and most diseases are not "simple" so modelling derives the R0.  Models rarely derive the same R0 if given the same data.  The CAL calls it: R0 = contacts * duration of infectiousness * probability of infection per contact.  If x is the proportion susceptible and "herd immunity" is 1-x and  then when R is 1:
+	$HI = 1-\frac{R}{R_0} = 1-\frac{1}{R_0} = \frac{R_0}{R_0}-\frac{1}{R_0}$, so HIT (herd immunity threshold) is $HIT = \frac{R_0-1}{R_0}$
+Vaccine efficacy is foolish, "usually" 1-(Risk in vaccinated/Risk in Unvaccinated).
+	If due to reducing infectiousness it's VEi, if susceptibility Ves.
+		If VEs=0, VEi=1 and f are vaccinated then Rf=(1-f)R0 
+		If f=1-(1/R0) then HI happens.  For more general VEi and VEs this f is multiplied by $\frac{1}{VE_s + VE_i - VE_s VE_i}$
+			
+	Estimation depends on being able to see direct and indirect effects; with some assumptions VEs and VEi can be jointly estimated from only the disease rate in vacc v unvacc if the vacc proportion is varied in strata, clusters or times.  This joint estimation has a coverage estimate trading VEi against VEs
+	and if a 2nd stage cluster, infection probability β, VEs =0, proportion infected at time t It, contact probability c, duration of contact d then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times 1-VEi. 
+
+# Causality – Bradford Hill – 9 dogme
+"An active agent or a static condition"
+Temporality, Strength (size), Consistency (across types of information), Dose:Response (Biological gradient), Specificity, Biological plausibility, coherence (sort of biological plausibility but probably intended to mean borrowing from other situations supports the idea), "Experiment" (protection by removal, in the examples), analogy (the example is HepB / HIV).
+	Predictive performance
+	No alternative theories after rigorous testing
+
+X and Y are associated in the population if 
+	X causes Y,
+	Y causes X, or
+	both X and Y are caused by another variable, call it Z.  In this case X and Y are not
+		associated in strata defined by Z
+X and Y may not be associated in the population, but are associated within strata of Z, if
+	Z is caused by both X and Y
+Z-conditioning can therefore create or remove X:Y associations depending on the causal structure.
+
+# Causal Complements are those things which together are "necessary and sufficient"
+Multi-causality demonstrated by Directed Acyclic Graphs
+	Nodes, Edges, Directed or not; Parents, Children, Ancestors, Descendants.
+	directed path is all forward arrows eg AC or AEDF,
+	backdoor path is one starting with a block eg EACD
+	collider: C is a collider on ACB but not ECD
+	Blocked path has a collider along it; otherwise open
+Remove all arrows from the exposure; in this case investigating effect of E on D.
+	If there are unblocked paths there is confounding.
+	Draw dotted lines connecting any nodes that share a child that is either in S or descends to S
+	A set S of candidate confounders will be sufficient to control confounding if
+		none is a descendant of the exposure
+		there is no open path from the exposure to the outcome that avoids a member of S,
+			including the new, dotted lines that denote 1st-gen sharing of S ancestry
+S can induce open paths by causing the dotted lines: this demonstrates the creation of conditional association by stratum creation.
+Selection or some other process of bias can be modelled with DAGs as well,
+	another name for selection bias being Collider Stratification bias.
+
+# Machine Learning
+	A Perceptron is the smallest form of neural network, with weighted inputs and a bias which feed an activation function to produce a single output.  The output is calibrated repeatedly against appropriate values and the weights altered to improve the closeness of prediction until either accuracy or number of repetition limits are crossed.
+
+The ideal type of data depends on the intended output.  eg 
+Description: whole population
+Exploratory: many variables on a random sample, up to the whole population
+Inferential: The right variables in the right population, randomly sampled
+Prediction: split training and test sets from same population
+Causal: data from a randomised trial
+Mechanistic: rich data about all available responses and predictors
+
+# Model fit
+Parameterisation is giving values to parameters in a model by whatever means.
+Fitting = calibration and is parameterisation by selecting models with a "good fit" to data.
+Validation is checking the model results by some standard (statistical or "face validity").
+Parametric sensitivity analysis is altering parameters in the model to check the change in results.
+
+Goodness of fit metric is used to decide whether the model prediction fits the data.  Given a set of observations and their accompanying expected values at positions i under a certain model that takes parameter x, a goodness of fit function describes how well the model fits the data for a given value of x.  This function might be written g(E1, ... En, O1, On).
+A saturated model exactly fits all the data points.
+When an objective function describes how the goodness of fit function varies by the choice of x, it can be minimised for some value of x.  Formally,
+	$\textrm{Maximise } f(x)  \textrm{ subject to } x \in X$	 where $f(x) = g(E_1(x), \dots , E_n(x), O_1, \dots , O_n)$
+		
+Some options are linear residual distance (may not fit at all, positive and negative cancel),
+		absolute linear residual distance (may not fit at all, odd behaviour at zero)
+		sum of squared residuals (SSR or SSQ) is the least squares method
+		$g(x) = \sum_i w_i (E_i(x) - O_i)^2$
+			
+If the deviances from model are uncorrelated, have equal variance expectation (and so wi = 1) and are normally distributed then uncertainty is not a problem for inferences on whether a model is superior to another model.  Under these preconditions the least squares estimate equals the maximum likelihood estimate.  On the other hand, there's no absolute statement possible about "how good" a fit is using this method, only that it's better than another one.  If variances are not equal they can be weighted, by the reciprocal of the variance at each observation if known, or by the reciprocal of the model value at each observation if not (the latter is Pearson's chi squared technique).
+Maximum likelihood is another option: choose a likelihood function that expresses the probability of a certain parameter conditional on the data observed and conditional on the likelihood function.  For example, the likelihood that the probability of an event is p, given 5 observed successes out of 10, is given by the binomial function and is maximal at p=0.5. 
+
+The deviance allows model fit to be compared across models, and gives a sort of "absolute goodness" of fit by comparing the likelihood of a test model with the likelihood of the saturated model.  D clearly gives a number less than one, tending to 1 as the model approaches perfection.
+
+D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}
+
+Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models.  This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the AIC.
+The parameters that lead to the best fit are chosen by a fitting algorithm.
+Git work
+pwd print working directory
+ls
+clear
+touch newfilename for new file
+cp file filetocopyto -r for recursive(=copy all within)
+mkdir
+cd
+	cd .. up one
+	cd home
+rm thing to remove -r with caution! No undo!
+mv object dir , also changes name if with file name
+echo 
+date
+
+git init
+git clone
+git add . Adds all new files to the index
+	git add -u updates
+	git add -A does both
+git commit -m "message" to local repository
+git push to remote directory
+git checkout -b branchname another version of the same directory
+git branch see what branch you're on
+pull request is not a git feature but on github
+
+
+markdown: 
+SQL
+CREATE TABLE tablename (fieldname FIELDTYPE); etc
+INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2); etc
+
+
+stata
+[by varlist]: command [varlist] [if exp] [in range] [using filename], options 
+describe
+summarize
+describe		
+display		Calculator
+Do			Execute a do file
+lookup		Online help
+save			save. To overwrite :save, replace
+append		concatenate new observations into existing columns
+codebook
+collapse		"aggregate data"
+count
+drop			delete
+duplicates		tag duplicates
+return list		list the output of the last command, maybe
+generate		new variable
+egen			new variable
+label define
+list			list values of variables
+merge			some kind of merge
+reshape		maybe some kind of transpose "long to wide or wide to long"
+sort
+table			two way tables
+tabulate		one and two way frequencies
+stset
+strate
+sts
+stmh
+stsplit
+logit			log scale
+logistic		natural scale
+clogit, or		conditional logistic, log scale unless or
+xtpoisson		random effects incidence rate ration poisson regression
+
+	outcome exposure##interactor,
+	exp(denominator follow up time) irr i(cluster) re
+mixed			mixed effects linear regression, output includes var(_cons)
+			which is the estimate of between cluster variance.
+			|| is the ~ of stata, reml is restricted likelihood
+	kscore arm if covariate==i|| cluster:, reml nolong
+xtlogit		random effects, gives icc and clustering chisq.
+	outcome treatment, or re i(cluster) 
+quadchk		probably not necessary any more because adaptive quadrature is			used to approximate normal likelihood distribution
+
+
+really useful R
+download.file
+file.exists
+dir.create
+list.files
+dir
+ls
+read.table(sep, quote, na.strings, nrows, skip)	read.csv	read.csv2
+seq(from, to, by along )
+cut(data, breaks)
+factor()		relevel(data, ref)
+intersect
+split-apply-combine
+sample
+
+apply(data, dim, fun)
+tapply(apply along an index, a function to data) ie tapply(data, index, function)
+sapply(simplify the output of a function applied to data)
+	eg	perms <- sapply(1:10000, function(i) testStat(DEcounts,
+			sample(group)))
+lapply(apply a function across a list; unlist to simplify)
+
+Hmisc::cut2(data, g)
+reshape2::melt(data, id, measure.vars)
+		dcast(melteddata, formula, Aggregation value)
+transformations
+plot
+	coplot
+	hist
+abs
+sqrt
+ceiling
+floor
+cos
+sin
+log
+log2
+log10
+exp
+round(data, digits=n)
+signif(data, digits=n)	
+p.adjust(method = c("bonferroni", "BH", "BY")
+
+
+xlsx
+xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)	read.xlsx2	write.xlsx
+
+XML and HTML
+xml::xmlTreeParse(fileURL, useInternal)	xmlRoot	xmlName	xmlSApply(doc, path fun, ...)
+	TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components
+		programmatically extracted eg xmlSApply(rootNode, xmlValue)
+	xPAth language	/Node	//Node Node[@value='thing']
+Read the short intro at least.
+httr::GET, PATCH, POST, HEAD, PUT, DELETE 
+
+JSON
+Javascript Object Notation
+jsonlite::fromJSON		toJSON
+multiple nesting of data from the data frame resulting from fromJSON
+data.table
+subsets by expression, not column
+:= adds a variable
+.N is an integer length 1 containing the number of observations
+does not copy data tables on subsetting, use copy function
+plyr-like operations, for example on .N by some value
+data.tables have keys to allow joins.
+setkey and merge
+fread for fast reading (substitute for read.table for tab separated files)
+tibble eg with list-columns so a data frame need not hold numbers or other low level entities in its cells but whole lists of interest such eg as a training resample from a dataset, a test resample, a model fitted to that test dataset and the resulting RMSE.  Tibbles are lazy and surly, don't require a list of vectors as the underlying structure and give a little more information in printing than data.frames.
+
+subsetting in base
+split-apply-combine
+	with(tapply(X, factor, function)) type of structure or
+	with(by(X, factor, function)) or
+	aggregate(data ~ factor, source or environment, function)
+by position
+by logical statements
+sort
+order eg X[order(X$var1, X$var3),]
+add columns by X$newvar or by Y <- cbind(X, newvar)
+sum	colSums	rowSums	any	all	is.na	%in%
+head	tail
+table
+xtabs(var1 ~ var2 + ., data=DF) where . is all the variables
+ftable(
+
+
+plyr
+plyr::arrange(X, var1)
+		mutate(oldata, newvar = function(oldvar)
+		`.` or as.quoted allow a list of variables to me assembled for later evaluation in plyr
+		ddply(.data, .variable, .fun , ... others)
+		dlply
+dplyr
+arrange 	 reorders rows 
+filter	 returns subset of rows based on a condition 
+select	 returns subset of columns (use starts_with, contains, matches, ends_with to specify), in the order specified
+mutate	 transforms data and adds or replaces them in the data.frame 
+rename	 rename without otherwise changing
+summarise	 summarises.  Also spelled summarize
+group_by	 reorders a data.frame "by group" 
+merge		 (x, y, by.x, by.y, all = T/F) where x is one dataset and y another, and "all" is whether to keep duplicate variables and add a subscript to the added variables to identify it .  plyr::join is faster but only works by a common variable. plyr::join_all takes a list (so need to form a list) of data frames and joins all by a common ID variable.
+%>%		 chains operators in sequence 
+*_join	left_joinincludes all observations in the left data frame; right_join analogous, inner_join only observations in both, full_join all observations no matter the match
+dbi package for using many other backends to dplyr
+
+tidyr
+unite	brings together values, like paste but with type specs.
+
+lm(outcome~predictor + predictor2 - 1)	 With intercept removed by -1; relevel() to set intercept. Counts modelled straightforwardy and adjusted for lower bound or heteroskedasticity.  Indicator variables add an optional intercept for binary factors.
+Influence.measures .  rstandard is residuals, hatvalues is for influential points (esp data entry errors). dffits is how much the line at that point is influenced by the absence of the data point.  dfbeta is one for each point for each regressor; it's a matrix.  cook's distance is a summary of the dfbeta by giving an overall change in them.  resid returns ordinary residuals, hatvalues gives the predicted Y value with the point excluded vs included.  A cross validated leave-one out residual, PRESS residuals are resid(model) / (1- hatvalues(model)).
+Hadley Wickham on the Tidyverse:
+Import-Tidy-{Transform Visualise Model} – Communicate
+The eye is drawn to the verbs and that's important because good data science can't be done without programming and the verbs are activities that can be programmed.  But for good workflow it's the interactions between each of those that's important.  Modelling is ultimately a computational approach that scales well but, because it uses assumptions at some level, and can't question those assumptions, can therefore not really surprise.  Visualisation on the other hand is a human activity and it's much harder to throw more brains at the problem than to throw more computers at the problem
+
+Share data structures, compose simple pieces, embrace functional programming and write for humans.
+
+Python for fuck's sake
+object Objects have attributes, which have associated methods (functions specific to object types). Methods are often called with an object as prefix: object.method() .
+method  Methods work differently depending on the type on which they are called.  Fucks again python.
+packages  Packages are collections of scripts (.py files); they are called modules in this context.  Packages imported, then modules called from the packages by package.module (eg numpy.array and the irritating renaming of the package is where np.array comes from); or modules are imported from packages then called bare; in which case the "import as" makes more sense because you can quote it bare.
+index  Indexing starts at 0 and starts if descending at -1.  Indexing in NumPy is by recursive [] calls or by R-style [dim1, dim2, ...] coordinates.
+dictionary  Key:value pairs initiated with {"key":"value}, accessed by [""].  Stored as hashes.  Lists can't, therefore, be keys because they are mutable. 
+Pandas Produces DataFrame which is a cbind of "series" .  All to make an array that can contain different data types. Accessed by [] for the series and [[]] for a new DataFrame containing the same information as the [] does.  Extended by the loc and iloc functions.  loc specifies by ['name of key"] for columns, or [[]] which can be chained. iloc does the same using indices of the location.  ix is a method to mix loc and iloc.  The different chaining results in different formats of output.
+ slice  Calls to index include the first and exclude the last.
+lists  Are stored separately from their name.  So x = [...] ; y = x declares y a pointer to the list that x also points to.  So manipulating the list using y is the same as manipulating the list using x.  Except that a slice or list() call creates a new list.  Fuck you python.  And deleting an element changes the indices of subsequent elements.  This is under "explicit versus reference based copies".
+NumPy  Is necessary to use any sums.  It introduces arrays which MAKE PYTHON WORK LIKE R: elementwise mathematical operations; it's a little tidyverselike because you can use proximal assignments to make distal ones.  Does this mean lazy evaluation? Arrays can contain any typep but all the same type.
+attributes  In a NumPy object are accessed by . The same as $ accesses them in an R object.
 
 
 ```{r bib, include=FALSE}
