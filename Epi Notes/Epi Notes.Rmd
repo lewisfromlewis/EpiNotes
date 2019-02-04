@@ -38,33 +38,30 @@ end{marginfigure}
 
 A table allows things to be seen, and calculations referred to.  "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ.
 
-\begin{table}
-\caption{Contingency Table}
 \begin{tabular}{| c |c | c | c| }
 \hline
 & + & - & \\ \hline
-D & a & b & N_{D} \\ \hline
-D^c & c & d & N_{D^c} \\ \hline
-& N_{+} &  N_{-}  & N \\
-\hline
+D & a & b & $N_{D}$ \\ \hline
+$D^c$ & c & d & $N_{D^c}$ \\ \hline
+& $N_{+}$ &  $N_{-}$  & N \\ \hline
 \end{tabular}
-\end{table}
+
 
 \begin{table}
 \caption{Marginal calculations}
-\begin{tabular}{}
-\hline
-sensitivity & =		P(+|D)  	& =	a/(a+b) \\
-specificity & = 	P(-|DC)	    & =	d/(c+d) \\
-ppv         & = 	P(D|+)	    & =	a/(a+c) \\
-npv         & = 	P(DC|-)	    & =	d/(d+b) \\
+    \begin{tabular}{l c c}
+    \hline
+sensitivity & =		$P(+|D)$  	& =	a/(a+b) \\
+specificity & = 	$P(-|DC)$	    & =	d/(c+d) \\
+ppv         & = 	$P(D|+)$	    & =	a/(a+c) \\
+npv         & = 	$P(DC|-)$	    & =	d/(d+b) \\
 accuracy    & =		P(correct)  & =	(a+d)/(a+b+c+d) \\
-variance    & =		\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)} \\
-\end{tabular}
+variance    & =		$\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$ \\
+    \end{tabular}
 \end{table}
 
 
-DLR+ 	= \frac{P(+|D)}{P(+|D^C)} = \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}} = \frac{(ac+ad)}{(ac+ab)} = sensitivity/(1-specificity) 
+DLR+ 	= $\frac{P(+|D)}{P(+|D^C)} = \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}} = \frac{(ac+ad)}{(ac+ab)}$ = sensitivity/(1-specificity) 
 
 		= (diagnostic likelihood ratio of a positive test) = Bayes Factor
 		
@@ -72,7 +69,7 @@ DLR+ 	= \frac{P(+|D)}{P(+|D^C)} = \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}} = \fra
 
 		a DLR of N means the H(D) is N times more supported by data than is $H(D^C)$
 
-SE for log odds ratio  = \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}  so the Error Factor is e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}} 
+SE for log odds ratio  = $\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$  so the Error Factor is $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$
 		log 95% CI is OR +/- log EF , so
 		95% CI is OR/EF to OR*EF or exp(log Estimate +/- log EF)
 
@@ -151,6 +148,7 @@ $$\frac{P(-|D)}{P(-|D^{c})} = \frac{(1-sensitivity)}{specificity}$$
 Because $P(D) = (1-P(D^{c}))$ the complementary Bayes rules for positive predictive value is
 $$P(D|+) = \frac {P(+|D).P(D)}
 {P(+|D).P(D)  +  P(+|D^{c}).P(D^{c})}$$
+
 		$$P(D^{c}|+) = \frac {P(+|D^{c}).P(D^{c})}
 {P(+|D).P(D)  +  P(+|D^{c}).P(D^{c})}$$
 	
@@ -223,7 +221,7 @@ The quadratic is chosen to meet the log LR curve at the MLE and to have the same
 	 $\textrm{log(LR)} = - \frac{1}{2} (\frac{M - \pi_0}{S})^2$ as for D failures in N trials D/N = M
 	 
 Fuckedly, London uses M not only for D/N but also for log(D/N-D).
-	$S^2 = M(1-M)$, $M = log(\frac{D}{N-D})$  and  $ S  = \sqrt{\frac{1}{D} + \frac{1}{N-D}} = \sqrt{\frac{M(1-M)}{n}}$
+	$S^2 = M(1-M)$, $M = log(\frac{D}{N-D})$  and $S =\sqrt{\frac{1}{D} + \frac{1}{N-D}} = \sqrt{\frac{M(1-M)}{n}}$
 	$\frac{1}{S^2}$ is called the information of the data: the larger, the greater the curvature of log(LR), and the more precise the estimate and so on.
 	A supported range of parameter values with attendant likelihood over a certain cutoff likelihood can be calculated and as S is the standard error so the LR at the 95% CI limits is $e^{\frac{-1.96^2}{2}} = 0.1465$ if the likelihood curve is normal across the parameter space.
 	
@@ -392,7 +390,7 @@ The estimates are either calculated over the whole study, or combined from clust
 	if they were randomly selected with PPS then the overall estimate is a consistent estimator of the true population value, and is of course easier but it doesn't allow simple t tests.
 
 To derive the standard error the variance of the risk or, interchangeably, the rate ratio, for cluster specific estimates is estimated roughly by working in the log RR scale
-$Var(\textrm{log} RR ) = Var(\textrm{log} R_1) + Var(\textrm{log} R_0) \approx \frac{Var(R_1)}{R_1^2} + \frac{Var(R_0)}{R_0^2} $, and $Var(R_1) \approx \frac{s_1^2}{c_1}$,
+$Var(\textrm{log} RR ) = Var(\textrm{log} R_1) + Var(\textrm{log} R_0) \approx \frac{Var(R_1)}{R_1^2} + \frac{Var(R_0)}{R_0^2}$, and $Var(R_1) \approx \frac{s_1^2}{c_1}$,
 	where s1 is the observed SD of the cluster specific estimates across the number c of clusters in arm 1 (the intervention, for example).
 	So the estimate accounting for clustering is $\textrm{log RR} \pm 1.96  \sqrt{Var(\textrm{log RR})}$.
 A simple T or Wilcoxon rank sum test can be used for the summary estimates using these summary values.
@@ -525,7 +523,7 @@ Kaplan Meier survival probability is the cumulative probability of an entity tha
 		as Pevent = nevents/nat-risk – (0.5*ncensored) 
 			if the censoring time is not defined for the interval
 		P(Si) = (1-Pevent1).(1-Pevent2)...(1-Peventi)
-		$P(S_x) = \prod_{i=1}^x (1- \frac{\textrm{events}}{\textrm{at risk} - 0.5 \times \textrm{censored}})_i$ , or $\widehat {S}}(t)=\prod \limits _{i:\ t_{i}\leq t}\left(1-{\frac {d_{i}}{n_{i}}}\right),$
+		$P(S_x) = \prod_{i=1}^x (1-\frac{\textrm{events}}{\textrm{at risk} - 0.5 \times \textrm{censored}})_i$ , or $\widehat {S}(t)=\prod \limits_{i:\>t_{i}\leq t}\left(1-{\frac {d_{i}}{n_{i}}}\right),$
 	A good KM curve has ticks on the line for censoring occurrences and nat-risk below the line
 	Log Rank test is a Chi Squared, with Observed totals and Expected E = (row total x column total)/(grand total)
 		summed across all intervals for each group, and added, giving the statistic:
@@ -536,7 +534,7 @@ The hazard function h(t) is the failure rate summed over ever smaller time inter
 The P(Si) above is equivalent to the reliability function R(t), also called the survival function S(t), the probability of "no failure" as a function of time.  R(t) = 1 – F(t).
 Cumulative failure as a function of time, F(t) is the integral over time of the probability density of failure as a function of time, f(t).
 
-$\tilde  {H}}(t)=\sum _{{t_{i}\leq t}}{\frac  {d_{i}}{n_{i}}$
+$\tilde{H} (t) = \sum_{{t_{i}\leq t}}\frac{d_{i}}{n_{i}}$
 
 h(t) = f(t) / 1-F(t) = f(t) / R(t).
 $h(t) = \lim _{\Delta t\to 0}{\frac {R(t)-R(t+\Delta t)}{\Delta t\cdot R(t)}}$, which does not have to be parametric as long as there is a definite cumulative distribution.
@@ -587,8 +585,7 @@ continuous is partitioned into systematic and random error eg by ANOVA;
 	$$\sigma_{X}^2 = E[(X- E[X])^2] = E[X]^2 - E[X^2]$$				  and 
 					  
 	$$E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$$, so
-	$$\rho_{(X, Y) = \frac{E[XY]-E[X]E[Y]}
-{\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$$
+	$$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]} {\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$$
 					
 
 	then the sample correlation r, assuming
@@ -600,8 +597,7 @@ continuous is partitioned into systematic and random error eg by ANOVA;
 		is the number of standard deviations that y changes for a 1 SD change in x 
 			given by Pearson's Correlation Coefficient:
 
-					$$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar{x})(y_{i} - \bar{y})}
-{\sqrt{\sum_{i=1}^n (x_{i} - \bar{x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar{y})^2}}$$ ,	and
+					$$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar{x})(y_{i} - \bar{y})}{\sqrt{\sum_{i=1}^n (x_{i} - \bar{x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar{y})^2}}$$ ,	and
 
 		can also be quoted as the mean of the standard scores of x and y:
 $r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \={x}}{s_{x}})(\frac{y_{i} - \={y}}{s_{y}})$	 ,	and	$\frac{\sum x_i y_i - n \=x \=y}{ns_x s_y}$  
