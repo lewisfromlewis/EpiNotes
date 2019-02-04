@@ -493,27 +493,152 @@ Mantel-Haenszel uses RR in stratum i weighted for total time in the stratum,
 
 	 $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i}$ or $\frac{(O-E)^2}{V}$, df = 1
 
-	where Exi is overall stratumi rate times observation time for exposure x,  
+	where Exi is overall stratumi rate times observation time for exposure x, $E_{1i} = \frac{d_i \times T_{1i}}{T_i}$
 
-To detect effect modification the Chi Square test for heterogeneity 
+To detect effect modification the Chi Square test for heterogeneity $H_0: RR_i = RR_{MH}$
 
-	, df = c-1
+	$$\chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{, df = c-1}$$
 
 Cohort E(D1) = Y1 *(D/T) and U = D1 – E(D1)
 
-Var(U) =  and test statistic  =  or , (Chi square df=1)
+Var(U) = $D \frac{t_1}{t}(1 - \frac{t_1}{t})$ and test statistic  $z= \frac{U}{SE(U)} = \frac{U}{\sqrt{Var(U)}} or Z^2 = \frac{U^2}{V} \textrm{, Chi square df=1}$
 
-Poisson regression is very similarly shaped to other regressions: rate = constant * timeband * exposure.  Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion.  If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then an adult must be asked for help  a value (constant or distributed) can be added to the regression model to account for the departure from poisson.  The value is called the frailty and the resulting model is a negative binomial model.
-Cox regression limits each timeband to that containing one event (call it a timeclick).  So rate = Changing baseline * exposure: the model assumes the exposure effect is constant (the proportional hazard assumption).  Test this graphically or by taking logs of the cumulative hazard so that the "Nelson-Aalen plot" of   is parallel against time, and test by fitting interaction terms of time (by arbitrary epochs or as a superimposed linear trend) and using LRT or something.
-Multivariate distributions
+Poisson regression is very similarly shaped to other regressions: rate = constant x timeband x exposure.  Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion.  If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then ^[an adult must be asked for help] a value (constant or distributed) can be added to the regression model to account for the departure from poisson.  The value is called the frailty and the resulting model is a negative binomial model.
+
+## Cox regression
+limits each timeband to that containing one event (call it a timeclick).  So rate = Changing baseline * exposure: the model assumes the exposure effect is constant (the proportional hazard assumption).  Test this graphically or by taking logs of the cumulative hazard so that the "Nelson-Aalen plot" of $\sum \lambda_{ti} = \sum \lambda_{t0} \times \theta_i$  is parallel against time, and test by fitting interaction terms of time (by arbitrary epochs or as a superimposed linear trend) and using LRT or something.
+
+# Multivariate distributions
 MV norm has mean as a vector, sigma is the variance / covariance matrix
 
 These have parameters of location, scale and skew. Normal location is the mean, t location is the non centrality parameter which are a scalar for univariate and an n-element vector for n-dimensional distributions (eg an n-variate distribution of densities).  Scale for a univariate is the variance for univariate normal and t distributions, but is a dispersion matrix sigma of n by n elements for for n-variate distributions (it's the variance / covariance matrix). The skew parameter is a vector of length n for n-variate distributions.
 
 MV t has degrees of freedom usually presumed identical across al variates, a parameter for centrality delta, and a variance / covariance matrix sigma
-density by dmvt(x, delta=c(i,j), sigma=as.matrix(r, t, y, u), df=df, log=T)
+
+density by `dmvt(x, delta=c(i,j)`, sigma= `as.matrix(r, t, y, u), df=df, log=T)`
 
 Bivariate has delta=0 if standard and sigma=diag(2), ie rbind(c(2, 0, 0, 2))
+
+# Survival and logrank test
+Kaplan Meier survival probability is the cumulative probability of an entity that is initially at risk surviving subsequent epochs until the one in question,
+	each epoch being "data-defined" and usually as containing one event:
+		as Pevent = nevents/nat-risk – (0.5*ncensored) 
+			if the censoring time is not defined for the interval
+		P(Si) = (1-Pevent1).(1-Pevent2)...(1-Peventi)
+		$P(S_x) = \prod_{i=1}^x (1- \frac{\textrm{events}}{\textrm{at risk} - 0.5 \times \textrm{censored}})_i$ , or $\widehat {S}}(t)=\prod \limits _{i:\ t_{i}\leq t}\left(1-{\frac {d_{i}}{n_{i}}}\right),$
+	A good KM curve has ticks on the line for censoring occurrences and nat-risk below the line
+	Log Rank test is a Chi Squared, with Observed totals and Expected E = (row total x column total)/(grand total)
+		summed across all intervals for each group, and added, giving the statistic:
+		$\chi^2_{logrank} = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2}$ , df=1 or $Z=\frac  {\sum _{{j=1}}^{J}(O_{1j}-E_{1j})}{\sqrt{\sum _{j=1}^J V_j}}$
+		Not sure whether you could substitute P(Sx) times number at risk at t=0 for E.
+
+The hazard function h(t) is the failure rate summed over ever smaller time intervals, which may be more than 1, hence is not a probability.  This depends on a failure function, F(t), which is a probability, being a cumulative distribution function.
+The P(Si) above is equivalent to the reliability function R(t), also called the survival function S(t), the probability of "no failure" as a function of time.  R(t) = 1 – F(t).
+Cumulative failure as a function of time, F(t) is the integral over time of the probability density of failure as a function of time, f(t).
+
+$\tilde  {H}}(t)=\sum _{{t_{i}\leq t}}{\frac  {d_{i}}{n_{i}}$
+
+h(t) = f(t) / 1-F(t) = f(t) / R(t).
+$h(t) = \lim _{\Delta t\to 0}{\frac {R(t)-R(t+\Delta t)}{\Delta t\cdot R(t)}}$, which does not have to be parametric as long as there is a definite cumulative distribution.
+
+If the failure density is modelled as exponential (ie Poisson(1), that is the time until first failure is Poisson distributed and other failures are presumed to be independent in every case including those already failed) then the familiar result is that $f(t) = \lambda^1 e^{-\lambda t}$ so $F(t) = \int_0^t \lambda e^{-\lambda t} dt$ then the hazard function h(t) is
+	$h(t) = \frac{f(t)}{R(t)} = \frac{\lambda e^{- \lambda t}}{e^{- \lambda t}} = \lambda$, which is time-blind / memoryless / constant with respect to time
+Assuming, then, that the hazard function is constant and the cumulative hazard rises linearly:
+    - Risk  = events/number at risk; 
+    - hazard = (events/time at risk in the limit as t goes to 0) = lambda; 
+    - survival as a function of time S(t) = product of 1-risk across times; cumulative hazard = sum of risks for all times (Nelson-Aalen estimate of the cumulative hazard).
+    
+The log of the hazard ratios for two exposures is log(HR1) – log(HR2) = log(constant)
+H(t) = -log(S(T)) or S(t) = e^(-H(t)) 
+S(t) = e^(-lambda t)
+H(t) = lambda t
+Risk up to time t = 1- e^(-lambda t)
+Average survival time = 1/lambda
+
+ARIMA
+The error term $\epsilon$ in the usual linear model $Y_i = \alpha + \beta X_i + \epsilon_i$ is assumed to be composed of errors which are independent, identically distributed (usually normally distributed with common variance). This is the definition of white noise.
+
+If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the Autoregression formula:
+$$X_t = \phi X_{t-1} + \epsilon_t$$
+
+These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model describes an autoreggressive process with autocorrelated errors:
+$$\epsilon_t = W_t + \theta W_{t-1}$$
+
+The autocorrelation magnitude can be estimated by comparing values that are a constant distance apart; lag 1 correlation is contiguous pairs, lag 2 is pairs separated by one intervening variable and so on. A series is stationary over a time, if the mean over that time is always constant. Some fiddling can make it stationary over a trend (so if there is an underlying spurious rise in price due to inflation). Examples of stationary processes are linear predictors where $X_t$ is stationary or a random walk, where W is white noise added to the last value of X to produce the current value of X:
+$$X_t = X_{t-1} + W_i$$
+This is demonstrated by differencing in R, eg for the default lag 1
+```
+diff(x, lag = 1)
+```
+
+# Correlation
+categorical variance is by tabulation, eg mean pair agreement or Observed Agreement OA:
+					
+	or Kappa statistic for excess agreement over max chance agreement $\kappa = \frac{OA-CA}{1-CA}$,	
+
+	(where CA is $\frac {E[a]+E[d]}{a+b+c+d}$ and $E[a] = \frac{\textrm{Row total} \times \textrm{Column total}}{\textrm{Grand total}}$  as in the χ2 )
+
+continuous is partitioned into systematic and random error eg by ANOVA;
+		their ratio is the Intraclass Correlation Coefficient, aka reliability coefficient
+				eg by Pearson's correlation of product-moment where for a population
+	$$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$, where 
+	$$cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$$
+				and using the identities
+	$$\sigma_{X}^2 = E[(X- E[X])^2] = E[X]^2 - E[X^2]$$				  and 
+					  
+	$$E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$$, so
+	$$\rho_{(X, Y) = \frac{E[XY]-E[X]E[Y]}
+{\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$$
+					
+
+	then the sample correlation r, assuming
+			a normal distribution of y for each xi 
+			a uniform variance for y across all x
+			y is monotonic on x
+		is the value that describes the closeness of all points to a linear relationship
+		is useful for a description of the scatter about the least squares linear relationship
+		is the number of standard deviations that y changes for a 1 SD change in x 
+			given by Pearson's Correlation Coefficient:
+
+					$$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar{x})(y_{i} - \bar{y})}
+{\sqrt{\sum_{i=1}^n (x_{i} - \bar{x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar{y})^2}}$$ ,	and
+
+		can also be quoted as the mean of the standard scores of x and y:
+$r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \={x}}{s_{x}})(\frac{y_{i} - \={y}}{s_{y}})$	 ,	and	$\frac{\sum x_i y_i - n \=x \=y}{ns_x s_y}$  
+					= $$\frac{n \sum x_i y_i - \sum x_i \sum y_i}{\sqrt{n \sum x_i^2 - (\sum x_i)^2} \sqrt{n \sum y_i^2 - (\sum y_i)^2}}$$, or	
+					$$r_{xy} = \frac{\sum x_i y_i - \frac{1}{n} \sum x_i \sum y_i}{\sqrt{\sum x_i^2 - \frac{1}{n}(\sum x_i)^2} \sqrt{\sum y_i^2 - \frac{1}{n}(\sum y_i)^2}}$$
+	
+r squared explains the proportion of variance that is explained by the straight line,
+For that straight line the regression coefficient for the straight line $y = \beta_0 x + \beta_1 x +\gamma x + \epsilon$ is
+$\beta_1 = \frac{\sum(x-\bar x)(y-\bar y)}{\sum(x- \bar x)^2}$
+					 or $\hat \beta_1 = Cor(Y, X) \frac{sd_y}{sd_x}$
+					 
+And Spearman's is Pearson's rho of the *ranks* of the values, rather than the values themselves.
+
+# Hypothesis Testing
+	The confidence interval is the set of observations for which H0 is rejected, that is an inversion of the alpha level under H0 (eg for the Binomial rather than use an asymptotic approximation to the CLT for 0.95 as the Wald interval (too narrow), this can be directly calculated as an exact interval, the Clopper-Pearson interval (too wide) or another procedure the Wilson Score method).
+	Often overlooked is that evidence for a hypothesis is always relative to that for another hypothesis; often it's the same evidence.
+
+Correlation of parameters within a subgroup implies that, when viewed at the level of the population, there is some component of variation that is attributable to membership of that subgroup.  A neater way to say this is that within cluster correlation measures the same phenomenon as between cluster variation.  The information is therefore reduced in comparison to i.i.d observations.
+Robust standard errors, GEE and multilevel modelling are ways to address this.
+
+Robust standard errors
+Robust variance is proportional to the sum of the squared residuals (residuals being the difference between the observed values and those predicted by the model).  They can be calculated individually if the data are i.i.d or calculated for each cluster then summed, where there is correlation.  This still assumes independence between clusters.
+	Robust standard errors do not affect the calculation of the maximum likelihood and so a LRS and test are not valid and the MLE is not altered.  A quadratic approximation is not used so the standard errors are not excessively narrow; the cluster level residuals are used to generate the variance instead.  "Robust SE are correct provided the model is correct" and there are >30 clusters.
+
+Generalised Estimating Equations
+GEE take account of correlation in the calculation of the effect estimate as well as the standard error.  The correlation matrix structure is assumed: independent (iid), exchangeable (observations within a cluster are equally correlated and are not correlated with those outside the cluster) or autocorrelated (the same observation at different times, for example).
+	Exchangeable correlation is the usual GEE setting, where the effect estimate is a weighted combination of the effect estimates in each cluster and the standard error is derived from the residuals outside the model.  A population average effect is estimated: the average odds of an outcome among those exposed, divided by the average odds among those not exposed.
+
+Multilevel Modelling (Random Effects models)
+The effect of cluster, whether innate, unmeasured confounder or a true mechanistic effect, is represented in the regression model by a separate term for each cluster: this is rendered tractable by assuming a stochastic distribution of the size of these terms rather than attempting to measure or specify the cluster effect for each cluster (hence "random effects"):
+	the log odds of the jth person in the ith cluster is then given by
+	, where for example ui ~ N(0, σu2) and σu2 is estimated as part of the model building.  The same information is imparted by estimating rho, the within cluster (also called "intra-class") correlation coefficient.  A cluster specific effect is estimated: the odds of an individual having the outcome if exposed, divided by the odds if not exposed. 
+	The intention is to derive a model that provides a fully specified likelihood: assuming that it has done so the LRT is appropriate.  That likelihood becomes complicated easily: a bivariate normal distribution for the likelihood is produced for a normal error plus normally distributed cluster effect, which has an algebraic solution, as does the combination of poisson error and gamma cluster effects to produce a negative binomial; but the combination of binomial error and normal cluster effects, or poisson error and normal cluster effects, produce mixture distributions without roots.  The reliability of estimates needs to be checked.
+
+
+
+
 
 `r newthought('In his later books')`^[[Beautiful Evidence](http://www.edwardtufte.com/tufte/books_be)], Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, call the `newthought()` function in **tufte** in an _inline R expression_ `` `r ` `` as demonstrated at the beginning of this paragraph.^[Note you should not assume **tufte** has been attached to your R session. You should either `library(tufte)` in your R Markdown document before you call `newthought()`, or use `tufte::newthought()`.]
 
