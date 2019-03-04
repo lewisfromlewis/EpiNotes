@@ -1311,6 +1311,44 @@ Qualitative
 	Common features are flexibility, triangulation, contextualisation, iteration and reflexivity.
 	Techniques include interviews, focus groups, observation, participation.
 
+# Utility
+This is something that needs to be expanded here. For now it's just a dumping ground for some interesting things. Such as:2E: Discrete Choice Experiment (DCE) to determine weighting
+Data Collection
+We will use a best-worst discrete choice experiment (BWS DCE; BWS Case 3) to determine the value
+placed on each dimension of the tool’s descriptive system. We will use best practice methods for the
+design and analysis of choice experiments13 and follow approaches taken previously by CI Ratcliffe14
+and CI Viney15, 16. The optimal sample size for a BWS DCE task is dependent upon the final number
+of dimensions and levels to be included in the tool’s descriptive system, as determined by 2B and 2D
+of our study17. Sociodemographic information, eg age, sex, ill health experience, income, remoteness
+and family structure will also be collected.
+AnalysisHREC Application Form Version 13, March 2017 Page 26
+The primary analysis will use a mixed multinomial logit (MMNL) model with a panel specification8.
+The MMNL can also identify heterogeneity in responses9; we will also examine alternative model
+specifications18, as different respondents may trade-off in different ways, reflecting cultural or social
+norms. From these analyses, we will develop a scoring algorithm for the instrument, based on the
+ratio of marginal utilities (RMU) approach, below.
+In valuing health gain, considering quantity of life (survival) separately from characteristics
+(QOL/wellbeing) of those extra years, and including simple interactions between them, as would
+usually be done for choice experiment analyses, may not be adequate in capturing this interrelatedness. An additional condition is also required for QALYs: that value of a health profile with
+zero life expectancy is zero irrespective of the quality of life in that period. The utility function for
+all models will, initially, be assumed to be linear with respect to time, and levels of QOL/wellbeing
+enter the utility function as an interaction with life expectancy (the TIME variable). Thus, the utility
+(U) of health state j in scenario s for individual i is in Equation 1. Thus, if TIME is set at zero, the
+systematic component of the utility function is also zero.
+$$U_{isj} = αTIME_{isj} + βX_{isj}' TIME_{isj} + ε_{isj} $$
+Generating a scoring system for QALYs
+To generate QALY weights for the health states to create the scoring algorithm of the tool, the initial
+analysis will use a ratio of marginal utilities (RMU) approach, as used by AI Viney15, 16. In a QALY
+model, ten years in full health provides 10 QALYs. If another health state provides 10 QALYs over
+a 15 year period, the QALY model values that health state at 10/15 = 0.667. Using Eq1, the systematic
+component of the utility function can be differentiated with respect to TIME,
+$$\frac{\delta U}{\delta TIME} = α + βX′$$
+The RMU between two health state profiles j and j* can therefore be estimated as:
+$$RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$$
+This gives a value for a health state with characteristics defined by the βX isj ' term, relative to another
+health state defined by characteristics βX isj ' * . If βX isj ' * is set to full health (ie the best level of each
+dimension), the value generated using Eq 3 is a QALY weight15, 19.
+
 # Ethics
 	Beneficence, non-Maleficence, Autonomy, Justice
 	Goal-, duty- or rights-based justifications.
