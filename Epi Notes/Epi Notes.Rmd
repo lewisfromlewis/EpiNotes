@@ -1194,7 +1194,10 @@ Variables can, confusingly, be fixed or changing; if changing they can have a de
 # Error
 Measurement error: Validity and Reliability....!
 For continuous variables: Correlation coefficients.  Mathematical coupling.  Agreement versus correlation.
-For categorical: Classification agreement.  Misclassification has variable effects but mostly:
+For categorical: Classification f agreement. 
+See also Cronbach alpha for a composite rating X as a sum of K items $Y_1 + Y_2 + Y_i \dots Y_K$
+    $$\alpha = \frac{K}{K-1} \left( 1- \frac{\sum^K_{i=1} \sigma^2_{Y_i}}{\sigma^2_X}\right)$$
+Misclassification has variable effects but mostly:
 	Differential may be decisively erroneous.
 	Non-differential exposure misclassification biases estimates to null
 	Non-differential outcome underestimates alter ratios less, and bias differences to 0
