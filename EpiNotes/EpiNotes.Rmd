@@ -29,10 +29,10 @@ This is the notes from my \textit{MSc Epidemiology} from LSHTM, one of the two m
 I wish I had done this twenty years ago, and spent the intervening time studying real statistics and computer science, instead of listening to people vomit party lines in my forties.
 
 # Headings
-`r newthought('The baseline odds is key to understanding')`^[This is just a test] the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.begin{marginfigure}
-includegraphics[]{Risk_magnification}
-caption[Risk Magnification]{Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.}
-end{marginfigure}
+`r newthought('The baseline odds is key to understanding')`^[This is just a test] the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.![Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.](C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg)
+```{r fig.margin=TRUE, cache=TRUE, message=FALSE, echo=FALSE, fig.cap='Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.'}
+knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
+```
 
 #The contingency table
 
@@ -137,6 +137,9 @@ Probability is always a feature of populations, not of data;
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 			
 Probabilities in the same probability space are independent if $P(A \cap B) = P(A).P(B)$
+
+The conditional probability is obtained by dividing a joint probability by a marginal probability, eg
+$$P(x_3 | y_2) = \frac{p(x_3, y_2)}{p(y_2)}$$
 
 ##Bayes rule and diagnosis
 Diagnostic likelihood ratio of a positive test (DLR+ve)
@@ -270,7 +273,8 @@ Robust objects (estimators, statistics, models...) are ones which are changed li
 # Sampling
 The study population is the population available for study
 A sampling frame is the entire extant list of possible units which could be sampled
-"Equal probability" selections (of each final stage unit): population value is estimated by sample values (self-weighting)
+"Equal probability" selections (of each final stage unit):
+population value is estimated by sample values (self-weighting)
 	eg Simple Random Sampling (and K&S alledges that Systematic Sampling is an EPS...?)
 	Probability proportional to size followed by numerical SRS (eg 4 at each stage 1)
 	SRS at stage 1 followed by proportional SRS (eg 20% of each stage 1)
