@@ -3,38 +3,47 @@ title: "EpiNotes"
 subtitle: "It's a dog."
 author: "Lewis Campbell"
 date: "`r Sys.Date()`"
-output:
-  tufte::tufte_handout:
-    citation_package: natbib
-    latex_engine: xelatex
-  tufte::tufte_html: default
+output: 
+  bookdown::epub_book: default
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
-bibliography: skeleton.bib
+    number_sections: true
+  tufte::tufte_handout: 
+    citation_package: natbib 
+    latex_engine: xelatex
+  tufte::tufte_html: default
+bibliography: Epinotespackages.bib
+csl: biomed-central.csl
+biblio-style: plain
 link-citations: yes
 ---
 
 ```{r setup, include=FALSE}
 library(tufte)
 # invalidate cache when the tufte version changes
+#render_book("EpiNotes.html", "Epinotes.epub", output_format = epub_book(pandoc_args = "--mathml", epub_version="epub3"))
+#calibre(input="EpiNotes.epub", output="EpiNotes.mobi", options = "--mobi-file-type new")
 knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
 options(htmltools.dir.version = FALSE)
 ```
+
+\frontmatter
+\tableofcontents
 
 # Introduction
 
 This is the notes from my \textit{MSc Epidemiology} from LSHTM, one of the two most respected Epidemiology institutions in the world.  It's a dog.
 
-I wish I had done this twenty years ago, and spent the intervening time studying real statistics and computer science, instead of listening to people vomit party lines in my forties.
+I wish I had done this twenty years ago, and spent the intervening time studying real statistics and computer science, instead of listening to people vomit party lines in my forties [@R-base].
 
-# Headings
-`r newthought('The baseline odds is key to understanding')`^[This is just a test] the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.![Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.](C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg)
+# Risk
+`r newthought('The baseline odds is key to understanding')` the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.![Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.](C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg)
 ```{r fig.margin=TRUE, cache=TRUE, message=FALSE, echo=FALSE, fig.cap='Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.'}
 knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
 ```
 
-#The contingency table
+# The contingency table
 
 A table allows things to be seen, and calculations referred to.  "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ.
 
@@ -49,7 +58,7 @@ $D^c$ & c & d & $N_{D^c}$ \\ \hline
 
 \begin{table}
 \caption{Marginal calculations}
-    \begin{tabular}{l c c}
+    \begin{tabular}{l l l}
     \hline
 sensitivity & =		$P(+|D)$  	& =	a/(a+b) \\
 specificity & = 	$P(-|DC)$	    & =	d/(c+d) \\
@@ -61,13 +70,15 @@ variance    & =		$\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$ \\
 \end{table}
 
 
-DLR+ 	= $\frac{P(+|D)}{P(+|D^C)} = \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}} = \frac{(ac+ad)}{(ac+ab)}$ = sensitivity/(1-specificity) 
+$$DLR+ 	= \frac{P(+|D)}{P(+|D^C)} = \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}} = \frac{(ac+ad)}{(ac+ab)}$$ 
 
-		= (diagnostic likelihood ratio of a positive test) = Bayes Factor
+    = sensitivity/(1-specificity) 
+
+    = (diagnostic likelihood ratio of a positive test)
+
+    = Bayes Factor
 		
-				because PostOdds = Prior*DLR,
-
-		a DLR of N means the H(D) is N times more supported by data than is $H(D^C)$
+because PostOdds = Prior*DLR, a DLR of N means the H(D) is N times more supported by data than is $H(D^C)$
 
 SE for log odds ratio  = $\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$  so the Error Factor is $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$
 		log 95% CI is OR +/- log EF , so
@@ -111,19 +122,28 @@ No Exposure & 10 & 40 & 50 \\ \hline
 \hline
 \end{tabular}
 
-AR = 30/50 – 10/50 = .4
-AF = ((30/30+20) – (10/10+40))/(10/10+40) = 2/3
-RR E+:E- = (30/30+20) / (10/10+40) = 3
-Odds of O+ if E+ = 30/20 = 1.5
-Odds of O+ if E- = 10/40 = .25
-Odds ratio of E+ versus E- = (30*40)/(10*20) = 6
-		If the RR doubles to 6 by clockwise rotation to rbind(c(36, 14), c(6, 44)) the OR is 18.857
-		If the RR doubles to 6 because right shift to rbind(c(24, 26), c(4, 46)) OR is 10.615
-PAR 	= 40/40+60 – 10/10+40 = .2					PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
+    AR = 30/50 – 10/50 = .4
+    AF = ((30/30+20) – (10/10+40))/(10/10+40) = 2/3
+    RR E+:E- = (30/30+20) / (10/10+40) = 3
+    Odds of O+ if E+ = 30/20 = 1.5
+    Odds of O+ if E- = 10/40 = .25
+    Odds ratio of E+ versus E- = (30*40)/(10*20) = 6
+
+If the RR doubles to 6 by clockwise rotation to
+    rbind(c(36, 14), c(6, 44))
+the OR is 18.857
+
+If the RR doubles to 6 because right shift to
+    rbind(c(24, 26), c(4, 46))
+then the OR is 10.615
+
+PAR 	= 40/40+60 – 10/10+40 = .2					
+PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
 	= using RR (0.5).(3-1) / (0.5).(3-1)+1 = 0.5
 	= using OR (0.5).(6-1) / (0.5).(6-1)+1 = 0.71
 
-##Probability and sampling
+## Probability and sampling
+
 Probability is always a feature of populations, not of data;
 	the population is connected to the data
 	by a probability model
@@ -142,6 +162,7 @@ The conditional probability is obtained by dividing a joint probability by a mar
 $$P(x_3 | y_2) = \frac{p(x_3, y_2)}{p(y_2)}$$
 
 ##Bayes rule and diagnosis
+
 Diagnostic likelihood ratio of a positive test (DLR+ve)
 	$$\frac{P(+|D)}{P(+|D^{c})} = \frac{sensitivity}{(1-specificity)}$$
 
@@ -160,13 +181,16 @@ $$P(D|+) = \frac {P(+|D).P(D)}
 	and dividing one into the other gives the posterior odds being equal to the diagnostic likelihood ratio times the prior odds:
 $$\frac{P(D|+)}{P(D^{c}|+)} = \frac {P(+ | D)}{P(+ | D^{c})} \times \frac{P(D)}{P(D^{c})}$$
 ### Presneill
-$$P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$$
+
+$P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 
 ## Chebyshev's inequality
+
 The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value:
 $$P(abs{X - \mu} > k \sigma) = \frac{1}{k^2}$$
 
 ## Beyond subjectivity and objectivity
+
 Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides.  They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
 
 Bias is any systematic effect (London:"error") in the design or conduct of a study which results in an incorrect estimate of the association between exposure and outcome.
@@ -209,17 +233,19 @@ Scatter plots of data allow clues about linearity or remote or influential point
 	- Assess whether data compatible with the exposure effect being the same in all studies
 
 Fixed Effect assumes the effect really is the same and any difference is due to sampling variation: provides a summary using a weighted average of the individual study estimates.  Weights are eg 1/variance of the log odds ratio, so the summary OR is 
-$$\psi_F = \frac{\sum_{i=1}^k w_i \psi_i}{\sum_{i=1}^k w_i} , \pm \frac{1}{\sum_{i=1}^k w_i}, $$
+$\psi_F = \frac{\sum_{i=1}^k w_i \psi_i}{\sum_{i=1}^k w_i} , \pm \frac{1}{\sum_{i=1}^k w_i}$,
 which is the variance regenerated from the averaged weights.
 A Forest Plot represents each study (box size = weight, bars for CI, diamond width = CI of summary estimate) and the heterogeneity between them uses a Chi Squared test $Q = \sum_{i=1}^k w_i (\psi_i - \psi_F)$.  If heterogenous then use Random Effect.
 
 Random Effect assumes the true effects vary around an average: the between study variance of the estimates (or alternatively, the residuals around the average of the estimates) is used to modify weights of each study.  A summary OR is the same shape as the fixed model summary OR but with between-study-variance-adjusted weights, w*i. These weights are far less dispersed than the Fixed Effect weights so smaller studies are weighted more heavily and the confidence intervals tend to be wider.  So Random Effects models are more conservative.
 
 # Likelihood
-	A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space.  The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the point which makes the data most likely: the maximum likelihood estimate MLE.
+
+A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space.  The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the point which makes the data most likely: the maximum likelihood estimate MLE.
+
 Other points are divided by the MLE to yield the likelihood ratio, which rejects data but adds clarity and comparability.  If the likelihood and hence the likelihood ratio curves are normal, so log(likelihood ratio) is quadratic and so easily solved using the pattern $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.  If it's not standard normal then it's not easy to do and iteration is probably as good as algebra.  The quadratic is chosen so that the curvature of the actual log likelihood and the quadratic fitted approximation are identical at the fit point, whether the MLE or the null, depending on whether the aim is to test or derive a confidence interval, or to determine the MLE.  Wald tests fit at the MLE.
 
-Also above a LR of 0.1465 lies 95% of the likelihood curve and twice the log of the likelihood ratio is algebraically equivalent to the chi squared distribution, giving a chi squared statistic for every value of the parameter, given the data, under those assumptions.  The log(LR) at that point is -0.192, useful for the Gaussian assumption underlying the quadratic approximation: $log(LR) = -\frac{1}{2}\frac{\=x - \mu}{\sigma \sqrt{n}}$.  The fit away from its fitted point is less good, so the choice is to fit at the MLE or at the null.
+Also above a LR of 0.1465 lies 95% of the likelihood curve and twice the log of the likelihood ratio is algebraically equivalent to the chi squared distribution, giving a chi squared statistic for every value of the parameter, given the data, under those assumptions.  The log(LR) at that point is -0.192, useful for the Gaussian assumption underlying the quadratic approximation: $log(LR) = -\frac{1}{2}\frac{\bar{x} - \mu}{\sigma \sqrt{n}}$.  The fit away from its fitted point is less good, so the choice is to fit at the MLE or at the null.
 The quadratic is chosen to meet the log LR curve at the MLE and to have the same curvature:
 	 $\textrm{log(LR)} = - \frac{1}{2} (\frac{M - \pi_0}{S})^2$ as for D failures in N trials D/N = M
 	 
@@ -239,12 +265,14 @@ or the Score Test: alternative quadratic matching value, gradient and curvature 
 		from which $\chi^2_{MH} = \frac{U^2}{V}$ is derived for the Mantel Haenszel test, $\frac{score^2}{score \> variance}$
 
 ## Binomial likelihoods
+
 are calculated so the most likely value of p is found for k successes in n trials
 	Likelihood = $\binom{n}{k} p^k (1 - p)^{n-k}$, approximated by $-\frac{1}{2}\frac{D/N - \pi}{S}$  with S set as $\sqrt{\frac{p(1-p)}{N}}$ by calculus to match the curvature of the actual likelihood at its maximum, being the sample standard error.
 		the plot of which against p is identical to its ratio, whose log is approximated by the normal assumption:
 		$\textrm{log(LR)} = - \frac{1}{2} (\frac{M - \pi_0}{S})^2$, making the Wald test $-2\textrm{log}(LR) = (\frac{M - \pi_0}{S})^2 \approx \chi^2, \textrm{df = 1}$
 
 ## Poisson likelihoods
+
 are calculated so for best guesses at baseline λ0 and rate ratio θ for d0 and d1 events over times T0 and T1 
 	log Likelihood $L = (d_0 + d_1) log(\lambda_0) + d_1 log(\theta) - \lambda_0 T_0 - \theta \lambda_0 T_1 + \> constant$
 		which generates a surface maximal at $\lambda_0 = \frac{d_0 + d_1}{T_0 + T_1}$.  Substituting this into the above,
@@ -314,6 +342,7 @@ Spin the bottle: random direction to walk from centre to border of cluster
 Design effect for clusters all of the same size is $1 + ((b-1) \times ICC)$ where b is the number per cluster and ICC is the correlation coefficient within clusters, as an average across all the clusters.
 
 ## Compact segment sampling;
+
 another cluster method.
 	Areas are initially chosen with PPS, eg from last census
 	The areas are divided into equal numbers of segments
@@ -327,9 +356,9 @@ another cluster method.
 		number vaccinated and number chosen,
 		each of which is weighted for the probability of being chosen,
 		which therefore has to be known to estimate the true values.
-$$\hat{Var} (\hat R) = (\frac{m}{(m-1)\hat N ^2}) \sum_{i=1}^m {\frac{(y_i - n_i \hat R)^2}{P_i^2}} $$
+$\hat{Var} (\hat R) = (\frac{m}{(m-1)\hat N ^2}) \sum_{i=1}^m {\frac{(y_i - n_i \hat R)^2}{P_i^2}}$
 
-$$\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$$
+$\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$
 
 IntraClass Correlation Coefficient (ICC or ρ) is Between Cluster Variance/Total Variance 
 	$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$, or $\rho = \frac{\sigma^2_B}{\sigma^2_B + \sigma^2_W}$ 
@@ -353,28 +382,29 @@ k is estimated for power reasons from σc : see below
 	
 ## Standard cluster sample size calculations
 
-For two rates:	$$n = \frac{(z_{1-\beta} + z_{1-\alpha/2})^2 . (\lambda_1 + \lambda_2)}{(\lambda_1 - \lambda_2)^2}$$	
-			$$\textrm{As  E}(s^2) = \lambda Av(1/y_j) + \sigma_c^2 = \lambda Av(1/y_j) + k^2\lambda^2 \> \textrm{ so} $$
-			$$\hat \sigma_c^2 = s^2 - r Av(1/y_j)$$	 and 
-            $$\hat k = \frac{\hat \sigma_c}{r}$$
+For two rates:	$n = \frac{(z_{1-\beta} + z_{1-\alpha/2})^2 . (\lambda_1 + \lambda_2)}{(\lambda_1 - \lambda_2)^2}$	
+			$\textrm{As E}(s^2) = \lambda Av(1/y_j) +\sigma_c^2 = \lambda Av(1/y_j) + k^2\lambda^2\>\textrm{ so}$
+			$\hat \sigma_c^2 = s^2 - r Av(1/y_j)$ and 
+            $\hat k = \frac{\hat \sigma_c}{r}$
 For two means:  		 
-        $$n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}, d = \frac{\delta}{\sigma}$$
+        $n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}, d = \frac{\delta}{\sigma}$
         or
-        $$\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$$
+        $\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$
         
 					or   
 
 		As $E(s^2) = \sigma^2 Av(1/n_{j}) + \sigma_c^2$, so $\hat \sigma_c^2 = s^2 - \hat \sigma^2 Av(1/n_j)$ across each jth cluster and	$\hat k=\frac{\hat \sigma_c}{\bar x}$	 where x-bar is the mean of all observations across all clusters combined.
 
-For two proportions, $$n = \frac{2[z_{1 - \alpha/2}\sqrt{2q(1-q)} + z_{1 - \beta}\sqrt{\pi_1(1-\pi_1) + \pi_2(1 - \pi_2)}]^2}{(\pi_1 - \pi_2)^2}	, q = \frac{\pi_1 + \pi_2}{2}$$
-            or $$ n = \frac{[u\sqrt{\pi_1(1- \pi_1) + \pi_2(1 - \pi_2)} + v \sqrt {2\bar{\pi} (1- \bar{\pi})}]^2} {(\pi_1 - \pi_2)^2}$$
+For two proportions, $n = \frac{2[z_{1 - \alpha/2}\sqrt{2q(1-q)} + z_{1 - \beta}\sqrt{\pi_1(1-\pi_1) + \pi_2(1 - \pi_2)}]^2}{(\pi_1 - \pi_2)^2}$	, $q = \frac{\pi_1 + \pi_2}{2}$
+            or 
+            $n = \frac{[u\sqrt{\pi_1(1- \pi_1) + \pi_2(1 - \pi_2)} + v \sqrt {2\bar{\pi} (1-\bar{\pi})}]^2} {(\pi_1 - \pi_2)^2}$
 
 As $E(s^2) = \pi (1 - \pi) Av(1/n_j) + \sigma_c^2$
 so $\hat \sigma_c^2 = s^2 - p(1-p) Av(1/n_j)$
 and $\hat k = \frac{\hat \sigma_c}{p}$
 where p is the combined proportion across all clusters combined
 These look simpler but sacrifice transparency if written for the number of clusters c
-for rates $$ c=1 + f\frac{[\frac{\lambda_0 + \lambda_1}{y} + k^2(\lambda_0^2 + \lambda_1^2)]}{(\lambda_0 - \lambda_1)^2}$$ or for proportions $$c=1 + f\frac{[\frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 + \pi_1^2)]}{(\pi_0 - \pi_1)^2}$$
+for rates $c=1 + f\frac{[\frac{\lambda_0 + \lambda_1}{y} + k^2(\lambda_0^2 + \lambda_1^2)]}{(\lambda_0 - \lambda_1)^2}$ or for proportions $c=1 + f\frac{[\frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 + \pi_1^2)]}{(\pi_0 - \pi_1)^2}$
 
 	where f is a factor combining zα and zβ, eg f=7.84 for power 0.8 and alpha 0.05, 10.5 for power 0.9 and alpha 0.05 and k is the assumed true coefficient of variation between clusters; y is the number of person-time follow up per cluster and m is the number of people per cluster, both of whcih are assumed identical.
 
@@ -424,33 +454,34 @@ Probability Density Function is >0 everywhere and has area =1 under it
 	The probability of a single specific number is 0
 	Integrating the CDF yields the CDF
 Cumulative Distribution Function is the probability that a random variable takes the value ≤x
-	$$F(x) = P(X \leqslant x)$$
+	$F(x) = P(X \leqslant x)$
 	Integrating the CDF at its limits yields an area of probability
 Survivor function is S(x) = 1-F(x)
 Quantiles: the αth quantile of a distribution function F(x) is the point such that $F(x_{\alpha}) = \alpha$
 
 # Bernoulli mass function
-$$p(X=x) = p^x.(1-p)^{1-x}$$
-$$p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$$ where $$\binom {n}{k} = \frac {n!}{k!(n-k)!}$$
+$p(X=x) = p^x.(1-p)^{1-x}$
+$p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom {n}{k} = \frac {n!}{k!(n-k)!}$
 (remembering that $\binom {n}{0} = \binom {n}{n} = 1$)
 
 #Normal distribution
 	Any normal distribution is a multiple of σ and an addend of μ from Z, the
 	Standard Normal Distribution: 
-	$$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$$
+	$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$
 	So if X is a normally distributed variable with mean μ and sd σ then $X = \mu + \sigma Z, N \sim (\mu,\sigma^2)$
 	
 	65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of μ
 	
 # Multinomial distribution is
-$$P(x_{1},\dots x_{n};k) = \frac{k!}{x_{1}!x_{2}!\dots {x_{n}!}}.p_{1}^{x_{1}} \dots p_{n}^{x_{n}}$$
+$P(x_{1},\dots x_{n};k) = \frac{k!}{x_{1}!x_{2}!\dots {x_{n}!}}.p_{1}^{x_{1}} \dots p_{n}^{x_{n}}$
 
 	of which a special case is the binomial distribution
-		$$P(x, k) = \frac{k!}{x!(k-x)!} \times p^{x}.q^{k-x}$$
+		$P(x, k) = \frac{k!}{x!(k-x)!} \times p^{x}.q^{k-x}$
 		
 T distribution is descended from the standard normal, and assumed to be symmetric and centred on 0 so with only 1 parameter, the degrees of freedom.  Skew can be exponentially transformed or another distribution used.
 
 ## The MH odds ratio across strata
+
 is the weighted mean sum of odds ratios across strata
 	generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$
 		weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ denominator of OR divided by the total
@@ -463,18 +494,18 @@ Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \
 	MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
 Rule of 5 to check validity:
 	subtrahends of `c(sum(min(c(di, n1i)))` , `sum(max(c(0, (n1i – hi))))) – sum(Ei) > 5`
-Chi squared for heterogeneity tests H0: for all i, ORi = ORMH , so $$\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$$
+Chi squared for heterogeneity tests H0: for all i, ORi = ORMH , so $\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$
 
 ## Poisson has MEAN AND VARIANCE EQUAL to λ 
 which is events / time, $\lambda = \frac{D}{t}$
 	and noting $1-x \approx e^{-x}$ so $(1 - x)^n \approx e^{-nx}$ its probability mass function is:
-	$$P(X=x;\lambda) = \frac{\lambda^x.e^{-\lambda}}{x!}$$
+	$P(X=x;\lambda) = \frac{\lambda^x.e^{-\lambda}}{x!}$
 		 where x is a non negative integer and $\textrm{Risk} = 1 - e^{-\lambda t}$
 
 	Standard Error of a rate is SE(number of events)/person-time at risk
-	$$SE_{events} = \sqrt{D}, SE_{risk} = \frac{\sqrt D}{t}$$
+	$SE_{events} = \sqrt{D}, SE_{risk} = \frac{\sqrt D}{t}$
 			 and $\lambda = \frac{D}{t}$ so $SE = \sqrt{\frac{\lambda}{t}}$
-	SE for log rate is $\frac{1}{\sqrt{D}}$, CI is $\lambda^{\times}_{\div} EF$, EF=$e^{\frac{1.96}{\sqrt D}}$ ; ratio or difference = ${\lambda_0 - \lambda_1}^{\times}_{\div} e^{1.96 \sqrt{\frac{1}{D_0} + \frac{1}{D_1}}$
+	SE for log rate is $\frac{1}{\sqrt{D}}$, CI is $\lambda^{\times}_{\div} EF$, EF=$e^{\frac{1.96}{\sqrt D}}$ ; ratio or difference = ${\lambda_0-\lambda_1}^{\times}_{\div} e^{1.96 \sqrt{\frac{1}{D_0} + \frac{1}{D_1}}$
 
 	Used for example in modelling especially unbounded count data,
 $X \sim Poisson (\lambda t)$ where $\lambda = E[X/t]$
@@ -486,9 +517,9 @@ NHST is the Wald against H0: λ0 = λ1, $z = \frac{\textrm{log}(rate \> ratio)}{
 
 Mantel-Haenszel uses RR in stratum i weighted for total time in the stratum,
 
-	$$RR_{MH} = \frac{\sum{\frac{d_{1i} \times T_{0i}}{T_i}}}{\sum{\frac{d_{0i} \times T_{1i}}{T_i}}} = \frac{Q}{R}$$
+	$RR_{MH} = \frac{\sum{\frac{d_{1i} \times T_{0i}}{T_i}}}{\sum{\frac{d_{0i} \times T_{1i}}{T_i}}} = \frac{Q}{R}$
 	or if $w_i = \frac{d_{0i}T_{1i}}{T_i}$ then 
-	$$RR_{MH} = \frac{\sum(w_i \times RR_i)}{\sum w_i}$$
+	$RR_{MH} = \frac{\sum(w_i \times RR_i)}{\sum w_i}$
 
 	 $se_{MH} = \sqrt{\frac{V}{QR}}$ where $V = \sum V_i$ and $V_i = \frac{d_i T_{1i} T_{0i}}{T_i^2}$ and NHST is the MH chi squared
 
@@ -499,7 +530,7 @@ Mantel-Haenszel uses RR in stratum i weighted for total time in the stratum,
 
 To detect effect modification the Chi Square test for heterogeneity $H_0: RR_i = RR_{MH}$
 
-	$$\chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{, df = c-1}$$
+	$\chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{, df = c-1}$
 
 Cohort E(D1) = Y1 *(D/T) and U = D1 – E(D1)
 
@@ -508,7 +539,8 @@ Var(U) = $D \frac{t_1}{t}(1 - \frac{t_1}{t})$ and test statistic  $z= \frac{U}{S
 Poisson regression is very similarly shaped to other regressions: rate = constant x timeband x exposure.  Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion.  If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then ~~an adult must be asked for help~~ a value (constant or distributed) can be added to the regression model to account for the departure from poisson.  The value is called the frailty and the resulting model is a negative binomial model.
 
 ## Cox regression
-limits each timeband to that containing one event (call it a timeclick).  So rate = Changing baseline * exposure: the model assumes the exposure effect is constant (the proportional hazard assumption).  Test this graphically or by taking logs of the cumulative hazard so that the "Nelson-Aalen plot" of $\sum \lambda_{ti} = \sum \lambda_{t0} \times \theta_i$  is parallel against time, and test by fitting interaction terms of time (by arbitrary epochs or as a superimposed linear trend) and using LRT or something.
+limits each timeband to that containing one event (call it a timeclick).  So rate = Changing baseline * exposure: the model assumes the exposure effect is constant (the proportional hazard assumption).  Test this graphically or by taking logs of the cumulative hazard so that the "Nelson-Aalen plot" of
+$\sum \lambda_{ti} = \sum \lambda_{t0} \times \theta_i$ is parallel against time, and test by fitting interaction terms of time (by arbitrary epochs or as a superimposed linear trend) and using LRT or something.
 
 # Multivariate distributions
 MV norm has mean as a vector, sigma is the variance / covariance matrix
@@ -561,13 +593,13 @@ ARIMA
 The error term $\epsilon$ in the usual linear model $Y_i = \alpha + \beta X_i + \epsilon_i$ is assumed to be composed of errors which are independent, identically distributed (usually normally distributed with common variance). This is the definition of white noise.
 
 If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the Autoregression formula:
-$$X_t = \phi X_{t-1} + \epsilon_t$$
+$X_t = \phi X_{t-1} + \epsilon_t$
 
 These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model describes an autoreggressive process with autocorrelated errors:
-$$\epsilon_t = W_t + \theta W_{t-1}$$
+$\epsilon_t = W_t + \theta W_{t-1}$
 
 The autocorrelation magnitude can be estimated by comparing values that are a constant distance apart; lag 1 correlation is contiguous pairs, lag 2 is pairs separated by one intervening variable and so on. A series is stationary over a time, if the mean over that time is always constant. Some fiddling can make it stationary over a trend (so if there is an underlying spurious rise in price due to inflation). Examples of stationary processes are linear predictors where $X_t$ is stationary or a random walk, where W is white noise added to the last value of X to produce the current value of X:
-$$X_t = X_{t-1} + W_i$$
+$X_t = X_{t-1} + W_i$
 This is demonstrated by differencing in R, eg for the default lag 1
 ```
 diff(x, lag = 1)
@@ -583,13 +615,13 @@ categorical variance is by tabulation, eg mean pair agreement or Observed Agreem
 continuous is partitioned into systematic and random error eg by ANOVA;
 		their ratio is the Intraclass Correlation Coefficient, aka reliability coefficient
 				eg by Pearson's correlation of product-moment where for a population
-	$$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$, where 
-	$$cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$$
+	$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$, where 
+	$cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$
 				and using the identities
-	$$\sigma_{X}^2 = E[(X- E[X])^2] = E[X]^2 - E[X^2]$$				  and 
+	$\sigma_{X}^2 = E[(X- E[X])^2] = E[X]^2 - E[X^2]$				  and 
 					  
-	$$E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$$, so
-	$$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]} {\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$$
+	$E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$, so
+	$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]} {\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$
 					
 
 	then the sample correlation r, assuming
@@ -601,12 +633,12 @@ continuous is partitioned into systematic and random error eg by ANOVA;
 		is the number of standard deviations that y changes for a 1 SD change in x 
 			given by Pearson's Correlation Coefficient:
 
-					$$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar{x})(y_{i} - \bar{y})}{\sqrt{\sum_{i=1}^n (x_{i} - \bar{x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar{y})^2}}$$ ,	and
+					$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar{x})(y_{i} - \bar{y})}{\sqrt{\sum_{i=1}^n (x_{i} - \bar{x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar{y})^2}}$ ,	and
 
 		can also be quoted as the mean of the standard scores of x and y:
 $r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \={x}}{s_{x}})(\frac{y_{i} - \={y}}{s_{y}})$	 ,	and	$\frac{\sum x_i y_i - n \=x \=y}{ns_x s_y}$  
-					= $$\frac{n \sum x_i y_i - \sum x_i \sum y_i}{\sqrt{n \sum x_i^2 - (\sum x_i)^2} \sqrt{n \sum y_i^2 - (\sum y_i)^2}}$$, or	
-					$$r_{xy} = \frac{\sum x_i y_i - \frac{1}{n} \sum x_i \sum y_i}{\sqrt{\sum x_i^2 - \frac{1}{n}(\sum x_i)^2} \sqrt{\sum y_i^2 - \frac{1}{n}(\sum y_i)^2}}$$
+					= $\frac{n \sum x_i y_i - \sum x_i \sum y_i}{\sqrt{n \sum x_i^2 - (\sum x_i)^2} \sqrt{n \sum y_i^2 - (\sum y_i)^2}}$, or	
+					$r_{xy} = \frac{\sum x_i y_i - \frac{1}{n} \sum x_i \sum y_i}{\sqrt{\sum x_i^2 - \frac{1}{n}(\sum x_i)^2} \sqrt{\sum y_i^2 - \frac{1}{n}(\sum y_i)^2}}$
 	
 r squared explains the proportion of variance that is explained by the straight line,
 For that straight line the regression coefficient for the straight line $y = \beta_0 x + \beta_1 x +\gamma x + \epsilon$ is
@@ -692,10 +724,10 @@ For continuous variables it's an area under the function t.f(t) where f(t) is th
     $E[X] = \int t.f(t)$
 	
 Given a normally distributed continuous variable X the population variance is 
-$$Var[X] = E([X- \mu]^2)  = E[X^2] - E[X]^2$$
+$Var[X] = E([X- \mu]^2)  = E[X^2] - E[X]^2$
 	
 And because binary categorical random variables have expected value
-	$$E[\bar{X}] = (1-p).x^{c} + p.x$$
+	$E[\bar{X}] = (1-p).x^{c} + p.x$
 then if x is coded as 0 if a variable is not present, eg tails, and 1 if present, eg heads, so
 		$E[\bar{X}] = (1-p) \times 0 + p \times 1 = p$	and
 		$E[X^2] = (1-p) \times 0^2 + p \times 1^2 = p$ then
@@ -762,12 +794,13 @@ The CLT doesn't guarantee that a given n is large enough
 Sample size increases precision rather than the probability that its coverage includes the true value.
 		The estimator is $\hat{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{p(1-p)}{n}}$
 		Wald or Agresti-Coull estimators (preferred) work best at p=0.5
-		Wald :	$95\% CI = \hat{p} \pm \frac{1}{\sqrt{n}}$, more generally an estimate \pm its standard error:
+		Wald :	$95\% CI = \hat{p} \pm \frac{1}{\sqrt{n}}$, more generally an estimate $\pm$ its standard error:
 				$\hat p \pm z_{\alpha / 2} . \sqrt{{\hat p \hat q} {n}}$
 				
 		Agresti-Coull adjusts n by z^2^ so if X successes in n is the proportion p,
 			and simplifying z of 1.96 as 2, adds 2 successes and 2 failures: so 
-			$\tilde{n} = n + z^2, \> \tilde{p} = \frac{1}{\tilde{n}}(X + \frac{1}{2} z^2)$ and CI for z = $\tilde{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}$
+			$\tilde{n} = n + z^2, \> \tilde{p} = \frac{1}{\tilde{n}}(X + \frac{1}{2} z^2)$
+			and CI for z = $\tilde{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}$
 
 Poisson also don't converge well especially for low p; again, poisson.test is exact.
 
@@ -798,28 +831,27 @@ For categorical data
 
 	and if variances are unequal the distribution of the difference of means is NOT T! 
 	it's something close to t that is well approximated by changing the degrees of freedom by
-	$$df = \frac{(\frac{S_{x}^2}{n_{x}} + \frac{S_{y}^2}{n_{y}})^2}
-	{(\frac{(\frac{S_{x}^2}{n_{x}})^2}{(n_{x}-1)}) + (\frac{(\frac{S_{y}^2}{n_{y}})^2}{(n_{y}-1)})}$$
+	$df = \frac{(\frac{S_{x}^2}{n_{x}} + \frac{S_{y}^2}{n_{y}})^2}	{(\frac{(\frac{S_{x}^2}{n_{x}})^2}{(n_{x}-1)}) + (\frac{(\frac{S_{y}^2}{n_{y}})^2}{(n_{y}-1)})}$
 			  which may be non integer
 			  
 		This altered t distribution is used to create the quantiles for confidence intervals etc.
-	$$eg \bar Y - \bar X \pm t_{df} \times \sqrt{\frac{s_{x}^2}{n_{x}} + \frac{s_{y}^2}{n_{y}}}$$
+	$eg \bar Y - \bar X \pm t_{df} \times \sqrt{\frac{s_{x}^2}{n_{x}} + \frac{s_{y}^2}{n_{y}}}$
 
 and for proportions
 
 	standard error for a confidence interval:
-	$$\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$$
+	$\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$
 	standard error for a hypothesis test assumes both are from the same π so uses the common proportion (all +ve / all n) before repeating the above formula:
-	$$\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$$
+	$\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$
 
 # Paired (matched) data
 	If method A and method B are used on the same sample the discordance (r, s) is informative:
-	
+
 \begin{tabular}{| c |c | c | c| }
 \hline
-& +_{B} & -_{B} & \\ \hline
-+_{A} &k & r & k+r \\ \hline
--_{A} & s & m & s+m \\ \hline
+& $+_{B}$ & $-_{B}$ & \\ \hline
+$+_{A}$ &k & r & k+r \\ \hline
+$-_{A}$ & s & m & s+m \\ \hline
 & &  & N \\
 \hline
 \end{tabular}
@@ -849,9 +881,7 @@ $\chi^2_{pair} = \frac{(r-s)^2}{r+s}$
 		And χ2 is $\chi ^2 = \frac{(|D_1 - E(D_1)|-0.5)^2}{V(D_1)} \textrm{, df=1}$, $H_0 = \lambda_1 - \lambda_2 = 0$ or equivalently that $\frac{\lambda_1}{\lambda_2} = 1$
 
 	 χ2 for trend, where x  is the group score or level, is 
-	 $$\frac{(\sum D_i x_i - \lambda \sum t_i x_i )^2}
-{\lambda^2 (t \sum t_i x_i^2 - (\sum t_i x_i)^2)}$$
-
+	 $\frac{(\sum D_i x_i - \lambda \sum t_i x_i)^2}{\lambda^2 (t \sum t_i x_i^2 - (\sum t_i x_i)^2)}$
 
 Non parametric equivalents
 Wilcoxon Signed Rank for paired samples or one sample from a hypothesised median
@@ -965,19 +995,17 @@ Variability: continuous is partitioned into systematic and random error eg by AN
 		 $\sigma_{X}^2 = E[(X- E[\={X}]^2)] = E[X] - E[X^2]$ and
 		 $E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$, so
 		
-	$$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]}
-{\sqrt{E[X^2] - E[X]^2} \sqrt{E[Y^2]-E[Y]^2} }$$	
+	$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]}{\sqrt{E[X^2] - E[X]^2} \sqrt{E[Y^2]-E[Y]^2} }$	
 
 	then the sample correlation r is
-    $$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar {x})(y_{i} - \bar {y})}
-{\sqrt{\sum_{i=1}^n (x_{i} - \bar {x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar {y})^2}}$$
+    $r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar {x})(y_{i} - \bar {y})}{\sqrt{\sum_{i=1}^n (x_{i} - \bar {x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar {y})^2}}$
 			
 
 	and can also be quoted as the mean of the standard scores of x and y:
-		$$r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \bar {x}}{s_{x}})(\frac{y_{i} - \bar {y}}{s_{y}})$$
+		$r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \bar {x}}{s_{x}})(\frac{y_{i} - \bar {y}}{s_{y}})$
 					
 categorical is by tabulation, eg mean pair agreement or Observed Agreement OA:
-		$$\frac {a+d}{a+b+c+d}$$
+		$\frac {a+d}{a+b+c+d}$
 	or Kappa statistic for excess agreement over max chance agreement  $\frac{OA-CA}{1-CA}$,	
 
 	(where CA is $\frac {E[a]+E[d]}{a+b+c+d}$ and $E[a] = \frac{Row total \times Column total}{Grand total}$ as in the χ2 )
@@ -986,17 +1014,17 @@ categorical is by tabulation, eg mean pair agreement or Observed Agreement OA:
 Regression is by $y = \beta_0 + \beta_1 x + \epsilon$ where ε is normal with SD estimated by s, below
 
 		β1 from $\hat \beta_1 = \frac{\sum_{i=1}^n(x_i - \bar X)(y_i - \bar Y)}{\sum_{i=1}^n (x_i - \bar X)^2}$, then $\hat \beta_0 = \bar Y - \hat \beta_1 \bar X$ or 
-		$$\hat \beta_1 = Cor (Y, X) \frac{SD_y}{SD_x}$$
+		$\hat \beta_1 = Cor (Y, X) \frac{SD_y}{SD_x}$
 		
 
 Confidence intervals for the slope are $\beta_1 \pm t_{2 \times 0.975, \nu} \times s.e.$, with t statistics used to test
 	H0: coefficient = 0
 	Standard error differs for prediction of a line at x0 and for the probability of a new point at x0
-$$s.e._{line \beta_0} = \hat \sigma \sqrt{\frac{1}{n} + \frac {(x_0 - \=X)^2}{\sum_{i=1}^n (X_i - \=X)^2}}$$, 
-$$s.e._{point \beta_0} = \hat \sigma \sqrt{1 + {\frac{1}{n} + \frac {(x_0 - \=X)^2}{\sum_{i=1}^n (X_i - \=X)^2}}}$$
+$s.e._{line \beta_0} = \hat \sigma \sqrt{\frac{1}{n} + \frac {(x_0 - \=X)^2}{\sum_{i=1}^n (X_i - \=X)^2}}$, 
+$s.e._{point \beta_0} = \hat \sigma \sqrt{1 + {\frac{1}{n} + \frac {(x_0 - \=X)^2}{\sum_{i=1}^n (X_i - \=X)^2}}}$
 		
-,	$$s.e._{\beta_1} = s{\frac{1}{\sqrt{\sum(x - \bar x)^2}}}$$
-$$s = \sqrt{\frac{\sum(y - \bar y)^2 - \beta_1^2 \sum(x - \bar x)^2}{n – 2}} \textrm{, df = } n - n_{coefficients}$$
+,	$s.e._{\beta_1} = s{\frac{1}{\sqrt{\sum(x - \bar x)^2}}}$
+$s = \sqrt{\frac{\sum(y - \bar y)^2 - \beta_1^2 \sum(x - \bar x)^2}{n – 2}} \textrm{, df = } n - n_{coefficients}$
 	
 So if the null hypothesis is that exposure is not predictive of outcome, and exposure of interest is at the head of columns, then the expected frequency of outcomes is (row total/table total) for the proportion of entries that exist in the row, times (column total) for the available number of exposed observations.
 
@@ -1017,12 +1045,10 @@ To repeat:
 
 	 which is only from Smith et al *"Field Trials"* but the same shape as in the C-M-H test for trend below
 
-Chi squared is distributed as \begin{*equation}
-\frac{1}{{2^\frac{k}{2}\Gamma(\frac{k}{2})}}x^{\frac{k}{2}-1}e^{-\frac{x}{2}}
-\end{*equation}, but that's not important right now.
+Chi squared is distributed as $\frac{1}{{2^\frac{k}{2} \Gamma(\frac{k}{2})}}x^{\frac{k}{2}-1}e^{-\frac{x}{2}}$, but that's not important right now.
 
 In the special case of a 2x2 table the χ2 statistic is
-		$$\chi^2_{Yates} = \frac{N.(|ad-bc|-\frac{N}{2})^2}{(a+b).(c+d).(a+c).(b+d)}$$
+		$\chi^2_{Yates} = \frac{N.(|ad-bc|-\frac{N}{2})^2}{(a+b).(c+d).(a+c).(b+d)}$
 
 including Yates's continuity correction of O-E-0.5 for each cell because of a tail of the underlying binomial continuous distribution being better estimated by a point midway between that cell count and one fewer.  This sums to N/2 for a 2x2 table with N=20-40 and no value <5.
 More generally χ2 can be used in a 2xC table if no value <1 and 80% values are >=5
@@ -1070,7 +1096,9 @@ The R^2^ is $\frac {Regression SS}{Total SS}$, giving a proportion of variance e
 	
 
 Mantel-Haenszel estimate of the common Odds Ratio is weighted for the non-supporting information as a proportion of stratum size
-		 $\frac{\sum ({\frac{a_i d_i} {n_i}})}{\sum ({\frac{b_i c_i} {n_i}})}$, that is $\frac{(a_{1}.d_{1} / N_{1}) + ... (a_{j}.d_{j} / N_{j})}{(b_{1}.c_{1} / N_{1}) + ... (b_{j}.c_{j} / N_{j})$ or if $w_i = \frac{b_i c_i}{n_i}$ then $OR_{MH} = \frac{\sum w_i OR_i}{\sum w_i}$
+		 $\frac{\sum ({\frac{a_i d_i} {n_i}})}{\sum ({\frac{b_i c_i} {n_i}})}$, that is $\frac{(a_{1}.d_{1} / N_{1}) + ... (a_{j}.d_{j} / N_{j})}{(b_{1}.c_{1} / N_{1}) + ... (b_{j} c_{j} / N_{j}})$
+		 or if $w_i = \frac{b_i c_i}{n_i}$ 
+		 then $OR_{MH} = \frac{\sum w_i OR_i}{\sum w_i}$
 
 and there's a corresponding Cochrane-Mantel-Haenszel Chi^2^ test of the same shape as the simple single table single stratum situation, 
 	$\chi^2_{MH} = \frac{[\sum a_{i} - \sum E (a_{i})]^2}{\sum Var[a_{i}]}$, equivalent to 
@@ -1113,7 +1141,7 @@ $$R^2 = \frac {\sum_{i=1}^n (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2
 	Deleting data or adding terms to a regression model always increase R^2
 
 Variance around the regression line is usually replaced by its estimate.
-	$$\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$$
+	$\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$
 
 # Multivariable regression
 Extending the line to a plane, or later to an n-dimensional plane.  Linear in the coefficients.  Least squares used again, fixing at zero (or removing ) coefficients and calculating regression through the new origin for the remainder, repeatedly.
@@ -1157,10 +1185,10 @@ Multiple correspondence analysis MCA is like PCA for categorical data, using an 
 Low rank structures imply that you can use clusters to infer with greatest efficiency.
 
 # Logistic regression
-The quantity estimated from the model is the log(Odds), from the log(OR)(="coefficient") and log(Other Odds). SE for log odds is as usual $\sqrt{\frac{1}{x_1} + \dots}$ so SE for odds is $e^{\textrm{SE(log odds)}}$
+The quantity estimated from the model is the log(Odds), from the log(OR)(="coefficient") and log(Other Odds). SE for log odds is as usual $\sqrt{\frac{1}{x_1}+\dots}$ so SE for odds is $e^{\textrm{SE(log odds)}}$
 	log(odds) = a + b1A1 + b2A2 ...
 Hypothesis testing by Wald tests (with SE for the null hypothesis, so the SE chosen depends on th null hypothesis chosen)
-	H0: log(Odds) = 0 for each level of a potential variable for the model, $z = \frac{\textrm{coefficient}}{\textrm{SE}}$
+	H0: log(Odds) = 0 for each level of a potential variable for the model, $z=\frac{\textrm{coefficient}}{\textrm{SE}}$
 	Or LRS, H0: the likelihood is not significantly increased by addition of the variable
 Adjustment for other variables uses a proportional odds assumption.
 Because it's built from a square table the absolute numbers of cases and non cases determine the baseline odds (="constant"): therefore the sample fraction ratio is added to the model.
@@ -1200,7 +1228,8 @@ Measurement error: Validity and Reliability....!
 For continuous variables: Correlation coefficients.  Mathematical coupling.  Agreement versus correlation.
 For categorical: Classification f agreement. 
 See also Cronbach alpha for a composite rating X as a sum of K items $Y_1 + Y_2 + Y_i \dots Y_K$
-    $$\alpha = \frac{K}{K-1} \left( 1- \frac{\sum^K_{i=1} \sigma^2_{Y_i}}{\sigma^2_X}\right)$$
+
+$\alpha = \frac{K}{K-1}\left(1-\frac{\sum^K_{i=1}\sigma^2_{Y_i}}{\sigma^2_X}\right)$
 Misclassification has variable effects but mostly:
 	Differential may be decisively erroneous.
 	Non-differential exposure misclassification biases estimates to null
@@ -1342,16 +1371,16 @@ all models will, initially, be assumed to be linear with respect to time, and le
 enter the utility function as an interaction with life expectancy (the TIME variable). Thus, the utility
 (U) of health state j in scenario s for individual i is in Equation 1. Thus, if TIME is set at zero, the
 systematic component of the utility function is also zero.
-$$U_{isj} = αTIME_{isj} + βX_{isj}' TIME_{isj} + ε_{isj} $$
+$U_{isj} = αTIME_{isj} + βX_{isj}' TIME_{isj} + ε_{isj} $
 Generating a scoring system for QALYs
 To generate QALY weights for the health states to create the scoring algorithm of the tool, the initial
 analysis will use a ratio of marginal utilities (RMU) approach, as used by AI Viney15, 16. In a QALY
 model, ten years in full health provides 10 QALYs. If another health state provides 10 QALYs over
 a 15 year period, the QALY model values that health state at 10/15 = 0.667. Using Eq1, the systematic
 component of the utility function can be differentiated with respect to TIME,
-$$\frac{\delta U}{\delta TIME} = α + βX′$$
+$\frac{\delta U}{\delta TIME} = α + βX′$
 The RMU between two health state profiles j and j* can therefore be estimated as:
-$$RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$$
+$RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$
 This gives a value for a health state with characteristics defined by the βX isj ' term, relative to another
 health state defined by characteristics βX isj ' * . If βX isj ' * is set to full health (ie the best level of each
 dimension), the value generated using Eq 3 is a QALY weight15, 19.
@@ -1512,7 +1541,7 @@ Maximum likelihood is another option: choose a likelihood function that expresse
 
 The deviance allows model fit to be compared across models, and gives a sort of "absolute goodness" of fit by comparing the likelihood of a test model with the likelihood of the saturated model.  D clearly gives a number less than one, tending to 1 as the model approaches perfection.
 
-D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}
+$D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
 
 Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models.  This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the AIC.
 The parameters that lead to the best fit are chosen by a fitting algorithm.
@@ -1646,7 +1675,7 @@ XML and HTML
 xml::xmlTreeParse(fileURL, useInternal)	xmlRoot	xmlName	xmlSApply(doc, path fun, ...)
 	TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components
 		programmatically extracted eg xmlSApply(rootNode, xmlValue)
-	xPAth language	/Node	//Node Node[@value='thing']
+	xPAth language	/Node	//Node Node['@value'='thing']
 Read the short intro at least.
 httr::GET, PATCH, POST, HEAD, PUT, DELETE 
 
@@ -1726,6 +1755,7 @@ attributes  In a NumPy object are accessed by . The same as $ accesses them in a
 
 
 ```{r bib, include=FALSE}
-# create a bib file for the R packages used in this document
-knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
+# create a bib file for the R packages used in this document, previous yaml included these for tufte-book but not necessary if using just pandoc-citeproc
+
+knitr::write_bib(c('base', 'rmarkdown'), file = 'Epinotespackages.bib')
 ```
