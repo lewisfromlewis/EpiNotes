@@ -257,20 +257,6 @@ Randomisation is distinct from random sampling
 	"Any difference between the trial groups should be due to the outcome."
 	True randomisation depends on randomness of sequence and allocation concealment.
 
-# Meta Analysis
-	- Provide a data display and objective review
-	- Give a summary interpretation
-	- Test an overall hypothesis
-	- Estimate an average exposure effect
-	- Assess whether data compatible with the exposure effect being the same in all studies
-
-Fixed Effect assumes the effect really is the same and any difference is due to sampling variation: provides a summary using a weighted average of the individual study estimates.  Weights are eg 1/variance of the log odds ratio, so the summary OR is 
-$\psi_F = \frac{\sum_{i=1}^k w_i \psi_i}{\sum_{i=1}^k w_i} , \pm \frac{1}{\sum_{i=1}^k w_i}$,
-which is the variance regenerated from the averaged weights.
-A Forest Plot represents each study (box size = weight, bars for CI, diamond width = CI of summary estimate) and the heterogeneity between them uses a Chi Squared test $Q = \sum_{i=1}^k w_i (\psi_i - \psi_F)$.  If heterogenous then use Random Effect.
-
-Random Effect assumes the true effects vary around an average: the between study variance of the estimates (or alternatively, the residuals around the average of the estimates) is used to modify weights of each study.  A summary OR is the same shape as the fixed model summary OR but with between-study-variance-adjusted weights, w*i. These weights are far less dispersed than the Fixed Effect weights so smaller studies are weighted more heavily and the confidence intervals tend to be wider.  So Random Effects models are more conservative.
-
 # Likelihood
 
 A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space.  The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the point which makes the data most likely: the maximum likelihood estimate MLE.
@@ -330,18 +316,19 @@ In regression the LRS tests the joint null that all the variables equal their nu
 # Robustness
 Robust objects (estimators, statistics, models...) are ones which are changed little by perturbations in the data; good robust objects retain efficiency while being robust.  Efficient objects are ones which need few observations to attain a given performance.  Performance is the ability of an object to describe or predict reality, such as to describe variation reliably, reject a false claim or detect a true difference.
 
-Clusters
+# Clusters
+
 Used when there's a direct effect plus indirect (ecological, herd, cooperative, etc) effect on participants, or when it's difficult to allocate individuals. Indirect include, for infections, that which reduces Quantity (herd, reduced carriage, vector death, epidemic periodicity) or Quality (less or more virulent strains, resistance, non-reproducing strains) of infection or the Immunity of victim (immune recency, cross reaction, polyvalency, multi-hit, immune mediated damage). "Direct" + "indirect" = "total"; if all in a cluster participate the effect is "total", otherwise the "overall" effect is the weighted average of direct + indirect on participants and indirect on non-participants.  Individually allocated trials measure the Direct effect; cluster trials measure the Overall which depends on participation fraction and HTE combined with differential participation. 
-	Second stage randomisation of individuals within clusters clarifies direct v indirect.
-Spin the bottle: random direction to walk from centre to border of cluster
-	Used by the Expanded Programme on Immunisation, EPI of the WHO as 30 clusters of 7	randomly select units along the line of walk to be cluster centres
-	clusters are "next nearest until quota of 7 children reached", no callbacks
-	Not probability based ("not self weighting") and 
-	In vaccine surveys mothers interviewed, Est is +- 10% at 95%CI assuming Design Effect 2
-	Probability of choosing a child is awfully roughly $P_i = m \times \frac{M_i}{M} \times \frac{n}{N_i}$
-	Where n is the very approximately equal number of children surveyed per cluster, Ni is total children in the ith cluster and others as below and $\hat Var (\hat R) = \frac{1}{m(m-1)} \sum_{i=1}^m{(y_i/n - \hat R)^2}$ so
-	CI is $\hat R \pm t_{1-\alpha, m-1} \sqrt{\hat V(\hat R)}$ and the bias  is $\bar \rho - R = -\rho_{p, g}\sqrt{\frac{V(p)V(g)}{\bar g}}$ where
-	g is the proportional change in population since the census, p is the true vaccinated proportion, rho is the correlation between p and g, C is the number of clusters in the whole population and R is the true ratio $R= \sum_{i=1}^C{\frac{g_i p_i}{C \bar g}}$.
+- Second stage randomisation of individuals within clusters clarifies direct v indirect.
+- Spin the bottle: random direction to walk from centre to border of cluster
+- Used by the Expanded Programme on Immunisation, EPI of the WHO as 30 clusters of 7	randomly select units along the line of walk to be cluster centres
+- clusters are "next nearest until quota of 7 children reached", no callbacks
+- Not probability based ("not self weighting") and 
+- In vaccine surveys mothers interviewed, Est is +- 10% at 95%CI assuming Design Effect 2
+- Probability of choosing a child is awfully roughly $P_i = m \times \frac{M_i}{M} \times \frac{n}{N_i}$
+- Where n is the very approximately equal number of children surveyed per cluster, Ni is total children in the ith cluster and others as below and $\hat Var (\hat R) = \frac{1}{m(m-1)} \sum_{i=1}^m{(y_i/n - \hat R)^2}$ so
+- CI is $\hat R \pm t_{1-\alpha, m-1} \sqrt{\hat V(\hat R)}$ and the bias  is $\bar \rho - R = -\rho_{p, g}\sqrt{\frac{V(p)V(g)}{\bar g}}$ where
+- g is the proportional change in population since the census, p is the true vaccinated proportion, rho is the correlation between p and g, C is the number of clusters in the whole population and R is the true ratio $R= \sum_{i=1}^C{\frac{g_i p_i}{C \bar g}}$.
 
 Design effect for clusters all of the same size is $1 + ((b-1) \times ICC)$ where b is the number per cluster and ICC is the correlation coefficient within clusters, as an average across all the clusters.
 
@@ -370,7 +357,9 @@ IntraClass Correlation Coefficient (ICC or ρ) is Between Cluster Variance/Total
 	ICC can be used for means, proportions and counts but is not defined for rates.
 k, the Between-Cluster Coefficient of Variation, is SD for cluster means/mean = $\frac{\sigma_c}{\=x} = \frac{\sigma_c}{\pi}$ so
 $$\rho = \frac{k^2 \pi}{1-\pi}$$
-	
+
+## Design Factor 
+
 Design Factor is SE for design/SE under simple random, terminology analogous to Error Factor
 Design Effect DEFF = Sample size / size by simple random sampling or Variance/Variance by SRS
 	= Design Factor squared if it's proportions
@@ -378,8 +367,8 @@ Design Effect DEFF = Sample size / size by simple random sampling or Variance/Va
 	= 1 + (Number in each cluster-1) * rate of homogeneity = $1 + \rho(m - 1)$
 	DEFF on total N is $1+(\bar{m} - 1) \rho$ where m is number in a cluster or, if cluster sizes vary,
 		$1+ \rho(\=m(1 +(\frac{sd_m}{\=m})^2) - 1)$ where $\frac{sd_m}{\bar m}$ is coefficient of variation of cluster size
-		rate of homogeneity **roh** (here ρ) is the ICC for single stage clustering, and an
-			equivalent ration of total variance for multi stage clustering 
+		rate of homogeneity **roh** (here ρ) is the ICC for single stage clustering, and an equivalent ration of total variance for multi stage clustering.
+		
 k is estimated for power reasons from σc : see below
 	or $m= \frac{N(1-\rho)}{(c - \rho N)}$ for cluster size given total N under simple random and number of clusters c
 	ICC can’t be used when the outcome is a rate per time; so k is used here. 
@@ -433,13 +422,18 @@ $Var(\textrm{log} RR ) = Var(\textrm{log} R_1) + Var(\textrm{log} R_0) \approx \
 	So the estimate accounting for clustering is $\textrm{log RR} \pm 1.96  \sqrt{Var(\textrm{log RR})}$.
 A simple T or Wilcoxon rank sum test can be used for the summary estimates using these summary values.
 
-# Cluster level analysis
+## Cluster level analysis
+
 Adjusted estimates of the effect of treatment allocation rely on the differences (residuals) between a model that accounts for all important-seeming covariates (that is, all except for cluster effects and the effect of treatment allocation).  These residuals will be randomly distributed across clusters under the null hypothesis, which is then tested by analysing them in place of the cluster level raw estimates.  For example, a poisson regression provides estimates; residuals are calculated as the ratios of rate in each cluster to the predicted rate for those individuals under the model; the mean and SD of residuals are calculated for each allocation group; these provide a T test (or equivalent) and the ratio of mean residuals is the estimate of effect size, with Var(RR) calculated analogously to the above, this time for the ratio of residuals.
 
-Individual level analysis
+## Individual level analysis
 With linear models, assume the data are all iid but that there is a cluster effect (data are still independent within a cluster but are all drawn from the same independent distribution).  Use poisson for rates and a gamma error, giving a negative binomial likelihood.  Normal for risk and a normal error, giving a normal likelihood.  Binomial for logit and  normal error, giving a non analytic likelihood which is converted to a log which is approximated by a log normal using the minimum of a quadratic equation to pass through a certain number of points representing the data.  This last might be unstable on changing the number of points to fit, if the approximation likelihood is not a good reflection of the whole data.  This is revealed by a quadrature check with >1% difference in likelihood on changing the number of quadrature points; this is actually probably not necessary now with adaptive quadrature being used at least in Stata.  If that's the case:
 
+## Generalised estimating equations
+
 GEE assume that any two points from separate clusters are uncorrelated, but within a cluster all points are identically correlated with each other, represented by an exchangeable correlation matrix derived from the data.  This estimate of rho is the primary output; then the regression coefficients and their standard errrors are estimated from it in turn.  The regression coefficient is a population average odds ratio, assuming no cluster level random effect but only correlation... I thiink.  Overall the buzz words are exchangeable correlation matrices and robust standard errors, with a Wald test $z = \frac{\beta}{\textrm{SE}(\beta)}$.
+
+## Cluster level t test
 
 Cluster level analysis with a t test is robust and has good coverage even with low cluster numbers (15 or fewer) but can't adjust well.  Linear models are efficient, GEE robust.  With binary data they differ: random effects models estimate cluster specific - averaged odds ratios and GEE estimate population averaged odds ratios.
 With 15 clusters in total you can estimate continuous or rate coefficients, with 30 their standard error; or 30 and 50 respectively for binary outcomes.
@@ -1572,7 +1566,22 @@ $D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
 
 Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models.  This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the AIC.
 The parameters that lead to the best fit are chosen by a fitting algorithm.
-Git work
+
+# Meta Analysis
+	- Provide a data display and objective review
+	- Give a summary interpretation
+	- Test an overall hypothesis
+	- Estimate an average exposure effect
+	- Assess whether data compatible with the exposure effect being the same in all studies
+
+Fixed Effect assumes the effect really is the same and any difference is due to sampling variation: provides a summary using a weighted average of the individual study estimates.  Weights are eg 1/variance of the log odds ratio, so the summary OR is 
+$\psi_F = \frac{\sum_{i=1}^k w_i \psi_i}{\sum_{i=1}^k w_i} , \pm \frac{1}{\sum_{i=1}^k w_i}$,
+which is the variance regenerated from the averaged weights.
+A Forest Plot represents each study (box size = weight, bars for CI, diamond width = CI of summary estimate) and the heterogeneity between them uses a Chi Squared test $Q = \sum_{i=1}^k w_i (\psi_i - \psi_F)$.  If heterogenous then use Random Effect.
+
+Random Effect assumes the true effects vary around an average: the between study variance of the estimates (or alternatively, the residuals around the average of the estimates) is used to modify weights of each study.  A summary OR is the same shape as the fixed model summary OR but with between-study-variance-adjusted weights, w*i. These weights are far less dispersed than the Fixed Effect weights so smaller studies are weighted more heavily and the confidence intervals tend to be wider.  So Random Effects models are more conservative.
+
+# Git work
 pwd print working directory
 ls
 clear
@@ -1599,13 +1608,13 @@ git branch see what branch you're on
 pull request is not a git feature but on github
 
 
-markdown: 
+# markdown: 
 SQL
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
 INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2); etc
 
 
-stata
+# stata
 [by varlist]: command [varlist] [if exp] [in range] [using filename], options 
 describe
 summarize
@@ -1651,7 +1660,7 @@ xtlogit		random effects, gives icc and clustering chisq.
 quadchk		probably not necessary any more because adaptive quadrature is			used to approximate normal likelihood distribution
 
 
-really useful R
+# R
 download.file
 file.exists
 dir.create
@@ -1695,10 +1704,10 @@ signif(data, digits=n)
 p.adjust(method = c("bonferroni", "BH", "BY")
 
 
-xlsx
+## xlsx
 xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)	read.xlsx2	write.xlsx
 
-XML and HTML
+## XML and HTML
 xml::xmlTreeParse(fileURL, useInternal)	xmlRoot	xmlName	xmlSApply(doc, path fun, ...)
 	TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components
 		programmatically extracted eg xmlSApply(rootNode, xmlValue)
@@ -1706,7 +1715,7 @@ xml::xmlTreeParse(fileURL, useInternal)	xmlRoot	xmlName	xmlSApply(doc, path fun,
 Read the short intro at least.
 httr::GET, PATCH, POST, HEAD, PUT, DELETE 
 
-JSON
+## JSON
 Javascript Object Notation
 jsonlite::fromJSON		toJSON
 multiple nesting of data from the data frame resulting from fromJSON
@@ -1721,7 +1730,7 @@ setkey and merge
 fread for fast reading (substitute for read.table for tab separated files)
 tibble eg with list-columns so a data frame need not hold numbers or other low level entities in its cells but whole lists of interest such eg as a training resample from a dataset, a test resample, a model fitted to that test dataset and the resulting RMSE.  Tibbles are lazy and surly, don't require a list of vectors as the underlying structure and give a little more information in printing than data.frames.
 
-subsetting in base
+## subsetting in base
 split-apply-combine
 	with(tapply(X, factor, function)) type of structure or
 	with(by(X, factor, function)) or
@@ -1738,13 +1747,13 @@ xtabs(var1 ~ var2 + ., data=DF) where . is all the variables
 ftable(
 
 
-plyr
+## plyr
 plyr::arrange(X, var1)
 		mutate(oldata, newvar = function(oldvar)
 		`.` or as.quoted allow a list of variables to me assembled for later evaluation in plyr
 		ddply(.data, .variable, .fun , ... others)
 		dlply
-dplyr
+## dplyr
 arrange 	 reorders rows 
 filter	 returns subset of rows based on a condition 
 select	 returns subset of columns (use starts_with, contains, matches, ends_with to specify), in the order specified
@@ -1757,18 +1766,21 @@ merge		 (x, y, by.x, by.y, all = T/F) where x is one dataset and y another, and 
 *_join	left_joinincludes all observations in the left data frame; right_join analogous, inner_join only observations in both, full_join all observations no matter the match
 dbi package for using many other backends to dplyr
 
-tidyr
+## tidyr
 unite	brings together values, like paste but with type specs.
 
 lm(outcome~predictor + predictor2 - 1)	 With intercept removed by -1; relevel() to set intercept. Counts modelled straightforwardy and adjusted for lower bound or heteroskedasticity.  Indicator variables add an optional intercept for binary factors.
 Influence.measures .  rstandard is residuals, hatvalues is for influential points (esp data entry errors). dffits is how much the line at that point is influenced by the absence of the data point.  dfbeta is one for each point for each regressor; it's a matrix.  cook's distance is a summary of the dfbeta by giving an overall change in them.  resid returns ordinary residuals, hatvalues gives the predicted Y value with the point excluded vs included.  A cross validated leave-one out residual, PRESS residuals are resid(model) / (1- hatvalues(model)).
-Hadley Wickham on the Tidyverse:
+
+## Hadley Wickham on the Tidyverse:
+
 Import-Tidy-{Transform Visualise Model} – Communicate
 The eye is drawn to the verbs and that's important because good data science can't be done without programming and the verbs are activities that can be programmed.  But for good workflow it's the interactions between each of those that's important.  Modelling is ultimately a computational approach that scales well but, because it uses assumptions at some level, and can't question those assumptions, can therefore not really surprise.  Visualisation on the other hand is a human activity and it's much harder to throw more brains at the problem than to throw more computers at the problem
 
 Share data structures, compose simple pieces, embrace functional programming and write for humans.
 
-Python for fuck's sake
+# Python. 'sake
+
 object Objects have attributes, which have associated methods (functions specific to object types). Methods are often called with an object as prefix: object.method() .
 method  Methods work differently depending on the type on which they are called.  Fucks again python.
 packages  Packages are collections of scripts (.py files); they are called modules in this context.  Packages imported, then modules called from the packages by package.module (eg numpy.array and the irritating renaming of the package is where np.array comes from); or modules are imported from packages then called bare; in which case the "import as" makes more sense because you can quote it bare.
