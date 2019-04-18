@@ -84,13 +84,15 @@ SE for log odds ratio  = $\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{
 		log 95% CI is OR +/- log EF , so
 		95% CI is OR/EF to OR*EF or exp(log Estimate +/- log EF)
 
-Measures of association:
-Relative risk is re/ru 
+## Measures of association
+
+Relative risk is $r_e / r_u$ 
 Attributable risk is the risk difference and obviously unique to pairs of risks
-		re-ru  	
+		$r_e - r_u$  	
 Attributable fraction AF is the proportion of the higher risk that is unique to the higher risk or
     $AF = \frac{r_e - r_u}{r_e}$
 		 , whence, multiplying all by ru and substituting  $RR = \frac{r_e}{r_u}$ : $AF = \frac{RR-1}{RR}$
+
 Population attributable risk PAR is the extra population risk due to exposure
     $$PAR = r_{t}-r_{u}$$
 		
@@ -142,7 +144,7 @@ PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
 	= using RR (0.5).(3-1) / (0.5).(3-1)+1 = 0.5
 	= using OR (0.5).(6-1) / (0.5).(6-1)+1 = 0.71
 
-## Probability and sampling
+# Probability and sampling
 
 Probability is always a feature of populations, not of data;
 	the population is connected to the data
@@ -180,7 +182,8 @@ $$P(D|+) = \frac {P(+|D).P(D)}
 
 	and dividing one into the other gives the posterior odds being equal to the diagnostic likelihood ratio times the prior odds:
 $$\frac{P(D|+)}{P(D^{c}|+)} = \frac {P(+ | D)}{P(+ | D^{c})} \times \frac{P(D)}{P(D^{c})}$$
-### Presneill
+
+## Presneill
 
 $P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 
@@ -189,7 +192,7 @@ $P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value:
 $$P(abs{X - \mu} > k \sigma) = \frac{1}{k^2}$$
 
-## Beyond subjectivity and objectivity
+# Beyond subjectivity and objectivity
 
 Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides.  They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
 
@@ -225,6 +228,34 @@ This assumes a linear model, or rather two simultaneous models for T and X.   Lo
 The correlation can be expressed separately as sensitivity and specificity of X for T.  The odds ratio or sign of the regression coefficient don't cross the null as long as (sens + spec) >= 1, or as long as an exposed case is classified as exposed with greater probability than an unexposed control is classified as exposed.
 
 Scatter plots of data allow clues about linearity or remote or influential points.  
+
+# Sampling
+The study population is the population available for study
+A sampling frame is the entire extant list of possible units which could be sampled
+"Equal probability" selections (of each final stage unit):
+population value is estimated by sample values (self-weighting)
+	eg Simple Random Sampling (and K&S alledges that Systematic Sampling is an EPS...?)
+	Probability proportional to size followed by numerical SRS (eg 4 at each stage 1)
+	SRS at stage 1 followed by proportional SRS (eg 20% of each stage 1)
+Others need weighting at the analysis stage proportionate to their oversampling
+	Stratified – sample within strata and add together
+	Hierarchical – Primary or First Stage (or Tier) or 1°, within which Second Stage (2°, etc)
+		"Probability Proportional to Size" then SRS with constant Tier 2 sample size
+			if different sized 1° samples, gives equal probability of sampling each 2° unit
+		SRS then SRS with 2° being a constant sampling fraction of 1°
+			if equally sized 1° samples
+			
+Balance covariates by stratification (usually logical), blocking (see Fisher and Student's fight), minimisation (re-read Senn 2004), matching (by pairs, read Eldridge 2012).
+	Matching case-control by a variable allows effect modification by that variable to be estimated, and for ignoring the effect of the variable.  Can increase precision or efficiency; may add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
+	Matching eg by malaria rates last year, can cause problems. I intuit that if the matched variable is not the right one then no inferential efficiency is gained, eg if "rank of malaria incidence" is very different in the year of study then they're not matched by malaria incidence and random baseline variability may be considered to have been reduced when it actually hasn't.  So that's a problem like HTE or undermatched confounders. As it happens they're not very correlated at all, r=0.2 or so. Matching doesn't lose much power unless the matching and exposure variables are strongly correlated; but it can do it.  Also overmatching is logistically hard and increases concordant pairs.  And if the matched variable is on the causal pathway it underestimates the effect of exposure on outcome.
+	"Break-even values" for the correlation between matching and outcome variables for matching or stratification to be beneficial. 
+	Matched Odds ratios are derived from MH summary odds ratios where only discordant pairs count: if individually matched then each pair is a stratum, if the tabulation is at pair level then two boxes contain zeroes for each concordant pair.  Overall numbers of pairs are tabulated for each combination.
+	
+Randomisation is distinct from random sampling
+	"In a properly randomised trial any difference between the groups outside that imparted by
+	the intervention are due to chance."
+	"Any difference between the trial groups should be due to the outcome."
+	True randomisation depends on randomness of sequence and allocation concealment.
 
 # Meta Analysis
 	- Provide a data display and objective review
@@ -298,34 +329,6 @@ In regression the LRS tests the joint null that all the variables equal their nu
 
 # Robustness
 Robust objects (estimators, statistics, models...) are ones which are changed little by perturbations in the data; good robust objects retain efficiency while being robust.  Efficient objects are ones which need few observations to attain a given performance.  Performance is the ability of an object to describe or predict reality, such as to describe variation reliably, reject a false claim or detect a true difference.
-
-# Sampling
-The study population is the population available for study
-A sampling frame is the entire extant list of possible units which could be sampled
-"Equal probability" selections (of each final stage unit):
-population value is estimated by sample values (self-weighting)
-	eg Simple Random Sampling (and K&S alledges that Systematic Sampling is an EPS...?)
-	Probability proportional to size followed by numerical SRS (eg 4 at each stage 1)
-	SRS at stage 1 followed by proportional SRS (eg 20% of each stage 1)
-Others need weighting at the analysis stage proportionate to their oversampling
-	Stratified – sample within strata and add together
-	Hierarchical – Primary or First Stage (or Tier) or 1°, within which Second Stage (2°, etc)
-		"Probability Proportional to Size" then SRS with constant Tier 2 sample size
-			if different sized 1° samples, gives equal probability of sampling each 2° unit
-		SRS then SRS with 2° being a constant sampling fraction of 1°
-			if equally sized 1° samples
-			
-Balance covariates by stratification (usually logical), blocking (see Fisher and Student's fight), minimisation (re-read Senn 2004), matching (by pairs, read Eldridge 2012).
-	Matching case-control by a variable allows effect modification by that variable to be estimated, and for ignoring the effect of the variable.  Can increase precision or efficiency; may add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
-	Matching eg by malaria rates last year, can cause problems. I intuit that if the matched variable is not the right one then no inferential efficiency is gained, eg if "rank of malaria incidence" is very different in the year of study then they're not matched by malaria incidence and random baseline variability may be considered to have been reduced when it actually hasn't.  So that's a problem like HTE or undermatched confounders. As it happens they're not very correlated at all, r=0.2 or so. Matching doesn't lose much power unless the matching and exposure variables are strongly correlated; but it can do it.  Also overmatching is logistically hard and increases concordant pairs.  And if the matched variable is on the causal pathway it underestimates the effect of exposure on outcome.
-	"Break-even values" for the correlation between matching and outcome variables for matching or stratification to be beneficial. 
-	Matched Odds ratios are derived from MH summary odds ratios where only discordant pairs count: if individually matched then each pair is a stratum, if the tabulation is at pair level then two boxes contain zeroes for each concordant pair.  Overall numbers of pairs are tabulated for each combination.
-	
-Randomisation is distinct from random sampling
-	"In a properly randomised trial any difference between the groups outside that imparted by
-	the intervention are due to chance."
-	"Any difference between the trial groups should be due to the outcome."
-	True randomisation depends on randomness of sequence and allocation concealment.
 
 Clusters
 Used when there's a direct effect plus indirect (ecological, herd, cooperative, etc) effect on participants, or when it's difficult to allocate individuals. Indirect include, for infections, that which reduces Quantity (herd, reduced carriage, vector death, epidemic periodicity) or Quality (less or more virulent strains, resistance, non-reproducing strains) of infection or the Immunity of victim (immune recency, cross reaction, polyvalency, multi-hit, immune mediated damage). "Direct" + "indirect" = "total"; if all in a cluster participate the effect is "total", otherwise the "overall" effect is the weighted average of direct + indirect on participants and indirect on non-participants.  Individually allocated trials measure the Direct effect; cluster trials measure the Overall which depends on participation fraction and HTE combined with differential participation. 
@@ -460,12 +463,49 @@ Cumulative Distribution Function is the probability that a random variable takes
 Survivor function is S(x) = 1-F(x)
 Quantiles: the αth quantile of a distribution function F(x) is the point such that $F(x_{\alpha}) = \alpha$
 
-# Bernoulli mass function
+## Variance and error terms
+
+For categorical data
+	variance is p(1-p) and sd therefore $\sqrt{p(1-p)}$ and standard error $\sqrt{\frac{p(1-p)}{n}}$
+	standard error for the difference in two proportions is $\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$
+		
+	s.e.m., eg for the representativeness of a sample mean of its normally distributed population, is
+	$$\frac{s}{\sqrt{n}} = \sqrt{\frac{s^2}{n}}$$
+			
+	and for 2 independent samples is
+			$$\textrm{sem} = \sqrt{\frac{s_{1}^2}{n_{1}} + \frac{s_{0}^2}{n_{0}}}$$
+	If it's reasonable to assume alike variance, such as for example randomised samples,
+			$$\textrm{sem} = s_{p}\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{0}}}$$
+	for which the sample size-weighted common estimate of σ assuming alike variance is
+	$$s_{p}= \sqrt{\frac{(n_{1}-1).s_{1}^2 + (n_{0}-1)s_{0}^2}{(n_{1} + n_{0} - 2)}}$$
+			
+	paired samples are modified if they are alike by rho
+			$$s = \sqrt{(s_{1}^2 + s_{2}^2 - 2 \rho . s_{1} . s_{2} )}$$
+		which simplifies to $\sqrt{(s_{1}^2+s_{2}^2)}$ if the "pairs" are nothing of the kind, and
+		not correlated at all so rho = 0
+	$$t = \frac{\bar X_{1} - \bar X_{0}}{sem}$$
+
+	and if variances are unequal the distribution of the difference of means is NOT T! 
+	it's something close to t that is well approximated by changing the degrees of freedom by
+	$df = \frac{(\frac{S_{x}^2}{n_{x}} + \frac{S_{y}^2}{n_{y}})^2}	{(\frac{(\frac{S_{x}^2}{n_{x}})^2}{(n_{x}-1)}) + (\frac{(\frac{S_{y}^2}{n_{y}})^2}{(n_{y}-1)})}$
+			  which may be non integer
+			  
+		This altered t distribution is used to create the quantiles for confidence intervals etc.
+	$eg \bar Y - \bar X \pm t_{df} \times \sqrt{\frac{s_{x}^2}{n_{x}} + \frac{s_{y}^2}{n_{y}}}$
+
+and for proportions
+
+	standard error for a confidence interval:
+	$\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$
+	standard error for a hypothesis test assumes both are from the same π so uses the common proportion (all +ve / all n) before repeating the above formula:
+	$\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$
+
+## Bernoulli mass function
 $p(X=x) = p^x.(1-p)^{1-x}$
 $p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom {n}{k} = \frac {n!}{k!(n-k)!}$
 (remembering that $\binom {n}{0} = \binom {n}{n} = 1$)
 
-#Normal distribution
+## Normal distribution
 	Any normal distribution is a multiple of σ and an addend of μ from Z, the
 	Standard Normal Distribution: 
 	$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$
@@ -473,7 +513,7 @@ $p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom {n}{k} = \frac {n!}{k!(n-k
 	
 	65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of μ
 	
-# Multinomial distribution is
+## Multinomial distribution is
 $P(x_{1},\dots x_{n};k) = \frac{k!}{x_{1}!x_{2}!\dots {x_{n}!}}.p_{1}^{x_{1}} \dots p_{n}^{x_{n}}$
 
 	of which a special case is the binomial distribution
@@ -481,21 +521,6 @@ $P(x_{1},\dots x_{n};k) = \frac{k!}{x_{1}!x_{2}!\dots {x_{n}!}}.p_{1}^{x_{1}} \d
 		
 T distribution is descended from the standard normal, and assumed to be symmetric and centred on 0 so with only 1 parameter, the degrees of freedom.  Skew can be exponentially transformed or another distribution used.
 
-## The MH odds ratio across strata
-
-is the weighted mean sum of odds ratios across strata
-	generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$
-		weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ denominator of OR divided by the total
-	or ORMH = Q/R where Q = $\sum \frac{d_{1i} h_{0i}}{n_i}$ and R = $\sum \frac{d_{0i} h_{1i}}{n_i}$
-		then se(log(ORMH)) = $\sqrt{\frac{V}{QR}}$, V = $\sum V_i = \sum \frac{d_i h_i n_{0i} n_{1i}}{n_i^2 (n_i - 1)}$,
-		V calculated from the marginal totals because each stratum has equal variance
-Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \frac{(O-E)^2}{V} = \frac{U^2}{V} \textrm{, df=1}$,
-
-	$E_{1i}= \frac{d_i n_{1i}}{n_iO} = \sum d_{1i}, \> E = \sum E_{1i} \textrm{, U = O-E}$
-	MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
-Rule of 5 to check validity:
-	subtrahends of `c(sum(min(c(di, n1i)))` , `sum(max(c(0, (n1i – hi))))) – sum(Ei) > 5`
-Chi squared for heterogeneity tests H0: for all i, ORi = ORMH , so $\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$
 
 ## Poisson has MEAN AND VARIANCE EQUAL to λ 
 which is events / time, $\lambda = \frac{D}{t}$
@@ -516,34 +541,17 @@ $X \sim Poisson (\lambda t)$ where $\lambda = E[X/t]$
 		in censoring survival models (as an "unbounded" problem).
 NHST is the Wald against H0: λ0 = λ1, $z = \frac{\textrm{log}(rate \> ratio)}{s.e. \textrm{log}(rate \> ratio)}$
 
-Mantel-Haenszel uses RR in stratum i weighted for total time in the stratum,
 
-	$RR_{MH} = \frac{\sum{\frac{d_{1i} \times T_{0i}}{T_i}}}{\sum{\frac{d_{0i} \times T_{1i}}{T_i}}} = \frac{Q}{R}$
-	or if $w_i = \frac{d_{0i}T_{1i}}{T_i}$ then 
-	$RR_{MH} = \frac{\sum(w_i \times RR_i)}{\sum w_i}$
+## Poisson regression 
 
-	 $se_{MH} = \sqrt{\frac{V}{QR}}$ where $V = \sum V_i$ and $V_i = \frac{d_i T_{1i} T_{0i}}{T_i^2}$ and NHST is the MH chi squared
-
-
-	 $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i}$ or $\frac{(O-E)^2}{V}$, df = 1
-
-	where Exi is overall stratumi rate times observation time for exposure x, $E_{1i} = \frac{d_i \times T_{1i}}{T_i}$
-
-To detect effect modification the Chi Square test for heterogeneity $H_0: RR_i = RR_{MH}$
-
-	$\chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{, df = c-1}$
-
-Cohort E(D1) = Y1 *(D/T) and U = D1 – E(D1)
-
-Var(U) = $D \frac{t_1}{t}(1 - \frac{t_1}{t})$ and test statistic  $z= \frac{U}{SE(U)} = \frac{U}{\sqrt{Var(U)}} or Z^2 = \frac{U^2}{V} \textrm{, Chi square df=1}$
-
-Poisson regression is very similarly shaped to other regressions: rate = constant x timeband x exposure.  Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion.  If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then ~~an adult must be asked for help~~ a value (constant or distributed) can be added to the regression model to account for the departure from poisson.  The value is called the frailty and the resulting model is a negative binomial model.
+is very similarly shaped to other regressions: rate = constant x timeband x exposure.  Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion.  If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then ~~an adult must be asked for help~~ a value (constant or distributed) can be added to the regression model to account for the departure from poisson.  The value is called the frailty and the resulting model is a negative binomial model.
 
 ## Cox regression
+
 limits each timeband to that containing one event (call it a timeclick).  So rate = Changing baseline * exposure: the model assumes the exposure effect is constant (the proportional hazard assumption).  Test this graphically or by taking logs of the cumulative hazard so that the "Nelson-Aalen plot" of
 $\sum \lambda_{ti} = \sum \lambda_{t0} \times \theta_i$ is parallel against time, and test by fitting interaction terms of time (by arbitrary epochs or as a superimposed linear trend) and using LRT or something.
 
-# Multivariate distributions
+## Multivariate distributions
 MV norm has mean as a vector, sigma is the variance / covariance matrix
 
 These have parameters of location, scale and skew. Normal location is the mean, t location is the non centrality parameter which are a scalar for univariate and an n-element vector for n-dimensional distributions (eg an n-variate distribution of densities).  Scale for a univariate is the variance for univariate normal and t distributions, but is a dispersion matrix sigma of n by n elements for for n-variate distributions (it's the variance / covariance matrix). The skew parameter is a vector of length n for n-variate distributions.
@@ -553,58 +561,6 @@ MV t has degrees of freedom usually presumed identical across al variates, a par
 density by `dmvt(x, delta=c(i,j)`, sigma= `as.matrix(r, t, y, u), df=df, log=T)`
 
 Bivariate has delta=0 if standard and sigma=diag(2), ie rbind(c(2, 0, 0, 2))
-
-# Survival and logrank test
-Kaplan Meier survival probability is the cumulative probability of an entity that is initially at risk surviving subsequent epochs until the one in question,
-	each epoch being "data-defined" and usually as containing one event:
-		as Pevent = nevents/nat-risk – (0.5*ncensored) 
-			if the censoring time is not defined for the interval
-		P(Si) = (1-Pevent1).(1-Pevent2)...(1-Peventi)
-		$P(S_x) = \prod_{i=1}^x (1-\frac{\textrm{events}}{\textrm{at risk} - 0.5 \times \textrm{censored}})_i$ , or $\widehat {S}(t)=\prod \limits_{i:\>t_{i}\leq t}\left(1-{\frac {d_{i}}{n_{i}}}\right),$
-	A good KM curve has ticks on the line for censoring occurrences and nat-risk below the line
-	Log Rank test is a Chi Squared, with Observed totals and Expected E = (row total x column total)/(grand total)
-		summed across all intervals for each group, and added, giving the statistic:
-		$\chi^2_{logrank} = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2}$ , df=1 or $Z=\frac  {\sum _{{j=1}}^{J}(O_{1j}-E_{1j})}{\sqrt{\sum _{j=1}^J V_j}}$
-		Not sure whether you could substitute P(Sx) times number at risk at t=0 for E.
-
-The hazard function h(t) is the failure rate summed over ever smaller time intervals, which may be more than 1, hence is not a probability.  This depends on a failure function, F(t), which is a probability, being a cumulative distribution function.
-The P(Si) above is equivalent to the reliability function R(t), also called the survival function S(t), the probability of "no failure" as a function of time.  R(t) = 1 – F(t).
-Cumulative failure as a function of time, F(t) is the integral over time of the probability density of failure as a function of time, f(t).
-
-$\tilde{H} (t) = \sum_{{t_{i}\leq t}}\frac{d_{i}}{n_{i}}$
-
-h(t) = f(t) / 1-F(t) = f(t) / R(t).
-$h(t) = \lim _{\Delta t\to 0}{\frac {R(t)-R(t+\Delta t)}{\Delta t\cdot R(t)}}$, which does not have to be parametric as long as there is a definite cumulative distribution.
-
-If the failure density is modelled as exponential (ie Poisson(1), that is the time until first failure is Poisson distributed and other failures are presumed to be independent in every case including those already failed) then the familiar result is that $f(t) = \lambda^1 e^{-\lambda t}$ so $F(t) = \int_0^t \lambda e^{-\lambda t} dt$ then the hazard function h(t) is
-	$h(t) = \frac{f(t)}{R(t)} = \frac{\lambda e^{- \lambda t}}{e^{- \lambda t}} = \lambda$, which is time-blind / memoryless / constant with respect to time
-Assuming, then, that the hazard function is constant and the cumulative hazard rises linearly:
-    - Risk  = events/number at risk; 
-    - hazard = (events/time at risk in the limit as t goes to 0) = lambda; 
-    - survival as a function of time S(t) = product of 1-risk across times; cumulative hazard = sum of risks for all times (Nelson-Aalen estimate of the cumulative hazard).
-    
-The log of the hazard ratios for two exposures is log(HR1) – log(HR2) = log(constant)
-H(t) = -log(S(T)) or S(t) = e^(-H(t)) 
-S(t) = e^(-lambda t)
-H(t) = lambda t
-Risk up to time t = 1- e^(-lambda t)
-Average survival time = 1/lambda
-
-ARIMA
-The error term $\epsilon$ in the usual linear model $Y_i = \alpha + \beta X_i + \epsilon_i$ is assumed to be composed of errors which are independent, identically distributed (usually normally distributed with common variance). This is the definition of white noise.
-
-If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the Autoregression formula:
-$X_t = \phi X_{t-1} + \epsilon_t$
-
-These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model describes an autoreggressive process with autocorrelated errors:
-$\epsilon_t = W_t + \theta W_{t-1}$
-
-The autocorrelation magnitude can be estimated by comparing values that are a constant distance apart; lag 1 correlation is contiguous pairs, lag 2 is pairs separated by one intervening variable and so on. A series is stationary over a time, if the mean over that time is always constant. Some fiddling can make it stationary over a trend (so if there is an underlying spurious rise in price due to inflation). Examples of stationary processes are linear predictors where $X_t$ is stationary or a random walk, where W is white noise added to the last value of X to produce the current value of X:
-$X_t = X_{t-1} + W_i$
-This is demonstrated by differencing in R, eg for the default lag 1
-```
-diff(x, lag = 1)
-```
 
 # Correlation
 categorical variance is by tabulation, eg mean pair agreement or Observed Agreement OA:
@@ -683,6 +639,58 @@ If assuming only the noncentral t distribution then
 	power is $P = (\frac {\=X - \mu_{0}} {s / \sqrt{n}} > t_{1-\alpha, n-1}; \mu = \mu_{a})$ ; note P=α at μa=μ0 ;
 On the other hand power depends only on the difference in means divided by S.E.M $\frac {\sqrt{n}(\mu_{a} - \mu_{0})}{\sigma}$,
 	and the effect size is dimensionless and can be used across contexts a bit.
+
+# Survival and logrank test
+Kaplan Meier survival probability is the cumulative probability of an entity that is initially at risk surviving subsequent epochs until the one in question,
+	each epoch being "data-defined" and usually as containing one event:
+		as Pevent = nevents/nat-risk – (0.5*ncensored) 
+			if the censoring time is not defined for the interval
+		P(Si) = (1-Pevent1).(1-Pevent2)...(1-Peventi)
+		$P(S_x) = \prod_{i=1}^x (1-\frac{\textrm{events}}{\textrm{at risk} - 0.5 \times \textrm{censored}})_i$ , or $\widehat {S}(t)=\prod \limits_{i:\>t_{i}\leq t}\left(1-{\frac {d_{i}}{n_{i}}}\right),$
+	A good KM curve has ticks on the line for censoring occurrences and nat-risk below the line
+	Log Rank test is a Chi Squared, with Observed totals and Expected E = (row total x column total)/(grand total)
+		summed across all intervals for each group, and added, giving the statistic:
+		$\chi^2_{logrank} = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2}$ , df=1 or $Z=\frac  {\sum _{{j=1}}^{J}(O_{1j}-E_{1j})}{\sqrt{\sum _{j=1}^J V_j}}$
+		Not sure whether you could substitute P(Sx) times number at risk at t=0 for E.
+
+The hazard function h(t) is the failure rate summed over ever smaller time intervals, which may be more than 1, hence is not a probability.  This depends on a failure function, F(t), which is a probability, being a cumulative distribution function.
+The P(Si) above is equivalent to the reliability function R(t), also called the survival function S(t), the probability of "no failure" as a function of time.  R(t) = 1 – F(t).
+Cumulative failure as a function of time, F(t) is the integral over time of the probability density of failure as a function of time, f(t).
+
+$\tilde{H} (t) = \sum_{{t_{i}\leq t}}\frac{d_{i}}{n_{i}}$
+
+h(t) = f(t) / 1-F(t) = f(t) / R(t).
+$h(t) = \lim _{\Delta t\to 0}{\frac {R(t)-R(t+\Delta t)}{\Delta t\cdot R(t)}}$, which does not have to be parametric as long as there is a definite cumulative distribution.
+
+If the failure density is modelled as exponential (ie Poisson(1), that is the time until first failure is Poisson distributed and other failures are presumed to be independent in every case including those already failed) then the familiar result is that $f(t) = \lambda^1 e^{-\lambda t}$ so $F(t) = \int_0^t \lambda e^{-\lambda t} dt$ then the hazard function h(t) is
+	$h(t) = \frac{f(t)}{R(t)} = \frac{\lambda e^{- \lambda t}}{e^{- \lambda t}} = \lambda$, which is time-blind / memoryless / constant with respect to time
+Assuming, then, that the hazard function is constant and the cumulative hazard rises linearly:
+    - Risk  = events/number at risk; 
+    - hazard = (events/time at risk in the limit as t goes to 0) = lambda; 
+    - survival as a function of time S(t) = product of 1-risk across times; cumulative hazard = sum of risks for all times (Nelson-Aalen estimate of the cumulative hazard).
+    
+The log of the hazard ratios for two exposures is log(HR1) – log(HR2) = log(constant)
+H(t) = -log(S(T)) or S(t) = e^(-H(t)) 
+S(t) = e^(-lambda t)
+H(t) = lambda t
+Risk up to time t = 1- e^(-lambda t)
+Average survival time = 1/lambda
+
+ARIMA
+The error term $\epsilon$ in the usual linear model $Y_i = \alpha + \beta X_i + \epsilon_i$ is assumed to be composed of errors which are independent, identically distributed (usually normally distributed with common variance). This is the definition of white noise.
+
+If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the Autoregression formula:
+$X_t = \phi X_{t-1} + \epsilon_t$
+
+These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model describes an autoreggressive process with autocorrelated errors:
+$\epsilon_t = W_t + \theta W_{t-1}$
+
+The autocorrelation magnitude can be estimated by comparing values that are a constant distance apart; lag 1 correlation is contiguous pairs, lag 2 is pairs separated by one intervening variable and so on. A series is stationary over a time, if the mean over that time is always constant. Some fiddling can make it stationary over a trend (so if there is an underlying spurious rise in price due to inflation). Examples of stationary processes are linear predictors where $X_t$ is stationary or a random walk, where W is white noise added to the last value of X to produce the current value of X:
+$X_t = X_{t-1} + W_i$
+This is demonstrated by differencing in R, eg for the default lag 1
+```
+diff(x, lag = 1)
+```
 	
 # Multiple testing
 
@@ -808,44 +816,8 @@ Poisson also don't converge well especially for low p; again, poisson.test is ex
 	A sample is Consistent if its estimate converges on the estimated value.
 		Sample means, sd and the like are consistent as well.
 
-# Variance and error terms
-
-For categorical data
-	variance is p(1-p) and sd therefore $\sqrt{p(1-p)}$ and standard error $\sqrt{\frac{p(1-p)}{n}}$
-	standard error for the difference in two proportions is $\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$
-		
-	s.e.m., eg for the representativeness of a sample mean of its normally distributed population, is
-	$$\frac{s}{\sqrt{n}} = \sqrt{\frac{s^2}{n}}$$
-			
-	and for 2 independent samples is
-			$$\textrm{sem} = \sqrt{\frac{s_{1}^2}{n_{1}} + \frac{s_{0}^2}{n_{0}}}$$
-	If it's reasonable to assume alike variance, such as for example randomised samples,
-			$$\textrm{sem} = s_{p}\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{0}}}$$
-	for which the sample size-weighted common estimate of σ assuming alike variance is
-	$$s_{p}= \sqrt{\frac{(n_{1}-1).s_{1}^2 + (n_{0}-1)s_{0}^2}{(n_{1} + n_{0} - 2)}}$$
-			
-	paired samples are modified if they are alike by rho
-			$$s = \sqrt{(s_{1}^2 + s_{2}^2 - 2 \rho . s_{1} . s_{2} )}$$
-		which simplifies to $\sqrt{(s_{1}^2+s_{2}^2)}$ if the "pairs" are nothing of the kind, and
-		not correlated at all so rho = 0
-	$$t = \frac{\bar X_{1} - \bar X_{0}}{sem}$$
-
-	and if variances are unequal the distribution of the difference of means is NOT T! 
-	it's something close to t that is well approximated by changing the degrees of freedom by
-	$df = \frac{(\frac{S_{x}^2}{n_{x}} + \frac{S_{y}^2}{n_{y}})^2}	{(\frac{(\frac{S_{x}^2}{n_{x}})^2}{(n_{x}-1)}) + (\frac{(\frac{S_{y}^2}{n_{y}})^2}{(n_{y}-1)})}$
-			  which may be non integer
-			  
-		This altered t distribution is used to create the quantiles for confidence intervals etc.
-	$eg \bar Y - \bar X \pm t_{df} \times \sqrt{\frac{s_{x}^2}{n_{x}} + \frac{s_{y}^2}{n_{y}}}$
-
-and for proportions
-
-	standard error for a confidence interval:
-	$\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$
-	standard error for a hypothesis test assumes both are from the same π so uses the common proportion (all +ve / all n) before repeating the above formula:
-	$\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$
-
 # Paired (matched) data
+
 	If method A and method B are used on the same sample the discordance (r, s) is informative:
 
 \begin{tabular}{| c |c | c | c| }
@@ -1118,7 +1090,10 @@ $mu = \sum^k_{i = 1} \frac{n_i v_i}{N}$
 where each of k groups of observations are denoted as ri successes out of ni total with score vi assigned. R is the sum of all ri, N is the sum of all ni and p = R/N.
 
 
-# Linear regression
+# Regression
+
+Linear regression is almost the canonical version of this, with Logistic, Cox, Poisson and even Mantel_Haenszel methods being special or extended cases. 
+
 A regression line is the line to which values "regress" in repeated observation of the parameter values.  The remaining variation in those sampled values is smaller than the variation in the whole dataset, because some of it is already modelled by the line.  Errors are unobservable true errors from known coefficients, whereas residuals are the observable errors from the estimated coefficient: so in a sense residuals are estimates of the error.
 
 Regression seeks to minimise the residuals which because they add to 0, are squared:
@@ -1150,7 +1125,45 @@ $$R^2 = \frac {\sum_{i=1}^n (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2
 Variance around the regression line is usually replaced by its estimate.
 	$\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$
 
-# Multivariable regression
+## Mantel-Haenszel 
+Mantel-Haenszel in general uses an association measure in stratum i weighted for total exposure in the stratum. So for a cohort describing relative risk:
+
+	$RR_{MH} = \frac{\sum{\frac{d_{1i} \times T_{0i}}{T_i}}}{\sum{\frac{d_{0i} \times T_{1i}}{T_i}}} = \frac{Q}{R}$
+	or if $w_i = \frac{d_{0i}T_{1i}}{T_i}$ then 
+	$RR_{MH} = \frac{\sum(w_i \times RR_i)}{\sum w_i}$
+
+	 $se_{MH} = \sqrt{\frac{V}{QR}}$ where $V = \sum V_i$ and $V_i = \frac{d_i T_{1i} T_{0i}}{T_i^2}$ and NHST is the MH chi squared
+
+
+	 $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i}$ or $\frac{(O-E)^2}{V}$, df = 1
+
+	where Exi is overall stratumi rate times observation time for exposure x, $E_{1i} = \frac{d_i \times T_{1i}}{T_i}$
+
+To detect effect modification the Chi Square test for heterogeneity $H_0: RR_i = RR_{MH}$
+
+	$\chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{, df = c-1}$
+
+Cohort E(D1) = Y1 *(D/T) and U = D1 – E(D1)
+
+Var(U) = $D \frac{t_1}{t}(1 - \frac{t_1}{t})$ and test statistic  $z= \frac{U}{SE(U)} = \frac{U}{\sqrt{Var(U)}} or Z^2 = \frac{U^2}{V} \textrm{, Chi square df=1}$
+
+## The MH odds ratio across strata
+
+is the weighted mean sum of odds ratios across strata
+	generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$
+		weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ denominator of OR divided by the total
+	or ORMH = Q/R where Q = $\sum \frac{d_{1i} h_{0i}}{n_i}$ and R = $\sum \frac{d_{0i} h_{1i}}{n_i}$
+		then se(log(ORMH)) = $\sqrt{\frac{V}{QR}}$, V = $\sum V_i = \sum \frac{d_i h_i n_{0i} n_{1i}}{n_i^2 (n_i - 1)}$,
+		V calculated from the marginal totals because each stratum has equal variance
+Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \frac{(O-E)^2}{V} = \frac{U^2}{V} \textrm{, df=1}$,
+
+	$E_{1i}= \frac{d_i n_{1i}}{n_iO} = \sum d_{1i}, \> E = \sum E_{1i} \textrm{, U = O-E}$
+	MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
+Rule of 5 to check validity:
+	subtrahends of `c(sum(min(c(di, n1i)))` , `sum(max(c(0, (n1i – hi))))) – sum(Ei) > 5`
+Chi squared for heterogeneity tests H0: for all i, ORi = ORMH , so $\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$
+
+## Multivariable regression
 Extending the line to a plane, or later to an n-dimensional plane.  Linear in the coefficients.  Least squares used again, fixing at zero (or removing ) coefficients and calculating regression through the new origin for the remainder, repeatedly.
 For a model with sum of squares $\sum (Y_i - X_{1i} \beta_1 - X_{2i} \beta_2)^2$ to estimate B2
 	define Y centred, $\~ Y_i = Y_i - X_{1i} \beta_1$ then sum of squares = $\sum (\~Y_i - X_{2i} \beta_2)^2$
