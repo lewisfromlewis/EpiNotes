@@ -902,6 +902,59 @@ take two samples of size N1 and N2, with a total size N
 
 This is partly covered by the [sampling] section, but it's integral to demonstrating epidemiological understanding.
 
+## Questionnaires
+
+Questionnaires are able to ask about 
+    attitudes
+    beliefs
+    behaviours
+    experiences
+    attributes
+
+Methods of applying the question are by 
+    Interview
+    Questionnaire
+    Diary
+    Observation
+    Routine Record Reaching
+    Measurements
+    Environmental Measurements
+
+Standard introductions are important.
+If appropriate to use a questionnaire, develop one that is 
+- easy to answer, process and analyse, 
+- minimises measurement error, 
+- preserves dignity and privacy of respondent, and 
+- limits burden on respondents.
+    "The minimum amount of an individual's total experience that will provide sufficient information concerning the problem under study" (including exposure and covariates).
+
+Burden is added by 
+- length
+- old information
+- low salience (and high sensitivity)
+- frequent events
+- greater depth of detail, 
+- being a proxy respondent
+
+Too much burden causes low response, failure to complete, low quality or random responses, alienation from questionnaires.
+
+Responses are maximised by 
+- low burden
+- trained interviewers
+- personalisation
+- storyboarded not scripted acknowledgment and introductions
+- facilitation (SSAEs for return,face-to-face, diligent attempts to contact, incentives)
+
+Allow responses by softening or appearing to understand sensitive questions, giving an option to give a socially acceptable answer before reporting true exposure.  Start with a relevant question, leave demographics to the end.  Go by concept group, go from general to particular, go from bland to sensitive.  Give an introduction, instructions (including the logic of the questions), link parts with language and conclude with thanks, ask for comments and tell what comes next.  Make it nice to look at: clear, not cluttered or congested.  If offering a closed list, cover all possible options once.  End with a nice thank you and a request for comments or suggestions.
+	Pre-Test by expert initial review, interview, interviews or cognitive testing around different versions of a complex question (think-aloud, paraphrasis of the question, explanation for why a choice or answer was made).
+	Then pilot with a debrief of respondents, observation while responding, permutation of questions, item response distribution analysis (proportion missing / don't know / valid), validation (not always possible).  At least expert review and 20 pilot runs.
+	Are all the words understood, does the logic of order always work, are there questions that makes no sense for some people, do the questions mean the same to everyone?  Give aids to memory if possible: eg lead-in questions, possible answers to choose, a life calendar leading up to the time.  If given by interview give space for times for starting, finishing and any notes.
+	Electronic data capture (questionnaires straight into electronic format) have advantages in filling or calculating routine information, checks on format or consistency, easy skipping or contingency questioning, easy alteration or updating, complex identification and linkage, and the preservation of the data.
+		Disadvantages are in the up front work, need for networking in some implementations, desirability of the hardware, and some points that are only important if you don't have IT support.
+
+Translation needs
+	Preliminary translation (I would put Simple Clarity or Translatable before that one); Evaluation of the first translation (eg by blind back translation); cross-language equivalence eg by giving perfectly bilingual people both versions (?!); validity assessment.
+
 ## Tidy Data
 
 - Each observation is a row.
@@ -914,55 +967,61 @@ A fully coherent data set is the raw data, tidy data, a codebook and a recipe to
 	The codebook is the information about the variable which is not contained in the tidy dataset, including information about units, the choices you've made in selecting or presenting data and about the design of the research.  Best as a text file with sections "codebook", "study design".
 	The script or set of instructions to process raw -> tidy data should not need parameters: having parameters introduces analyst degrees of freedom.
 
-## Wrong conclusions:
-Effect modification = "the association of an exposure with an outcome varies by a third factor".
-Confounding is the unequal distribution of a further risk factor between those exposed and unexposed to the exposure of interest. Confounders are
+# Wrong conclusions
+
+## Effect modification
+
+"the association of an exposure with an outcome varies by a third factor".
+
+## Confounding
+
+is the unequal distribution of a further risk factor between those exposed and unexposed to the exposure of interest. Confounders are
 	1 associated with the exposure in the source population
 	2 associated with the outcome in the nonexposed
 	3 not a causal intermediate from exposure to outcome.
-Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. 		Selection bias
-		Responder / Compliance, Surveillance, Follow-up / missing data
-			healthy worker effect
-	Information bias
-		Reporting, Recall, Interviewer
-		Observer: Recording, Measurement, Classification, Ascertainment
+
+## Bias 
+
+is any systematic error in design or conduct of a study leading to incorrect conclusions.
+
+### Selection bias
+Responder bias is a type of selection bias, the responder odds ratio being biased unpredictably by the ratio of probabilities of selection from a contingency table:
+		$$OR_R = \frac{P_a P_d}{P_b P_c}OR$$
+Knowing this, a non-response of 0.8 could bias the odds ratio by a factor of 0.8 to 1.4, for example.
+    Compliance
+    Surveillance
+    Differential Follow-up / missing data
+    healthy worker effect
+
+### Information bias
+	Reporting, Recall, Interviewer
+	Observer: Recording, Measurement, Classification, Ascertainment
 	Reporting bias in Systematic reviews
-		Errors in Sequence generation, allocation concealment, blinding,
-			incomplete outcome data, and selective outcome reporting (Cochrane list)
+	Errors in Sequence generation, allocation concealment, blinding,
+	incomplete outcome data, and selective outcome reporting
 
-Control of these by
-	discarding information based on potential comparators having parameters that fall outside 	acceptable ranges: 
-	Restriction is absolute and simple but reduces potential comparisons, hence inferences
-		Matching
-		by individual (search for control with Value = case Value +/- acceptable range)
-		by group aka frequency (distribution in case group matched by that in control group)
-		re-note Case Definitions: clear method, clear boundaries, defined source population
-Or
-not discarding but instead randomising.
-	Simple random "needs a whole population list" although of course there are limits.
-	Stratified random, multiple stage random, single randomisation of the fixed point of a
-			sample system, called "systematic random".  Eg start at a random place in a
-			pseudorandom ordered list and take regular steps through to sample.
+(Cochrane list)
 
-To avoid: Blinding, Objective measures, randomisation, complete follow up, timely measurements, calibration under the desired circumstances eg values in true controls by eg questionnaire or BP cuff calibration.
+## Control of threats to inference:
 
-Questionnaires
-Ask about attitudes, beliefs, behaviours, experiences, attributes.  Standard introductions are important.
-Ask by Interview, Questionnaire, Diary, Observation, Routine Record Reaching, Measurements or Environmental Measurements.
-If appropriate to use a questionnaire, develop one that is easy to answer, process and analyse, minimises measurement error, preserves dignity and privacy of respondent and limits burden on respondents.  "The minimum amount of an individual's total experience that will provide sufficient information concerning the problem under study" (including exposure and covariates).
-	Burden is added by length, old information, low salience (and high sensitivity), frequent events, depth of detail, being a proxy respondent.  Too much burden causes low response, failure to complete, low quality or random responses, alienation from questionnaires.
-	Responses are meximised by low burden, trained interviewers, personalisation, storyboarded not scripted acknowledgment and introductions, SSAEs for return,face-to-face, diligent attempts to contact, incentives.
-	Responder bias is a type of selection bias, the responder odds ratio being biased unpredictably by the ratio of probabilities of selection from a contingency table:
-		$OR_R = \frac{P_a P_d}{P_b P_c}OR$ which is from 0.8 to 1.4 times the true OR
-	Allow responses by softening or appearing to understand sensitive questions, giving an option to give a socially acceptable answer before reporting true exposure.  Start with a relevant question, leave demographics to the end.  Go by concept group, go from general to particular, go from bland to sensitive.  Give an introduction, instructions (including the logic of the questions), link parts with language and conclude with thanks, ask for comments and tell what comes next.  Make it nice to look at: clear, not cluttered or congested.  If offering a closed list, cover all possible options once.  End with a nice thank you and a request for comments or suggestions.
-	Pre-Test by expert initial review, interview, interviews or cognitive testing around different versions of a complex question (think-aloud, paraphrasis of the question, explanation for why a choice or answer was made).
-	Then pilot with a debrief of respondents, observation while responding, permutation of questions, item response distribution analysis (proportion missing / don't know / valid), validation (not always possible).  At least expert review and 20 pilot runs.
-	Are all the words understood, does the logic of order always work, are there questions that makes no sense for some people, do the questions mean the same to everyone?  Give aids to memory if possible: eg lead-in questions, possible answers to choose, a life calendar leading up to the time.  If given by interview give space for times for starting, finishing and any notes.
-	Electronic data capture (questionnaires straight into electronic format) have advantages in filling or calculating routine information, checks on format or consistency, easy skipping or contingency questioning, easy alteration or updating, complex identification and linkage, and the preservation of the data.
-		Disadvantages are in the up front work, need for networking in some implementations, desirability of the hardware, and some points that are only important if you don't have IT support.
+Discarding information based on potential comparators having parameters that fall outside acceptable ranges:
+- Restriction is absolute and simple but reduces potential comparisons, hence inferences
+- Matching
+	- by individual (search for control with Value = case Value +/- acceptable range)
+	- by group aka frequency (distribution in case group matched by that in control group)
+	- re-note Case Definitions: clear method, clear boundaries, defined source population
 
-Translation needs
-	Preliminary translation (I would put Simple Clarity or Translatable before that one); Evaluation of the first translation (eg by blind back translation); cross-language equivalence eg by giving perfectly bilingual people both versions (?!); validity assessment.
+Or not discarding but instead randomising.
+- Simple random "needs a whole population list" although of course there are limits.
+- Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample.
+
+## To avoid. 
+- Blinding
+- Objective measures
+- Randomisation
+- Complete follow up
+- Timely measurements
+- Calibration under the desired circumstances ( _eg_ values in true controls by _eg_ questionnaire or BP cuff calibration)
 
 # Reliability
 (~= Repeatability): intra and interobserver reliability.
