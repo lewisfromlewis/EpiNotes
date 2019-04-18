@@ -562,6 +562,43 @@ density by `dmvt(x, delta=c(i,j)`, sigma= `as.matrix(r, t, y, u), df=df, log=T)`
 
 Bivariate has delta=0 if standard and sigma=diag(2), ie rbind(c(2, 0, 0, 2))
 
+#Asymptotics
+
+Really very useful topic: the behaviour of functions as the size nears infinity, in this case the behaviour of estimators as the sample size approaches infinity; eg
+>Strong Law of Large Numbers: 
+
+sample averages converge on the population average as n increases.
+
+>Central Limit Theorem: 
+
+"the distribution of averages of i.i.d variables (properly normalised)	becomes that of a standard normal as the sample size increases"
+
+So the average of samples, and their variance, converge on population values: a sample is Consistent if it does this, with its estimate converging on the estimated value.
+
+For consistent samples, the mean, sd and the like are all consistent.
+- The distribution also becomes more normal-like as n rises.
+- 95% of 95% confidence intervals contain μ; except see below...
+
+The CLT doesn't guarantee that a given n is large enough
+- sample proportions don't converge very fast on the population proportion, so
+- 95% confidence intervals don't always contain the true value 95% of the time, but
+- somewhat less.
+
+"Exact" estimators eg binom.test in R, don't use the central limit theorem and are	computationally intensive and while they guarantee 95% "coverage" of the true value are a little conservative. Poisson also don't converge well especially for low p: again, poisson.test is exact.
+
+Sample size increases precision rather than the probability that its coverage includes the true value.
+
+The estimator is $\hat{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{p(1-p)}{n}}$
+Wald or Agresti-Coull estimators (preferred) work best at p=0.5
+
+- Wald :	$95\% CI = \hat{p} \pm \frac{1}{\sqrt{n}}$, more generally an estimate $\pm$ its standard error:
+				$\hat p \pm z_{\alpha / 2} . \sqrt{{\hat p \hat q} {n}}$
+				
+		Agresti-Coull adjusts n by z^2^ so if X successes in n is the proportion p,
+			and simplifying z of 1.96 as 2, adds 2 successes and 2 failures: so 
+			$\tilde{n} = n + z^2, \> \tilde{p} = \frac{1}{\tilde{n}}(X + \frac{1}{2} z^2)$
+			and CI for z = $\tilde{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}$
+
 # Correlation
 categorical variance is by tabulation, eg mean pair agreement or Observed Agreement OA:
 					
@@ -785,36 +822,6 @@ When grouped / stratified data are compared the labels are irrelevant for formin
 	Reassort the group labels randomly across the data; calculate a statistic for each of these random bins.
 	Repeat many times; this results in a distribution of statistics 
 	Observe number of times these differences are more extreme than the initially observed data.
-	
-#Asymptotics
-Really very useful topic: the behaviour of functions as the size nears infinity, in this case
-	the behaviour of estimators as the sample size approaches infinity; eg
-Law of large numbers: sample averages converge on the population average as n increases.
-Central Limit Theorem: "the distribution of averages of i.i.d variables (properly normalised)	becomes that of a standard normal as the sample size increases"
-	So the average of samples, and their variance, converge on population values.
-	The distribution also becomes more normal-like as n rises.
-	95% of 95% confidence intervals contain μ; except see below...
-The CLT doesn't guarantee that a given n is large enough
-	eg sample proportions don't converge very fast on the population proportion, so
-	95% confidence intervals don't always contain the true value 95% of the time, but
-	somewhat less.
-"Exact" estimators eg binom.test in R, don't use the central limit theorem and are	computationally intensive and while they guarantee 95% "coverage" of the true value are a little conservative.
-
-Sample size increases precision rather than the probability that its coverage includes the true value.
-		The estimator is $\hat{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{p(1-p)}{n}}$
-		Wald or Agresti-Coull estimators (preferred) work best at p=0.5
-		Wald :	$95\% CI = \hat{p} \pm \frac{1}{\sqrt{n}}$, more generally an estimate $\pm$ its standard error:
-				$\hat p \pm z_{\alpha / 2} . \sqrt{{\hat p \hat q} {n}}$
-				
-		Agresti-Coull adjusts n by z^2^ so if X successes in n is the proportion p,
-			and simplifying z of 1.96 as 2, adds 2 successes and 2 failures: so 
-			$\tilde{n} = n + z^2, \> \tilde{p} = \frac{1}{\tilde{n}}(X + \frac{1}{2} z^2)$
-			and CI for z = $\tilde{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}$
-
-Poisson also don't converge well especially for low p; again, poisson.test is exact.
-
-	A sample is Consistent if its estimate converges on the estimated value.
-		Sample means, sd and the like are consistent as well.
 
 # Paired (matched) data
 
