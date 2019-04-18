@@ -38,7 +38,9 @@ This is the notes from my _MSc Epidemiology_ from LSHTM, one of the two most res
 I wish I had done this twenty years ago, and spent the intervening time studying real statistics and computer science, instead of listening to people vomit party lines in my forties.
 
 # Risk
-`r newthought('The baseline odds is key to understanding')` the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.![Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.](C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg)
+`r newthought('The baseline odds is key to understanding')` the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.
+
+![Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.](C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg)
 ```{r fig.margin=TRUE, cache=TRUE, message=FALSE, echo=FALSE, fig.cap='Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.'}
 knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
 ```
@@ -72,17 +74,28 @@ variance    & =		$\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$ \\
 
 $$DLR+ 	= \frac{P(+|D)}{P(+|D^C)} = \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}} = \frac{(ac+ad)}{(ac+ab)}$$ 
 
-    = sensitivity/(1-specificity) 
+= sensitivity/(1-specificity) 
 
-    = (diagnostic likelihood ratio of a positive test)
+= (diagnostic likelihood ratio of a positive test)
 
-    = Bayes Factor
+= Bayes Factor
 		
 because PostOdds = Prior*DLR, a DLR of N means the H(D) is N times more supported by data than is $H(D^C)$
 
 SE for log odds ratio  = $\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$  so the Error Factor is $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$
-		log 95% CI is OR +/- log EF , so
-		95% CI is OR/EF to OR*EF or exp(log Estimate +/- log EF)
+log 95% CI is OR +/- log EF , so
+95% CI is OR/EF to OR*EF or exp(log Estimate +/- log EF)
+
+## Measures of outcome
+
+Case definitions need
+- Method for detection or definition
+- Case boundary
+- Unit of analysis (a diagnosis, an individual, a cluster...?)
+
+The population is a sort of a holy quantity, those who could be cases: so case definition influences the definition of a population. Other influences are geographic, demographic and behavioural.
+
+Population at risk is the entire actual population to which the case definitions are applied. Above that somewhere is a sort of superpopulation, an ideal version of the realised population.
 
 ## Measures of association
 
@@ -99,7 +112,7 @@ Population attributable risk PAR is the extra population risk due to exposure
 or the attributable risk times the prevalence of exposure
 		 $$PAR = p.AR = p(r_e-r_u) ;  PAF = p' AF_E =  \frac{p'(RR -1)}{RR}$$,
 		 
-	where p is proportion of the population exposed, and p' is proportion of cases are exposed.
+where p is proportion of the population exposed, and p' is proportion of cases are exposed.
 because total cases if a fraction p of the population is exposed, 0<p<1, it's like a binomial
 $$r_{t} = p.r_{e} + (1-p)r_{u}$$
 
@@ -147,9 +160,9 @@ PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
 # Probability and sampling
 
 Probability is always a feature of populations, not of data;
-	the population is connected to the data
-	by a probability model
-	using assumptions so a sample quantity is an estimator of the estimand, population value
+the population is connected to the data
+by a probability model
+using assumptions so a sample quantity is an estimator of the estimand, population value 
 1. Probability of something happening is 1
 2. Probability of nothing happening is 0
 3. Probability of a thing is 1-its opposite
@@ -180,7 +193,7 @@ $$P(D|+) = \frac {P(+|D).P(D)}
 	
 		
 
-	and dividing one into the other gives the posterior odds being equal to the diagnostic likelihood ratio times the prior odds:
+and dividing one into the other gives the posterior odds being equal to the diagnostic likelihood ratio times the prior odds:
 $$\frac{P(D|+)}{P(D^{c}|+)} = \frac {P(+ | D)}{P(+ | D^{c})} \times \frac{P(D)}{P(D^{c})}$$
 
 ## Presneill
@@ -195,21 +208,6 @@ $$P(abs{X - \mu} > k \sigma) = \frac{1}{k^2}$$
 # Beyond subjectivity and objectivity
 
 Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides.  They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
-
-Bias is any systematic effect (London:"error") in the design or conduct of a study which results in an incorrect estimate of the association between exposure and outcome.
-	Information bias is present when there is a difference in the accuracy of information
-	collected for exposure or outcome.
-		Reporting bias is due to subjects reporting one with different accuracy, depending on
-		their status in the other (for example reporting exposure differently if they have the
-		outcome, or reporting outcomes differently if they were exposed).
-		Observer bias is due to measurements giving different answers on one depending on
-		the status of the other (for example, the outcome is reported with greater deviation or
-		variation in the exposed, or vice versa)
-	Selection bias is present when there is a systematic difference in the exposure or outcome
-	between those who are observed and 	those who are not. AKA Collider Stratification bias.
-		The sampling frame may not be representative of the target population
-		The groups may not be comparable (their sampling frames may differ)
-
 
 # Exposure measurement
 The true exposure is like True Grail, only seen by indirect evidence of its presence by an Instrument: this is the Measured Exposure.
@@ -1015,6 +1013,20 @@ Or not discarding but instead randomising.
 - Simple random "needs a whole population list" although of course there are limits.
 - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample.
 
+Bias is any systematic effect (London:"error") in the design or conduct of a study which results in an incorrect estimate of the association between exposure and outcome.
+	Information bias is present when there is a difference in the accuracy of information
+	collected for exposure or outcome.
+		Reporting bias is due to subjects reporting one with different accuracy, depending on
+		their status in the other (for example reporting exposure differently if they have the
+		outcome, or reporting outcomes differently if they were exposed).
+		Observer bias is due to measurements giving different answers on one depending on
+		the status of the other (for example, the outcome is reported with greater deviation or
+		variation in the exposed, or vice versa)
+	Selection bias is present when there is a systematic difference in the exposure or outcome
+	between those who are observed and 	those who are not. AKA Collider Stratification bias.
+		The sampling frame may not be representative of the target population
+		The groups may not be comparable (their sampling frames may differ)
+
 ## To avoid. 
 - Blinding
 - Objective measures
@@ -1075,14 +1087,14 @@ $D^c$ & c & d & $N_{D^c}$ \\ \hline
 & $N_{+}$ &  $N_{-}$  & N \\ \hline
 \end{tabular}
 
-	The distribution of the squared differences in observed and expected values generates a χ2 distribution scaled for the expected values, with degrees of freedom $\nu = (rows-1) \times (columns-1)$. That is, the χ2 statistic is given by $\sum {\frac{(O-E)^{2}}{E}}$, 
-	H0 = "the distribution of observations among the categories of one variable is independent of their distribution among the categories of the other" or "there is no association between row and column variables"
+The distribution of the squared differences in observed and expected values generates a χ2 distribution scaled for the expected values, with degrees of freedom $\nu = (rows-1) \times (columns-1)$. That is, the χ2 statistic is given by $\sum {\frac{(O-E)^{2}}{E}}$, 
+H0 = "the distribution of observations among the categories of one variable is independent of their distribution among the categories of the other" or "there is no association between row and column variables"
 
 To repeat:
 	$$E(a) = \frac{N_D N_+}{N}$$
     $$Var (a) = \frac{N_D N_+ N_{D^c} N_-}{N^2(N-1)}$$
 
-	 which is only from Smith et al *"Field Trials"* but the same shape as in the C-M-H test for trend below
+which is only from Smith et al *"Field Trials"* but the same shape as in the C-M-H test for trend below
 
 Chi squared is distributed as $\frac{1}{{2^\frac{k}{2} \Gamma(\frac{k}{2})}}x^{\frac{k}{2}-1}e^{-\frac{x}{2}}$, but that's not important right now.
 
@@ -1094,8 +1106,8 @@ More generally χ2 can be used in a 2xC table if no value <1 and 80% values are 
 
 Otherwise Fisher's Exact:  
 $$p_{table} = \frac{N_+ ! N_+! N_D! N_{D^c}!}{N! a! b! c! d!}$$
-	and either sum p_table across all the possible tables with lower probabilities
-	or double the sum of probabilities of lower p_table (either acceptable, both differ!)
+and either sum p_table across all the possible tables with lower probabilities
+or double the sum of probabilities of lower p_table (either acceptable, both differ!)
 
 and for the test of a "trend" across scored levels of a variable which differs between groups Xi, hence having one degree of freedom as it's comparing two means-of-scores X̄1 and X̄2 is a t test squared, which is also the form of the Pearson Chi Squared:
 		 $$\chi^2_\rho = \frac{(X _{1} - X _{2})^2}
@@ -1109,7 +1121,7 @@ $S^2 = \frac{V}{QR}$ and error factor $EF = e^{1.96 S}$
 $\chi^2_{trend}=\frac{U^2}{V} \textrm{, df=1}$
 Increase in log odds for an increase in x is U/V; the variance of this estimate is $\sqrt{1/V}$.
 The difference between the standard Chi squared test for this table and the Chi squared test for trend is the Chi squared test for departure from linear trend with df = (number of exposure groups – 2).
-	Also $V = \sum V_i$ where $V_i = \frac{D_i H_i N_{0i} N_{1i}}{N_i^2 (N_1 -1)}$ which is called the Mantel-Haenszel Chi Squared in SM04 of EPM202.
+Also $V = \sum V_i$ where $V_i = \frac{D_i H_i N_{0i} N_{1i}}{N_i^2 (N_1 -1)}$ which is called the Mantel-Haenszel Chi Squared in SM04 of EPM202.
 	
 # ANOVA
 Related to linear regression.   A table of n observations y, in k groups 
