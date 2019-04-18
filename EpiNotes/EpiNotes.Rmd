@@ -4,7 +4,7 @@ subtitle: "It's a dog."
 author: "Lewis Campbell"
 date: "`r Sys.Date()`"
 output: 
-  bookdown::epub_book: default
+  tufte::tufte_html: default
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
@@ -12,7 +12,7 @@ output:
   tufte::tufte_handout: 
     citation_package: natbib 
     latex_engine: xelatex
-  tufte::tufte_html: default
+  bookdown::epub_book: default
 bibliography: Epinotespackages.bib
 csl: biomed-central.csl
 biblio-style: plain
@@ -33,9 +33,9 @@ options(htmltools.dir.version = FALSE)
 
 # Introduction
 
-This is the notes from my \textit{MSc Epidemiology} from LSHTM, one of the two most respected Epidemiology institutions in the world.  It's a dog.
+This is the notes from my _MSc Epidemiology_ from LSHTM, one of the two most respected Epidemiology institutions in the world.  It's a dog.
 
-I wish I had done this twenty years ago, and spent the intervening time studying real statistics and computer science, instead of listening to people vomit party lines in my forties [@R-base].
+I wish I had done this twenty years ago, and spent the intervening time studying real statistics and computer science, instead of listening to people vomit party lines in my forties.
 
 # Risk
 `r newthought('The baseline odds is key to understanding')` the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.![Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.](C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg)
@@ -207,11 +207,12 @@ Bias is any systematic effect (London:"error") in the design or conduct of a stu
 		The sampling frame may not be representative of the target population
 		The groups may not be comparable (their sampling frames may differ)
 
+
 # Exposure measurement
 The true exposure is like True Grail, only seen by indirect evidence of its presence by an Instrument: this is the Measured Exposure.
 Exposure measurement errors arises from the Instrument's design, its protocols, training or attention or malice or prejudice of those who use it; from the subjects in their memory, cyclic or random or circumstantial variability or recall; and from entering or coding or transforming data.
 	Bias can be caused by differential measurement exposure error.
-If a parameter X is a proxy measure of the true parameter T, with a fixed bias across a sample b and an additional random error E then $t_i = x_i + b + e_i$, where E(E)=0, E(X) = E(T)-b and so on.  If the bias is not fixed, then the regression is not simple but multiple.  This can be hard to detect if not suspected on the basis of mechanistic understanding, which couples with unpredictable "test coverage" of regression models to reflect the true situation.
+If a parameter X is a proxy measure of the true parameter T, with a fixed bias b across any sample, and an additional random error E then $t_i = x_i + b + e_i$, where E(E)=0, E(X) = E(T)-b and so on.  If the bias is not fixed, then the regression is not simple but multiple.  This can be hard to detect if not suspected on the basis of mechanistic understanding, which couples with unpredictable "test coverage" of regression models to reflect the true situation.
 	Non fixed bias is introduced by differential measurement error, among other things.
 Precision is given by the correlation of T with X, the validity coefficient.  This all remains a bit theoretical unless the values of T can be known.
 	$\rho^2_{TX} = 1 - \frac{\sigma^2_E}{\sigma^2_X} = \frac{\sigma^2_T}{\sigma^2_X}$ , and assuming linear relationships for Y with both T and X,
@@ -924,15 +925,21 @@ take two samples of size N1 and N2, with a total size N
 	Pearson's correlation coefficient calculated for the ranks as if they were x, y coordinates
 
 
-# Tidy Data
- - Each observation is a row.
- - Each variable is a column.
- - Each "kind" of variable is a table.
- - A column to allow linkage between tables.
+# Data types and features
+
+This is partly covered by the [sampling] section, but it's integral to demonstrating epidemiological understanding.
+
+## Tidy Data
+
+- Each observation is a row.
+- Each variable is a column.
+- Each "kind" of variable is a table.
+- A column allows linkage between tables.
+
 Also have a row with variable names, which are human readable, and save in one file per table.
 A fully coherent data set is the raw data, tidy data, a codebook and a recipe to go from one to the other.
 	The codebook is the information about the variable which is not contained in the tidy dataset, including information about units, the choices you've made in selecting or presenting data and about the design of the research.  Best as a text file with sections "codebook", "study design".
-	The script or set of instructions to process raw -> tidy data should not need parameters, 
+	The script or set of instructions to process raw -> tidy data should not need parameters: having parameters introduces analyst degrees of freedom.
 
 ## Wrong conclusions:
 Effect modification = "the association of an exposure with an outcome varies by a third factor".
