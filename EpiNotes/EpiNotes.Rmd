@@ -4,11 +4,11 @@ subtitle: "It's a dog."
 author: "Lewis Campbell"
 date: "`r Sys.Date()`"
 output: 
+  tufte::tufte_html: default
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
     number_sections: true
-  tufte::tufte_html: default
   tufte::tufte_handout: 
     citation_package: natbib 
     latex_engine: xelatex
@@ -92,45 +92,51 @@ The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{
 
 ## Measures of outcome
 
-Case definitions need
-- Method for detection or definition
-- Case boundary
+Case definitions need 
+
+- Method for detection or definition 
+
+- Case boundary 
+
 - Unit of analysis (a diagnosis, an individual, a cluster...?)
 
-The population is a sort of a holy quantity, those who could be cases: so case definition influences the definition of a population. Other influences are geographic, demographic and behavioural.
+Population at risk is the entire realised, actual population to which the case definitions are applied. Above that somewhere is a sort of superpopulation, an ideal version of the realised population. This is usually just called the population in what I think is not even shorthand but a lack of concern over how ephemeral it proves to be under analysis. This _population_ is a sort of a holy quantity, those who could be cases: so case definition circularly influences the definition of a population, because the cases must be drawn from a population. The harder way to derive a case definition is to imagine the population first, and then create the definition of what would be important to call a case. In that case, the influences on the definition of the population are the more expected ones: geographic, demographic, perhaps genetic, and behavioural.
 
-Population at risk is the entire actual population to which the case definitions are applied. Above that somewhere is a sort of superpopulation, an ideal version of the realised population.
+
 
 ## Measures of association
 
-Relative risk is $r_e / r_u$ 
-Attributable risk is the risk difference and obviously unique to pairs of risks
-		$r_e - r_u$  	
-Attributable fraction AF is the proportion of the higher risk that is unique to the higher risk or
-    $AF = \frac{r_e - r_u}{r_e}$
-		 , whence, multiplying all by ru and substituting  $RR = \frac{r_e}{r_u}$ : $AF = \frac{RR-1}{RR}$
+Relative risk is $r_e / r_u$. Attributable risk is the risk difference $r_e - r_u$ under the assumption that the difference is causal. Again, here they come teaching the fruit before the tree. 
 
-Population attributable risk PAR is the extra population risk due to exposure
-    $$PAR = r_{t}-r_{u}$$
-		
-or the attributable risk times the prevalence of exposure
-		 $$PAR = p.AR = p(r_e-r_u) ;  PAF = p' AF_E =  \frac{p'(RR -1)}{RR}$$,
+Attributable fraction AF is the proportion of the higher risk that is unique to the higher risk $AF = \frac{r_e - r_u}{r_e}$, whence, multiplying all by $r_u$ and substituting  $RR = \frac{r_e}{r_u}$ : $$AF = \frac{RR-1}{RR}$$
+
+Population attributable risk PAR is the extra population risk due to exposure $PAR = r_t-r_u$, again assuming it's _all causal_. This is mathematically the same as attributable risk times the prevalence of exposure, and population attributable fraction is predictable from the definition.
+		 $$PAR = p.AR = p(r_e-r_u)$$
+		 $$PAF = p' AF_E =  \frac{p'(RR -1)}{RR}$$
 		 
-where p is proportion of the population exposed, and p' is proportion of cases are exposed.
-because total cases if a fraction p of the population is exposed, 0<p<1, it's like a binomial
-$$r_{t} = p.r_{e} + (1-p)r_{u}$$
+where p is the proportion of the population exposed, and p' is proportion of cases who are exposed.
+because total cases if a fraction p of the population is exposed, 0<p<1, the risk in the total population is calculated for a single exposure, assuming all sorts of things (it's all causal, there are no effect modifiers, all other causes are orthogonal to both exposure and outcome)
+        $$r_t = p.r_e + (1-p)r_u$$
 
-So anyway PAF is like attributable fraction, $$\frac{r_{t}-r_{u}}{r_{t}}	= \frac {PAR}{r_{t}} = \frac {p.(r_{e}-r{u})}{r_{t}}  = \frac {p.(RR-1)}{p.(RR-1)+1} $$
-Call the parameter of interest theta; whether it's risk ratio, rate ratio, odds ratio (I know, sshh...)
-A cohort estimates theta directly but only estimates p and p' if it's a random sample, otherwise external estimates are used.  Then the above equations are used.
-In cross sectional studies prevalence is estimated, incidence can't be.
-In case control, "theta is estimated by the odds ratio"; as $\theta = ad/bc$ and $PAF = p'(theta – 1)/theta$ and $p' = a/n$ so $PAF = \frac{1- (b/n_1)}{(d/n_0)}$, the ratio of cases unexposed to controls unexposed.
-Remember, kids: the assumption that PAF describes a causal relationship might not be correct: it might describe a confounder, or have an effect modification.
-A confidence interval for PAF is given using 1-PAF: $$1- (1 - \textrm{PAF} ^{\times}_{\div} e^{1.96 \sqrt{}\frac{a}{b n_1} + \frac{c}{d n_0}})$$
+So anyway PAF is like attributable fraction, and the whole calculation then goes a little something like this
+        $$\frac{r_{t}-r_{u}}{r_{t}}	= \frac {PAR}{r_{t}} = \frac {p.(r_{e}-r{u})}{r_{t}}  = \frac {p.(RR-1)}{p.(RR-1)+1} $$
 
-PAF for several levels of an exposure is given by $\sum \frac{p_k' (\theta_k -1)}{\theta_k}$ or the equation $\frac{p'1-\theta}{\theta}$, using as theta a regression estimate with whatever covariates are desired to be included.
-The joint PAF for independent exposure is $$1-PAF_T = 1-PAF_1 + 1-PAF_2 ... 1-PAF_i$$
-$AF_E$ is often used to assign blame by transposing the conditional: as it is the proportion of cases that are associated with the exposure it is called the probability of causation or the assigned share of causation. This is clearly an error unless rare conditions are met.
+A confidence interval for PAF is given using 1-PAF. Honestly I'm not sure why but maybe it's emphasising that the observed value is usually the exposed and diseased, and so the uncertainty is in how much of the rest of the population there is: 
+        $$1- (1 - \textrm{PAF} ^{\times}_{\div} e^{1.96 \sqrt{}\frac{a}{b n_1} + \frac{c}{d n_0}})$$
+
+## Inference using certain sampling designs 
+
+Call the parameter of interest theta; whether it's risk ratio, rate ratio, odds ratio (I know, sshh...). Then, 
+
+- A cohort estimates theta directly but only estimates p and p' if it's a random sample, otherwise external estimates are used.  Then the above equations are used. 
+
+- In cross sectional studies prevalence is estimated, incidence can't be. 
+
+- In case control, "theta is estimated by the odds ratio"; as $\theta = ad/bc$ and $PAF = p'(theta – 1)/theta$ and $p' = a/n$ so $PAF = \frac{1- (b/n_1)}{(d/n_0)}$, the ratio of cases unexposed to controls unexposed. 
+
+PAF for several levels of an exposure is given by $\sum \frac{p_k' (\theta_k -1)}{\theta_k}$ or the overall equation $\frac{p'1-\theta_{tot}}{\theta_{tot}}$, using as $\theta_{tot}$ a regression estimate with whatever covariates are desired to be included. The joint PAF for independent exposure is 
+            $$1-PAF_T = 1-PAF_1 + 1-PAF_2 ... 1-PAF_i$$
+$AF_E$ is often used to assign blame by transposing the conditional: as it is the proportion of cases that are associated with the exposure it is called the probability of causation or the assigned share of causation. This is clearly an error unless rare conditions are met, and the effects of the error are anywhere from very mild to moderate depending on the baseline probabilities.
 
 \begin{tabular}{| c |c | c | c| }
 \hline
@@ -163,18 +169,32 @@ PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
 	= using RR (0.5).(3-1) / (0.5).(3-1)+1 = 0.5
 	= using OR (0.5).(6-1) / (0.5).(6-1)+1 = 0.71
 
+## Final caution 
+
+Remember, kids: the assumption that PAF describes a causal relationship **might not be correct**: it might describe a confounder, or have an effect modification. 
+
 # Probability and sampling
 
-Probability is always a feature of populations, not of data;
-the population is connected to the data
-by a probability model
-using assumptions so a sample quantity is an estimator of the estimand, population value 
-1. Probability of something happening is 1
-2. Probability of nothing happening is 0
-3. Probability of a thing is 1-its opposite
-4. Probability of at least one of some mutually exclusive things is the sum of their probabilities
-5. If event A implies event B then probability of A < probability of B
-6. The joint probability of any 2 events is the sum minus their intersection:
+- Probability is always a _feature of populations_, not of data 
+
+- the population is _connected to the data_ 
+- by a probability  
+- using assumptions, so a 
+- _sample quantity is an estimator_ 
+- the population value, that mythical value again, is the estimand 
+## Kolmogorov's axioms 
+
+1. Probability of something happening is 1 $P(\Omega) = 1$
+
+2. Probability of nothing happening is 0 $P(E)\geq 0, P(E) \in R$
+
+3. Probability of a thing is 1-its opposite 
+
+4. Probability of at least one of some mutually exclusive things is the sum of their probabilities 
+
+5. If event A implies event B then probability of A < probability of B 
+
+6. The joint probability of any 2 events is the sum minus their intersection 
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 			
 Probabilities in the same probability space are independent if $P(A \cap B) = P(A).P(B)$
