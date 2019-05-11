@@ -290,24 +290,31 @@ Randomisation is distinct from random sampling
 
 # Likelihood
 
-A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space.  The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the point which makes the data most likely: the maximum likelihood estimate MLE.
+A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space, and those two likelihoods are not always the same.  The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the likelihood which makes the data most likely under the model assumption: this is the maximum likelihood estimate MLE.
 
-Other points are divided by the MLE to yield the likelihood ratio, which rejects data but adds clarity and comparability.  If the likelihood and hence the likelihood ratio curves are normal, so log(likelihood ratio) is quadratic and so easily solved using the pattern $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.  If it's not standard normal then it's not easy to do and iteration is probably as good as algebra.  The quadratic is chosen so that the curvature of the actual log likelihood and the quadratic fitted approximation are identical at the fit point, whether the MLE or the null, depending on whether the aim is to test or derive a confidence interval, or to determine the MLE.  Wald tests fit at the MLE.
+Because the whole curve is fitted, it has to depart from at least some of the observed values at least some of the time. This means that it rejects data, but it adds clarity and comparability between well designed tests.  If the likelihood is normal, so log(likelihood) is quadratic and so easily solved using the pattern $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.  If it's not standard normal then it's not easy to do and iteration is probably as good as algebra.  The quadratic is chosen so that the curvature of the actual log likelihood and the quadratic fitted approximation are identical at the fit point, whether the MLE or the null, depending on whether the aim is to test or derive a confidence interval, or to determine the MLE.  Wald tests fit at the MLE.
 
-Also above a LR of 0.1465 lies 95% of the quadratic approximation to the likelihood curve and twice the log of the likelihood ratio is algebraically equivalent to the chi squared distribution, giving a chi squared statistic for every value of the parameter, given the data, under those assumptions.  The log(LR) at that point is -0.192, useful for the Gaussian assumption underlying the quadratic approximation: $log(LR) = -\frac{1}{2}\frac{\bar{x} - \mu}{\sigma \sqrt{n}}$.  The fit away from its fitted point is less good, so the choice is to fit at the MLE or at the null.
+Other points are divided by the MLE to yield the likelihood ratio. They are standardised by comparing to the MLE, so that with all the approximations above the ratio at the MLE is 1 and the ratio at each 97.5% centile is 0.1465. A ratio is the exponential of a difference, and logs of likelihood ratios to the MLE are convenient because they are all negative.
+
+The log(LR) at the 97.5% point is -0.192, useful for the Gaussian assumption underlying the quadratic approximation: $log(LR) = -\frac{1}{2}\frac{\bar{x} - \mu}{\sigma \sqrt{n}}$. Twice the log of the normal likelihood ratio is algebraically equivalent to the chi squared distribution, giving a chi squared statistic for every value of the parameter, given the data, under those assumptions.   The fit of the curve is less good for any point other than the deliberately fitted one, so the choice is to fit at the MLE or at the null. 
+
 The quadratic is chosen to meet the log LR curve at the MLE and to have the same curvature:
-	 $$\textrm{log(LR)} = - \frac{1}{2} (\frac{M - \pi_0}{S})^2$$ as for D failures in N trials D/N = M
-	 
-Fuckedly, London uses M not only for D/N but also for log(D/N-D).	$S^2 = M(1-M)$, $M = log(\frac{D}{N-D})$  and $S =\sqrt{\frac{1}{D} + \frac{1}{N-D}} = \sqrt{\frac{M(1-M)}{n}}$	$\frac{1}{S^2}$ is called the information of the data: the larger, the greater the curvature of log(LR), and the more precise the estimate and so on.	A supported range of parameter values with attendant likelihood over a certain cutoff likelihood can be calculated and as S is the standard error so the LR at the 95% CI limits is $e^{\frac{-1.96^2}{2}} = 0.1465$ if the likelihood curve is normal across the parameter space.
-	
-Use likelihood ratio statistic of the value of the log(LR) at the null value of the parameter (or for any 2 models where one is a restricted form of the other)
+	 $$\textrm{log(LR)} = - \frac{1}{2} (\frac{M - \pi_0}{S})^2$$ as for D failures in N trials D/N = M 
 
-LRS = -2 log(LR) = -2(lognull – logMLE) = 2(logMLE - lognull) ~ χ2 df = (r-1).(c-1) 
-or the Wald statistic of the fitted quadratic approximation to the log(LR) at the null
-$LRS_{Wald} = (\frac{MLE}{S})^2$, and its square root if H0:log(LR)=0 is $z = \frac{MLE}{S}$
+## Likelihood ratio statistic 
+
+The likelihood ratio statistic compares the likelihood at the chosen point on the line with another, such as the null. It can also be used to compare two likelihoods such as the MLE of two different models, giving an estimate of how relatively likely the data is under each of the models and so if they differ in only one parameter, what the probability is of the data .  
+$$LRS = -2 log(LR), \sim \chi^2, df = 1$$ 
+
+## Wald test 
+
+The Wald statistic describes the difference between two possible values for a coefficient of the model in units of standard errors, so $W = \frac{\hat{\beta} - \beta_0}{\hat{SE}(\hat\beta)} \sim N(0,1)$, or the square of all that which is $\chi^2$ distributed.  If testing the null hypothesis that the coefficient is zero, which is the usual use, then $\beta_0$ disappears and the statistic is then the coefficient divided by its standard error.  For logistic or poisson regression this is fixed at 1 because it's a conservative standard error in the first place and there's no single framework to describe it outside of that. For ordinary least squares regression it's estimated from the residuals of the fitted values using $\hat{SE}()\hat{\beta_j} = \sqrt{s^2 (X'X)_{jj}^{-1}}$, the product of those residuals and the design matrix.  so for log or Poisson it's $LRS_{Wald} = (\frac{MLE}{S})^2$, and its square root if H0:log(LR)=0 is $z = \frac{MLE}{S}$, and for OLS it's t.
 	
-or the Score Test: alternative quadratic matching value, gradient and curvature at null, not MLE
-Score test = $-2 \textrm{log(LR)}_{null_{quadfit}} = \frac{U^2}{V}$ where U=gradient and -V = curvature(fitted) at null from which $\chi^2_{MH} = \frac{U^2}{V}$ is derived for the Mantel Haenszel test, $\frac{score^2}{score \> variance}$
+The Score Test requires an alternative curve. Usually this is the quadratic approximation to the normal likelihood which matches value, gradient and curvature at the null rather than at the MLE. The test itself is $\textrm{score}^2 / \textrm{score variance}$
+
+This is realised as a chi squared test. If U=gradient and -V = curvature fitted at the null, then $-2\textrm{log(LR)}_{null_{quadfit}} = \frac{U^2}{V}$ and $$\chi^2_{MH} = \frac{U^2}{V}$$ is derived for the Mantel Haenszel test.
+
+Fuckedly, London uses M not only for D/N but also for log(D/N-D).	$S^2 = M(1-M)$, $M = log(\frac{D}{N-D})$  and $S =\sqrt{\frac{1}{D} + \frac{1}{N-D}} = \sqrt{\frac{M(1-M)}{n}}$.  	$\frac{1}{S^2}$ is called the _information_ of the data: the larger the "information", the greater the curvature of log(LR), and the more precise the estimate and so on. A supported range of parameter values with their attendant likelihood over a certain cutoff likelihood can be calculated. As S is the standard error so the LR at the 95% CI limits is $e^{\frac{-1.96^2}{2}} = 0.1465$ if the likelihood curve is normal across the parameter space.
 
 ## Binomial likelihoods
 
