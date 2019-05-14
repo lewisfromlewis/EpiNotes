@@ -4,14 +4,14 @@ subtitle: "For you"
 author: "Lewis Campbell"
 date: "`r Sys.Date()`"
 output: 
+  tufte::tufte_html: default
+  tufte::tufte_handout: 
+    citation_package: natbib 
+    latex_engine: xelatex
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
     number_sections: true
-  tufte::tufte_handout: 
-    citation_package: natbib 
-    latex_engine: xelatex
-  tufte::tufte_html: default
   bookdown::epub_book: default
 bibliography: Epidemiology.bib
 csl: biomed-central.csl
@@ -312,7 +312,7 @@ $$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$
 
 # Beyond subjectivity and objectivity
 
-Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides[@gelman_beyond].  They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
+Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides[@gelman_beyond_].  They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
 
 # Exposure measurement
 
@@ -883,7 +883,7 @@ The sample variance is sort of analogous as $s^2 = \frac{ \sum_{i=1} (X_{i} - \b
 
 `r newthought('THE SAMPLE VARIANCE ALSO HAS A DISTRIBUTION')` relating to the population of sample variances from which it is drawn: it is an unbiased estimator, meaning the mean of sample variances is an estimate of the population variance; and the variance of sample means is an estimate of the population variance, scaled for the sample size.  I think this is incredibly important.
 The variance of the sample mean is the population variance divided by n
-		 $Var[\bar{X}] = \frac{\sigma^2}{n}$, so s.e.m. = $\sigma \sqrt \frac{1}{n}$, because
+		 $Var[\bar{X}] = \frac{\sigma^2}{n}$, so s.e.m. = $\sigma\sqrt{\frac{1}{n}}$, because
 		 $Var[\bar X]= Var[\frac{1}{n}.\sum X_{i}] = (\frac{1}{n^2}).Var[\sum{X_{i}}] = (\frac{1}{n^2}).\sum \sigma^2 = \frac{\sigma^2}{n}$
 
 The SE for the mean of a log transformed variable, because
@@ -1327,14 +1327,14 @@ Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \
 	$E_{1i}= \frac{d_i n_{1i}}{n_iO} = \sum d_{1i}, \> E = \sum E_{1i} \textrm{, U = O-E}$
 	MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
 Rule of 5 to check validity:
-	subtrahends of `c(sum(min(c(di, n1i)))` , `sum(max(c(0, (n1i – hi))))) – sum(Ei) > 5`
+	subtrahends of `c(sum(min(c(di, n1i))))` , `sum(max(c(0, (n1i – hi))))) – sum(Ei) > 5`
 Chi squared for heterogeneity tests H0: for all i, ORi = ORMH , so $\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$
 
 ## Multivariable regression
 Extending the line to a plane, or later to an n-dimensional plane.  Linear in the coefficients.  Least squares used again, fixing at zero (or removing ) coefficients and calculating regression through the new origin for the remainder, repeatedly.
 For a model with sum of squares $\sum (Y_i - X_{1i} \beta_1 - X_{2i} \beta_2)^2$ to estimate B2
-	define Y centred, $\~ Y_i = Y_i - X_{1i} \beta_1$ then sum of squares = $\sum (\~Y_i - X_{2i} \beta_2)^2$
-	and so $\beta_2 = \frac{\sum \~Y_i X_{2i}}{\sum X_{2i}^2}$, and so on for other coefficients.
+	define Y centred, $\tilde Y_i = Y_i - X_{1i} \beta_1$ then sum of squares = $\sum (\tilde Y_i - X_{2i} \beta_2)^2$
+	and so $\beta_2 = \frac{\sum \tilde Y_i X_{2i}}{\sum X_{2i}^2}$, and so on for other coefficients.
 	and if $e_{i, a | b} = a_i -  \frac{\sum_{j=1}^n a_j b_j }{\sum_{i=1}^n b_j^2} b_i$
 So we get the minimiser $\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e_{i, X_1 | X_2} X_1}$ or $\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e^2_{i, X_1 | X_2} }$
 
