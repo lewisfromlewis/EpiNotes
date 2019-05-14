@@ -39,12 +39,21 @@ This is the notes from my _MSc Epidemiology_ from LSHTM, one of the two most res
 I wish I had done this twenty years ago, and spent the intervening time studying real statistics and computer science, instead of listening to people vomit party lines in my forties.
 
 # Risk
-`r newthought('The baseline odds is key to understanding')` the effect of a given odds ratio on the absolute risk difference.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of an outcome, it needs to be applied to a baseline absolute risk to display itself.
+`r newthought('Risk is a conditional probability')`. This is the entry level, and is maybe a bit higher up than Epidemiology is usually sold. Conditional probabilities are talked about all over the place, but rarely in that language, which requires a retreat by many steps to get to the true underlying shape of the relationship. Relative risk and how it works, odds ratios, hazards and their ratios are fundamental but are maybe best understood via observing how they work in their more "advanced" utilities such as regression modelling.
+
+The baseline odds, for example, is key to understanding the effect of a given odds ratio on the absolute risk difference. By extension it helps to understand how risk and odds differ, how invertible odds are so useful and how a little mathematical manipulation of the relative probabilities opens up a whole set of ways to figure out the true underlying effect.  While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of a categorical outcome, it needs to be applied to a baseline absolute odds (and hence risk) to display itself.
 
 ![Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.](C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg)
 ```{r fig.margin=TRUE, cache=TRUE, message=FALSE, echo=FALSE, fig.cap='Absolute benefit as a function of risk of the event in a control subject and the relative effect (odds ratio) of the risk factor. The odds ratios are given for each curve.'}
 knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
 ```
+
+The standard error for log odds ratio is
+
+$$\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$$
+and the 95% confidence interval for the log(OR) is +/- log(SE).
+
+The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$, whereby the 95% CI is OR/EF to OR*EF or exp(log Estimate +/- log SE)
 
 ## Measures of outcome
 
@@ -54,9 +63,9 @@ Case definitions need
 
 - Case boundary 
 
-- Unit of analysis (a diagnosis, an individual, a cluster...?)
+- Unit of analysis (a diagnosis, an individual, a cluster...?) 
 
-Population at risk is the entire realised, actual population to which the case definitions are applied. Above that somewhere is a sort of superpopulation, an ideal version of the realised population. This is usually just called the population in what I think is not even shorthand but a lack of concern over how ephemeral it proves to be under analysis. This _population_ is a sort of a holy quantity, those who could be cases: so case definition circularly influences the definition of a population, because the cases must be drawn from a population. The harder way to derive a case definition is to imagine the population first, and then create the definition of what would be important to call a case. In that case, the influences on the definition of the population are the more expected ones: geographic, demographic, perhaps genetic, and behavioural.
+Population at risk is the entire realised, actual population to which the case definitions are applied. Above that somewhere is a sort of superpopulation, an ideal version of the realised population. This is usually just called the population in what I think is not even shorthand but a lack of concern over how ephemeral it proves to be under analysis. This _population_ is a sort of a holy quantity, those who could be cases: so case definition circularly influences the definition of a population, because the cases must be drawn from a population. The harder way to derive a case definition is to imagine the population first, and then create the definition of what would be important to call a case. In that case, the influences on the definition of the population are the more expected ones: geographic, demographic, perhaps genetic, and behavioural[@rose_sick_nodate].
 
 # The contingency table
 
@@ -85,9 +94,9 @@ This table is the familiar medical school one where sensitivity and specificity 
 
 ```{r, echo = FALSE, message=FALSE}
 Bayesmargins <- tibble::tibble(
-    "measure" = c("sensitivity     ",
+    "measure" = c("sensitivity or recall",
                   "specificity",
-                  "ppv",
+                  "ppv or precision",
                   "npv",
                   "accuracy",
                   "variance"),
@@ -150,15 +159,11 @@ Following form this the negative diagnostic likelihood is DLR-:
 
 And the entire likelihood ratio is DLR+/DLR- and if far from 1 means that a test result is very informative.
 
-The standard error for log odds ratio is
-
-$$\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$$
-and the 95% confidence interval for the log(OR) is +/- log(SE).
-
-The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$, whereby the 95% CI is OR/EF to OR*EF or exp(log Estimate +/- log SE)
-
 
 ## Measures of association
+
+The likelihood ratio is a measure of association, and there are many others, with the preference guided as much by familiarity as by utility for the task. Cohen's kappa, the phi coefficient, the uncertainty coefficient, Regression coefficients, the F score combining precision and recall (identical to ppv and sensitivity), markedness and informedness are various measures^[Cohen's kappa is 1 with perfect agreement, $\kappa = \frac{p_o - p_e}{1 - p_e}$ where $p_o$ is the observed agreement and is the same as accuracy, and $p_e = \frac{1}{N^2} \sum_{k,i} n_{ki}$ is the expected chance agreement, the mean pair agreement weighted for the number of times rater _i_ predicted item _k_ in total.]
+.
 
 Relative risk is $r_e / r_u$. Attributable risk is the risk difference $r_e - r_u$ under the assumption that the difference is causal. Again, here they come teaching the fruit before the tree. 
 
