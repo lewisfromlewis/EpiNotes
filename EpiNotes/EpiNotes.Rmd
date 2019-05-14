@@ -5,15 +5,15 @@ author: "Lewis Campbell"
 date: "`r Sys.Date()`"
 output: 
   tufte::tufte_html: default
+  tufte::tufte_handout: 
+    citation_package: natbib 
+    latex_engine: xelatex
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
     number_sections: true
-  tufte::tufte_handout: 
-    citation_package: natbib 
-    latex_engine: xelatex
   bookdown::epub_book: default
-bibliography: Epinotespackages.bib
+bibliography: Epidemiology.bib
 csl: biomed-central.csl
 biblio-style: plain
 link-citations: yes
@@ -21,6 +21,7 @@ link-citations: yes
 
 ```{r setup, include=FALSE}
 library(tufte)
+library(tidyverse)
 # invalidate cache when the tufte version changes
 #library(bookdown) + render_book("EpiNotes.html", "Epinotes.epub", output_format = epub_book(pandoc_args = "--mathml", epub_version="epub3"))
 #calibre(input="EpiNotes.epub", output="EpiNotes.mobi", options = "--mobi-file-type new")
@@ -47,16 +48,31 @@ knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes
 
 # The contingency table
 
-A table allows things to be seen, and calculations referred to.  "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ.
+A table allows things to be seen, and calculations referred to.  "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ ^[The very first thing to say is that there must be sufficient items in each box, or as we'll call them later, each stratum, to say something about the expectation. You can't estimate the effect of a thing that is universal or absent in your sample, whether using this or most other methods.]
+.
 
-\begin{tabular}{| c |c | c | c| }
-\hline
-& + & - & \\ \hline
-D & a & b & $N_{D}$ \\ \hline
-$D^c$ & c & d & $N_{D^c}$ \\ \hline
-& $N_{+}$ &  $N_{-}$  & N \\ \hline
-\end{tabular}
+```{r, echo=FALSE}
+contingency <- tibble(" " = c("D", "$D^c$", ""),
+            "+" = c("a", "c", "$N_{+}$"),
+            "-" = c("b", "d", "$N_{-}$"),
+            "total" = c("$N_D$", "$N_{D^c}$", "N")
+            )
+knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table", escape=FALSE)
 
+
+#\begin{tabular}{| c |c | c | c| }
+#\hline
+#& + & - & \\ \hline
+#D & a & b & $N_{D}$ \\ \hline
+#$D^c$ & c & d & $N_{D^c}$ \\ \hline
+#& $N_{+}$ &  $N_{-}$  & N \\ \hline
+#\end{tabular}
+```
+
+
+```{r, echo = FALSE}
+
+knitr::kable(Bayesmargins, caption = "Marginal calculations", booktabs = TRUE, escape=FALSE)
 
 \begin{table}
 \caption{Marginal calculations}
@@ -70,7 +86,7 @@ accuracy    & =		P(correct)  & =	(a+d)/(a+b+c+d) \\
 variance    & =		$\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$ \\
 \end{tabular}
 \end{table}
-
+```
 
 $DLR+ 	= \frac{P(+|D)}{P(+|D^C)}$
 $= \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}}$
@@ -1266,13 +1282,17 @@ Outliers can be real or spurious, conform to the regression line or not.  Levera
 Adding spurious variables inflates the variance: as the true sigma is unknown the variance inflation factor of a predictor is the inflation of variance due to correlation of it with other variables, over the ideal situation in which it's orthogonal to all the other variables.
 Missing helpful variables out introduces bias in the estimate.
 
-# Missing (from Josse)
+# Missing (from Josse) 
+
 Missing for various reasons 
-MCAR – P(missing) does not depend on either the missing value itself or any other value.
-MAR – P(missing) does not depend on the the value itself; but may depend on other variables (ie it's Missing At Random Within Strata)
+
+MCAR – P(missing) does not depend on either the missing value itself or any other value. 
+
+MAR – P(missing) does not depend on the the value itself; but may depend on other variables (ie it's Missing At Random Within Strata) 
+
 Multiple correspondence analysis MCA graph on a "missingness matrix" shows neighbours in missingness; but doesn't imply a missingness definition (eg broken machine probably MCAR but if broken by a high value, then MNAR).
 
-EM algorithm, os supplementary EM algorithm, allows a model that uses the observed data, then updates with the last estimate and so on.  Needs a new process for each assumed underlying model.
+[EM algorithm], or supplementary EM algorithm, allows a model that uses the observed data, then updates with the last estimate and so on.  Needs a new process for each assumed underlying model.
 
 Imputation using the mean shrinks the correlation to zero; by the regression line shrinks to 1; can impute by the regression line plus noise (stochastic regression) and preserve both the joint and marginal distribution of the data, so estimation has no bias added to the missingness bias itself.  It's an extension of this last to the multivariate case that results in the mice procedure.
 
@@ -1879,5 +1899,6 @@ attributes  In a NumPy object are accessed by . The same as $ accesses them in a
 ```{r bib, include=FALSE}
 # create a bib file for the R packages used in this document, previous yaml included these for tufte-book but not necessary if using just pandoc-citeproc
 
-knitr::write_bib(c('base', 'rmarkdown'), file = 'Epinotespackages.bib')
+#knitr::write_bib(c('base', 'rmarkdown'), file = 'Epinotespackages.bib')
 ```
+[EM algorithm]
