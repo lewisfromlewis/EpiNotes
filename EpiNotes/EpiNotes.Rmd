@@ -307,12 +307,12 @@ $P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 
 ## Chebyshev's inequality
 
-The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value:
-$$P(abs{X - \mu} > k \sigma) = \frac{1}{k^2}$$
+This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. Teh inequality is that the probability that the observed value is more than k σ away from its mean is small and rapidly decreasing with k 
+$$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$
 
 # Beyond subjectivity and objectivity
 
-Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides.  They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
+Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides[@gelman_beyond].  They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
 
 # Exposure measurement
 
