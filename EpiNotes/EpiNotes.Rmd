@@ -4,14 +4,14 @@ subtitle: "It's a dog."
 author: "Lewis Campbell"
 date: "`r Sys.Date()`"
 output: 
-  tufte::tufte_html: default
-  tufte::tufte_handout: 
-    citation_package: natbib 
-    latex_engine: xelatex
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
     number_sections: true
+  tufte::tufte_handout: 
+    citation_package: natbib 
+    latex_engine: xelatex
+  tufte::tufte_html: default
   bookdown::epub_book: default
 bibliography: Epidemiology.bib
 csl: biomed-central.csl
@@ -46,16 +46,28 @@ I wish I had done this twenty years ago, and spent the intervening time studying
 knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
 ```
 
+## Measures of outcome
+
+Case definitions need 
+
+- Method for detection or definition 
+
+- Case boundary 
+
+- Unit of analysis (a diagnosis, an individual, a cluster...?)
+
+Population at risk is the entire realised, actual population to which the case definitions are applied. Above that somewhere is a sort of superpopulation, an ideal version of the realised population. This is usually just called the population in what I think is not even shorthand but a lack of concern over how ephemeral it proves to be under analysis. This _population_ is a sort of a holy quantity, those who could be cases: so case definition circularly influences the definition of a population, because the cases must be drawn from a population. The harder way to derive a case definition is to imagine the population first, and then create the definition of what would be important to call a case. In that case, the influences on the definition of the population are the more expected ones: geographic, demographic, perhaps genetic, and behavioural.
+
 # The contingency table
 
 A table allows things to be seen, and calculations referred to.  "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ ^[The very first thing to say is that there must be sufficient items in each box, or as we'll call them later, each stratum, to say something about the expectation. You can't estimate the effect of a thing that is universal or absent in your sample, whether using this or most other methods.]
 .
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 contingency <- tibble(" " = c("D", "$D^c$", ""),
             "+" = c("a", "c", "$N_{+}$"),
             "-" = c("b", "d", "$N_{-}$"),
-            "total" = c("$N_D$", "$N_{D^c}$", "N")
+            "total" = c("$N_D$", "$N_{D^c}$", "$N$")
             )
 knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table", escape=FALSE)
 
@@ -69,55 +81,81 @@ knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table", escape=
 #\end{tabular}
 ```
 
+This table is the familiar medical school one where sensitivity and specificity are shown to be mean completely different things about a positive test, depending on the prevalence of the disease in the population.
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message=FALSE}
+Bayesmargins <- tibble::tibble(
+    "measure" = c("sensitivity     ",
+                  "specificity",
+                  "ppv",
+                  "npv",
+                  "accuracy",
+                  "variance"),
+    "concept" = c("$P(+|D)$",  
+                "$P(-|DC)$",
+                "$P(D|+)$",
+                "$P(DC|-)$",
+                "$P(correct)$",
+                "inhomogeneity in the table"),
+    "value"= c("a/(a+b)",
+               "d/(c+d)",
+               "a/(a+c)",
+               "d/(d+b))",
+               "(a+d)/(a+b+c+d)",
+               "$\\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$")
+)
 
 knitr::kable(Bayesmargins, caption = "Marginal calculations", booktabs = TRUE, escape=FALSE)
 
-\begin{table}
-\caption{Marginal calculations}
-\begin{tabular}{l l l}
-\hline
-sensitivity & =		$P(+|D)$  	& =	a/(a+b) \\
-specificity & = 	$P(-|DC)$	    & =	d/(c+d) \\
-ppv         & = 	$P(D|+)$	    & =	a/(a+c) \\
-npv         & = 	$P(DC|-)$	    & =	d/(d+b) \\
-accuracy    & =		P(correct)  & =	(a+d)/(a+b+c+d) \\
-variance    & =		$\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$ \\
-\end{tabular}
-\end{table}
+#\begin{table}
+#\caption{Marginal calculations}
+#\begin{tabular}{l l l}
+#\hline
+#sensitivity & =		$P(+|D)$  	    & =	a/(a+b) \\
+#specificity & = 	$P(-|DC)$	    & =	d/(c+d) \\
+#ppv         & = 	$P(D|+)$	    & =	a/(a+c) \\
+#npv         & = 	$P(DC|-)$	    & =	d/(d+b) \\
+#accuracy    & =		P(correct)  & =	(a+d)/(a+b+c+d) \\
+#variance    & =		$\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$
+#\\
+#\end{tabular}
+#\end{table}
 ```
 
-$DLR+ 	= \frac{P(+|D)}{P(+|D^C)}$
-$= \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}}$
-$= \frac{(ac+ad)}{(ac+ab)}$
+## Diagnostic likelihood ratio 
 
-DLR+ = (diagnostic likelihood ratio of a positive test) = sensitivity/(1-specificity) 
+[Likelihood] is covered later in plenty detail. For now, the diagnostic likelihood ratio for this limited situation of mutually exclusive states is revealed by the table, and is a measure of how inhomogenous are the numbers across the table. A certain hypothesis, such as "the disease is present" is more likely than its complement if the test is positive, by an amount equal to the ratio of positive results among the diseased compared to those without the disease.
 
-DLR+ = Bayes Factor
-		
-Because Posterior Odds = Prior Odds times the DLR, a DLR of N means the H(D) is N times more supported by data than is its complement, 
-$H(D^C)$
+The diagnostic likelihood ratio of a positive test is the DLR+: 
 
-`r newthought('The standard error for log odds ratio is')` 
+- $= \frac{P(+|D)}{P(+|D^C)}$ 
+
+- = sensitivity/(1-specificity) 
+
+- = Bayes Factor 
+
+- = Posterior Odds / Prior Odds 
+
+- $= \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}}$ 
+
+- $= \frac{(ac+ad)}{(ac+ab)}$ 
+
+Following form this the negative diagnostic likelihood is DLR-: 
+
+- $= \frac{P(- | D)}{P(- | D^c)}$ 
+
+- = 1 - sensitivity / specificity 
+
+- _etc_ 
+
+And the entire likelihood ratio is DLR+/DLR- and if far from 1 means that a test result is very informative.
+
+The standard error for log odds ratio is
 
 $$\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$$
 and the 95% confidence interval for the log(OR) is +/- log(SE).
 
 The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$, whereby the 95% CI is OR/EF to OR*EF or exp(log Estimate +/- log SE)
-
-## Measures of outcome
-
-Case definitions need 
-
-- Method for detection or definition 
-
-- Case boundary 
-
-- Unit of analysis (a diagnosis, an individual, a cluster...?)
-
-Population at risk is the entire realised, actual population to which the case definitions are applied. Above that somewhere is a sort of superpopulation, an ideal version of the realised population. This is usually just called the population in what I think is not even shorthand but a lack of concern over how ephemeral it proves to be under analysis. This _population_ is a sort of a holy quantity, those who could be cases: so case definition circularly influences the definition of a population, because the cases must be drawn from a population. The harder way to derive a case definition is to imagine the population first, and then create the definition of what would be important to call a case. In that case, the influences on the definition of the population are the more expected ones: geographic, demographic, perhaps genetic, and behavioural.
-
 
 
 ## Measures of association
