@@ -363,9 +363,9 @@ Balance covariates by
 
 Matching attempts to make the groups comparable. 
 
-- Frequency matching creates groups who are exposed, or unexposed, and who are the same in the frequency of whatever matching variables is desired. Group parameters are calculated and pooled
+- Frequency matching creates groups who are exposed, or unexposed, and who are the same in the frequency of whatever matching variables is desired. Group parameters are calculated and pooled, as in the MH method 
 
-- Individual matching takes cases and only selects controls who possess the same value of the matching characteristic. Matched analysis is needed 
+- Individual matching takes cases and only selects controls who possess the same value of the matching characteristic. Matched analysis is needed across strata j, such as for odds ratio $OR_m = \frac{\sum D_{1j} D^c_{0j} / N_j}{\sum D_{0j} D^c_{1j} / N_j} , ^{\times}_\div e^{1.96 \sqrt{\frac{1}{N_{01}} + \frac{1}{N_{10}}}}$, and tested with $\chi^2 = \frac{(n_{10} + n_{01})^2}{(n_{10} - n_{01})}, df = 1$
 
 There is selection involved in matching, which is not addressed in most places. The result of matching is that if the groups or individuals are perfectly matched, they are perfectly balanced for all characteristics other than the exposure of interest. Matching cases with controls for a variable most directly allows the estimation of effect modification by that variable. It also makes that variable ignorable if both groups really are identical except for the the exposure of interest. This reduces variance and therefore can increase precision or efficiency. It may also add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
 
