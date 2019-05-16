@@ -361,11 +361,17 @@ Balance covariates by
 
 ## Matching 
 
-Matching attempts to make the groups comparable. If they are perfectly matched, they are perfectly balanced for all characteristics other than the exposure of interest. Matching cases with controls for a variable most directly allows the estimation of effect modification by that variable. It also makes that variable ignorable if both groups really are identical except for the the exposure of interest. This reduces variance and therefore can increase precision or efficiency. It may also add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
+Matching attempts to make the groups comparable. 
 
-Matching eg by malaria rates last year, can, however, cause problems. I intuit that if the matched variable is not the right one then no inferential efficiency is gained, eg if "rank of malaria incidence" is very different in the year of study then they're not matched by malaria incidence and random baseline variability may be considered to have been reduced when it actually hasn't.  So that's a problem like HTE or undermatched confounders. As it happens they're not very correlated at all, r=0.2 or so. Also overmatching is logistically hard and increases concordant pairs. 
+- Frequency matching creates groups who are exposed, or unexposed, and who are the same in the frequency of whatever matching variables is desired. Group parameters are calculated and pooled
 
-Matching does lose a little power becaus eonly discordant pairs contribute to estimates, but it gains bby reducing variability. The problem that is hidden is if the matching and exposure variables are strongly correlated, when power is lost, probably without being recognised.  
+- Individual matching takes cases and only selects controls who possess the same value of the matching characteristic. Matched analysis is needed 
+
+There is selection involved in matching, which is not addressed in most places. The result of matching is that if the groups or individuals are perfectly matched, they are perfectly balanced for all characteristics other than the exposure of interest. Matching cases with controls for a variable most directly allows the estimation of effect modification by that variable. It also makes that variable ignorable if both groups really are identical except for the the exposure of interest. This reduces variance and therefore can increase precision or efficiency. It may also add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
+
+Matching, _eg_ by _"malaria rates last year"_, can cause problems. I intuit that if the matched variable is not the right one then no inferential efficiency is gained, eg if "rank of malaria incidence" is very different in the year of study then they're not matched by malaria incidence and random baseline variability may be considered to have been reduced when it actually hasn't.  So that's a problem like HTE or undermatched confounders. As it happens they're not very correlated at all, r=0.2 or so. Also overmatching is logistically hard and increases concordant pairs. 
+
+Matching does lose a little power because only discordant pairs contribute to estimates, but it gains more power back by reducing variability. The problem that is hidden is if the matching and exposure variables are strongly correlated, when power is lost, probably without being recognised.  
 
 If the matched variable is on the causal pathway it underestimates the effect of exposure on outcome. 
 
