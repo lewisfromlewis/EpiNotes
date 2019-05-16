@@ -4,14 +4,14 @@ subtitle: "For you"
 author: "Lewis Campbell"
 date: "`r Sys.Date()`"
 output: 
-  tufte::tufte_html: default
-  tufte::tufte_handout: 
-    citation_package: natbib 
-    latex_engine: xelatex
   tufte::tufte_book:
     citation_package: natbib
     latex_engine: xelatex
     number_sections: true
+  tufte::tufte_handout: 
+    citation_package: natbib 
+    latex_engine: xelatex
+  tufte::tufte_html: default
   bookdown::epub_book: default
 bibliography: Epidemiology.bib
 csl: biomed-central.csl
@@ -294,7 +294,7 @@ and DLR-ve
 $$\frac{P(-|D)}{P(-|D^{c})} = \frac{(1-sensitivity)}{specificity}$$	
 
 Because $P(D) = (1-P(D^{c}))$ the complementary Bayes rules for positive predictive value is
-$$P(D|+) = \frac {P(+|D).P(D)} {P(+|D).P(D)  +  P(+|D^{c}).P(D^{c})}$$
+$$P(D|+) = \frac{P(+|D).P(D)}{P(+|D).P(D) + P(+|D^{c}).P(D^{c})}$$
 
 		$$P(D^{c}|+) = \frac {P(+|D^{c}).P(D^{c})}{P(+|D).P(D)  +  P(+|D^{c}).P(D^{c})}$$
 
@@ -359,13 +359,22 @@ Balance covariates by
 - minimisation (re-read Senn 2004) 
 - matching (by pairs, read Eldridge 2012).
 
-Matching case-control by a variable allows effect modification by that variable to be estimated, and for ignoring the effect of the variable.  Can increase precision or efficiency; may add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
+## Matching 
 
-Matching eg by malaria rates last year, can cause problems. I intuit that if the matched variable is not the right one then no inferential efficiency is gained, eg if "rank of malaria incidence" is very different in the year of study then they're not matched by malaria incidence and random baseline variability may be considered to have been reduced when it actually hasn't.  So that's a problem like HTE or undermatched confounders. As it happens they're not very correlated at all, r=0.2 or so. Matching doesn't lose much power unless the matching and exposure variables are strongly correlated; but it can do it.  Also overmatching is logistically hard and increases concordant pairs.  And if the matched variable is on the causal pathway it underestimates the effect of exposure on outcome.
+Matching attempts to make the groups comparable. If they are perfectly matched, they are perfectly balanced for all characteristics other than the exposure of interest. Matching cases with controls for a variable most directly allows the estimation of effect modification by that variable. It also makes that variable ignorable if both groups really are identical except for the the exposure of interest. This reduces variance and therefore can increase precision or efficiency. It may also add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
 
-"Break-even values" for the correlation between matching and outcome variables for matching or stratification to be beneficial. 
+Matching eg by malaria rates last year, can, however, cause problems. I intuit that if the matched variable is not the right one then no inferential efficiency is gained, eg if "rank of malaria incidence" is very different in the year of study then they're not matched by malaria incidence and random baseline variability may be considered to have been reduced when it actually hasn't.  So that's a problem like HTE or undermatched confounders. As it happens they're not very correlated at all, r=0.2 or so. Also overmatching is logistically hard and increases concordant pairs. 
+
+Matching does lose a little power becaus eonly discordant pairs contribute to estimates, but it gains bby reducing variability. The problem that is hidden is if the matching and exposure variables are strongly correlated, when power is lost, probably without being recognised.  
+
+If the matched variable is on the causal pathway it underestimates the effect of exposure on outcome. 
+
+Between these two effects there are "break-even values" for the correlation between matching and outcome variables for matching or stratification to be beneficial. 
+
 Matched Odds ratios are derived from MH summary odds ratios where only discordant pairs count: if individually matched then each pair is a stratum, if the tabulation is at pair level then two boxes contain zeroes for each concordant pair.  Overall numbers of pairs are tabulated for each combination.
 	
+## Randomisation 
+
 Randomisation is distinct from random sampling 
 - "In a properly randomised trial any difference between the groups outside that imparted by the intervention are due to chance." 
 - "Any difference between the trial groups should be due to the outcome." 
@@ -480,28 +489,25 @@ k is estimated for power reasons from σc : see below or $m= \frac{N(1-\rho)}{(c
 ## Standard cluster sample size calculations
 
 For two rates:	$n = \frac{(z_{1-\beta} + z_{1-\alpha/2})^2 . (\lambda_1 + \lambda_2)}{(\lambda_1 - \lambda_2)^2}$	
-			$\textrm{As E}(s^2) = \lambda Av(1/y_j) +\sigma_c^2 = \lambda Av(1/y_j) + k^2\lambda^2\>\textrm{ so}$
-			$\hat \sigma_c^2 = s^2 - r Av(1/y_j)$ and 
-            $\hat k = \frac{\hat \sigma_c}{r}$
-For two means:  		 
-        $n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}, d = \frac{\delta}{\sigma}$
-or
-        $\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$
-        
-or   
+As $E(s^2) = \lambda Av(1/y_j) +\sigma_c^2 = \lambda Av(1/y_j) + k^2\lambda^2$ so $\hat \sigma_c^2 = s^2 - r Av(1/y_j)$ and $\hat k = \frac{\hat \sigma_c}{r}$ 
 
-As $E(s^2) = \sigma^2 Av(1/n_{j}) + \sigma_c^2$, so $\hat \sigma_c^2 = s^2 - \hat \sigma^2 Av(1/n_j)$ across each jth cluster and	$\hat k=\frac{\hat \sigma_c}{\bar x}$	 where x-bar is the mean of all observations across all clusters combined.
+For two means:  		 
+$n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}$, where $d = \frac{\delta}{\sigma}$,
+or $\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$
+
+As $E(s^2) = \sigma^2 Av(1/n_{j}) + \sigma_c^2$, so $\hat \sigma_c^2 = s^2 - \hat \sigma^2 Av(1/n_j)$ across each jth cluster and	$\hat k=\frac{\hat \sigma_c}{\bar x}$ where x-bar is the mean of all observations across all clusters combined.
 
 For two proportions, $n = \frac{2[z_{1 - \alpha/2}\sqrt{2q(1-q)} + z_{1 - \beta}\sqrt{\pi_1(1-\pi_1) + \pi_2(1 - \pi_2)}]^2}{(\pi_1 - \pi_2)^2}$	, $q = \frac{\pi_1 + \pi_2}{2}$
-            or 
+or 
             $n = \frac{[u\sqrt{\pi_1(1- \pi_1) + \pi_2(1 - \pi_2)} + v \sqrt {2\bar{\pi} (1-\bar{\pi})}]^2} {(\pi_1 - \pi_2)^2}$
 
-As $E(s^2) = \pi (1 - \pi) Av(1/n_j) + \sigma_c^2$
-so $\hat \sigma_c^2 = s^2 - p(1-p) Av(1/n_j)$
-and $\hat k = \frac{\hat \sigma_c}{p}$
-where p is the combined proportion across all clusters combined
-These look simpler but sacrifice transparency if written for the number of clusters c
-for rates $c=1 + f\frac{[\frac{\lambda_0 + \lambda_1}{y} + k^2(\lambda_0^2 + \lambda_1^2)]}{(\lambda_0 - \lambda_1)^2}$ or for proportions $c=1 + f\frac{[\frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 + \pi_1^2)]}{(\pi_0 - \pi_1)^2}$
+As $E(s^2) = \pi (1 - \pi) Av(1/n_j) + \sigma_c^2$ 
+so $\hat \sigma_c^2 = s^2 - p(1-p) Av(1/n_j)$ 
+and $\hat k = \frac{\hat \sigma_c}{p}$ where p is the combined proportion across all clusters combined. 
+
+These look simpler but sacrifice transparency if written for the number of clusters c for rates $c=1 + f\frac{[\frac{\lambda_0 + \lambda_1}{y} + k^2(\lambda_0^2 + \lambda_1^2)]}{(\lambda_0 - \lambda_1)^2}$ or for proportions 
+
+$$c=1 + f \frac{\left( \frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 + \pi_1^2 ) \right)}{(\pi_0 - \pi_1)^2}$$
 
 where f is a factor combining zα and zβ, eg f=7.84 for power 0.8 and alpha 0.05, 10.5 for power 0.9 and alpha 0.05 and k is the assumed true coefficient of variation between clusters; y is the number of person-time follow up per cluster and m is the number of people per cluster, both of whcih are assumed identical.
 
@@ -515,7 +521,7 @@ If SRS but unequal randomisation ratios with size in each group n, then if the s
 
 Because few clusters tend to be randomised and the power calculations nastily fudged, baseline imbalance is common, with instability of the effect size estimates and hence increased false claims in both directions.  Balancing of baseline covariates is often thought to limit this.
 
-Balance is achieved by matching (add 2 instead of 1 to the RHS of the simplifed equation, k is the average coefficient of variation only between matched pairs), stratifiction or restriction / constraint (reject all random allocations until one is generated with eg 10% difference in any covariate per arm). Among these only matching is random, depends on the matching variables being well chosen and doesn't permit analysis of the main effects of any matching variable.
+Balance is achieved by [matching][Matching] (add 2 instead of 1 to the RHS of the simplifed equation, k is the average coefficient of variation only between matched pairs), stratifiction or restriction / constraint (reject all random allocations until one is generated with eg 10% difference in any covariate per arm). Among these only matching is random, depends on the matching variables being well chosen and doesn't permit analysis of the main effects of any matching variable.
 
 The estimates are either calculated over the whole study, or combined from cluster-specific estimates.  This is not straighforward :
 if equal weighting of cluster estimates is desired and the clusters were not randomly selected from a well defined target population then cluster estimates are better if they were randomly selected with PPS then the overall estimate is a consistent estimator of the true population value, and is of course easier but it doesn't allow simple t tests.
