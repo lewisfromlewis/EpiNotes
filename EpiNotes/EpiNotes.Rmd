@@ -1076,18 +1076,33 @@ A fully coherent data set is the raw data, tidy data, a codebook and a recipe to
 The codebook is the information about the variable which is not contained in the tidy dataset, including information about units, the choices you've made in selecting or presenting data and about the design of the research.  Best as a text file with sections "codebook", "study design".
 The script or set of instructions to process raw -> tidy data should not need parameters: having parameters introduces analyst degrees of freedom.
 
-# Wrong conclusions
+# Wrong conclusions 
 
-## Effect modification
+If the effect of an identical exposure is not the same for all individuals, it may be because the exposure is not in fact identical at the mechanistic level (an identical dose of drug may be given to a small or large person, most simply) or because the measurement error or variabiity is high, or just doesn't measure the effect itself, or because there are other causes of the outcome acting at the same time but not altering the effect, or because there are genuine differences in effect either across a single population or due to categorical differences within identifiable subgroups. See [risk magnification][Risk] for how, even with identical effect, the scale of measure may give the appearance of heterogenous treatment effect. 
 
-"the association of an exposure with an outcome varies by a third factor".
+## Effect modification 
+
+"The effect of an exposure varies by the level of a third factor". This is easy to explain generally but the construction of the question is important in interpreting the answer. 
+
+If an effect is different between stable identifiable categories of individual (those with, or without, arms would have different effects on examination success from a scribing app), that is a [differential treatment effect]. 
+
+If the effect varies continuously across a continuous variable that is [heterogeneity of treatment effect]: this is classically by baseline risk of the outcome, so that the effect is absent at lower risk and more pronounced at higher risk, independently of the scale of outcome measurement. It's potentially been demonstrated by admission risk of death among ICU populations exposed to a harmful intervention but is generally quite rare.
+
+Overall, where the effect itself varies by the magnitude of another factor, this is called interaction or effect modification. It's often described as a departure from a combined linear effect of two independent exposures, such that the combined effect is greater or lesser than would have been predicted by simply combining the isolated effects of the exposures. This definition allows a statistical test, such as the chi squared test for heterogeneity across ordered categories of exposure, or a test of the null hypothesis that the effect is additive in a general linear model.
 
 ## Confounding
 
-is the unequal distribution of a further risk factor between those exposed and unexposed to the exposure of interest. Confounders are
-	1 associated with the exposure in the source population 
-	2 associated with the outcome in the nonexposed 
-	3 not a causal intermediate from exposure to outcome 
+Confounding is defined quite divergently. As a working definition, it is a nuisance which distorts the estimate of the independent effect of a certain exposure. The confounder will have not change the true magnitude of the effect being estimated, but it will alter the estimate by an independent and possibly unmeasured mechanism. It is identified as the unequal distribution of a further influential risk factor between those exposed and unexposed to the exposure of interest. Confounding is distinguished from bias because it depends on a measurable quantity. The quantity can then potentially be controlled for, such as by comparing strata with and without it, or including it in a model which explains the observed outcome. A variable might be a confounder, but not alter the estimate by very much. In that case it may be safer to ignore it rather than risk introducing bias by conditioning on it. The approach to this depends very much on the amount by which the effect estimate alters with the confounder, and the causal model for generating the data under which the analysis is carried out.
+
+Confounders are 
+
+1 associated with the exposure in the source population
+
+2 associated with the outcome in the nonexposed 
+
+3 not a causal intermediate from exposure to outcome 
+
+There are other definitions and literal reams devoted to identifying confounders, which have much more nuanced definitions and exacting analytic approaches in 
 
 ## Bias 
 
@@ -1981,3 +1996,4 @@ attributes  In a NumPy object are accessed by . The same as $ accesses them in a
 #knitr::write_bib(c('base', 'rmarkdown'), file = 'Epinotespackages.bib')
 ```
 [EM algorithm]
+[differential treatment effect]
