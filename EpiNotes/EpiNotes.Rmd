@@ -1462,36 +1462,57 @@ Variables can, confusingly, be fixed or changing; if changing they can have a de
 
 
 
-# Error
+# Error 
+
 Measurement error: Validity and Reliability....!
 For continuous variables: Correlation coefficients.  Mathematical coupling.  Agreement versus correlation.
 For categorical: Classification f agreement. 
-See also Cronbach alpha for a composite rating X as a sum of K items $Y_1 + Y_2 + Y_i \dots Y_K$
+See also [Cronbach alpha] for a composite rating X as a sum of K items $Y_1 + Y_2 + Y_i \dots Y_K$
 
-$\alpha = \frac{K}{K-1}\left(1-\frac{\sum^K_{i=1}\sigma^2_{Y_i}}{\sigma^2_X}\right)$
+$\alpha = \frac{K}{K-1}\left(1-\frac{\sum^K_{i=1}\sigma^2_{Y_i}}{\sigma^2_X}\right)$ 
+
 Misclassification has variable effects but mostly:
-	Differential may be decisively erroneous.
-	Non-differential exposure misclassification biases estimates to null
-	Non-differential outcome underestimates alter ratios less, and bias differences to 0
-	Non-differential outcome overestimates bias ratios and differences to null
+- Differential may be decisively erroneous. 
 
-# Analyse
-Stratification
+- Non-differential exposure misclassification biases estimates to null 
+
+- Non-differential outcome misclassification underestimates alter ratios by less, and bias differences to 0 
+
+- Non-differential outcome overestimates bias ratios and differences to null 
+
+# Analyse 
+
+## Stratification 
+
 Needs accurate identification of strata: if too broad will replicate the confounding, if misclassified could unpredictably increase or decrease the confounding: "residual confounding".  If matched by strata, those strata are reported as if unmatched then results pooled somehow.  If perfectly matched for the confounder then the groups can't study the effect of the confounder unless they're also perfectly matched for another cause (resulting in tiny fractured groups, for which a solution is Bayesian Borrowing).  Stratum specific probabilities are either randomly distributed about the true total population value if there is partially controlled confounding, or are real, and display the effect modification.
-A special case is Standardisation, applying weights to observations in categories according to a standard distribution of observations expected in those categories.
-	In eg direct standardisation for age, a standard demograph weights crude population mortality for age standardised mortality: the number "deaths per thousand person years of standard population" is the "deaths per thousand person years of actual population" (crude death rate) times comparative mortality figure (CMF, ratio of rates).  I think the weight here is the area of a histogram where x=age range and y=observations, each of the steps of which are multiplied by a death rate to give a new histogram.  The area under this new histogram is the population standardised mortality rate and the ratio of its area to the original is the CMF; clearly the standard matters, especially as they insist on probabilities not odds.
-	Indirect standardisation for age uses not size but death rates as the standard.  It's the basis for the Standard Mortality Rates and hence ratio, SMR.  "Direct standardisation is subject to less bias"; why?  Because true rates are needed and so there's more finely grained data?  Maybe, because "indirect may be the only possible" if rates aren't available at each stratum or numbers are small hence standard error high.
-	So Direct uses observed rates if applied to a standard population, ("Directly standardised rates")
-	Indirect uses standard rates if applied to the observed population
-	If a confounder is misclassified its effect may remain: residual confounding
 
-Or use a model to borrow from neighbourign areas, using both a structured and unstructured geographical component, eg:
-$Y_i|P(x_i) = Binomial(N_i, P(x_i))$
+## Standardisation
+
+Standardisation applies weights to observations in categories according to a standard distribution of observations expected in those categories. 
+
+In eg direct standardisation for age, a standard demograph weights crude population mortality for age standardised mortality: the number "deaths per thousand person years of standard population" is the "deaths per thousand person years of actual population" (crude death rate) times comparative mortality figure (CMF, ratio of rates).  I think the weight here is the area of a histogram where x=age range and y=observations, each of the steps of which are multiplied by a death rate to give a new histogram.  The area under this new histogram is the population standardised mortality rate and the ratio of its area to the original is the CMF; clearly the standard matters, especially as they insist on probabilities not odds. 
+
+Indirect standardisation for age uses not size but death rates as the standard.  It's the basis for the Standard Mortality Rates and hence ratio, SMR. ^["Direct standardisation is subject to less bias"; why?  Because true rates are needed and so there's more finely grained data?  Maybe, because "indirect may be the only possible" if rates aren't available at each stratum or numbers are small hence standard error high.] 
+
+So 
+
+- Direct uses observed rates if applied to a standard population, ("Directly standardised rates") 
+
+- Indirect uses standard rates if applied to the observed population 
+
+If a confounder is misclassified its effect may remain: residual confounding
+
+Or use a model to borrow from neighbouring areas, using both a structured and unstructured geographical component, eg: 
+
+$Y_i|P(x_i) = Binomial(N_i, P(x_i))$ or 
+
 $logit(P(x_i)) = z_i \beta + S(i) + u_i$
 
 
 Where S(i) is according to some coordinate reference system CRS (UTS in Eastings + Northings; or lat/long in unstructured ellipsoid projection)
-Study designs
+
+## Study designs 
+
 Case Control sampling is either one or more tier: "internal controls" are unexposed ones from the initial sample.  If a rare exposure the initial sample must be very large; or "similar" unexposed can be selected from the same or a similar population in another sample as "external controls".  The similarity is discussed in mechanistic terms needing experts, not advice on sufficient stochastic descriptions of the similarity.
 	"If the groups are comparable they have internal validity"; "if the conclusions are applicable to other populations it has external validity"
 	"In case studies the controls are only a subset of the NonCases in the population"
