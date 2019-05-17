@@ -1080,6 +1080,10 @@ The script or set of instructions to process raw -> tidy data should not need pa
 
 If the effect of an identical exposure is not the same for all individuals, it may be because the exposure is not in fact identical at the mechanistic level (an identical dose of drug may be given to a small or large person, most simply) or because the measurement error or variabiity is high, or just doesn't measure the effect itself, or because there are other causes of the outcome acting at the same time but not altering the effect, or because there are genuine differences in effect either across a single population or due to categorical differences within identifiable subgroups. See [risk magnification][Risk] for how, even with identical effect, the scale of measure may give the appearance of heterogenous treatment effect. 
 
+## The play of chance 
+
+Also dealt with in the section [Error], this is the simplest and the one against which 
+
 ## Effect modification 
 
 "The effect of an exposure varies by the level of a third factor". This is easy to explain generally but the construction of the question is important in interpreting the answer. 
@@ -1106,24 +1110,11 @@ There are other definitions and literal reams devoted to identifying confounders
 
 ## Bias 
 
-Bias is any systematic effect (London:"error") in the design or conduct of a study which results in an incorrect estimate of the association between exposure and outcome. 
-- 
-- 
-- 
--  AKA Collider Stratification bias. 
+Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. Any of the other influences in this section will count as a bias, if it is not detected. If it is detected and cannot be controlled for, or controlling for it introduces another influence, then it is also a bias^[
+This reading may be wrong, because very few commentators are willing to go outside the lines when describing fundamental concepts. A note from London divides it into descriptive studies, where bias arises if the sample is not representative of the population, and analytic studies, where bias arises if the groups to be compared are not comparable. I think they're talking about the parameter estimate, which in "descriptive" is an estimate of an unobserved population parameter and in "analytic" is an estimate of an unobserved generalisable parameter of the difference between groups.
+].
 
-
-## To avoid. 
-- Blinding 
-- Objective measures 
-- Randomisation 
-- Complete follow up 
-- Timely measurements 
-- Calibration under the desired circumstances ( _eg_ values in true controls by _eg_ questionnaire or BP cuff calibration) 
-
-Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. Any of the other influences in this section will count as a bias, if it is not detected. If it is detected and cannot be controlled for, or controlling for it introduces another influence, then it is also a bias.
-
-This reading may be wrong, because very few commentators are willing to go outside the lines when describing fundamental concepts. Fortunately there are various types of bias that have been identified. 
+Fortunately there are various types of bias that have been identified. 
 
 ## Selection bias
 
@@ -1145,6 +1136,7 @@ Other selection biases include
 
 - Healthy worker effect 
 
+- The bias induced by conditioning on non-confounding variables, turning them into confounders, sits a little apart from all of these and has been called Collider Stratification bias. 
 
 ## Information bias 
 
@@ -1162,6 +1154,14 @@ Information bias is present when there is a difference in the accuracy of inform
     - Ascertainment 
 
 - Reporting bias is a serious effect but outside of the individual study, as where the public perception is influenced by selective reporting of certain results and the suppression of others. Systematic reviews may display this. 
+
+## To avoid. 
+- Blinding 
+- Objective measures 
+- Randomisation 
+- Complete follow up 
+- Timely measurements 
+- Calibration under the desired circumstances ( _eg_ values in true controls by _eg_ questionnaire or BP cuff calibration) 
 
 (Cochrane list)
 
