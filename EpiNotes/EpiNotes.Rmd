@@ -1106,25 +1106,62 @@ There are other definitions and literal reams devoted to identifying confounders
 
 ## Bias 
 
-is any systematic error in design or conduct of a study leading to incorrect conclusions.
+Bias is any systematic effect (London:"error") in the design or conduct of a study which results in an incorrect estimate of the association between exposure and outcome. 
+- 
+- 
+- 
+-  AKA Collider Stratification bias. 
 
-### Selection bias
 
-Responder bias is a type of selection bias, the responder odds ratio being biased unpredictably by the ratio of probabilities of selection from a contingency table:
+## To avoid. 
+- Blinding 
+- Objective measures 
+- Randomisation 
+- Complete follow up 
+- Timely measurements 
+- Calibration under the desired circumstances ( _eg_ values in true controls by _eg_ questionnaire or BP cuff calibration) 
+
+Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. Any of the other influences in this section will count as a bias, if it is not detected. If it is detected and cannot be controlled for, or controlling for it introduces another influence, then it is also a bias.
+
+This reading may be wrong, because very few commentators are willing to go outside the lines when describing fundamental concepts. Fortunately there are various types of bias that have been identified. 
+
+## Selection bias
+
+Selection bias is present when there is a systematic difference in the exposure or outcome between those who are observed and those who are not, or more broadly where one or both of these groups in the sample fail to reflect the target population. That is:
+
+- The sampling frame may not be representative of the target population 
+
+- The groups may not be comparable (their sampling frames may differ) 
+
+Responder bias is a type of selection bias, the responder odds ratio being biased unpredictably by the ratio of probabilities of selection from a contingency table. Knowing this, a non-response of 0.8 could bias the odds ratio by a factor of 0.8 to 1.4. 
 		$$OR_R = \frac{P_a P_d}{P_b P_c}OR$$
-Knowing this, a non-response of 0.8 could bias the odds ratio by a factor of 0.8 to 1.4, for example.
+Other selection biases include 
+
 - Compliance 
+
 - Surveillance 
-- Differential Follow-up / missing data
-- healthy worker effect 
+
+- Differential Follow-up / missing data 
+
+- Healthy worker effect 
 
 
-### Information bias
+## Information bias 
 
-- Reporting, Recall, Interviewer 
-- Observer: Recording, Measurement, Classification, Ascertainment
-- Reporting bias in Systematic reviews 
-- Errors in Sequence generation, allocation concealment, blinding, incomplete outcome data, and selective outcome reporting
+Information bias is present when there is a difference in the accuracy of information	collected for exposure or outcome. 
+
+- Reporting bias is due to subjects reporting either exposure or outcome with an accuracy which depends on their status in the other (for example reporting exposure differently if they have the outcome, or reporting outcomes differently if they were exposed). 
+    - Self report bias is universal, and the only question is how to interpret across studies. 
+    - Recall bias occurs when the time distance or type of information determines the accuracy of its reporting, such as when recent or unusual information is more likely to be recalled or at least reported. 
+    - Interviewer bias is introduced when an interviewer guides the interviewee in a way that minimises the possibility of certain responses and rewards others. 
+
+- Observer bias is due to measurements giving different answers on one depending on the status of the other (for example, the outcome is reported with greater deviation or variation in the exposed, or vice versa). Observer biases include: 
+    - Recording 
+    - Measurement 
+    - Classification 
+    - Ascertainment 
+
+- Reporting bias is a serious effect but outside of the individual study, as where the public perception is influenced by selective reporting of certain results and the suppression of others. Systematic reviews may display this. 
 
 (Cochrane list)
 
@@ -1140,22 +1177,6 @@ Discarding information based on potential comparators having parameters that fal
 Or not discarding but instead randomising.
 - Simple random "needs a whole population list" although of course there are limits. 
 - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample. 
-
-Bias is any systematic effect (London:"error") in the design or conduct of a study which results in an incorrect estimate of the association between exposure and outcome. 
-- Information bias is present when there is a difference in the accuracy of information	collected for exposure or outcome.
-- Reporting bias is due to subjects reporting one with different accuracy, depending on their status in the other (for example reporting exposure differently if they have the outcome, or reporting outcomes differently if they were exposed). 
-- Observer bias is due to measurements giving different answers on one depending on the status of the other (for example, the outcome is reported with greater deviation or variation in the exposed, or vice versa) 
-- Selection bias is present when there is a systematic difference in the exposure or outcome between those who are observed and 	those who are not. AKA Collider Stratification bias. 
-- The sampling frame may not be representative of the target population 
-- The groups may not be comparable (their sampling frames may differ) 
-
-## To avoid. 
-- Blinding 
-- Objective measures 
-- Randomisation 
-- Complete follow up 
-- Timely measurements 
-- Calibration under the desired circumstances ( _eg_ values in true controls by _eg_ questionnaire or BP cuff calibration) 
 
 # Reliability
 (~= Repeatability): intra and interobserver reliability.
