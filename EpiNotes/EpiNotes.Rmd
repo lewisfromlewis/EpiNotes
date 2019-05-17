@@ -1126,9 +1126,11 @@ Selection bias is present when there is a systematic difference in the exposure 
 
 Response bias is a type of selection bias, the odds ratio among those who respond being biased unpredictably by the ratio of probabilities of selecting those responders at random from a contingency table composed of the entire sampling frame. Knowing this, a non-response of 0.8 could bias the odds ratio by a factor of 0.8 to 1.4. 
 		$$OR_R = \frac{P_a P_d}{P_b P_c}OR$$
-Other selection biases include 
+Other selection biases include: 
 
-- Compliance 
+- Compliance bias, which is the basis for preferring Intention to Treat for most analyses of exogeneously allocated interventions^[
+If those who (fully) comply are systematically different from those who do not in respect of predictors of outcome, the estimate of effect will be incorrect.
+]. 
 
 - Surveillance bias, where there is greater intensity of observation on particular individuals who are then more likely to be identified as having further characteristics, irrespective of the mechanistic relationship of those characteristics to either exposure or outcome 
 
