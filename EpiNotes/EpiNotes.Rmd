@@ -1167,6 +1167,10 @@ For example, the outcome is reported with greater deviation or variation in the 
 
 - Reporting bias is a serious effect but outside of the individual study, as where the public perception is influenced by selective reporting of certain results and the suppression of others. Systematic reviews may display this. 
 
+## Systematic bias 
+
+The data are insufficient to compute a causal effect even with an infinite sample size. 
+
 ## To avoid. 
 
 - Blinding^[
