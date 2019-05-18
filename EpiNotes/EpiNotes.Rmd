@@ -1169,7 +1169,9 @@ For example, the outcome is reported with greater deviation or variation in the 
 
 ## To avoid. 
 
-- Blinding 
+- Blinding^[
+Why does this work, exactly? It eliminates some forms of observer bias, and it reduces several forms of selection bias. It only reduces those that need for their effect some sort of knowledge of exposure or outcome.
+].
 
 - Objective measures 
 
@@ -1489,8 +1491,11 @@ See also [Cronbach alpha] for a composite rating X as a sum of K items $Y_1 + Y_
 
 $\alpha = \frac{K}{K-1}\left(1-\frac{\sum^K_{i=1}\sigma^2_{Y_i}}{\sigma^2_X}\right)$ 
 
-Misclassification has variable effects but mostly:
-- Differential may be decisively erroneous. 
+## Misclassification 
+
+Misclassification may be the original sin or due to some random error or bias in measurement which then results in misclassification. This has variable effects but mostly: 
+
+- Differential misclassification may be decisively erroneous. 
 
 - Non-differential exposure misclassification biases estimates to null 
 
