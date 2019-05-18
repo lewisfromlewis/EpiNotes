@@ -1134,7 +1134,9 @@ If those who (fully) comply are systematically different from those who do not i
 
 - Surveillance bias, where there is greater intensity of observation on particular individuals who are then more likely to be identified as having further characteristics, irrespective of the mechanistic relationship of those characteristics to either exposure or outcome 
 
-- Differential Follow-up / missing data 
+- Differential Follow-up is one of the very many [missing data] problems, this one particularly in situations where individuals either leave or are ignored for the duration in which they may develop outcomes or even further exposures, confounders, and so on^[
+This time, or I suppose hazard element subtly differentiates it from the bias in which these may exist but are not looked for in most individuals, which I've called surveillance bias.
+] 
 
 - Healthy worker effect 
 
@@ -1147,7 +1149,7 @@ This can be conceptualised in a few different ways, such as opening up a backdoo
 Information bias is present when there is a difference in the accuracy of information	collected for exposure or outcome. 
 
 - Reporting bias is due to subjects reporting either exposure or outcome with an accuracy which depends on their status in the other^[
-For example reporting exposure differently if they have the outcome, or reporting outcomes differently if they were exposed
+For example reporting exposure differently if they have the outcome, or reporting outcomes differently if they were exposed. Greater awareness of the research question, or reasons to hide or lie such as desirability or acceptability of particular answers, desire to please or frustrate and so on, are similar in effect and also can be called reporting bias.
 ]. 
     - Self report bias is universal, and the only question is how to interpret across studies. 
     - Recall bias occurs when the time distance or type of information determines the accuracy of its reporting^[
