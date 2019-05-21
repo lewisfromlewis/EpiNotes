@@ -709,17 +709,21 @@ $$\hat p \pm z_{\alpha / 2} . \sqrt{{\hat p \hat q} {n}}$$
 
 # Correlation
 
-Categorical variance is displayed by tabulation, eg mean pair agreement or Observed Agreement OA. The agreement due to chance is calculated for a table with given marginal totals and is distributed as chi squared:
+Correlation is the amount by which a value is more like another given value than it is like all the remaining values in a dataset. It's more usually defined as any statistical relationship between two variables, most usually meaning a linear relationship. 
+
+## Categorical 
+
+Categorical variance is displayed by tabulation, eg mean pair agreement or Observed Agreement OA. The agreement due to chance is calculated for a table with given marginal totals and is distributed as chi squared: 
 
 The expected value in each cell is $E[x] = \frac{\textrm{Row total} \times \textrm{Column total}}{\textrm{Grand total}}$, and if as in table 1 the cells with agreement are a and d, then the maximum chance agreement is $\frac {E[a]+E[d]}{a+b+c+d}$.
 
 Having calculated that, the Kappa statistic for excess agreement over max chance agreement is $\kappa = \frac{OA-CA}{1-CA}$,
 
-Continuous variation is partitioned into systematic and random error, _eg_ by ANOVA;
-their ratio is the Intraclass Correlation Coefficient, aka reliability coefficient
-_eg_ by Pearson's correlation of product-moment where for a population
+## Continuous 
+
+Continuous variation is partitioned into systematic and random error, _eg_ by ANOVA. The ratio of these errors is the Intraclass Correlation Coefficient, aka reliability coefficient _eg_ by Pearson's correlation of product-moment. This is all a little dense and needs some explanation. Pearson's correlation coefficient is the "standardised covariance" between two values, which is the covariance divided by the product of their standard deviations. Covariance itself is the product of the variances of those values, where high positive values mean that high values in one variable are commonly found with high values of the other, and negative values mean that small values of one variable are associated with large values in the other.
 	
-	$$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$
+$$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$
 	, where 
 	$cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$
 and using the identities
