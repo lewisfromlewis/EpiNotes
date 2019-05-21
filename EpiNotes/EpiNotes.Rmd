@@ -709,16 +709,18 @@ $$\hat p \pm z_{\alpha / 2} . \sqrt{{\hat p \hat q} {n}}$$
 
 # Correlation
 
-categorical variance is by tabulation, eg mean pair agreement or Observed Agreement OA:
-					
-or Kappa statistic for excess agreement over max chance agreement $\kappa = \frac{OA-CA}{1-CA}$,	
+Categorical variance is displayed by tabulation, eg mean pair agreement or Observed Agreement OA. The agreement due to chance is calculated for a table with given marginal totals and is distributed as chi squared:
 
-(where CA is $\frac {E[a]+E[d]}{a+b+c+d}$ and $E[a] = \frac{\textrm{Row total} \times \textrm{Column total}}{\textrm{Grand total}}$  as in the χ2 )
+The expected value in each cell is $E[x] = \frac{\textrm{Row total} \times \textrm{Column total}}{\textrm{Grand total}}$, and if as in table 1 the cells with agreement are a and d, then the maximum chance agreement is $\frac {E[a]+E[d]}{a+b+c+d}$.
 
-continuous is partitioned into systematic and random error eg by ANOVA;
+Having calculated that, the Kappa statistic for excess agreement over max chance agreement is $\kappa = \frac{OA-CA}{1-CA}$,
+
+Continuous variation is partitioned into systematic and random error, _eg_ by ANOVA;
 their ratio is the Intraclass Correlation Coefficient, aka reliability coefficient
 _eg_ by Pearson's correlation of product-moment where for a population
-	$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$, where 
+	
+	$$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$
+	, where 
 	$cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$
 and using the identities
 	$\sigma_{X}^2 = E[(X- E[X])^2] = E[X]^2 - E[X^2]$ and 
@@ -727,18 +729,20 @@ and using the identities
 	$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]} {\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$
 					
 
-then the sample correlation r, assuming
-    - a normal distribution of y for each xi 
-    - a uniform variance for y across all x
-    - y is monotonic on x
+then the sample correlation r, assuming 
 
-- is the value that describes the closeness of all points to a linear relationship
-- is useful for a description of the scatter about the least squares linear relationship
-- is the number of standard deviations that y changes for a 1 SD change in x.
+- a normal distribution of y for each xi 
+
+- a uniform variance for y across all x 
+
+- y is monotonic on x
+    - is the value that describes the closeness of all points to a linear relationship 
+    - is useful for a description of the scatter about the least squares linear relationship 
+    - is the number of standard deviations that y changes for a 1 SD change in x.
 
 Given by Pearson's Correlation Coefficient:
 
-					$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar{x})(y_{i} - \bar{y})}{\sqrt{\sum_{i=1}^n (x_{i} - \bar{x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar{y})^2}}$ ,	and
+$$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar{x})(y_{i} - \bar{y})}{\sqrt{\sum_{i=1}^n (x_{i} - \bar{x})^2}   \sqrt{\sum_{i=1}^n (y_{i} - \bar{y})^2}}$$ ,	and
 
 can also be quoted as the mean of the standard scores of x and y:
 $r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \bar{x}}{s_{x}})(\frac{y_{i} - \bar{y}}{s_{y}})$	 ,	and	$\frac{\sum x_i y_i - n \bar x \bar y}{ns_x s_y}$  
@@ -762,7 +766,7 @@ Robust standard errors, GEE and multilevel modelling are ways to address this.
 
 ## Robust standard errors
 
-Robust variance is proportional to the sum of the squared residuals (residuals being the difference between the observed values and those predicted by the model).  They can be calculated individually if the data are i.i.d or calculated for each cluster then summed, where there is correlation.  This still assumes independence between clusters.
+Robust variance is proportional to the sum of the squared [residuals] (residuals being the difference between the observed values and those predicted by the model).  They can be calculated individually if the data are i.i.d or calculated for each cluster then summed, where there is correlation.  This still assumes independence between clusters.
 
 Robust standard errors do not affect the calculation of the maximum likelihood and so a LRS and test are not valid and the MLE is not altered.  A quadratic approximation is not used so the standard errors are not excessively narrow; the cluster level residuals are used to generate the variance instead.  "Robust SE are correct provided the model is correct" and there are >30 clusters.
 
@@ -814,13 +818,19 @@ h(t) = f(t) / 1-F(t) = f(t) / R(t).
 $h(t) = \lim _{\Delta t\to 0}{\frac {R(t)-R(t+\Delta t)}{\Delta t\cdot R(t)}}$, which does not have to be parametric as long as there is a definite cumulative distribution.
 
 If the failure density is modelled as exponential (ie Poisson(1), that is the time until first failure is Poisson distributed and other failures are presumed to be independent in every case including those already failed) then the familiar result is that $f(t) = \lambda^1 e^{-\lambda t}$ so $F(t) = \int_0^t \lambda e^{-\lambda t} dt$ then the hazard function h(t) is
-	$h(t) = \frac{f(t)}{R(t)} = \frac{\lambda e^{- \lambda t}}{e^{- \lambda t}} = \lambda$, which is time-blind / memoryless / constant with respect to time
-Assuming, then, that the hazard function is constant and the cumulative hazard rises linearly:
+	$h(t) = \frac{f(t)}{R(t)} = \frac{\lambda e^{- \lambda t}}{e^{- \lambda t}} = \lambda$, which is time-blind / memoryless / constant with respect to time. 
+	
+Assuming, then, that the hazard function is constant and the cumulative hazard rises linearly: 
+
 - Risk  = events/number at risk; 
+
 - hazard = (events/time at risk in the limit as t goes to 0) = lambda; 
-- survival as a function of time S(t) = product of 1-risk across times; cumulative hazard = sum of risks for all times (Nelson-Aalen estimate of the cumulative hazard).
+
+- survival as a function of time S(t) = product of 1-risk across times; 
+
+- cumulative hazard = sum of risks for all times (Nelson-Aalen estimate of the cumulative hazard).
     
-The log of the hazard ratios for two exposures is log(HR1) – log(HR2) = log(constant)
+The log of the hazard ratio for two exposures is log(HR1) – log(HR2) = log(constant)
 H(t) = -log(S(T)) or S(t) = e^(-H(t)) 
 S(t) = e^(-lambda t)
 H(t) = lambda t
