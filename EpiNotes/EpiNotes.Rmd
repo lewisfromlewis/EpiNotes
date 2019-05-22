@@ -631,17 +631,20 @@ of which a special case is the binomial distribution
 T distribution is descended from the standard normal, and assumed to be symmetric and centred on 0 so with only 1 parameter, the degrees of freedom.  Skew can be exponentially transformed or another distribution used.
 
 
-## Poisson has MEAN AND VARIANCE EQUAL to λ
+## Poisson 
 
-which is events / time, $\lambda = \frac{D}{t}$
-and noting $1-x \approx e^{-x}$ so $(1 - x)^n \approx e^{-nx}$ its probability mass function is:
-	$P(X=x;\lambda) = \frac{\lambda^x.e^{-\lambda}}{x!}$
-where x is a non negative integer and $\textrm{Risk} = 1 - e^{-\lambda t}$
+The Poisson distribution has both mean and variance equal to λ, which is events over a given time, $\lambda = \frac{D}{t}$
+and noting $1-x \approx e^{-x}$ so $(1 - x)^n \approx e^{-nx}$ its probability mass function for the unrealised variable X adopting a certain non negative, integer value x is:
+$$P(X=x;\lambda) = \frac{\lambda^x.e^{-\lambda}}{x!}$$
 
-Standard Error of a rate is SE(number of events)/person-time at risk
-	$SE_{events} = \sqrt{D}, SE_{risk} = \frac{\sqrt D}{t}$
-and $\lambda = \frac{D}{t}$ so $SE = \sqrt{\frac{\lambda}{t}}$
-SE for log rate is $\frac{1}{\sqrt{D}}$, CI is $\lambda^{\times}_{\div} EF$, EF=$e^{\frac{1.96}{\sqrt D}}$ ; ratio or difference = ${\lambda_0-\lambda_1}^{\times}_{\div} e^{1.96 \sqrt{\frac{1}{D_0} + \frac{1}{D_1}}}$
+The relationshiip between the rate, time spent at that rate and the risk for a given proportion of the initial population to have experienced the event, or for any given member to have experienced it, is given in the way hinted by the above exponential relationship for survivor proportion:
+
+$$\textrm{Risk} = 1 - e^{-\lambda t}$$
+
+Standard Error of a rate is SE(number of events)/person-time at risk $SE_{events} = \sqrt{D}, SE_{risk} = \frac{\sqrt D}{t}$
+and $\lambda = \frac{D}{t}$ so $SE = \sqrt{\frac{\lambda}{t}}$. 
+
+Standard Error of a log rate is $\frac{1}{\sqrt{D}}$, CI is $\lambda^{\times}_{\div} EF$, and EF=$e^{\frac{1.96}{\sqrt D}}$. A difference of log rates is the same as the log of the rate ratio on the original scale,  = ${\lambda_0-\lambda_1}^{\times}_{\div} e^{1.96 \sqrt{\frac{1}{D_0} + \frac{1}{D_1}}}$
 
 Used for example in modelling especially unbounded count data,
 $X \sim Poisson (\lambda t)$ where $\lambda = E[X/t]$
