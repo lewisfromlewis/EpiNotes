@@ -1013,9 +1013,9 @@ Ui is $U_i = R_i - \frac{N_1 . (N_1 + 1)}{2}$, and the total possible is $U_1 + 
 Hodges-Lehmann, or more properly H-L-Sen estimators, are interesting. They're not a median or a mean but they have some properties that place them somewhere between. They can be used for marking the relative position along a distribution with easily explained performance characteristics, and so allow decisions about observed values and future values. The formula for Ui in this section is the H-L estimator for location of a univariate distribution.
 ].
 
+## Spearman Rank Correlation Coefficient 
 
-## Spearman Rank Correlation Coefficient
-Ranks for each observation are calculated (ties given average rank). Pearson's correlation coefficient calculated for the ranks as if they were x, y coordinates.
+Ranks for each observation are calculated (ties given average rank). Pearson's correlation coefficient calculated for the ranks as if they were x, y coordinates. 
 
 # Data types and features
 
@@ -1024,6 +1024,7 @@ This is partly covered by the [sampling] section, but it's integral to demonstra
 ## Questionnaires
 
 Questionnaires are able to ask about 
+
     attitudes
     beliefs
     behaviours
@@ -1031,6 +1032,7 @@ Questionnaires are able to ask about
     attributes
 
 Methods of applying the question are by 
+
     Interview
     Questionnaire
     Diary
@@ -1039,13 +1041,16 @@ Methods of applying the question are by
     Measurements
     Environmental Measurements
 
-Standard introductions are important.
-If appropriate to use a questionnaire, develop one that is 
+Standard introductions are important. If appropriate to use a questionnaire, develop one that samples the minimum amount of an individual's total experience that will provide sufficient information concerning the problem under study (including exposure and covariates). It must be: 
+
 - easy to answer, process and analyse, 
+
 - minimises measurement error, 
+
 - preserves dignity and privacy of respondent, and 
+
 - limits burden on respondents.
-    "The minimum amount of an individual's total experience that will provide sufficient information concerning the problem under study" (including exposure and covariates).
+
 
 Burden is added by 
 - length 
