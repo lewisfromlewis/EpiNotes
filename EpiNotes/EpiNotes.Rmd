@@ -987,29 +987,31 @@ And χ2 is $\chi ^2 = \frac{(|D_1 - E(D_1)|-0.5)^2}{V(D_1)} \textrm{, df=1}$, $H
 
 χ2 for trend, where x  is the group score or level, is 	 $$\frac{(\sum D_i x_i - \lambda \sum t_i x_i)^2}{\lambda^2 (t \sum t_i x_i^2 - (\sum t_i x_i)^2)}$$
 
-# Non parametric equivalents
+# Non parametric hypothesis tests 
 
-## Wilcoxon Signed Rank
+These make very few assumptions about the distribution of a parameter. But not none: they don't assume the shape or skew or kurtosis, and they test the central tendency, but they mostly assume something about them, such as the most common assumption that they are independent and identically distributed (i.i.d), often that they are symmetrical, or that two distributions for comparison are identical to each other. Hence some common tests are of the hypothesis that the sample "differs in degree" from a measured or assumed value. 
 
-for paired samples or one sample from a hypothesised median. Assumes symmetrical distribution calculate the differences (of each value from the median, or across each pair): N is total nonzero differences.
+## Wilcoxon Signed Rank 
 
-Assign ranks to the absolute values of differences. Sum the ranks of positive differences, sum the ranks of negative differences.
+The signed rank test assumes symmetrical distribution of the parameter under consideration, which can be a set of matched samples, or a sample to compare to an assumed null. It is very similar to the rank sum test, and both the procedure and the name refer to differences from the median of all values.
 
-The null hypothesis is that T=sum of all ranks divided by 2. Call the smaller sum T and look it up on a table of N against p values. There are $\frac{n(n + 1)}{2}$ possible pairs of differences, each of which has an average difference.
+First, calculate the differences (of each value from the median, or across each pair): N is total nonzero differences. Assign ranks to the absolute values of differences. Sum the ranks of positive differences, sum the ranks of negative differences. The smaller of these sums is T.
 
-The real values of these averages are ordered $D_1 \dots D_{T5} \dots D_i$ where $T_5$ is the T with probability 0.025 (the 2-sided p value of 0.05 on the tables). DT5 to Di-T5 are the outer bounds of the 95% confidence interval for the difference.
+The null hypothesis is that T=sum of all ranks divided by 2. Now look up the observed T on a table of probabilities of that value or more extreme for given N. There are $\frac{n(n + 1)}{2}$ possible pairs of differences, each of which has an average difference.
 
-## Wilcoxon Rank Sum
-for the difference of medians in two samples (Mann Whitney U / MWW). Assumes data are i.i.d. and takes the strong H0; distributions of two samples differ only in location for continuous data.
-Less strong but valid for ordinal data H0; P(X>Y) = P(Y>X) for ordinal responses.
+The real values, D, of these averages are ordered. This forms a series $D_1 \dots D_{T_5} \dots D_i$ where $T_5$ is the T with probability at least 0.025 (the 2-sided p value of 0.05 on the tables). $D_{T_5}$ to $D_i - D_{T_5}$ are the outer bounds of the 95% confidence interval for the difference, again assuming a symmetrical distribution. Clearly for small N these T are very conservative indeed.
 
-Take two samples of size N1 and N2, with a total size N. Order all of the outcome values, rank the values in each sample as R1 and R2. The total rank sum is $R_1 + R_2 = \frac{N.(N+1)}{2}$, equal values take the mean of the ranks they span. Sum the ranks in each group. The null hypothesis is that the groups are identically located. T is the rank sum in the smaller group. 
+## Wilcoxon Rank Sum 
+
+Also called the Mann Whitney U / Wilcoxon-Mann-Whitney. For the difference of medians in two samples. Assumes data are i.i.d. and makes the strong assumption that the distributions of the two samples "differ only in location", that is that they are identical, for continuous data. The test is still useable for ordinal data with a less strong assumption that P(X>Y) = P(Y>X).
+
+Take two samples of size N1 and N2, with a total size N. Order all of the N, give them ranks in that order, equal values take the mean of the ranks they span^[So 3rd to 6th inclusive being equal would mean each on is given 3+4+5+6/4 = 4.5].  Sum the ranks across N1 as R1, and the ranks across N2 as R2. T is the rank sum in the smaller group. 
 	
-Calculate the number of possible choices of size 1 ... T from groups of size N1 and N2. Sum the possible choices and invert for the probability or look it up for tables of N1, N2.
+The total rank sum is $R_1 + R_2 = \frac{N.(N+1)}{2}$. Calculate the number of possible choices of size 1 ... T from groups of size N1 and N2. Sum the possible choices and invert for the probability or look it up for tables of N1, N2.
 
-Ui is $U_i = R_i - \frac{N_1 . (N_1 + 1)}{2}$, and the total possible is $U_1 + U_2 = N_1 . N_2$. 
-$AUC_{ROC_1} = \frac{U_1}{N_1.N.2}$ for ROC curves
-95% CI by bootstrap or Hodges-Lehmann estimates of location shift.
+Ui is $U_i = R_i - \frac{N_1 . (N_1 + 1)}{2}$, and the total possible is $U_1 + U_2 = N_1 . N_2$. $AUC_{ROC_1} = \frac{U_1}{N_1.N_2}$ for ROC curves. 95% CI by bootstrap or [Hodges-Lehmann] estimates of location shift^[
+Hodges-Lehmann, or more properly H-L-Sen estimators, are interesting. They're not a median or a mean but they have some properties that place them somewhere between. They can be used for marking the relative position along a distribution with easily explained performance characteristics, and so allow decisions about observed values and future values. The formula for Ui in this section is the H-L estimator for location of a univariate distribution.
+].
 
 
 ## Spearman Rank Correlation Coefficient
