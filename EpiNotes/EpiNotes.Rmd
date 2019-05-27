@@ -539,22 +539,26 @@ $$1+ \rho(\bar m(1 +(\frac{sd_m}{\bar m})^2) - 1)$$
 
 Rate of homogeneity **roh** (here $\rho$) is the ICC for single stage clustering, and an equivalent ration of total variance for multi stage clustering.
 		
-k is estimated for power reasons from $\sigma c$ : see below or $m= \frac{N(1-\rho)}{(c - \rho N)}$ for cluster size given total N under simple random and number of clusters c. ICC can’t be used when the outcome is a rate per time; so k is used here. 
+k is estimated for power reasons from $\sigma c$ : see below or $m= \frac{N(1-\rho)}{(c - \rho N)}$ for cluster size given total N under simple random and number of clusters c. ICC can’t be used when the outcome is a rate (events per time); so k is used here. 
 	
 ## Standard cluster sample size calculations
 
-For two rates:	$n = \frac{(z_{1-\beta} + z_{1-\alpha/2})^2 . (\lambda_1 + \lambda_2)}{(\lambda_1 - \lambda_2)^2}$	
+For two rates:	
+$$n = \frac{(z_{1-\beta} + z_{1-\alpha/2})^2 . (\lambda_1 + \lambda_2)}{(\lambda_1 - \lambda_2)^2}$$	
 As $E(s^2) = \lambda Av(1/y_j) +\sigma_c^2 = \lambda Av(1/y_j) + k^2\lambda^2$ so $\hat \sigma_c^2 = s^2 - r Av(1/y_j)$ and $\hat k = \frac{\hat \sigma_c}{r}$ 
 
 For two means:  		 
-$n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}$, where $d = \frac{\delta}{\sigma}$,
-or $\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$
+$$n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}$$
+, where $d = \frac{\delta}{\sigma}$, or $\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$
 
 As $E(s^2) = \sigma^2 Av(1/n_{j}) + \sigma_c^2$, so $\hat \sigma_c^2 = s^2 - \hat \sigma^2 Av(1/n_j)$ across each jth cluster and	$\hat k=\frac{\hat \sigma_c}{\bar x}$ where x-bar is the mean of all observations across all clusters combined.
 
-For two proportions, $n = \frac{2[z_{1 - \alpha/2}\sqrt{2q(1-q)} + z_{1 - \beta}\sqrt{\pi_1(1-\pi_1) + \pi_2(1 - \pi_2)}]^2}{(\pi_1 - \pi_2)^2}$	, $q = \frac{\pi_1 + \pi_2}{2}$
-or 
-            $n = \frac{[u\sqrt{\pi_1(1- \pi_1) + \pi_2(1 - \pi_2)} + v \sqrt {2\bar{\pi} (1-\bar{\pi})}]^2} {(\pi_1 - \pi_2)^2}$
+For two proportions, where  $q = \frac{\pi_1 + \pi_2}{2}$, then
+
+$$n = \frac{2[z_{1 - \alpha/2}\sqrt{2q(1-q)} + z_{1 - \beta}\sqrt{\pi_1(1-\pi_1) + \pi_2(1 - \pi_2)}]^2}{(\pi_1 - \pi_2)^2}$$ 
+
+or
+$$n = \frac{[u\sqrt{\pi_1(1- \pi_1) + \pi_2(1 - \pi_2)} + v \sqrt {2\bar{\pi} (1-\bar{\pi})}]^2} {(\pi_1 - \pi_2)^2}$$
 
 As $E(s^2) = \pi (1 - \pi) Av(1/n_j) + \sigma_c^2$ 
 so $\hat \sigma_c^2 = s^2 - p(1-p) Av(1/n_j)$ 
@@ -566,7 +570,7 @@ $$c=1 + f \frac{\left( \frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 +
 
 where f is a factor combining z-alpha and z-beta, eg f=7.84 for power 0.8 and alpha 0.05, 10.5 for power 0.9 and alpha 0.05 and k is the assumed true coefficient of variation between clusters; y is the number of person-time follow up per cluster and m is the number of people per cluster, both of whcih are assumed identical.
 
-If SRS but unequal randomisation ratios with size in each group n, then if the smaller group is n1, then alter the size of each group by $k= \frac{n_2}{n_1}$ and $n_1 = \frac{n(k+1)}{2k}$, which converges on $n_1 = \frac{n}{2}$ as the ratio k increases, at the cost of imprecision in estimates of the effect in group 1, and less information on rare events.
+If SRS but unequal randomisation ratios with size in each group n, then if the smaller group is n1, then alter the size of each group by $k= \frac{n_2}{n_1}$ and $n_1 = \frac{n(k+1)}{2k}$, which converges on $n_1 = \frac{n}{2}$ as the ratio k increases, at the cost of imprecision in estimates of the effect in group 1, and less information on rare events. 
 
 1 Was there an effect of treatment in this trial?
 2 What was the average effect of treatment in this trial?
