@@ -531,12 +531,11 @@ $$\rho = \frac{k^2 \pi}{1-\pi}$$
 
 ## Design Factor 
 
-Design Factor is SE for design/SE under simple random, terminology analogous to Error Factor
-Design Effect DEFF 
-= Sample size / size by simple random sampling or Variance/Variance by SRS
-= Design Factor squared if it's proportions (Also quoted as SE by design / SE by SRS!)
-= 1 + (Number in each cluster-1) * rate of homogeneity = $1 + \rho(m - 1)$
-DEFF on total N is $1+(\bar{m} - 1) \rho$ where m is number in a cluster or, if cluster sizes vary, $1+ \rho(\bar m(1 +(\frac{sd_m}{\bar m})^2) - 1)$ where $\frac{sd_m}{\bar m}$ is coefficient of variation of cluster size
+Design Factor is SE for design/SE under simple random, terminology analogous to Error Factor.  In distinction to this is the Design Effect DEFF, which equals the Sample size using the proposed scheme divided by the sample size by simple random sampling. It almost always therefore is also equal to the Variance as proposed / Variance by SRS.
+
+If the outcome measure of interest is a proportion, DEFF = Design Factor squared. This is then 1 + (Number in each cluster-1) * rate of homogeneity = $1 + \rho(m - 1)$.
+DEFF on total N is $1+(\bar{m} - 1) \rho$ where m is number in a cluster. This is appropriate if clusters are fairly close in size but if cluster sizes vary widely will overweight the smaller clusters. In the case of highly variable cluster sizes, the coefficient of variation of cluster size $\frac{sd_m}{\bar m}$ is used and the eventual design effect is
+$$1+ \rho(\bar m(1 +(\frac{sd_m}{\bar m})^2) - 1)$$ 
 
 Rate of homogeneity **roh** (here $\rho$) is the ICC for single stage clustering, and an equivalent ration of total variance for multi stage clustering.
 		
