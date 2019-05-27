@@ -397,11 +397,16 @@ Balance covariates by
 
 ## Matching 
 
-Matching attempts to make the groups comparable. 
+Matching attempts to make the groups comparable. The main effect is to reduce the discernible sources of variation in the final analysis, by ensuring that the variation between the members of a matched pair is minimised. This will increase statistical efficiency in most cases. In some cases it may reduce confounding, but that's not even as guaranteed as the gain in efficiency. 
 
-- Frequency matching creates groups who are exposed, or unexposed, and who are the same in the frequency of whatever matching variables is desired. Group parameters are calculated and pooled, as in the MH method 
+- Frequency matching creates groups who are exposed, or unexposed, and who are the same in the frequency of whatever matching variables is desired. Group parameters are calculated and pooled, as in the MH method. 
 
-- Individual matching takes cases and only selects controls who possess the same value of the matching characteristic. Matched analysis is needed across strata j, such as for odds ratio $OR_m = \frac{\sum D_{1j} D^c_{0j} / N_j}{\sum D_{0j} D^c_{1j} / N_j} , ^{\times}_\div e^{1.96 \sqrt{\frac{1}{N_{01}} + \frac{1}{N_{10}}}}$, and tested with $\chi^2 = \frac{(n_{10} + n_{01})^2}{(n_{10} - n_{01})}, df = 1$
+- Individual matching takes cases and only selects controls who possess the same value of the matching characteristic. 
+
+Matched analysis is needed when any selection has been done by way of the matching criteria. The "summary" or "pooled" odds ratio across all strata is a weighted sum:
+$$OR_m = \frac{\sum D_{1j} D^c_{0j} / N_j}{\sum D_{0j} D^c_{1j} / N_j} , ^{\times}_\div e^{1.96 \sqrt{\frac{1}{N_{01}} + \frac{1}{N_{10}}}}$$
+The accompanying test for a 2 by 2 table only uses information from pairs with discordant outcomes, and tests the hypothesis that the summary odds ratio is 1:
+$$\chi^2 = \frac{(n_{10} + n_{01})^2}{(n_{10} - n_{01})}, df = 1$$
 
 There is selection involved in matching, which is not addressed in most places. The result of matching is that if the groups or individuals are perfectly matched, they are perfectly balanced for all characteristics other than the exposure of interest. Matching cases with controls for a variable most directly allows the estimation of effect modification by that variable. It also makes that variable ignorable if both groups really are identical except for the the exposure of interest. This reduces variance and therefore can increase precision or efficiency. It may also add an unknown amount of control for unacknowledged confounders if those are correlated with the matching variable.
 
@@ -409,7 +414,7 @@ Matching, _eg_ by _"malaria rates last year"_, can cause problems. I intuit that
 
 Matching does lose a little power because only discordant pairs contribute to estimates, but it gains more power back by reducing variability. The problem that is hidden is if the matching and exposure variables are strongly correlated, when power is lost, probably without being recognised.  
 
-If the matched variable is on the causal pathway it underestimates the effect of exposure on outcome. 
+If the matched variable is on the causal pathway it causes a bias, which will generally by to underestimate the effect of exposure on outcome. 
 
 Between these two effects there are "break-even values" for the correlation between matching and outcome variables for matching or stratification to be beneficial. 
 
