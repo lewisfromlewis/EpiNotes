@@ -485,39 +485,48 @@ Robust objects (estimators, statistics, models...) are ones which are changed li
 # Clusters
 
 Used when there's a direct effect plus indirect (ecological, herd, cooperative, etc) effect on participants, or when it's difficult to allocate individuals. Indirect include, for infections, that which reduces Quantity (herd, reduced carriage, vector death, epidemic periodicity) or Quality (less or more virulent strains, resistance, non-reproducing strains) of infection or the Immunity of victim (immune recency, cross reaction, polyvalency, multi-hit, immune mediated damage). "Direct" + "indirect" = "total"; if all in a cluster participate the effect is "total", otherwise the "overall" effect is the weighted average of direct + indirect on participants and indirect on non-participants.  Individually allocated trials measure the Direct effect; cluster trials measure the Overall which depends on participation fraction and HTE combined with differential participation. 
-- Second stage randomisation of individuals within clusters clarifies direct v indirect.
-- Spin the bottle: random direction to walk from centre to border of cluster
-- Used by the Expanded Programme on Immunisation, EPI of the WHO as 30 clusters of 7	randomly select units along the line of walk to be cluster centres
-- clusters are "next nearest until quota of 7 children reached", no callbacks
+
+- Second stage randomisation of individuals within clusters clarifies direct v indirect. 
+
+- Spin the bottle: random direction to walk from centre to border of cluster 
+
+- Used by the Expanded Programme on Immunisation, EPI of the WHO as 30 clusters of 7	randomly select units along the line of walk to be cluster centres 
+
+- clusters are "next nearest until quota of 7 children reached", no callbacks 
+
 - Not probability based ("not self weighting") and 
-- In vaccine surveys mothers interviewed, Est is +- 10% at 95%CI assuming Design Effect 2
-- Probability of choosing a child is awfully roughly $P_i = m \times \frac{M_i}{M} \times \frac{n}{N_i}$
-- Where n is the very approximately equal number of children surveyed per cluster, Ni is total children in the ith cluster and others as below and $\hat Var (\hat R) = \frac{1}{m(m-1)} \sum_{i=1}^m{(y_i/n - \hat R)^2}$ so
-- CI is $\hat R \pm t_{1-\alpha, m-1} \sqrt{\hat V(\hat R)}$ and the bias  is $\bar \rho - R = -\rho_{p, g}\sqrt{\frac{V(p)V(g)}{\bar g}}$ where
+
+- In vaccine surveys mothers interviewed, Est is +- 10% at 95%CI assuming Design Effect 2 
+
+- Probability of choosing a child is awfully roughly $P_i = m \times \frac{M_i}{M} \times \frac{n}{N_i}$ 
+
+- Where n is the very approximately equal number of children surveyed per cluster, Ni is total children in the ith cluster and others as below and $\hat Var (\hat R) = \frac{1}{m(m-1)} \sum_{i=1}^m{(y_i/n - \hat R)^2}$ so 
+
+- CI is $\hat R \pm t_{1-\alpha, m-1} \sqrt{\hat V(\hat R)}$ and the bias  is $\bar \rho - R = -\rho_{p, g}\sqrt{\frac{V(p)V(g)}{\bar g}}$ where 
+
 - g is the proportional change in population since the census, p is the true vaccinated proportion, rho is the correlation between p and g, C is the number of clusters in the whole population and R is the true ratio $R= \sum_{i=1}^C{\frac{g_i p_i}{C \bar g}}$.
 
 Design effect for clusters all of the same size is $1 + ((b-1) \times ICC)$ where b is the number per cluster and ICC is the correlation coefficient within clusters, as an average across all the clusters.
 
 ## Compact segment sampling;
 
-another cluster method.
-Areas are initially chosen with PPS, eg from last census
-The areas are divided into equal numbers of segments
-Within each segment of a given area are an equal number of houses, sketched and recorded
-A segment is randomly chosen from each area, and all houses in the segment are sampled
-Probability of choosing a house in the ith segment and therefore a child is very roughly 
-$P_i = \frac{m}{S_i} \times \frac{M_i}{M_{tot}}$ where
-_m_ is the number of selected clusters, Si is the number of segments in the ith cluster, Mtot the census population of all clusters in the sampling frame, Mi census population in the ith cluster
-IF population has changed uniformly and segments are exactly chosen, _eg_ vaccine coverage is estimated by a ratio of two random variables, number vaccinated and number chosen, each of which is weighted for the probability of being chosen, which therefore has to be known to estimate the true values.
+Another cluster method. 
+
+Areas are initially chosen with PPS, eg from last census. The areas are divided into equal numbers of segments. Within each segment of a given area are an equal number of houses, sketched and recorded. A segment is randomly chosen from each area, and all houses in the segment are sampled.
+
+The probability of choosing a house in the ith segment, and therefore a child, is very roughly $P_i = \frac{m}{S_i} \times \frac{M_i}{M_{tot}}$ where _m_ is the number of selected clusters, Si is the number of segments in the ith cluster, Mtot the census population of all clusters in the sampling frame, Mi census population in the ith cluster. The outcome, _eg_ vaccine coverage as a proportion, is estimated by a ratio of two random variables, number vaccinated and number chosen, each of which is weighted for the probability of being chosen, which therefore has to be known to estimate the true values. This is unbiased _IF_ the population has changed uniformly since the informative census and segments are exactly chosen.
+
 $\hat{Var} (\hat R) = (\frac{m}{(m-1)\hat N ^2}) \sum_{i=1}^m {\frac{(y_i - n_i \hat R)^2}{P_i^2}}$
 
 $\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$
 
 IntraClass Correlation Coefficient (ICC or rho) is Between Cluster Variance/Total Variance 
-$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$, or $\rho = \frac{\sigma^2_B}{\sigma^2_B + \sigma^2_W}$ 
-where $\sigma c$ is the between cluster SD and $\sigma e$ is everything else (here, within-cluster variation)
-ICC can be used for means, proportions and counts but is not defined for rates.
-k, the Between-Cluster Coefficient of Variation, is SD for cluster means/mean = $\frac{\sigma_c}{\bar x} = \frac{\sigma_c}{\pi}$ so
+$$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$$
+
+, or $\rho = \frac{\sigma^2_B}{\sigma^2_B + \sigma^2_W}$ 
+where $\sigma c$ is the between cluster SD and $\sigma e$ is everything else (here, within-cluster variation). 
+
+ICC can be used for means, proportions and counts but is not defined for rates, and so another quantity is defined and the equations rearranged to use it. This is _k_, the Between-Cluster Coefficient of Variation, and is the standard deviation for cluster means divided by the overall mean = $\frac{\sigma_c}{\bar x} = \frac{\sigma_c}{\pi}$.  The relationship between k and rho is normally
 $$\rho = \frac{k^2 \pi}{1-\pi}$$
 
 ## Design Factor 
