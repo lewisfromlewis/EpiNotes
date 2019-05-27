@@ -226,33 +226,50 @@ $AF_E$ is often used to assign blame by transposing the conditional: as it is th
 
 PAF for several levels of an exposure is given by $\sum \frac{p_k' (\theta_k -1)}{\theta_k}$ or the overall equation $\frac{p'(\theta_{tot}-1)}{\theta_{tot}}$, using as $\theta_{tot}$ a regression estimate with whatever covariates are desired to be included. The joint PAF for independent exposure is 
             $$1-PAF_T = 1-PAF_1 + 1-PAF_2 ... 1-PAF_i$$
-## Instabiity of relative risk
 
-Table: (tab:testing-RR) testing RR.
+## Instabiity of relative risk 
 
----------       ---------   ----------  -------- 
-                Outcome     No Outcome   
-Exposure        30          20          50
-No Exposure     10          40          50 
-                40          60          100
+Relative risk is a tricky slippy thing, as shown here. 
 
-\begin{tabular}{| c |c | c | c| }
-\hline
- & Outcome & No Outcome & \\ \hline
-Exposure & 30 & 20 & 50 \\ \hline
-No Exposure & 10 & 40 & 50 \\ \hline
-& 40 &  60 & 100 \\
-\hline
-\end{tabular}
+```{r, echo=FALSE, message=FALSE}
+rel_risk <- tibble(" " = c("Exposure", "No Exposure", ""),
+            "Outcome" = c(30, 10, 40),
+            "No outcome" = c(20, 40, 60),
+            "  " = c(50, 50, 100)
+            )
+knitr::kable(rel_risk, booktabs = TRUE, caption= "Instability of relative risk", align = 'c', padding = 2, escape=FALSE)
 
-AR = 30/50 – 10/50 = .4
-AF = ((30/30+20) – (10/10+40))/(10/10+40) = 2/3
-RR E+:E- = (30/30+20) / (10/10+40) = 3
-Odds of O+ if E+ = 30/20 = 1.5
-Odds of O+ if E- = 10/40 = .25
-Odds ratio of E+ versus E- = (30*40)/(10*20) = 6
+#\begin{tabular}{| c |c | c | c| }
+#\hline
+# & Outcome & No Outcome & \\ \hline
+#Exposure & 30 & 20 & 50 \\ \hline
+#No Exposure & 10 & 40 & 50 \\ \hline
+#& 40 &  60 & 100 \\
+#\hline
+#\end{tabular}
 
-If the RR doubles to 6 by clockwise rotation to
+```
+
+Initially, 
+
+    AR = 30/50 – 10/50 = .4
+    AF = ((30/30+20) – (10/10+40))/(10/10+40) = 2/3
+    RR = (30/30+20) / (10/10+40) = 3
+    Odds of O+ if E+ = 30/20 = 1.5
+    Odds of O+ if E- = 10/40 = .25
+    Odds ratio of E+ versus E- = (30*40)/(10*20) = 6
+
+If the RR doubles to 6 by "clockwise rotation" of the table, as shown below, then the OR is not doubled but instead rises to 18.857
+
+```{r, echo=FALSE, message=FALSE}
+rel_risk_clockwise <- tibble(" " = c("Exposure", "No Exposure", ""),
+            "Outcome" = c(36, 14, 40),
+            "No outcome" = c(6, 44, 60),
+            "  " = c(42, 58, 100)
+            )
+knitr::kable(rel_risk_clockwise, booktabs = TRUE, caption= "Clockwise table", align = 'c', padding = 2, escape=FALSE)
+
+```
 >rbind(c(36, 14), c(6, 44))
 
 the OR is 18.857
