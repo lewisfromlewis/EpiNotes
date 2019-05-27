@@ -191,20 +191,25 @@ The likelihood ratio is a measure of association, and there are many others, wit
 
 Relative risk is $r_e / r_u$. Attributable risk is the risk difference $r_e - r_u$ under the assumption that the difference is causal. Again, here they come teaching the fruit before the tree. 
 
-Attributable fraction AF is the proportion of the higher risk that is unique to the higher risk $AF = \frac{r_e - r_u}{r_e}$, whence, multiplying all by $r_u$ and substituting  $RR = \frac{r_e}{r_u}$ : $$AF = \frac{RR-1}{RR}$$
+Attributable fraction AF is the proportion of the higher risk that is unique to those with the higher risk, as in the first equation here. Because relative risk $RR = \frac{r_e}{r_u}$, the second form is equivalent. 
+$$AF = \frac{RR-1}{RR}$$
+$$AF = \frac{r_e - r_u}{r_e}$$
 
-Population attributable risk PAR is the extra population risk due to exposure $PAR = r_t-r_u$, again assuming it's _all causal_. This is mathematically the same as attributable risk times the prevalence of exposure, and population attributable fraction is predictable from the definition.
+
+Population attributable risk PAR is the extra population risk due to exposure $PAR = r_t-r_u$, again assuming it's _all causal_. This is mathematically the same as attributable risk times the prevalence of exposure, and population attributable fraction is predictable from the definition as here, where p is the proportion of the population exposed, and p' is proportion of cases who are exposed:
 		 $$PAR = p.AR = p(r_e-r_u)$$
 		 $$PAF = p' AF_E =  \frac{p'(RR -1)}{RR}$$
 		 
-where p is the proportion of the population exposed, and p' is proportion of cases who are exposed.
-because total cases if a fraction p of the population is exposed, 0<p<1, the risk in the total population is calculated for a single exposure, assuming all sorts of things (it's all causal, there are no effect modifiers, all other causes are orthogonal to both exposure and outcome)
+
+Assuming all sorts of things (it's all causal, there are no effect modifiers, all other causes are orthogonal to both exposure and outcome, the stratum-specific risks are known for the exposed and unexposed), the risk in the total population is calculated for a single exposure. 
         $$r_t = p.r_e + (1-p)r_u$$
 
 So anyway PAF is like attributable fraction, and the whole calculation then goes a little something like this
         $$\frac{r_{t}-r_{u}}{r_{t}}	= \frac {PAR}{r_{t}} = \frac {p.(r_{e}-r{u})}{r_{t}}  = \frac {p.(RR-1)}{p.(RR-1)+1} $$
 
-A confidence interval for PAF is given using 1-PAF. Honestly I'm not sure why but maybe it's emphasising that the observed value is usually the exposed and diseased, and so the uncertainty is in how much of the rest of the population there is: 
+A confidence interval for PAF is given using 1-PAF^[
+Honestly I'm not sure why but maybe it's emphasising that the observed value is usually the exposed and diseased, and so the uncertainty is in how much of the rest of the population there is
+]: 
         $$1- (1 - \textrm{PAF} ^{\times}_{\div} e^{1.96 \sqrt{}\frac{a}{b n_1} + \frac{c}{d n_0}})$$
 
 ## Inference using certain sampling designs 
@@ -215,11 +220,21 @@ Call the parameter of interest theta; whether it's risk ratio, rate ratio, odds 
 
 - In cross sectional studies prevalence is estimated, incidence can't be. 
 
-- In case control, "theta is estimated by the odds ratio"; as $\theta = ad/bc$ and $PAF = p'(theta – 1)/theta$ and $p' = a/n$ so $PAF = \frac{1- (b/n_1)}{(d/n_0)}$, the ratio of cases unexposed to controls unexposed. 
-
-PAF for several levels of an exposure is given by $\sum \frac{p_k' (\theta_k -1)}{\theta_k}$ or the overall equation $\frac{p'1-\theta_{tot}}{\theta_{tot}}$, using as $\theta_{tot}$ a regression estimate with whatever covariates are desired to be included. The joint PAF for independent exposure is 
-            $$1-PAF_T = 1-PAF_1 + 1-PAF_2 ... 1-PAF_i$$
+- In case control, "theta is estimated by the odds ratio"; as $\theta = ad/bc$ and $PAF = p'(theta – 1)/theta$ and $p' = a/n$ so $PAF = \frac{1- (b/n_1)}{(d/n_0)}$, the ratio of cases unexposed to controls unexposed^[
 $AF_E$ is often used to assign blame by transposing the conditional: as it is the proportion of cases that are associated with the exposure it is called the probability of causation or the assigned share of causation. This is clearly an error unless rare conditions are met, and the effects of the error are anywhere from very mild to moderate depending on the baseline probabilities.
+]. 
+
+PAF for several levels of an exposure is given by $\sum \frac{p_k' (\theta_k -1)}{\theta_k}$ or the overall equation $\frac{p'(\theta_{tot}-1)}{\theta_{tot}}$, using as $\theta_{tot}$ a regression estimate with whatever covariates are desired to be included. The joint PAF for independent exposure is 
+            $$1-PAF_T = 1-PAF_1 + 1-PAF_2 ... 1-PAF_i$$
+## Instabiity of relative risk
+
+Table: (tab:testing-RR) testing RR.
+
+---------       ---------   ----------  -------- 
+                Outcome     No Outcome   
+Exposure        30          20          50
+No Exposure     10          40          50 
+                40          60          100
 
 \begin{tabular}{| c |c | c | c| }
 \hline
@@ -1761,17 +1776,28 @@ Précis
 
 
 
-# Community Engagement
-From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which aﬀect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."
-I thin there's a little too much of the White Mans Burden in this, where the inherent "good" of engagement is because of the researchers displaying cultural humility.  I'm sure it's nice to see but the studied community would get along just as well with nobody coming in to satisfy themselves about their cultural humility, but the conduct of a trial does change things and the focus should be on whether those changes are beneficial enough to justify doing the study there.
-Should never be prefabricated, always negotiated and always actually strengthen participants' ability to control important aspects of their own lives or "empower" them.
-Find out, acknowledge and reconcile complexities in community attitudes and internal power structures, empower the unempowered.  Pilot or engagement activities may reveal that much more work needs done just to understand the views of the community, before touching the research design.
-Locoregional administrators or governments: Smith adds special interest and religious groups to this, explicitly recommending power games and assessing factions as if it's in fucking Helmand.  Local health providers for advice and "synergy".  This is all motherhood shite.
-Frameworks Methodologies Theories Participatory
+# Community Engagement 
+From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which aﬀect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."^[
+I thin there's a little too much of the White Man's Burden in this, where the inherent "good" of engagement is because of the researchers displaying cultural humility.  I'm sure it's nice to see but the studied community would get along just as well with nobody coming in to satisfy themselves about their cultural humility. The conduct of a trial does change things and the focus should be on whether those changes are beneficial enough to justify doing the study there.
+]
+Should never be prefabricated, always negotiated and always actually strengthen participants' ability to control important aspects of their own lives or "empower" them. Find out, acknowledge and reconcile complexities in community attitudes and internal power structures, empower the unempowered^[
+This can surely cause problems? Breaking the wheel is not without collateral damage.
+].  Pilot or engagement activities may reveal that much more work needs done just to understand the views of the community, before touching the research design. Locoregional administrators or governments, or relevant NGOs in some places, are also necessary^[
+... and probably evil, I'd guess. Smith adds special interest and religious groups to this, explicitly recommending power games and assessing factions as if it's in fucking Helmand. It's largely motherhood shite otherwise.
+] 
+Local health providers are usually just completely necessary for the intervention to work or be measured, and are also advised to be properly engaged for advice and "synergy". 
+
+    Frameworks Methodologies Theories Participatory blaaahhhh
+    
 Apparently visual aids are Participatory.
-Result feedback: considered and mediated feedback of overall results; but they also recommend using simple tests as a sop to the simple folk while sending off all the other tests.
-Surveillance
-"the ongoing systematic collection, analysis and interpretation of health data essential to the planning, implementation, and evaluation of public health practice, closely integrated with the timely dissemination of these data to those who need to know. The final link in the surveillance chain is the application of these data to prevention and control. A surveillance system includes a functional capacity for data collection, analysis and dissemination linked to public health programmes." (CDC, 1986)
+
+## Communicating results 
+
+They recommend onsidered and mediated feedback of overall results, but they also recommend using simple tests as a sop to the simple folk while sending off all the other tests. 
+
+# Surveillance 
+
+Surveillance is "the ongoing systematic collection, analysis and interpretation of health data essential to the planning, implementation, and evaluation of public health practice, closely integrated with the timely dissemination of these data to those who need to know. The final link in the surveillance chain is the application of these data to prevention and control. A surveillance system includes a functional capacity for data collection, analysis and dissemination linked to public health programmes."(CDC, 1986)
 Surveillance (tracking a disease or risks) vs monitoring (tracking process and outcomes)
 	Practical, uniform, rapid; unlike epidemiological research which is one-off and specialised
 	Many data collectors with less interest or time
