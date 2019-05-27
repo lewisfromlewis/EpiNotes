@@ -237,7 +237,7 @@ rel_risk <- tibble(" " = c("Exposure", "No Exposure", ""),
             "No outcome" = c(20, 40, 60),
             "  " = c(50, 50, 100)
             )
-knitr::kable(rel_risk, booktabs = TRUE, caption= "Instability of relative risk", align = 'c', padding = 2, escape=FALSE)
+knitr::kable(rel_risk, booktabs = TRUE, caption= "Initially", align = 'c', padding = 2, escape=FALSE)
 
 #\begin{tabular}{| c |c | c | c| }
 #\hline
@@ -259,7 +259,7 @@ Initially,
     Odds of O+ if E- = 10/40 = .25
     Odds ratio of E+ versus E- = (30*40)/(10*20) = 6
 
-If the RR doubles to 6 by "clockwise rotation" of the table, as shown below, then the OR is not doubled but instead rises to 18.857
+If the RR doubles to 6 by "clockwise rotation" of the table, as shown below, then the OR is not doubled but more than tripled, rising by a factor of 3.14 to a new odds ratio of 18.857
 
 ```{r, echo=FALSE, message=FALSE}
 rel_risk_clockwise <- tibble(" " = c("Exposure", "No Exposure", ""),
@@ -267,22 +267,26 @@ rel_risk_clockwise <- tibble(" " = c("Exposure", "No Exposure", ""),
             "No outcome" = c(6, 44, 60),
             "  " = c(42, 58, 100)
             )
-knitr::kable(rel_risk_clockwise, booktabs = TRUE, caption= "Clockwise table", align = 'c', padding = 2, escape=FALSE)
-
+knitr::kable(rel_risk_clockwise, booktabs = TRUE, caption= "Clockwise", align = 'c', padding = 2, escape=FALSE)
 ```
->rbind(c(36, 14), c(6, 44))
 
-the OR is 18.857
+Then if there is "right shift" in the table so that the relative risk is doubled to 6, with a reduced population prevalence, the odds ratio only rises by a factor of 1.77, to 10.615
 
-If the RR doubles to 6 because right shift to
->rbind(c(24, 26), c(4, 46)) 
+```{r, echo=FALSE, message=FALSE}
+rel_risk_right <- tibble(" " = c("Exposure", "No Exposure", ""),
+            "Outcome" = c(24, 26, 50),
+            "No outcome" = c(4, 46, 50),
+            "  " = c(28, 72, 100)
+            )
+knitr::kable(rel_risk_right, booktabs = TRUE, caption= "Right-shifted", align = 'c', padding = 2, escape=FALSE)
+```
 
-then the OR is 10.615
+Again, the "population attribution" is unstable. 
 
-PAR 	= 40/40+60 – 10/10+40 = .2					
-PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
-	= using RR (0.5).(3-1) / (0.5).(3-1)+1 = 0.5
-	= using OR (0.5).(6-1) / (0.5).(6-1)+1 = 0.71
+    PAR = 40/40+60 – 10/10+40 = .2 
+    PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
+    PAF using RR is (0.5).(3-1) / (0.5).(3-1)+1 = 0.5
+    = using OR (0.5).(6-1) / (0.5).(6-1)+1 = 0.71
 
 ## Final caution 
 
