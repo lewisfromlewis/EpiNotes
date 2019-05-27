@@ -1,22 +1,22 @@
 ---
 title: "EpiNotes"
-subtitle: "For you"
 author: "Lewis Campbell"
 date: "`r Sys.Date()`"
-output: 
-  tufte::tufte_book:
+output:
+  bookdown::tufte_book2:
     citation_package: natbib
     latex_engine: xelatex
-    number_sections: true
-  tufte::tufte_handout: 
-    citation_package: natbib 
-    latex_engine: xelatex
-  tufte::tufte_html: default
+    number_sections: yes
   bookdown::epub_book: default
+  bookdown::tufte_html2: default
+  bookdown::tufte_handout2:
+    citation_package: natbib
+    latex_engine: xelatex
 bibliography: Epidemiology.bib
-csl: biomed-central.csl
-biblio-style: plain
 link-citations: yes
+csl: biomed-central.csl
+subtitle: For you
+biblio-style: plain
 ---
 
 ```{r setup, include=FALSE}
@@ -237,7 +237,7 @@ rel_risk <- tibble(" " = c("Exposure", "No Exposure", ""),
             "No outcome" = c(20, 40, 60),
             "  " = c(50, 50, 100)
             )
-knitr::kable(rel_risk, booktabs = TRUE, caption= "Initially", align = 'c', padding = 2, escape=FALSE)
+knitr::kable(rel_risk, booktabs = TRUE, caption= "Initially", align = 'c', escape=FALSE)
 
 #\begin{tabular}{| c |c | c | c| }
 #\hline
@@ -267,7 +267,7 @@ rel_risk_clockwise <- tibble(" " = c("Exposure", "No Exposure", ""),
             "No outcome" = c(6, 44, 60),
             "  " = c(42, 58, 100)
             )
-knitr::kable(rel_risk_clockwise, booktabs = TRUE, caption= "Clockwise", align = 'c', padding = 2, escape=FALSE)
+knitr::kable(rel_risk_clockwise, booktabs = TRUE, caption= "Clockwise", align = 'c', escape=FALSE)
 ```
 
 Then if there is "right shift" in the table so that the relative risk is doubled to 6, with a reduced population prevalence, the odds ratio only rises by a factor of 1.77, to 10.615
@@ -278,7 +278,7 @@ rel_risk_right <- tibble(" " = c("Exposure", "No Exposure", ""),
             "No outcome" = c(4, 46, 50),
             "  " = c(28, 72, 100)
             )
-knitr::kable(rel_risk_right, booktabs = TRUE, caption= "Right-shifted", align = 'c', padding = 2, escape=FALSE)
+knitr::kable(rel_risk_right, booktabs = TRUE, caption= "Right-shifted", align = 'c', escape=FALSE)
 ```
 
 Again, the "population attribution" is unstable. 
@@ -343,7 +343,7 @@ $P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 
 ## Chebyshev's inequality
 
-This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. Teh inequality is that the probability that the observed value is more than k σ away from its mean is small and rapidly decreasing with k 
+This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. Teh inequality is that the probability that the observed value is more than k sigma away from its mean is small and rapidly decreasing with k 
 $$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$
 
 # Beyond subjectivity and objectivity
@@ -458,14 +458,14 @@ Likelihood = $\binom{n}{k} p^k (1 - p)^{n-k}$, approximated by $-\frac{1}{2}\fra
 
 ## Poisson likelihoods
 
-are calculated so for best guesses at baseline λ0 and rate ratio θ for d0 and d1 events over times T0 and T1 
+are calculated so for best guesses at baseline $\lambda0$ and rate ratio $\theta$ for d0 and d1 events over times T0 and T1 
 log Likelihood $L = (d_0 + d_1) log(\lambda_0) + d_1 log(\theta) - \lambda_0 T_0 - \theta \lambda_0 T_1 + \> constant$
 which generates a surface maximal at $\lambda_0 = \frac{d_0 + d_1}{T_0 + T_1}$.  Substituting this into the above,
-L is hence maximal at $λ0 = d_1 log (\frac{\theta T_1}{T_0}) - (d_0 + d_1) log (1 + \frac{\theta T_1}{T_0}) + \> constant$
-which is the "profile log likelihood for θ";
-its plot against θ is the same shape as its ratio-to-maximum against θ;
-its plot against log(θ) is approximated by:
-			$\textrm{log(LR)} = - \frac{1}{2} (\frac{MLE - \theta}{S})^2$ where S is the SE of θ
+L is hence maximal at $\lambda0 = d_1 log (\frac{\theta T_1}{T_0}) - (d_0 + d_1) log (1 + \frac{\theta T_1}{T_0}) + \> constant$
+which is the "profile log likelihood for theta";
+its plot against theta is the same shape as its ratio-to-maximum against theta;
+its plot against log(theta) is approximated by:
+			$\textrm{log(LR)} = - \frac{1}{2} (\frac{MLE - \theta}{S})^2$ where S is the SE of theta
 More complex likelihoods are fitted by iteration on the MLE, _eg_
 taking nulls (L=MLE=0) for all *n* parameters, and working out, calculating gradient and curvature at each value to sketch the best approximation n-surface with its n-dimensional maximum being the improved estimate of MLE and repeating to convergence which doesn't work if the data are insufficient to estimate the number of parameters or if the profile log likelihoods are non-quadratic when eg Poisson, Logistic and Cox regression uses log transformations, 
 or the similar Score Test of form $-2 \textrm{log}(LR) = \frac{U^2}{V}$ where U is the gradient (*aka* the Score) and V the negative of the curvature of a quadratic approximation to the likelihood fitted at the null (aka the Score Variance), not at the MLE.
@@ -508,9 +508,9 @@ $\hat{Var} (\hat R) = (\frac{m}{(m-1)\hat N ^2}) \sum_{i=1}^m {\frac{(y_i - n_i 
 
 $\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$
 
-IntraClass Correlation Coefficient (ICC or ρ) is Between Cluster Variance/Total Variance 
+IntraClass Correlation Coefficient (ICC or rho) is Between Cluster Variance/Total Variance 
 $\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$, or $\rho = \frac{\sigma^2_B}{\sigma^2_B + \sigma^2_W}$ 
-where σc is the between cluster SD and  σe is everything else (here, within-cluster variation)
+where $\sigma c$ is the between cluster SD and $\sigma e$ is everything else (here, within-cluster variation)
 ICC can be used for means, proportions and counts but is not defined for rates.
 k, the Between-Cluster Coefficient of Variation, is SD for cluster means/mean = $\frac{\sigma_c}{\bar x} = \frac{\sigma_c}{\pi}$ so
 $$\rho = \frac{k^2 \pi}{1-\pi}$$
@@ -524,9 +524,9 @@ Design Effect DEFF
 = 1 + (Number in each cluster-1) * rate of homogeneity = $1 + \rho(m - 1)$
 DEFF on total N is $1+(\bar{m} - 1) \rho$ where m is number in a cluster or, if cluster sizes vary, $1+ \rho(\bar m(1 +(\frac{sd_m}{\bar m})^2) - 1)$ where $\frac{sd_m}{\bar m}$ is coefficient of variation of cluster size
 
-Rate of homogeneity **roh** (here ρ) is the ICC for single stage clustering, and an equivalent ration of total variance for multi stage clustering.
+Rate of homogeneity **roh** (here $\rho$) is the ICC for single stage clustering, and an equivalent ration of total variance for multi stage clustering.
 		
-k is estimated for power reasons from σc : see below or $m= \frac{N(1-\rho)}{(c - \rho N)}$ for cluster size given total N under simple random and number of clusters c. ICC can’t be used when the outcome is a rate per time; so k is used here. 
+k is estimated for power reasons from $\sigma c$ : see below or $m= \frac{N(1-\rho)}{(c - \rho N)}$ for cluster size given total N under simple random and number of clusters c. ICC can’t be used when the outcome is a rate per time; so k is used here. 
 	
 ## Standard cluster sample size calculations
 
@@ -551,7 +551,7 @@ These look simpler but sacrifice transparency if written for the number of clust
 
 $$c=1 + f \frac{\left( \frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 + \pi_1^2 ) \right)}{(\pi_0 - \pi_1)^2}$$
 
-where f is a factor combining zα and zβ, eg f=7.84 for power 0.8 and alpha 0.05, 10.5 for power 0.9 and alpha 0.05 and k is the assumed true coefficient of variation between clusters; y is the number of person-time follow up per cluster and m is the number of people per cluster, both of whcih are assumed identical.
+where f is a factor combining z-alpha and z-beta, eg f=7.84 for power 0.8 and alpha 0.05, 10.5 for power 0.9 and alpha 0.05 and k is the assumed true coefficient of variation between clusters; y is the number of person-time follow up per cluster and m is the number of people per cluster, both of whcih are assumed identical.
 
 If SRS but unequal randomisation ratios with size in each group n, then if the smaller group is n1, then alter the size of each group by $k= \frac{n_2}{n_1}$ and $n_1 = \frac{n(k+1)}{2k}$, which converges on $n_1 = \frac{n}{2}$ as the ratio k increases, at the cost of imprecision in estimates of the effect in group 1, and less information on rare events.
 
@@ -603,11 +603,11 @@ Probability Density Function is >0 everywhere and has area =1 under it
 The area under the pdf corresponds to the probability for those values of that random variable
 The probability of a single specific number is 0
 Integrating the CDF yields the CDF
-Cumulative Distribution Function is the probability that a random variable takes the value ≤x
+Cumulative Distribution Function is the probability that a random variable takes the value $\leq x$
 	$F(x) = P(X \leqslant x)$
 Integrating the CDF at its limits yields an area of probability
 Survivor function is S(x) = 1-F(x)
-Quantiles: the αth quantile of a distribution function F(x) is the point such that $F(x_{\alpha}) = \alpha$
+Quantiles: the $\alpha^{th}$ quantile of a distribution function F(x) is the point such that $F(x_{\alpha}) = \alpha$
 
 # Variance and error terms
 
@@ -621,7 +621,7 @@ and for 2 independent samples is
 			$$\textrm{sem} = \sqrt{\frac{s_{1}^2}{n_{1}} + \frac{s_{0}^2}{n_{0}}}$$
 	If it's reasonable to assume alike variance, such as for example randomised samples,
 			$$\textrm{sem} = s_{p}\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{0}}}$$
-	for which the sample size-weighted common estimate of σ assuming alike variance is
+	for which the sample size-weighted common estimate of sigma assuming alike variance is
 	$$s_{p}= \sqrt{\frac{(n_{1}-1).s_{1}^2 + (n_{0}-1)s_{0}^2}{(n_{1} + n_{0} - 2)}}$$
 			
 paired samples are modified if they are alike by rho
@@ -640,7 +640,7 @@ and for proportions
 
 standard error for a confidence interval:
 	$\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$
-standard error for a hypothesis test assumes both are from the same π so uses the common proportion (all +ve / all n) before repeating the above formula:
+standard error for a hypothesis test assumes both are from the same true population probability $\pi$ so uses the common proportion (all +ve / all n) before repeating the above formula:
 	$\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$
 
 ## Bernoulli mass function
@@ -650,12 +650,12 @@ $p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom {n}{k} = \frac {n!}{k!(n-k
 
 ## Normal distribution
 
-Any normal distribution is a multiple of σ and an addend of μ from Z, the
+Any normal distribution is a multiple of sigma and an addend of mu from Z, the
 Standard Normal Distribution: 
 	$$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$$
-So if X is a normally distributed variable with mean μ and sd σ then $X = \mu + \sigma Z, N \sim (\mu,\sigma^2)$
+So if X is a normally distributed variable with mean mu and sd sigma then $X = \mu + \sigma Z, N \sim (\mu,\sigma^2)$
 	
-65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of μ
+65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of mu
 	
 ## Multinomial distribution is
 
@@ -669,7 +669,7 @@ T distribution is descended from the standard normal, and assumed to be symmetri
 
 ## Poisson 
 
-The Poisson distribution has both mean and variance equal to λ, which is events over a given time, $\lambda = \frac{D}{t}$
+The Poisson distribution has both mean and variance equal to lambda, which is events over a given time, $\lambda = \frac{D}{t}$
 and noting $1-x \approx e^{-x}$ so $(1 - x)^n \approx e^{-nx}$ its probability mass function for the unrealised variable X adopting a certain non negative, integer value x is:
 $$P(X=x;\lambda) = \frac{\lambda^x.e^{-\lambda}}{x!}$$
 
@@ -684,9 +684,9 @@ Standard Error of a log rate is $\frac{1}{\sqrt{D}}$, CI is $\lambda^{\times}_{\
 
 Used for example in modelling especially unbounded count data,
 $X \sim Poisson (\lambda t)$ where $\lambda = E[X/t]$
-approximating the binomial for large n and small p; let λ=np 
+approximating the binomial for large n and small p; let lambda=np 
 modelling contingency tables. In censoring survival models (as an "unbounded" problem).
-NHST is the Wald against H0: λ0 = λ1, $z = \frac{\textrm{log}(rate \> ratio)}{s.e. \textrm{log}(rate \> ratio)}$
+NHST is the Wald against H0: lambda0 = lambda1, $z = \frac{\textrm{log}(rate \> ratio)}{s.e. \textrm{log}(rate \> ratio)}$
 
 
 ## Poisson regression 
@@ -725,7 +725,7 @@ So the average of samples, and their variance, converge on population values: a 
 
 For consistent samples, the mean, sd and the like are all consistent.
 - The distribution also becomes more normal-like as n rises.
-- 95% of 95% confidence intervals contain μ; except see below...
+- 95% of 95% confidence intervals contain mu; except see below...
 
 The CLT doesn't guarantee that a given n is large enough
 - sample proportions don't converge very fast on the population proportion, so
@@ -823,7 +823,7 @@ Exchangeable correlation is the usual GEE setting, where the effect estimate is 
 
 The effect of cluster, whether innate, unmeasured confounder or a true mechanistic effect, is represented in the regression model by a separate term for each cluster: this is rendered tractable by assuming a stochastic distribution of the size of these terms rather than attempting to measure or specify the cluster effect for each cluster (hence "random effects"):
 
-The log odds of the jth person in the ith cluster is then given by, where for example ui ~ N(0, σu2) and σu2 is estimated as part of the model building.  The same information is imparted by estimating rho, the within cluster (also called "intra-class") correlation coefficient.  A cluster specific effect is estimated: the odds of an individual having the outcome if exposed, divided by the odds if not exposed. 
+The log odds of the jth person in the ith cluster is then given by, where for example ui ~ N(0, sigmau2) and sigmau2 is estimated as part of the model building.  The same information is imparted by estimating rho, the within cluster (also called "intra-class") correlation coefficient.  A cluster specific effect is estimated: the odds of an individual having the outcome if exposed, divided by the odds if not exposed. 
 
 The intention is to derive a model that provides a fully specified likelihood: assuming that it has done so the LRT is appropriate.  That likelihood becomes complicated easily: a bivariate normal distribution for the likelihood is produced for a normal error plus normally distributed cluster effect, which has an algebraic solution, as does the combination of poisson error and gamma cluster effects to produce a negative binomial; but the combination of binomial error and normal cluster effects, or poisson error and normal cluster effects, produce mixture distributions without roots.  The reliability of estimates needs to be checked.
 
@@ -832,11 +832,11 @@ Power
 - is a function that depends on the value of mu0
 - the distributions of the observation under H0 versus Ha hypotheses are calculated
 - then a line is drawn across the null for alpha;
-- at that line the extreme tail under Ha is 1-β = P	
+- at that line the extreme tail under Ha is 1-beta = P	
 	
-If testing Ha: μ > μ0, $1 - \beta = P (\bar X > \mu_{0} +z_{1-\alpha} \frac{\sigma}{\sqrt{n}}; \mu = \mu_{a})$ , where $\bar X \sim N(\mu_a, \sigma^2/n)$ and μ0, α are known.  If 3 of the 4 unknowns μa, σ, n, β are specified the last can be calculated
+If testing Ha: mu > mu0, $1 - \beta = P (\bar X > \mu_{0} +z_{1-\alpha} \frac{\sigma}{\sqrt{n}}; \mu = \mu_{a})$ , where $\bar X \sim N(\mu_a, \sigma^2/n)$ and mu(0), alpha are known.  If 3 of the 4 unknowns are specified the last can be calculated
 	
-If assuming only the noncentral t distribution then power is $P = (\frac {\bar X - \mu_{0}} {s / \sqrt{n}} > t_{1-\alpha, n-1}; \mu = \mu_{a})$ ; note P=α at μa=μ0 ;
+If assuming only the noncentral t distribution then power is $P = (\frac {\bar X - \mu_{0}} {s / \sqrt{n}} > t_{1-\alpha, n-1}; \mu = \mu_{a})$ ; note $P=(\alpha | \mu_a=\mu0)$ ;
 On the other hand power depends only on the difference in means divided by S.E.M $\frac {\sqrt{n}(\mu_{a} - \mu_{0})}{\sigma}$, and the effect size is dimensionless and can be used across contexts a bit.
 
 # Survival and logrank test
@@ -918,7 +918,7 @@ Family wise error rate $P(V \geq 1)$ which converges to 1 for multiple tests eve
 False discovery rate is the rate at which claims of significance are false. Controlled so that $\textrm{E}(\frac{V}{R})$ is below a chosen threshold q:
 Benjamini-Hochberg order P1 ... Pm with their null hypotheses H1 ... Hm and for the largest *k* such that $P_{k} \leq \alpha. \frac{k}{m}$, reject Hi where i= 1 ... k which is useful because $E[Q] \leq \frac{m_0}{m} \alpha \leq \alpha$
 Or you could report "adjusted p-values" which are no longer p-values
-eg to control FWER for P1 ... Pm take $P_{i}^{fwer} = \max{m \times P_{i}, 1}$ and call each Pi<α significant
+eg to control FWER for P1 ... Pm take $P_{i}^{fwer} = \max{m \times P_{i}, 1}$ and call each Pi<alpha significant
 
 Expected values
 	- are properties of distributions, as are variances of those distributions
@@ -999,7 +999,7 @@ $-_{A}$ & s & m & s+m \\ \hline
 \hline
 \end{tabular}
 
-This is also used in matched rather than paired data, where one can imagine ρ being quite important.
+This is also used in matched rather than paired data, where one can imagine rho being quite important.
 
 Odds ratio is r/s, the ratio of discordance between the tests, and error factor is $e^{z_{0.05} \times \sqrt{\frac{1}{r} + \frac{1}{s}}}$ so OR with 95% CI is $\frac{r}{s} \times e^{1.96 \times \sqrt{\frac{1}{r} + \frac{1}{s}}}$ 	to	 $\frac{r}{s} / e^{1.96 \times \sqrt{\frac{1}{r} + \frac{1}{s}}}$
 
@@ -1009,19 +1009,19 @@ So 95% CI for an estimate of the proportional discordance is $\frac{r+s}{n} \pm 
 
 Paired categorical data from the 2x2 agreement table tested by McNemar's test:
 $$\chi^2_{pair} = \frac{(r-s)^2}{r+s}$$
-or with the continuity correction $\frac{(|r-s|-1)^2}{r+s}, \nu = 1$, or by MHχ2 with pairs as strata or an exact binomial test if discordant cells <20.
+or with the continuity correction $\frac{(|r-s|-1)^2}{r+s}, \nu = 1$, or by MH chi squared with pairs as strata or an exact binomial test if discordant cells <20.
 
 ## Rate data
-The rate, call it λ, is estimated by $\hat \lambda$, usually Events / Total time at risk $\hat \lambda = \frac{D}{t}$
+The rate, call it lambda, is estimated by $\hat \lambda$, usually Events / Total time at risk $\hat \lambda = \frac{D}{t}$
 S.E. for the estimate is $\sqrt{\frac{\hat \lambda}{t}}$ so 95% CI is $\lambda = \hat \lambda \pm 1.96 \sqrt{\frac{\hat \lambda}{t}}$
 Rate differences are $(\lambda_1 - \lambda_2) \pm 1.96 \sqrt{\frac{\lambda_1}{t_1} - \frac{\lambda_2}{t_2}}$
 Expected number of events e1 is $E(D_1) = \frac{D t_1}{t} = \lambda t$
 		
 Variance for e is $V(e) = \frac{Dt t_{2}}{t^2}$
 		
-And χ2 is $\chi ^2 = \frac{(|D_1 - E(D_1)|-0.5)^2}{V(D_1)} \textrm{, df=1}$, $H_0 = \lambda_1 - \lambda_2 = 0$ or equivalently that $\frac{\lambda_1}{\lambda_2} = 1$
+And chi squared is $\chi ^2 = \frac{(|D_1 - E(D_1)|-0.5)^2}{V(D_1)} \textrm{, df=1}$, $H_0 = \lambda_1 - \lambda_2 = 0$ or equivalently that $\frac{\lambda_1}{\lambda_2} = 1$
 
-χ2 for trend, where x  is the group score or level, is 	 $$\frac{(\sum D_i x_i - \lambda \sum t_i x_i)^2}{\lambda^2 (t \sum t_i x_i^2 - (\sum t_i x_i)^2)}$$
+Chi squared for trend, where x is the group score or level, is 	 $$\frac{(\sum D_i x_i - \lambda \sum t_i x_i)^2}{\lambda^2 (t \sum t_i x_i^2 - (\sum t_i x_i)^2)}$$
 
 # Non parametric hypothesis tests 
 
@@ -1303,12 +1303,12 @@ categorical is by tabulation, eg mean pair agreement or Observed Agreement OA:
 		$\frac {a+d}{a+b+c+d}$
 or Kappa statistic for excess agreement over max chance agreement  $\frac{OA-CA}{1-CA}$,	
 
-(where CA is $\frac {E[a]+E[d]}{a+b+c+d}$ and $E[a] = \frac{Row total \times Column total}{Grand total}$ as in the χ2 )
+(where CA is $\frac {E[a]+E[d]}{a+b+c+d}$ and $E[a] = \frac{Row total \times Column total}{Grand total}$ as in the chi squared )
 
 
-Regression is by $y = \beta_0 + \beta_1 x + \epsilon$ where ε is normal with SD estimated by s, below
+Regression is by $y = \beta_0 + \beta_1 x + \epsilon$ where epsilon is normal with SD estimated by s, below
 
-β1 from $\hat \beta_1 = \frac{\sum_{i=1}^n(x_i - \bar X)(y_i - \bar Y)}{\sum_{i=1}^n (x_i - \bar X)^2}$, then $\hat \beta_0 = \bar Y - \hat \beta_1 \bar X$ or 
+Beta 1 from $\hat \beta_1 = \frac{\sum_{i=1}^n(x_i - \bar X)(y_i - \bar Y)}{\sum_{i=1}^n (x_i - \bar X)^2}$, then $\hat \beta_0 = \bar Y - \hat \beta_1 \bar X$ or 
 		$\hat \beta_1 = Cor (Y, X) \frac{SD_y}{SD_x}$
 		
 
@@ -1331,7 +1331,7 @@ $D^c$ & c & d & $N_{D^c}$ \\ \hline
 & $N_{+}$ &  $N_{-}$  & N \\ \hline
 \end{tabular}
 
-The distribution of the squared differences in observed and expected values generates a χ2 distribution scaled for the expected values, with degrees of freedom $\nu = (rows-1) \times (columns-1)$. That is, the χ2 statistic is given by $\sum {\frac{(O-E)^{2}}{E}}$, 
+The distribution of the squared differences in observed and expected values generates a chi squared distribution scaled for the expected values, with degrees of freedom $\nu = (rows-1) \times (columns-1)$. That is, the chi squared statistic is given by $\sum {\frac{(O-E)^{2}}{E}}$, 
 H0 = "the distribution of observations among the categories of one variable is independent of their distribution among the categories of the other" or "there is no association between row and column variables"
 
 To repeat:
@@ -1342,18 +1342,18 @@ which is only from Smith et al *"Field Trials"* but the same shape as in the C-M
 
 Chi squared is distributed as $\frac{1}{{2^\frac{k}{2} \Gamma(\frac{k}{2})}}x^{\frac{k}{2}-1}e^{-\frac{x}{2}}$, but that's not important right now.
 
-In the special case of a 2x2 table the χ2 statistic is
+In the special case of a 2x2 table the chi squared statistic is
 		$\chi^2_{Yates} = \frac{N.(|ad-bc|-\frac{N}{2})^2}{(a+b).(c+d).(a+c).(b+d)}$
 
 including Yates's continuity correction of O-E-0.5 for each cell because of a tail of the underlying binomial continuous distribution being better estimated by a point midway between that cell count and one fewer.  This sums to N/2 for a 2x2 table with N=20-40 and no value <5.
-More generally χ2 can be used in a 2xC table if no value <1 and 80% values are >=5
+More generally chi squared can be used in a 2xC table if no value <1 and 80% values are >=5
 
 Otherwise Fisher's Exact:  
 $$p_{table} = \frac{N_+ ! N_+! N_D! N_{D^c}!}{N! a! b! c! d!}$$
 and either sum p_table across all the possible tables with lower probabilities
 or double the sum of probabilities of lower p_table (either acceptable, both differ!)
 
-and for the test of a "trend" across scored levels of a variable which differs between groups Xi, hence having one degree of freedom as it's comparing two means-of-scores X̄1 and X̄2 is a t test squared, which is also the form of the Pearson Chi Squared:
+and for the test of a "trend" across scored levels of a variable which differs between groups Xi, hence having one degree of freedom as it's comparing two means-of-scores Xbar1 and Xbar2 is a t test squared, which is also the form of the Pearson Chi Squared:
 		 $$\chi^2_\rho = \frac{(X _{1} - X _{2})^2}
 {s^{2}.(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$$
 
@@ -1421,13 +1421,13 @@ the estimator that minimises the sum of squares for a regression line is $\beta_
 	 , or $Cor(X,Y) \frac{sd(Y)}{sd(X)}$
 	 
 
-Model Yi = β0 + β1 Xi + ϵi where ϵi ~ N(0, σ2).  Observed outcome i is Yi at predictor Xi;
+Model $Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$ where $\epsilon_i \sim N(0, \sigma^2)$.  Observed outcome i is Yi at predictor Xi;
 	Predicted outcome at predictor Xi is $\hat Y_i = \hat \beta_0 + \hat \beta_1 X_i$ and residual is $e_i = Y_i - \hat Y_i$
-	Least squares minimises $\sum_{i=1}^n e_i^2$, ei being estimates of ϵi .
+	Least squares minimises $\sum_{i=1}^n e_i^2$, ei being estimates of $\epsilon_i$ .
 
-The errors are the product of all the unmodelled confounders or modifiers acting outside the model, on the observed data, so E(ϵi )=0 ; if an intercept is included then their sum=0 and if a linear regressor is included then $\sum_{i=1}^n e_i X_i = 0$ so the residuals are very useful for investigating poor model fit such as by residual plots.
+The errors are the product of all the unmodelled confounders or modifiers acting outside the model, on the observed data, so $E(\epsilon_i ) = 0$ ; if an intercept is included then their sum=0 and if a linear regressor is included then $\sum_{i=1}^n e_i X_i = 0$ so the residuals are very useful for investigating poor model fit such as by residual plots.
 
-ML estimate of the variance σ^2^ around the line is $\frac{1}{n} \sum_{i=1}^n e_i^2$, and $\hat \sigma^2 = \frac{1}{n-2} \sum_{i=1}^n e_i^2$ is an unbiased estimate for the population sigma based on the independent residuals.
+ML estimate of the variance $\sigma^2$ around the line is $\frac{1}{n} \sum_{i=1}^n e_i^2$, and $\hat \sigma^2 = \frac{1}{n-2} \sum_{i=1}^n e_i^2$ is an unbiased estimate for the population sigma based on the independent residuals.
 The numerator for total variability in response variable is $\sum_{i=1}^n (Y_i - \bar Y)^2$ and is made up of the variability explained by the line and the residual variability.
 	$\sum_{i=1}^n (Y_i - \bar Y)^2 = \sum_{i=1}^n (Y_i - \hat Y_i)^2 + \sum_{i=1}^n (\hat Y_i - \bar Y)^2$ and
 
@@ -1735,18 +1735,18 @@ all models will, initially, be assumed to be linear with respect to time, and le
 enter the utility function as an interaction with life expectancy (the TIME variable). Thus, the utility
 (U) of health state j in scenario s for individual i is in Equation 1. Thus, if TIME is set at zero, the
 systematic component of the utility function is also zero.
-$U_{isj} = αTIME_{isj} + βX_{isj}' TIME_{isj} + ε_{isj} $
+$U_{isj} = \alpha TIME_{isj} + \beta X_{isj} ' TIME_{isj} + \epsilon_{isj}$
 Generating a scoring system for QALYs
 To generate QALY weights for the health states to create the scoring algorithm of the tool, the initial
 analysis will use a ratio of marginal utilities (RMU) approach, as used by AI Viney15, 16. In a QALY
 model, ten years in full health provides 10 QALYs. If another health state provides 10 QALYs over
 a 15 year period, the QALY model values that health state at 10/15 = 0.667. Using Eq1, the systematic
 component of the utility function can be differentiated with respect to TIME,
-$\frac{\delta U}{\delta TIME} = α + βX′$
+$\frac{\delta U}{\delta TIME} = \alpha + \beta X′$
 The RMU between two health state profiles j and j* can therefore be estimated as:
 $RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$
-This gives a value for a health state with characteristics defined by the βX isj ' term, relative to another
-health state defined by characteristics βX isj ' * . If βX isj ' * is set to full health (ie the best level of each
+This gives a value for a health state with characteristics defined by the betaX isj ' term, relative to another
+health state defined by characteristics betaX isj ' * . If betaX isj ' * is set to full health (ie the best level of each
 dimension), the value generated using Eq 3 is a QALY weight15, 19.
 
 # Ethics
@@ -1849,7 +1849,7 @@ Vaccine efficacy is foolish, "usually" 1-(Risk in vaccinated/Risk in Unvaccinate
 		If f=1-(1/R0) then HI happens.  For more general VEi and VEs this f is multiplied by $\frac{1}{VE_s + VE_i - VE_s VE_i}$
 			
 	Estimation depends on being able to see direct and indirect effects; with some assumptions VEs and VEi can be jointly estimated from only the disease rate in vacc v unvacc if the vacc proportion is varied in strata, clusters or times.  This joint estimation has a coverage estimate trading VEi against VEs
-	and if a 2nd stage cluster, infection probability β, VEs =0, proportion infected at time t It, contact probability c, duration of contact d then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times 1-VEi. 
+	and if a 2nd stage cluster, infection probability beta, VEs =0, proportion infected at time t It, contact probability c, duration of contact d then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times 1-VEi. 
 
 # Causality – Bradford Hill – 9 dogme
 "An active agent or a static condition"
