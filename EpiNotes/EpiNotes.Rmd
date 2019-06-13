@@ -412,9 +412,8 @@ There is selection involved in matching, which is not addressed in most places. 
 
 Matching, _eg_ by _"malaria rates last year"_, can cause problems. I intuit that if the matched variable is not the right one then no inferential efficiency is gained, eg if "rank of malaria incidence" is very different in the year of study then they're not matched by malaria incidence and random baseline variability may be considered to have been reduced when it actually hasn't.  So that's a problem like HTE or undermatched confounders. As it happens they're not very correlated at all, r=0.2 or so. Also overmatching is logistically hard and increases concordant pairs. 
 
-Matching does lose a little power because only discordant pairs contribute to estimates, but it gains more power back by reducing variability. The problem that is hidden is if the matching and exposure variables are strongly correlated, when power is lost, probably without being recognised.  
-
-If the matched variable is on the causal pathway it causes a bias, which will generally by to underestimate the effect of exposure on outcome. 
+Matching does lose a little power because only discordant pairs contribute to estimates, but it gains more power back by reducing variability. The problem that is hidden is if the matching and exposure variables are strongly correlated, when power is lost, probably without being recognised.   
+If the matched variable is on the causal pathway it causes a bias, which will generally be to underestimate the effect of exposure on outcome. 
 
 Between these two effects there are "break-even values" for the correlation between matching and outcome variables for matching or stratification to be beneficial. 
 
@@ -519,6 +518,8 @@ The probability of choosing a house in the ith segment, and therefore a child, i
 $\hat{Var} (\hat R) = (\frac{m}{(m-1)\hat N ^2}) \sum_{i=1}^m {\frac{(y_i - n_i \hat R)^2}{P_i^2}}$
 
 $\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$
+
+## Measures of clustering 
 
 IntraClass Correlation Coefficient (ICC or rho) is Between Cluster Variance/Total Variance 
 $$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$$
@@ -1838,38 +1839,48 @@ They recommend onsidered and mediated feedback of overall results, but they also
 
 # Surveillance 
 
-Surveillance is "the ongoing systematic collection, analysis and interpretation of health data essential to the planning, implementation, and evaluation of public health practice, closely integrated with the timely dissemination of these data to those who need to know. The final link in the surveillance chain is the application of these data to prevention and control. A surveillance system includes a functional capacity for data collection, analysis and dissemination linked to public health programmes."(CDC, 1986)
-Surveillance (tracking a disease or risks) vs monitoring (tracking process and outcomes)
-	Practical, uniform, rapid; unlike epidemiological research which is one-off and specialised
-	Many data collectors with less interest or time
-	Passive (cheap, routine, patchy and dodgy data) or active (expensive, higher quality data)
-	Lab surveillance only works for some diseases and depends on referrals; or
-		serology surveillance of samples sent for other purposes
-	Save some money and approach good performance by two stage systems or sentinel systems
-Establish the objectives of the surveillance system 
-    1. Develop a case definition 
-    2. Develop a data collection mechanism 
-    3. Field test methods 
-    4. Data analysis 
-    5. Interpretation 
-    6. Dissemination of information 
-    7. Evaluation of the system 
+Surveillance is "the ongoing systematic collection, analysis and interpretation of health data essential to the planning, implementation, and evaluation of public health practice, closely integrated with the timely dissemination of these data to those who need to know. The final link in the surveillance chain is the application of these data to prevention and control. A surveillance system includes a functional capacity for data collection, analysis and dissemination linked to public health programmes."(CDC, 1986) 
 
-# Infectious epidemiology
-"Generation time and serial interval are the same"
-	Generation time is latent plus infectious and serial interval is time between identical clinical moments in successive cases in the same chain of transmission.
-	The corresponding – or not – clinical times are incubation and symptomatic.
-	Virulence is proportion symptomatic / having
-	SAR (Secondary Attack Rate) is proportion Exposed and Infected / Exposed and as usual is entirely contingent on things not measured for its calculation and hence not included in it: eg usually assumes **identical duration** and **intensity** of a **unique** exposure among all who are considered, such as a class or village.  SAR and transmission probability are conditional parameters and either require contact details or see below.
-	R0, (basic reproduction number) the average number of new infections per source, is an idealised value that could have been observed pragmatically if perfect knowledge of all exposed individuals were available. Generally it's most useful as a threshold: if R0<1 in a population the disease can't expand.  Compartments in populations behave differently and most diseases are not "simple" so modelling derives the R0.  Models rarely derive the same R0 if given the same data.  The CAL calls it: R0 = contacts * duration of infectiousness * probability of infection per contact.  If x is the proportion susceptible and "herd immunity" is 1-x and  then when R is 1:
-	$HI = 1-\frac{R}{R_0} = 1-\frac{1}{R_0} = \frac{R_0}{R_0}-\frac{1}{R_0}$, so HIT (herd immunity threshold) is $HIT = \frac{R_0-1}{R_0}$
-Vaccine efficacy is foolish, "usually" 1-(Risk in vaccinated/Risk in Unvaccinated).
-	If due to reducing infectiousness it's VEi, if susceptibility Ves.
-		If VEs=0, VEi=1 and f are vaccinated then Rf=(1-f)R0 
-		If f=1-(1/R0) then HI happens.  For more general VEi and VEs this f is multiplied by $\frac{1}{VE_s + VE_i - VE_s VE_i}$
+Surveillance (tracking a disease or risks) vs monitoring (tracking process and outcomes). 
+
+- Practical, uniform, rapid; unlike epidemiological research which is one-off and specialised 
+
+- Many data collectors with less interest or time 
+
+- Passive (cheap, routine, patchy and dodgy data) or active (expensive, higher quality data) 
+
+- Lab surveillance only works for some diseases and depends on referrals; or serology surveillance of samples sent for other purposes 
+
+- Save some money and approach good performance by two stage systems or sentinel systems. 
+
+- Establish the objectives of the surveillance system 
+
+1. Develop a case definition 
+2. Develop a data collection mechanism 
+3. Field test methods 
+4. Data analysis 
+5. Interpretation 
+6. Dissemination of information 
+7. Evaluation of the system 
+
+# Infectious epidemiology 
+
+"Generation time and serial interval are the same" 
+
+Generation time is latent plus infectious and serial interval is time between identical clinical moments in successive cases in the same chain of transmission. The corresponding – or not – clinical times are incubation and symptomatic. 
+	
+Virulence is proportion symptomatic / having
+
+SAR (Secondary Attack Rate) is proportion Exposed and Infected / Exposed and as usual is entirely contingent on things not measured for its calculation and hence not included in it: eg usually assumes **identical duration** and **intensity** of a **unique** exposure among all who are considered, such as a class or village.  SAR and transmission probability are conditional parameters and either require contact details or see below. 
+
+R0, (basic reproduction number) the average number of new infections per source, is an idealised value that could have been observed pragmatically if perfect knowledge of all exposed individuals were available. Generally it's most useful as a threshold: if R0<1 in a population the disease can't expand.  Compartments in populations behave differently and most diseases are not "simple" so modelling derives the R0.  Models rarely derive the same R0 if given the same data.  The CAL calls it: R0 = contacts * duration of infectiousness * probability of infection per contact.  If x is the proportion susceptible and "herd immunity" is 1-x and  then when R is 1:
+$HI = 1-\frac{R}{R_0} = 1-\frac{1}{R_0} = \frac{R_0}{R_0}-\frac{1}{R_0}$, so HIT (herd immunity threshold) is $HIT = \frac{R_0-1}{R_0}$
+Vaccine efficacy is foolish, "usually" 1-(Risk in vaccinated/Risk in Unvaccinated). If due to reducing infectiousness it's VEi, if susceptibility Ves. 
+
+- If VEs=0, VEi=1 and f are vaccinated then Rf=(1-f)R0 
+- If f=1-(1/R0) then HI happens.  For more general VEi and VEs this f is multiplied by $\frac{1}{VE_s + VE_i - VE_s VE_i}$ 
 			
-	Estimation depends on being able to see direct and indirect effects; with some assumptions VEs and VEi can be jointly estimated from only the disease rate in vacc v unvacc if the vacc proportion is varied in strata, clusters or times.  This joint estimation has a coverage estimate trading VEi against VEs
-	and if a 2nd stage cluster, infection probability beta, VEs =0, proportion infected at time t It, contact probability c, duration of contact d then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times 1-VEi. 
+Estimation depends on being able to see direct and indirect effects; with some assumptions VEs and VEi can be jointly estimated from only the disease rate in vacc v unvacc if the vacc proportion is varied in strata, clusters or times.  This joint estimation has a coverage estimate trading $VE_i$ against $VE_s$	and if a 2nd stage cluster, infection probability beta, $VE_s =0$, proportion infected at time t It, contact probability c, duration of contact d then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times $1-VE_i$. 
 
 # Causality – Bradford Hill – 9 dogme
 "An active agent or a static condition"
