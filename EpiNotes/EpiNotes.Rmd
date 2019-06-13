@@ -1632,9 +1632,11 @@ $logit(P(x_i)) = z_i \beta + S(i) + u_i$
 
 Where S(i) is according to some coordinate reference system CRS (UTS in Eastings + Northings; or lat/long in unstructured ellipsoid projection)
 
-## Study designs 
+# Study designs 
 
-Case Control sampling is either one or more tier: "internal controls" are unexposed ones from the initial sample.  If a rare exposure the initial sample must be very large; or "similar" unexposed can be selected from the same or a similar population in another sample as "external controls".  The similarity is discussed in mechanistic terms needing experts, not advice on sufficient stochastic descriptions of the similarity.
+## Case Control 
+
+The sampling is either one or more tier: "internal controls" are unexposed ones from the initial sample.  If a rare exposure the initial sample must be very large; or "similar" unexposed can be selected from the same or a similar population in another sample as "external controls".  The similarity is discussed in mechanistic terms needing experts, not advice on sufficient stochastic descriptions of the similarity.
 	"If the groups are comparable they have internal validity"; "if the conclusions are applicable to other populations it has external validity"
 	"In case studies the controls are only a subset of the NonCases in the population"
 	The OR is "Odds of exposure in those with outcome"; the logical flips assumes that the sampling probability of controls is the same whether exposed or unexposed.
@@ -1728,7 +1730,8 @@ Qualitative
 	Common features are flexibility, triangulation, contextualisation, iteration and reflexivity.
 	Techniques include interviews, focus groups, observation, participation.
 
-# Utility
+# Utility 
+
 This is something that needs to be expanded here. For now it's just a dumping ground for some interesting things. Such as:2E: Discrete Choice Experiment (DCE) to determine weighting
 Data Collection
 We will use a best-worst discrete choice experiment (BWS DCE; BWS Case 3) to determine the value
@@ -1883,23 +1886,30 @@ X and Y may not be associated in the population, but are associated within strat
 	Z is caused by both X and Y
 Z-conditioning can therefore create or remove X:Y associations depending on the causal structure.
 
-# Causal Complements are those things which together are "necessary and sufficient"
-Multi-causality demonstrated by Directed Acyclic Graphs
-	Nodes, Edges, Directed or not; Parents, Children, Ancestors, Descendants.
-	directed path is all forward arrows eg AC or AEDF,
-	backdoor path is one starting with a block eg EACD
-	collider: C is a collider on ACB but not ECD
-	Blocked path has a collider along it; otherwise open
-Remove all arrows from the exposure; in this case investigating effect of E on D.
-	If there are unblocked paths there is confounding.
-	Draw dotted lines connecting any nodes that share a child that is either in S or descends to S
-	A set S of candidate confounders will be sufficient to control confounding if
-		none is a descendant of the exposure
-		there is no open path from the exposure to the outcome that avoids a member of S,
-			including the new, dotted lines that denote 1st-gen sharing of S ancestry
-S can induce open paths by causing the dotted lines: this demonstrates the creation of conditional association by stratum creation.
-Selection or some other process of bias can be modelled with DAGs as well,
-	another name for selection bias being Collider Stratification bias.
+# Causal Complements 
+
+These are the things which together are "necessary and sufficient". Multi-causality is demonstrated by Directed Acyclic Graphs. Acyclic because the rules apply more clearly, without the loss of definite solutions induced by cyclic graphs. 
+
+- Nodes, Edges, Directed or not; Parents, Children, Ancestors, Descendants. 
+
+- directed path is all forward arrows eg AC or AEDF, 
+
+- backdoor path is one starting with a block eg EACD 
+
+- collider: C is a collider on ACB but not ECD 
+
+- Blocked path has a collider along it; otherwise open 
+
+Remove all arrows from the exposure; in this case investigating effect of E on D. If there are unblocked paths there is confounding. Draw dotted lines connecting any nodes that share a child that is either in S or descends to S. A set S of candidate confounders will be sufficient to control confounding if 
+
+- none is a descendant of the exposure 
+
+- there is no open path from the exposure to the outcome that avoids a member of S, 
+
+- including the new, dotted lines that denote 1st-gen sharing of S ancestry
+S can induce open paths by causing the dotted lines: this demonstrates the creation of conditional association by stratum creation. 
+
+Selection or some other process of bias can be modelled with DAGs as well, another name for selection bias being Collider Stratification bias.
 
 # Machine Learning
 	A Perceptron is the smallest form of neural network, with weighted inputs and a bias which feed an activation function to produce a single output.  The output is calibrated repeatedly against appropriate values and the weights altered to improve the closeness of prediction until either accuracy or number of repetition limits are crossed.
@@ -1978,14 +1988,156 @@ git checkout -b branchname another version of the same directory
 git branch see what branch you're on
 pull request is not a git feature but on github
 
+# Syntax and reminders 
 
-# markdown: 
-SQL
+## Base R 
+
+download.file
+file.exists
+dir.create
+list.files
+dir
+ls
+read.table(sep, quote, na.strings, nrows, skip)	read.csv	read.csv2
+seq(from, to, by along )
+cut(data, breaks)
+factor()		relevel(data, ref)
+intersect
+split-apply-combine
+sample
+
+split-apply-combine
+	with(tapply(X, factor, function)) type of structure or
+	with(by(X, factor, function)) or
+	aggregate(data ~ factor, source or environment, function)
+by position
+by logical statements
+sort
+order eg X[order(X$var1, X$var3),]
+add columns by X$newvar or by Y <- cbind(X, newvar)
+sum	colSums	rowSums	any	all	is.na	%in%
+head	tail
+table
+xtabs(var1 ~ var2 + ., data=DF) where . is all the variables
+ftable(
+
+apply(data, dim, fun)
+tapply(apply along an index, a function to data) ie tapply(data, index, function)
+sapply(simplify the output of a function applied to data)
+	eg	perms <- sapply(1:10000, function(i) testStat(DEcounts,
+			sample(group)))
+lapply(apply a function across a list; unlist to simplify)
+
+Hmisc::cut2(data, g)
+reshape2::melt(data, id, measure.vars)
+		dcast(melteddata, formula, Aggregation value)
+transformations
+plot
+	coplot
+	hist
+abs
+sqrt
+ceiling
+floor
+cos
+sin
+log
+log2
+log10
+exp
+round(data, digits=n)
+signif(data, digits=n)	
+p.adjust(method = c("bonferroni", "BH", "BY")
+
+## SQL
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
 INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2); etc
 
 
-# stata
+## xlsx
+xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)	read.xlsx2	write.xlsx
+
+## XML and HTML
+xml::xmlTreeParse(fileURL, useInternal)	xmlRoot	xmlName	xmlSApply(doc, path fun, ...)
+	TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components
+		programmatically extracted eg xmlSApply(rootNode, xmlValue)
+	xPAth language	/Node	//Node Node['@value'='thing']
+Read the short intro at least.
+httr::GET, PATCH, POST, HEAD, PUT, DELETE 
+
+## JSON
+Javascript Object Notation
+jsonlite::fromJSON		toJSON
+multiple nesting of data from the data frame resulting from fromJSON
+data.table
+subsets by expression, not column
+:= adds a variable
+.N is an integer length 1 containing the number of observations
+does not copy data tables on subsetting, use copy function
+plyr-like operations, for example on .N by some value
+data.tables have keys to allow joins.
+setkey and merge
+fread for fast reading (substitute for read.table for tab separated files)
+tibble eg with list-columns so a data frame need not hold numbers or other low level entities in its cells but whole lists of interest such eg as a training resample from a dataset, a test resample, a model fitted to that test dataset and the resulting RMSE.  Tibbles are lazy and surly, don't require a list of vectors as the underlying structure and give a little more information in printing than data.frames.
+
+## plyr
+plyr::arrange(X, var1)
+		mutate(oldata, newvar = function(oldvar)
+		`.` or as.quoted allow a list of variables to me assembled for later evaluation in plyr
+		ddply(.data, .variable, .fun , ... others)
+		dlply
+## dplyr
+arrange 	 reorders rows 
+filter	 returns subset of rows based on a condition 
+select	 returns subset of columns (use starts_with, contains, matches, ends_with to specify), in the order specified
+mutate	 transforms data and adds or replaces them in the data.frame 
+rename	 rename without otherwise changing
+summarise	 summarises.  Also spelled summarize
+group_by	 reorders a data.frame "by group" 
+merge		 (x, y, by.x, by.y, all = T/F) where x is one dataset and y another, and "all" is whether to keep duplicate variables and add a subscript to the added variables to identify it .  plyr::join is faster but only works by a common variable. plyr::join_all takes a list (so need to form a list) of data frames and joins all by a common ID variable.
+%>%		 chains operators in sequence 
+*_join	left_joinincludes all observations in the left data frame; right_join analogous, inner_join only observations in both, full_join all observations no matter the match
+dbi package for using many other backends to dplyr
+
+## tidyr
+unite	brings together values, like paste but with type specs.
+
+lm(outcome~predictor + predictor2 - 1)	 With intercept removed by -1; relevel() to set intercept. Counts modelled straightforwardy and adjusted for lower bound or heteroskedasticity.  Indicator variables add an optional intercept for binary factors.
+Influence.measures .  rstandard is residuals, hatvalues is for influential points (esp data entry errors). dffits is how much the line at that point is influenced by the absence of the data point.  dfbeta is one for each point for each regressor; it's a matrix.  cook's distance is a summary of the dfbeta by giving an overall change in them.  resid returns ordinary residuals, hatvalues gives the predicted Y value with the point excluded vs included.  A cross validated leave-one out residual, PRESS residuals are resid(model) / (1- hatvalues(model)).
+
+## Hadley Wickham on the Tidyverse:
+
+Import-Tidy-{Transform Visualise Model} – Communicate
+The eye is drawn to the verbs and that's important because good data science can't be done without programming and the verbs are activities that can be programmed.  But for good workflow it's the interactions between each of those that's important.  Modelling is ultimately a computational approach that scales well but, because it uses assumptions at some level, and can't question those assumptions, can therefore not really surprise.  Visualisation on the other hand is a human activity and it's much harder to throw more brains at the problem than to throw more computers at the problem
+
+Share data structures, compose simple pieces, embrace functional programming and write for humans.
+
+## Python. 
+
+'sake
+
+- _object_ Objects have attributes, which have associated methods (functions specific to object types). Methods are often called with an object as prefix: object.method() . 
+
+- _method_  Methods work differently depending on the type on which they are called.  Fucks again python. 
+
+- _packages_ Packages are collections of scripts (.py files); they are called modules in this context.  Packages imported, then modules called from the packages by package.module (eg numpy.array and the irritating renaming of the package is where np.array comes from); or modules are imported from packages then called bare; in which case the "import as" makes more sense because you can quote it bare. 
+
+- _index_  Indexing starts at 0 and starts if descending at -1.  Indexing in NumPy is by recursive [] calls or by R-style [dim1, dim2, ...] coordinates. 
+
+- _dictionary_  Key:value pairs initiated with {"key":"value}, accessed by [""].  Stored as hashes.  Lists can't, therefore, be keys because they are mutable. 
+
+- _Pandas_ Produces DataFrame which is a cbind of "series" .  All to make an array that can contain different data types. Accessed by [] for the series and [[]] for a new DataFrame containing the same information as the [] does.  Extended by the loc and iloc functions.  loc specifies by ['name of key"] for columns, or [[]] which can be chained. iloc does the same using indices of the location.  ix is a method to mix loc and iloc.  The different chaining results in different formats of output. 
+
+- _slice_  Calls to index include the first and exclude the last. 
+
+- _lists_  Are stored separately from their name.  So x = [...] ; y = x declares y a pointer to the list that x also points to.  So manipulating the list using y is the same as manipulating the list using x.  Except that a slice or list() call creates a new list.  Fuck you python.  And deleting an element changes the indices of subsequent elements.  This is under "explicit versus reference based copies". 
+
+- _NumPy_  is necessary to use any sums.  It introduces arrays which MAKE PYTHON WORK LIKE R: elementwise mathematical operations; it's a little tidyverselike because you can use proximal assignments to make distal ones.  Does this mean lazy evaluation? Arrays can contain any typep but all the same type. 
+
+- _attributes_  In a NumPy object are accessed by '.' The same as '$' accesses them in an R object.
+
+## stata 
+
 [by varlist]: command [varlist] [if exp] [in range] [using filename], options 
 describe
 summarize
@@ -2031,143 +2183,8 @@ xtlogit		random effects, gives icc and clustering chisq.
 quadchk		probably not necessary any more because adaptive quadrature is			used to approximate normal likelihood distribution
 
 
-# R
-download.file
-file.exists
-dir.create
-list.files
-dir
-ls
-read.table(sep, quote, na.strings, nrows, skip)	read.csv	read.csv2
-seq(from, to, by along )
-cut(data, breaks)
-factor()		relevel(data, ref)
-intersect
-split-apply-combine
-sample
-
-apply(data, dim, fun)
-tapply(apply along an index, a function to data) ie tapply(data, index, function)
-sapply(simplify the output of a function applied to data)
-	eg	perms <- sapply(1:10000, function(i) testStat(DEcounts,
-			sample(group)))
-lapply(apply a function across a list; unlist to simplify)
-
-Hmisc::cut2(data, g)
-reshape2::melt(data, id, measure.vars)
-		dcast(melteddata, formula, Aggregation value)
-transformations
-plot
-	coplot
-	hist
-abs
-sqrt
-ceiling
-floor
-cos
-sin
-log
-log2
-log10
-exp
-round(data, digits=n)
-signif(data, digits=n)	
-p.adjust(method = c("bonferroni", "BH", "BY")
-
-
-## xlsx
-xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)	read.xlsx2	write.xlsx
-
-## XML and HTML
-xml::xmlTreeParse(fileURL, useInternal)	xmlRoot	xmlName	xmlSApply(doc, path fun, ...)
-	TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components
-		programmatically extracted eg xmlSApply(rootNode, xmlValue)
-	xPAth language	/Node	//Node Node['@value'='thing']
-Read the short intro at least.
-httr::GET, PATCH, POST, HEAD, PUT, DELETE 
-
-## JSON
-Javascript Object Notation
-jsonlite::fromJSON		toJSON
-multiple nesting of data from the data frame resulting from fromJSON
-data.table
-subsets by expression, not column
-:= adds a variable
-.N is an integer length 1 containing the number of observations
-does not copy data tables on subsetting, use copy function
-plyr-like operations, for example on .N by some value
-data.tables have keys to allow joins.
-setkey and merge
-fread for fast reading (substitute for read.table for tab separated files)
-tibble eg with list-columns so a data frame need not hold numbers or other low level entities in its cells but whole lists of interest such eg as a training resample from a dataset, a test resample, a model fitted to that test dataset and the resulting RMSE.  Tibbles are lazy and surly, don't require a list of vectors as the underlying structure and give a little more information in printing than data.frames.
-
-## subsetting in base
-split-apply-combine
-	with(tapply(X, factor, function)) type of structure or
-	with(by(X, factor, function)) or
-	aggregate(data ~ factor, source or environment, function)
-by position
-by logical statements
-sort
-order eg X[order(X$var1, X$var3),]
-add columns by X$newvar or by Y <- cbind(X, newvar)
-sum	colSums	rowSums	any	all	is.na	%in%
-head	tail
-table
-xtabs(var1 ~ var2 + ., data=DF) where . is all the variables
-ftable(
-
-
-## plyr
-plyr::arrange(X, var1)
-		mutate(oldata, newvar = function(oldvar)
-		`.` or as.quoted allow a list of variables to me assembled for later evaluation in plyr
-		ddply(.data, .variable, .fun , ... others)
-		dlply
-## dplyr
-arrange 	 reorders rows 
-filter	 returns subset of rows based on a condition 
-select	 returns subset of columns (use starts_with, contains, matches, ends_with to specify), in the order specified
-mutate	 transforms data and adds or replaces them in the data.frame 
-rename	 rename without otherwise changing
-summarise	 summarises.  Also spelled summarize
-group_by	 reorders a data.frame "by group" 
-merge		 (x, y, by.x, by.y, all = T/F) where x is one dataset and y another, and "all" is whether to keep duplicate variables and add a subscript to the added variables to identify it .  plyr::join is faster but only works by a common variable. plyr::join_all takes a list (so need to form a list) of data frames and joins all by a common ID variable.
-%>%		 chains operators in sequence 
-*_join	left_joinincludes all observations in the left data frame; right_join analogous, inner_join only observations in both, full_join all observations no matter the match
-dbi package for using many other backends to dplyr
-
-## tidyr
-unite	brings together values, like paste but with type specs.
-
-lm(outcome~predictor + predictor2 - 1)	 With intercept removed by -1; relevel() to set intercept. Counts modelled straightforwardy and adjusted for lower bound or heteroskedasticity.  Indicator variables add an optional intercept for binary factors.
-Influence.measures .  rstandard is residuals, hatvalues is for influential points (esp data entry errors). dffits is how much the line at that point is influenced by the absence of the data point.  dfbeta is one for each point for each regressor; it's a matrix.  cook's distance is a summary of the dfbeta by giving an overall change in them.  resid returns ordinary residuals, hatvalues gives the predicted Y value with the point excluded vs included.  A cross validated leave-one out residual, PRESS residuals are resid(model) / (1- hatvalues(model)).
-
-## Hadley Wickham on the Tidyverse:
-
-Import-Tidy-{Transform Visualise Model} – Communicate
-The eye is drawn to the verbs and that's important because good data science can't be done without programming and the verbs are activities that can be programmed.  But for good workflow it's the interactions between each of those that's important.  Modelling is ultimately a computational approach that scales well but, because it uses assumptions at some level, and can't question those assumptions, can therefore not really surprise.  Visualisation on the other hand is a human activity and it's much harder to throw more brains at the problem than to throw more computers at the problem
-
-Share data structures, compose simple pieces, embrace functional programming and write for humans.
-
-# Python. 'sake
-
-object Objects have attributes, which have associated methods (functions specific to object types). Methods are often called with an object as prefix: object.method() .
-method  Methods work differently depending on the type on which they are called.  Fucks again python.
-packages  Packages are collections of scripts (.py files); they are called modules in this context.  Packages imported, then modules called from the packages by package.module (eg numpy.array and the irritating renaming of the package is where np.array comes from); or modules are imported from packages then called bare; in which case the "import as" makes more sense because you can quote it bare.
-index  Indexing starts at 0 and starts if descending at -1.  Indexing in NumPy is by recursive [] calls or by R-style [dim1, dim2, ...] coordinates.
-dictionary  Key:value pairs initiated with {"key":"value}, accessed by [""].  Stored as hashes.  Lists can't, therefore, be keys because they are mutable. 
-Pandas Produces DataFrame which is a cbind of "series" .  All to make an array that can contain different data types. Accessed by [] for the series and [[]] for a new DataFrame containing the same information as the [] does.  Extended by the loc and iloc functions.  loc specifies by ['name of key"] for columns, or [[]] which can be chained. iloc does the same using indices of the location.  ix is a method to mix loc and iloc.  The different chaining results in different formats of output.
- slice  Calls to index include the first and exclude the last.
-lists  Are stored separately from their name.  So x = [...] ; y = x declares y a pointer to the list that x also points to.  So manipulating the list using y is the same as manipulating the list using x.  Except that a slice or list() call creates a new list.  Fuck you python.  And deleting an element changes the indices of subsequent elements.  This is under "explicit versus reference based copies".
-NumPy  Is necessary to use any sums.  It introduces arrays which MAKE PYTHON WORK LIKE R: elementwise mathematical operations; it's a little tidyverselike because you can use proximal assignments to make distal ones.  Does this mean lazy evaluation? Arrays can contain any typep but all the same type.
-attributes  In a NumPy object are accessed by . The same as $ accesses them in an R object.
-
-
-```{r bib, include=FALSE}
-# create a bib file for the R packages used in this document, previous yaml included these for tufte-book but not necessary if using just pandoc-citeproc
-
-#knitr::write_bib(c('base', 'rmarkdown'), file = 'Epinotespackages.bib')
+```{r bib, echo=FALSE, message=FALSE, include=FALSE}
+knitr::write_bib(c('base', 'rmarkdown'), file = 'Epinotespackages.bib')
 ```
 [EM algorithm]
 [differential treatment effect]
