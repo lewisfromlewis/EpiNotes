@@ -1933,11 +1933,19 @@ Prediction: split training and test sets from same population
 Causal: data from a randomised trial
 Mechanistic: rich data about all available responses and predictors
 
-# Model fit
+# Model fit 
+All models essemtially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Cross validation is a powerful way. 
+
+The unobserved test set MSE of any model is always reducible to 
+
+$$E(y_0 - \hat{f}(x_0))^2 = Var(\hat{f}) + [Bias(\hat{f(x_0)})]^2 + Var(\epsilon)$$
+
 Parameterisation is giving values to parameters in a model by whatever means.
 Fitting = calibration and is parameterisation by selecting models with a "good fit" to data.
 Validation is checking the model results by some standard (statistical or "face validity").
-Parametric sensitivity analysis is altering parameters in the model to check the change in results.
+Parametric sensitivity analysis is altering parameters in the model to check the change in results. 
+
+The Mean Squared Error is a good generic way to determine Goodness of Fit. Training MSE is almost irrelevant to the purpose of a model, and test MSE is not estimable.
 
 Goodness of fit metric is used to decide whether the model prediction fits the data.  Given a set of observations and their accompanying expected values at positions i under a certain model that takes parameter x, a goodness of fit function describes how well the model fits the data for a given value of x.  This function might be written g(E1, ... En, O1, On).
 A saturated model exactly fits all the data points.
