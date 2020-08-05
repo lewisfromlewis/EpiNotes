@@ -93,8 +93,7 @@ The one clear answer is that transformations should probably allow recovery of t
 
 # The contingency table
 
-A table allows things to be seen, and calculations referred to.  "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ ^[The very first thing to say is that there must be sufficient items in each box, or as we'll call them later, each stratum, to say something about the expectation. You can't estimate the effect of a thing that is universal or absent in your sample, whether using this or most other methods.]
-.
+A table allows things to be seen, and calculations referred to.  "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ. The very first thing to say is that there must be sufficient items in each box, or as we'll call them later, each stratum, to say something about the expectation. You can't estimate the effect of a thing that is universal or absent in your sample, whether using this or most other methods.
 
 ```{r, echo=FALSE, message=FALSE}
 contingency <- tibble(" " = c("D", "$D^c$", ""),
@@ -102,7 +101,7 @@ contingency <- tibble(" " = c("D", "$D^c$", ""),
             "-" = c("b", "d", "$N_{-}$"),
             "total" = c("$N_D$", "$N_{D^c}$", "$N$")
             )
-knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table", escape=FALSE)
+knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table. This table is the familiar medical school one where sensitivity and specificity are shown to be mean completely different things about a positive test, depending on the prevalence of the disease in the population.", escape=FALSE)
 
 
 #\begin{tabular}{| c |c | c | c| }
@@ -114,7 +113,7 @@ knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table", escape=
 #\end{tabular}
 ```
 
-This table is the familiar medical school one where sensitivity and specificity are shown to be mean completely different things about a positive test, depending on the prevalence of the disease in the population.
+
 
 ```{r, echo = FALSE, message=FALSE}
 Bayesmargins <- tibble::tibble(
@@ -1865,22 +1864,47 @@ Surveillance (tracking a disease or risks) vs monitoring (tracking process and o
 
 # Infectious epidemiology 
 
+This is a mathematical modelling pursuit. As such it depends on things not measured for its calculation and hence not included in it. These assumptions are usually important and generate surprisingly little comment.
+
+The first concept is probably effective contact. All human interaction can be boiled down into the frequency, duration and type, which is disappointing. A step further can abstract it to the rate of effective contact, which in a large enough population is perfectly adequate for modelling.
+
+## Deterministic models
+
+Abstractions are used to simplify the problem so that it represents the long run behaviour of a population with various states and flows between them.
+
+One useful abstraction is to define the number of effective contacts _per person_ per unit time: then by holding the definition constant, the probability of infection for each of those contacts is almost disease specific and is called $\beta$. With the current proportion infected (or the absolute numbers of infected I and total population N), the force of infection can then be defined as 
+
+$$\lambda = \frac{\beta c I}{N}$$
+The initial rate of new infections, assuming homogenous mixing, is then dependent on the force of infection and the size of the population. Both the force of infection and the number of susceptible individuals changes as more are infected, and the rate changes depending on initial values. A system of differential equations can be set up to describe an arbitrarily complex model^[
+
+$$\frac{dS}{dt} = -\lambda S$$
+$$\frac{dI}{dt} = \lambda S$$
+]
+
 "Generation time and serial interval are the same" 
 
-Generation time is latent plus infectious and serial interval is time between identical clinical moments in successive cases in the same chain of transmission. The corresponding – or not – clinical times are incubation and symptomatic. 
+- **Generation time** is _Latent_ plus _Infectious_ and 
+- **Serial interval** is _Incubation_ plus _Symptomatic_ time, which adds up to the same without its components necessarily being the same. It's also, more formally, between identical clinical moments in successive cases in the same chain of transmission. 
 	
-Virulence is proportion symptomatic / having
+**Virulence** is proportion symptomatic / having
 
-SAR (Secondary Attack Rate) is proportion Exposed and Infected / Exposed and as usual is entirely contingent on things not measured for its calculation and hence not included in it: eg usually assumes **identical duration** and **intensity** of a **unique** exposure among all who are considered, such as a class or village.  SAR and transmission probability are conditional parameters and either require contact details or see below. 
+SAR (Secondary Attack Rate) is proportion Exposed and Infected / Exposed and usually assumes **identical duration** and **intensity** of a **unique** exposure among all who are considered, such as a class or village.  SAR and transmission probability are conditional parameters and either require contact details or see below. 
 
-R0, (basic reproduction number) the average number of new infections per source, is an idealised value that could have been observed pragmatically if perfect knowledge of all exposed individuals were available. Generally it's most useful as a threshold: if R0<1 in a population the disease can't expand.  Compartments in populations behave differently and most diseases are not "simple" so modelling derives the R0.  Models rarely derive the same R0 if given the same data.  The CAL calls it: R0 = contacts * duration of infectiousness * probability of infection per contact.  If x is the proportion susceptible and "herd immunity" is 1-x and  then when R is 1:
+$R_0$, or the basic reproduction number, is the number of new infections from the introduction of an infectious individual into an entirely susceptible population. It's and odd sort of idealised value: it could have been observed pragmatically if perfect knowledge of all exposed individuals were available, but on the other hand it changes with the slightest perturbation in the mixing parameters, composition and structure of the population. For building models it's useful with contemporaneous data. Heuristically, it's most useful as a threshold: if $R_0 < 1$ in a population the disease can't expand.  
+
+- Compartments in populations behave differently and most diseases are not "simple" so modelling derives the R0.  
+- Models rarely derive the same R0 if given the same data.  
+
+$R_0 = c\beta t$, that is $R_0$ = contacts * duration of infectiousness * probability of infection per contact.  If x is the proportion susceptible and "herd immunity" is 1-x then when R is 1:
 $HI = 1-\frac{R}{R_0} = 1-\frac{1}{R_0} = \frac{R_0}{R_0}-\frac{1}{R_0}$, so HIT (herd immunity threshold) is $HIT = \frac{R_0-1}{R_0}$
-Vaccine efficacy is foolish, "usually" 1-(Risk in vaccinated/Risk in Unvaccinated). If due to reducing infectiousness it's VEi, if susceptibility Ves. 
 
-- If VEs=0, VEi=1 and f are vaccinated then Rf=(1-f)R0 
-- If f=1-(1/R0) then HI happens.  For more general VEi and VEs this f is multiplied by $\frac{1}{VE_s + VE_i - VE_s VE_i}$ 
+**Vaccine efficacy** is a foolish concept and has resuted n much unwanted inference and communication. It is "usually" 1-relative risk reduction (1 - Risk in vaccinated/Risk in Unvaccinated). If due to reducing infectiousness it's $VE_i$, if susceptibility $VE_s$. 
+
+- If $VE_s=0$, $VE_i=1$ and f is the proportion vaccinated then $R_f=(1-f)R_0$ 
+
+- If $f=1-(1/R_0)$ then herd immunity happens.  For more general $VE_i$ and $VE_s$ this f is multiplied by $\frac{1}{VE_s + VE_i - VE_s VE_i}$ 
 			
-Estimation depends on being able to see direct and indirect effects; with some assumptions VEs and VEi can be jointly estimated from only the disease rate in vacc v unvacc if the vacc proportion is varied in strata, clusters or times.  This joint estimation has a coverage estimate trading $VE_i$ against $VE_s$	and if a 2nd stage cluster, infection probability beta, $VE_s =0$, proportion infected at time t It, contact probability c, duration of contact d then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times $1-VE_i$. 
+Estimation depends on being able to see direct and indirect effects; with some assumptions $VE_s$ and $VE_i$ can be jointly estimated from only the disease rate in vaccinated versus unvaccinated if there are different vaccinated proportions in strata, clusters or times.  This joint estimation has a coverage estimate trading $VE_i$ against $VE_s$. If considering a 2nd stage cluster, infection probability $\beta$, $VE_s =0$, proportion infected at time t $I_t$, contact probability _c_, duration of contact _d_ then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times $1-VE_i$. 
 
 # Causality – Bradford Hill – 9 dogme
 "An active agent or a static condition"
@@ -1934,16 +1958,26 @@ Causal: data from a randomised trial
 Mechanistic: rich data about all available responses and predictors
 
 # Model fit 
-All models essemtially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Cross validation is a powerful way. 
+All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Cross validation is a powerful way. 
 
 The unobserved test set MSE of any model is always reducible to 
 
 $$E(y_0 - \hat{f}(x_0))^2 = Var(\hat{f}) + [Bias(\hat{f(x_0)})]^2 + Var(\epsilon)$$
 
-Parameterisation is giving values to parameters in a model by whatever means.
-Fitting = calibration and is parameterisation by selecting models with a "good fit" to data.
-Validation is checking the model results by some standard (statistical or "face validity").
-Parametric sensitivity analysis is altering parameters in the model to check the change in results. 
+This means, if the error is a property of the population and not the model or the sample^[it is], that there is clearly a trade-off between test bias and test variance to minimise MSE.
+
+
+## Parameterisation 
+Parameterisation is giving values to parameters in a model by whatever means. This results in a model which generates expectations for the parameters $\hat{E}(X)$ and so, given actual values for those parameters, generates expected values for the outcome. It is confusing that these expectations are not used if the intention is only to generate the expected parameter value, despite using the exact same assumptions. 
+
+In any case the predictive index is then the individual result of the predictor for an observation, $PI = \beta_1x_1 + ... \beta_k x_k$, and the D index is closely related to its standard deviation.
+
+
+## Features of a model 
+- Fitting = calibration and is parameterisation by selecting models with a "good fit" to data 
+- Validation is checking the model results by some standard (statistical or "face validity", see [@collins_sample_2016])
+- Discrimination is the ability of a prognostic model to differentiate between people with different outcomes, such that those without the outcome (*eg*, alive) have a lower predicted risk than those with the outcome (*eg*, dead). There are several ways to quote discrimination, such as *c*-indices (including Harrell's *c*-index, the probability that a subject experiencing an event earlier has a lower score in a survival predictor). The D index is the separation between two Cox regression curves, created by ordering all the Predictive Index values, transforming them using standard normal order statistics (then dividing by $\sqrt{8/\pi} \approxeq 1.596$) then fitting this as a single term Cox regression, whose coefficient and standard error are then D and its standard error.
+- Parametric sensitivity analysis is altering parameters in the model to check the change in results 
 
 The Mean Squared Error is a good generic way to determine Goodness of Fit. Training MSE is almost irrelevant to the purpose of a model, and test MSE is not estimable.
 
