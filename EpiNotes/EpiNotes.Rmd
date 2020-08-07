@@ -2111,12 +2111,12 @@ INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2); etc
 xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)	read.xlsx2	write.xlsx
 
 ## XML and HTML
-Extended markup language is a structured data store. Mainly works via tags, which can have attributes, and form elements. The `XML` package has short (good) and long (long) tutorials, and provides methods for XML and HTML which are moderately different protocols.
+HTML is a markup language. XML, Extended markup language, is a structured data store or formally, "a meta-language facility for defining a markup language", which is self-describing, extensible and yet with strict parsing rules. Apparently it also allows tool sharing across disciplines and I await enlightenment on that. Mainly works via tags, which can have attributes, and form elements. The `XML` package has short (good) and long (long) tutorials, and provides methods for XML and HTML which are moderately different protocols.
 
 - `<tag>` such as the tag surrounding this sentence `<\tag>` 
-- `t\<tag />` is an empty tag, such as is often used for images 
 - attributes are added to the tag such as `<tag attribute> <\tag>`
-- elements are the combination of tags and the content tagged by the tags
+- the basic unit of XML is an element, also called a node or chunk; elements are the combination of tags and the content tagged by the tags 
+- `t\<tag />` is an empty or collapsed tag, such as is often used for images 
 
 `xml::xmlTreeParse(fileURL, useInternal)` TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components programmatically extracted 
 `xmlRoot` 
