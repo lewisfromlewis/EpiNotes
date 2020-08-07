@@ -2111,14 +2111,25 @@ INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2); etc
 xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)	read.xlsx2	write.xlsx
 
 ## XML and HTML
-xml::xmlTreeParse(fileURL, useInternal)	xmlRoot	xmlName	xmlSApply(doc, path fun, ...)
-	TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components
-		programmatically extracted eg xmlSApply(rootNode, xmlValue)
-	xPAth language	/Node	//Node Node['@value'='thing']
-Read the short intro at least.
-httr::GET, PATCH, POST, HEAD, PUT, DELETE 
+Extended markup language is a structured data store. Mainly works via tags, which can have attributes, and form elements. The `XML` package has short (good) and long (long) tutorials, and provides methods for XML and HTML which are moderately different protocols.
 
-## JSON
+- `<tag>` such as the tag surrounding this sentence `<\tag>` 
+- `t\<tag />` is an empty tag, such as is often used for images 
+- attributes are added to the tag such as `<tag attribute> <\tag>`
+- elements are the combination of tags and the content tagged by the tags
+
+`xml::xmlTreeParse(fileURL, useInternal)` TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components programmatically extracted 
+`xmlRoot` 
+`xmlName` 
+`xmlSApply(doc, path fun, ...)`, *eg* `xmlSApply(rootNode, xmlValue)` is how to alter the content of the XML object 
+There is yet another language to learn, called `xPAth` language	with syntax such as 
+- `/Node` a top level node
+- `//Node` a node at any level
+- `Node['@value'='thing']` a specified node; read the short intro at least. 
+`httr::GET, PATCH, POST, HEAD, PUT, DELETE` 
+
+## JSON 
+
 Javascript Object Notation
 jsonlite::fromJSON		toJSON
 multiple nesting of data from the data frame resulting from fromJSON
@@ -2153,9 +2164,10 @@ merge		 (x, y, by.x, by.y, all = T/F) where x is one dataset and y another, and 
 dbi package for using many other backends to dplyr
 
 ## tidyr
-unite	brings together values, like paste but with type specs.
+`unite`	brings together values, like paste but with type specs.
 
-lm(outcome~predictor + predictor2 - 1)	 With intercept removed by -1; relevel() to set intercept. Counts modelled straightforwardy and adjusted for lower bound or heteroskedasticity.  Indicator variables add an optional intercept for binary factors.
+`lm(outcome~predictor + predictor2 - 1)` With intercept removed by -1; `relevel()` to set intercept. Counts modelled straightforwardy and adjusted for lower bound or heteroskedasticity.  Indicator variables add an optional intercept for binary factors. 
+
 Influence.measures .  rstandard is residuals, hatvalues is for influential points (esp data entry errors). dffits is how much the line at that point is influenced by the absence of the data point.  dfbeta is one for each point for each regressor; it's a matrix.  cook's distance is a summary of the dfbeta by giving an overall change in them.  resid returns ordinary residuals, hatvalues gives the predicted Y value with the point excluded vs included.  A cross validated leave-one out residual, PRESS residuals are resid(model) / (1- hatvalues(model)).
 
 ## Hadley Wickham on the Tidyverse:
@@ -2185,13 +2197,13 @@ Share data structures, compose simple pieces, embrace functional programming and
 
 - _lists_  Are stored separately from their name.  So x = [...] ; y = x declares y a pointer to the list that x also points to.  So manipulating the list using y is the same as manipulating the list using x.  Except that a slice or list() call creates a new list.  Fuck you python.  And deleting an element changes the indices of subsequent elements.  This is under "explicit versus reference based copies". 
 
-- _NumPy_  is necessary to use any sums.  It introduces arrays which MAKE PYTHON WORK LIKE R: elementwise mathematical operations; it's a little tidyverselike because you can use proximal assignments to make distal ones.  Does this mean lazy evaluation? Arrays can contain any typep but all the same type. 
+- _NumPy_  is necessary to use any sums.  It introduces arrays which MAKE PYTHON WORK LIKE R: elementwise mathematical operations; it's a little tidyverselike because you can use proximal assignments to make distal ones.  Does this mean lazy evaluation? Arrays can contain any type but all the same type. 
 
 - _attributes_  In a NumPy object are accessed by '.' The same as '$' accesses them in an R object.
 
 ## stata 
 
-[by varlist]: command [varlist] [if exp] [in range] [using filename], options 
+`[by varlist]: command [varlist] [if exp] [in range] [using filename], options ` 
 describe
 summarize
 describe		
