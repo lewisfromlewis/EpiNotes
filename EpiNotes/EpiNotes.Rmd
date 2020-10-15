@@ -60,12 +60,6 @@ The baseline odds, for example, is key to understanding the effect of a given od
 knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
 ```
 
-The standard error for log odds ratio is
-
-$$\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$$
-and the 95% confidence interval for the log(OR) is +/- log(SE).
-
-The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$, whereby the 95% CI is OR/EF to OR*EF or exp(log Estimate +/- log SE)
 
 ## Measures of outcome
 
@@ -101,7 +95,7 @@ contingency <- tibble(" " = c("D", "$D^c$", ""),
             "-" = c("b", "d", "$N_{-}$"),
             "total" = c("$N_D$", "$N_{D^c}$", "$N$")
             )
-knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table. This table is the familiar medical school one where sensitivity and specificity are shown to be mean completely different things about a positive test, depending on the prevalence of the disease in the population.", escape=FALSE)
+knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table. This table is the familiar medical school one where sensitivity and specificity are shown to mean completely different things about a positive test, depending on the prevalence of the disease in the population.", escape=FALSE)
 
 
 #\begin{tabular}{| c |c | c | c| }
@@ -137,7 +131,7 @@ Bayesmargins <- tibble::tibble(
                "$\\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$")
 )
 
-knitr::kable(Bayesmargins, caption = "Marginal calculations", booktabs = TRUE, escape=FALSE)
+knitr::kable(Bayesmargins, caption = "Marginal calculations. Marginal probabilities are also important later in Bayesian calculations, because they are the normalising constant, the P(B) in the classic form.", booktabs = TRUE, escape=FALSE)
 
 #\begin{table}
 #\caption{Marginal calculations}
@@ -154,60 +148,86 @@ knitr::kable(Bayesmargins, caption = "Marginal calculations", booktabs = TRUE, e
 #\end{table}
 ```
 
+The standard error for log odds ratio is
+
+$$\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$$
+and the 95% confidence interval for the log(OR) is +/- 1.96 log(SE).
+
+The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$, whereby the 95% CI is OR/EF to OR*EF or exp(log Estimate +/- 1.96 log SE)
+
+
 ## Diagnostic likelihood ratio 
 
 [Likelihood] is covered later in plenty detail. For now, the diagnostic likelihood ratio for this limited situation of mutually exclusive states is revealed by the table, and is a measure of how inhomogenous are the numbers across the table. A certain hypothesis, such as "the disease is present" is more likely than its complement if the test is positive, by an amount equal to the ratio of positive results among the diseased compared to those without the disease.
 
-The diagnostic likelihood ratio of a positive test is the DLR+: 
 
-- $= \frac{P(+|D)}{P(+|D^C)}$ 
+```{r, echo = FALSE, message=FALSE}
+DLRtable <- tibble::tibble(
+    "DLR+" = c("$\frac{P(+|D)}{P(+|D^C)}",
+                  "sensitivity / (1-specificity)",
+                  "Bayes Factor",
+                  "Posterior Odds / Prior Odds",
+                  "$\frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}}$",
+                  "$\frac{(ac+ad)}{(ac+ab)}$"),
+    "DLR-" = c("$\frac{P(- | D)}{P(- | D^c)}$",  
+                "1 - sensitivity / specificity",
+                "1/Bayes Factor",
+                "etc",
+                "",
+                ""),
+    "Likelihood"= c("DLR+/DLR-",
+               "",
+               "",
+               "",
+               "",
+               "")
+)
 
-- = sensitivity/(1-specificity) 
+knitr::kable(DLRtable, caption = "The diagnostic likelihood ratio of a positive test is the DLR+, and following from this the negative diagnostic likelihood is DLR-, and from these two the entire Likelihood is DLR+/DLR-. If the Likelihood is far from 1, it means that a test result is very informative.", booktabs = TRUE, escape=FALSE)
 
-- = Bayes Factor 
-
-- = Posterior Odds / Prior Odds 
-
-- $= \frac{\frac{a}{(a+b)}}{\frac{c}{(c+d)}}$ 
-
-- $= \frac{(ac+ad)}{(ac+ab)}$ 
-
-Following form this the negative diagnostic likelihood is DLR-: 
-
-- $= \frac{P(- | D)}{P(- | D^c)}$ 
-
-- = 1 - sensitivity / specificity 
-
-- _etc_ 
-
-And the entire likelihood ratio is DLR+/DLR- and if far from 1 means that a test result is very informative.
-
+#\begin{table}
+#\caption{Marginal calculations}
+#\begin{tabular}{l l l}
+#\hline
+#sensitivity & =		$P(+|D)$  	    & =	a/(a+b) \\
+#specificity & = 	$P(-|DC)$	    & =	d/(c+d) \\
+#ppv         & = 	$P(D|+)$	    & =	a/(a+c) \\
+#npv         & = 	$P(DC|-)$	    & =	d/(d+b) \\
+#accuracy    & =		P(correct)  & =	(a+d)/(a+b+c+d) \\
+#variance    & =		$\frac{(a+b).(a+c).(b+d).(c+d)}{n^2(n-1)}$
+#\\
+#\end{tabular}
+#\end{table}
+```
 
 ## Measures of association
 
-The likelihood ratio is a measure of association, and there are many others, with the preference guided as much by familiarity as by utility for the task. Cohen's kappa, the phi coefficient, the uncertainty coefficient, Regression coefficients, the F score combining precision and recall (identical to ppv and sensitivity), markedness and informedness are various measures^[Cohen's kappa is 1 with perfect agreement, $\kappa = \frac{p_o - p_e}{1 - p_e}$ where $p_o$ is the observed agreement and is the same as accuracy, and $p_e = \frac{1}{N^2} \sum_{k,i} n_{ki}$ is the expected chance agreement, the mean pair agreement weighted for the number of times rater _i_ predicted item _k_ in total.]
+The likelihood ratio is a measure of association, and there are many others, with the preference guided as much by familiarity as by utility for the task. Cohen's kappa, the phi coefficient, the uncertainty coefficient, Regression coefficients, the F score combining precision and recall (identical to ppv and sensitivity), markedness and informedness are various measures
+^[Cohen's kappa is 1 with perfect agreement, $\kappa = \frac{p_o - p_e}{1 - p_e}$ where $p_o$ is the observed agreement and is the same as accuracy, and $p_e = \frac{1}{N^2} \sum_{k,i} n_{ki}$ is the expected chance agreement, the mean pair agreement weighted for the number of times rater _i_ predicted item _k_ in total.]
 .
 
-Relative risk is $r_e / r_u$. Attributable risk is the risk difference $r_e - r_u$ under the assumption that the difference is causal. Again, here they come teaching the fruit before the tree. 
+Relative risk is $r_e / r_u$. Attributable risk is the risk difference $r_e - r_u$ under the big assumption that the difference is causal, which might be teaching the fruit before the tree. 
 
 Attributable fraction AF is the proportion of the higher risk that is unique to those with the higher risk, as in the first equation here. Because relative risk $RR = \frac{r_e}{r_u}$, the second form is equivalent. 
 $$AF = \frac{RR-1}{RR}$$
 $$AF = \frac{r_e - r_u}{r_e}$$
 
 
-Population attributable risk PAR is the extra population risk due to exposure $PAR = r_t-r_u$, again assuming it's _all causal_. This is mathematically the same as attributable risk times the prevalence of exposure, and population attributable fraction is predictable from the definition as here, where p is the proportion of the population exposed, and p' is proportion of cases who are exposed:
+Population attributable risk PAR is the extra population risk due to exposure, $PAR = r_t-r_u$, again assuming it's _all causal_. This is mathematically the same as attributable risk times the prevalence of exposure, and population attributable fraction is predictable from the definition as here, where p is the proportion of the population exposed, and p' is proportion of cases who are exposed:
 		 $$PAR = p.AR = p(r_e-r_u)$$
 		 $$PAF = p' AF_E =  \frac{p'(RR -1)}{RR}$$
 		 
 
-Assuming all sorts of things (it's all causal, there are no effect modifiers, all other causes are orthogonal to both exposure and outcome, the stratum-specific risks are known for the exposed and unexposed), the risk in the total population is calculated for a single exposure. 
+Assuming all sorts of things^[
+it's all causal, there are no effect modifiers, all other causes are orthogonal to both exposure and outcome, the stratum-specific risks are known for the exposed and unexposed), the risk in the total population is calculated for a single exposure.
+] 
         $$r_t = p.r_e + (1-p)r_u$$
 
-So anyway PAF is like attributable fraction, and the whole calculation then goes a little something like this
+So anyway PAF is like attributable fraction, and the whole calculation then goes a little something like this, which I suppose you have to either memorise or write down. 
         $$\frac{r_{t}-r_{u}}{r_{t}}	= \frac {PAR}{r_{t}} = \frac {p.(r_{e}-r{u})}{r_{t}}  = \frac {p.(RR-1)}{p.(RR-1)+1} $$
 
 A confidence interval for PAF is given using 1-PAF^[
-Honestly I'm not sure why but maybe it's emphasising that the observed value is usually the exposed and diseased, and so the uncertainty is in how much of the rest of the population there is
+Honestly I'm not sure why but maybe it's emphasising that the observed value is usually the exposed and diseased, and so the uncertainty is in how much of the rest of the population there is.
 ]: 
         $$1- (1 - \textrm{PAF} ^{\times}_{\div} e^{1.96 \sqrt{}\frac{a}{b n_1} + \frac{c}{d n_0}})$$
 
