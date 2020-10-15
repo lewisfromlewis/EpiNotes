@@ -246,7 +246,7 @@ $AF_E$ is often used to assign blame by transposing the conditional: as it is th
 PAF for several levels of an exposure is given by $\sum \frac{p_k' (\theta_k -1)}{\theta_k}$ or the overall equation $\frac{p'(\theta_{tot}-1)}{\theta_{tot}}$, using as $\theta_{tot}$ a regression estimate with whatever covariates are desired to be included. The joint PAF for independent exposure is 
             $$1-PAF_T = 1-PAF_1 + 1-PAF_2 ... 1-PAF_i$$
 
-## Instabiity of relative risk 
+## Instability of relative risk 
 
 Relative risk is a tricky slippy thing, as shown here. 
 
@@ -256,7 +256,7 @@ rel_risk <- tibble(" " = c("Exposure", "No Exposure", ""),
             "No outcome" = c(20, 40, 60),
             "  " = c(50, 50, 100)
             )
-knitr::kable(rel_risk, booktabs = TRUE, caption= "Initially", align = 'c', escape=FALSE)
+knitr::kable(rel_risk, booktabs = TRUE, caption= "The proportions are initially as shown", align = 'c', escape=FALSE)
 
 #\begin{tabular}{| c |c | c | c| }
 #\hline
@@ -269,14 +269,27 @@ knitr::kable(rel_risk, booktabs = TRUE, caption= "Initially", align = 'c', escap
 
 ```
 
-Initially, 
+```{r, echo=FALSE, message=FALSE}
+rel_risk <- tibble(" " = c("AR" "30/50 – 10/50" ".4"),
+            " " = c( "AF" , "((30/30+20) – (10/10+40))/(10/10+40)","2/3"),
+            " " = c(    "RR" , "(30/30+20) / (10/10+40)" , "3"),
+            "  " = c("Odds of O+ if E+", "30/20" , "1.5"),
+            " " = c("Odds of O+ if E-" , "10/40" ,  ".25"),
+            " " = c("Odds ratio of E+ versus E-" ," (30*40)/(10*20)"," 6")
+            )
+knitr::kable(rel_risk, booktabs = TRUE, caption= "The risks are initially as shown", align = 'c', escape=FALSE)
 
-    AR = 30/50 – 10/50 = .4
-    AF = ((30/30+20) – (10/10+40))/(10/10+40) = 2/3
-    RR = (30/30+20) / (10/10+40) = 3
-    Odds of O+ if E+ = 30/20 = 1.5
-    Odds of O+ if E- = 10/40 = .25
-    Odds ratio of E+ versus E- = (30*40)/(10*20) = 6
+#\begin{tabular}{| c |c | c | c| }
+#\hline
+# & Outcome & No Outcome & \\ \hline
+#Exposure & 30 & 20 & 50 \\ \hline
+#No Exposure & 10 & 40 & 50 \\ \hline
+#& 40 &  60 & 100 \\
+#\hline
+#\end{tabular}
+
+```
+
 
 If the RR doubles to 6 by "clockwise rotation" of the table, as shown below, then the OR is not doubled but more than tripled, rising by a factor of 3.14 to a new odds ratio of 18.857
 
@@ -302,10 +315,13 @@ knitr::kable(rel_risk_right, booktabs = TRUE, caption= "Right-shifted", align = 
 
 Again, the "population attribution" is unstable. 
 
-    PAR = 40/40+60 – 10/10+40 = .2 
-    PAF = 40/40+60 – 10/10+40 / 40/40+60 = 0.5
-    PAF using RR is (0.5).(3-1) / (0.5).(3-1)+1 = 0.5
-    = using OR (0.5).(6-1) / (0.5).(6-1)+1 = 0.71
+```{r, echo=FALSE, message=FALSE}
+rel_risk_PAR <- tibble("" = c("PAR", "40/40+60 – 10/10+40", ".2" ),
+            " " = c("PAF using RR", "40/40+60 – 10/10+40 / 40/40+60", "0.5"),
+            "  " = c("PAF using OR", "(0.5).(6-1) / (0.5).(6-1)+1", "0.71")
+            )
+knitr::kable(rel_risk_PAR, booktabs = TRUE, caption= "Notice the unstable population attribution even if assumptions of causality are correct.", align = 'c', escape=FALSE)
+```
 
 ## Final caution 
 
@@ -313,48 +329,58 @@ Remember, kids: the assumption that PAF describes a causal relationship **might 
 
 # Probability and sampling
 
-- Probability is always a _feature of populations_, not of data 
+Probability is always a _feature of populations_, not of data. The population is _connected to the data_ by a probability  using assumptions, so a _sample quantity is an estimator_ and not the true probability. The population value, that mythical value again which needs Greek letters to deepen the mythos, is the estimand. 
 
-- the population is _connected to the data_ 
-- by a probability  
-- using assumptions, so a 
-- _sample quantity is an estimator_ 
-- the population value, that mythical value again, is the estimand 
 ## Kolmogorov's axioms 
 
-1. Probability of something happening is 1 $P(\Omega) = 1$
+    1. Probability of something happening is 1 $P(\Omega) = 1$
 
-2. Probability of nothing happening is 0 $P(E)\geq 0, P(E) \in R$
+    2. Probability of nothing happening is 0 $P(E)\geq 0, P(E) \in R$
 
-3. Probability of a thing is 1-its opposite 
+    3. Probability of a thing is 1-its opposite 
 
-4. Probability of at least one of some mutually exclusive things is the sum of their probabilities 
+    4. Probability of at least one of some mutually exclusive things is the sum of their probabilities 
 
-5. If event A implies event B then probability of A < probability of B 
+    5. If event A implies event B then probability of A < probability of B 
 
-6. The joint probability of any 2 events is the sum minus their intersection 
+    6. The joint probability of any 2 events is the sum minus their intersection 
+    
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 			
-Probabilities in the same probability space are independent if $P(A \cap B) = P(A).P(B)$
+Probabilities in the same probability space are independent if $$P(A) \perp P(B)  P(A \cap B) = P(A).P(B)$$
 
-The conditional probability is obtained by dividing a joint probability by a marginal probability, eg
+The conditional probability is obtained by dividing a joint probability by a marginal probability, _eg_
 $$P(x_3 | y_2) = \frac{p(x_3, y_2)}{p(y_2)}$$
+## Probability functions 
 
-## Bayes rule and diagnosis
+The probability that a random variable such as $X$ will take on a particular value such as $x$ is kind of the whole point of the enterprise. The true value, and any uncertainty about that value, is all expressed in the probability of each of the values that $X$ can take on. The possible values of $X$ are different for each situation, or problem. They might be binary, constrained to a set of integers, or continuous. The **function** $f(x)$ that defines the probability for each of these values satisfies Kolmogorov's axioms, in particular it sums to one. 
 
-Diagnostic likelihood ratio of a positive test (DLR+ve)
+These are called [distributions]. For discrete values, it's a probability mass function which is positive for each value, and the probabilities at each value sum to 1. 
+    
+For continuous probability, the probability density function PDF is a continuous function, and although the probability of a single specific number is 0 the area under which still integrates to 1; integrating the pdf yields to cumulative distribution function CDF. The area under a part of the pdf corresponds to the total probability for those values of that random variable. 
+
+Integrating the PDF yields the CDF
+Cumulative Distribution Function is the probability that a random variable takes the value $\leq x$
+	$F(x) = P(X \leqslant x)$
+Integrating the CDF at its limits yields an area of probability
+Survivor function is S(x) = 1-F(x)
+Quantiles: the $\alpha^{th}$ quantile of a distribution function F(x) is the point such that $F(x_{\alpha}) = \alpha$
+
+
+## Bayes rule and diagnosis 
+
+Remember the diagnostic likelihood ratio of a positive test (DLR+ve)
 	$$\frac{P(+|D)}{P(+|D^{c})} = \frac{sensitivity}{(1-specificity)}$$
 
-and DLR-ve
-$$\frac{P(-|D)}{P(-|D^{c})} = \frac{(1-sensitivity)}{specificity}$$	
+and the complementary DLR-ve, which is $\frac{P(-|D)}{P(-|D^{c})} = \frac{(1-sensitivity)}{specificity}$. 	
 
 Because $P(D) = (1-P(D^{c}))$ the complementary Bayes rules for positive predictive value is
 $$P(D|+) = \frac{P(+|D).P(D)}{P(+|D).P(D) + P(+|D^{c}).P(D^{c})}$$
 
-		$$P(D^{c}|+) = \frac {P(+|D^{c}).P(D^{c})}{P(+|D).P(D)  +  P(+|D^{c}).P(D^{c})}$$
+And the Bayes rule for negative predictive value therefore is $P(D^{c}|+) = \frac {P(+|D^{c}).P(D^{c})}{P(+|D).P(D)  +  P(+|D^{c}).P(D^{c})}$, and dividing one into the other gives the posterior odds being equal to the diagnostic likelihood ratio times the prior odds:
 
-and dividing one into the other gives the posterior odds being equal to the diagnostic likelihood ratio times the prior odds:
 $$\frac{P(D|+)}{P(D^{c}|+)} = \frac {P(+ | D)}{P(+ | D^{c})} \times \frac{P(D)}{P(D^{c})}$$
+In another statement of the same thing, the posterior probability mass function 
 
 ## Presneill
 
@@ -630,21 +656,6 @@ With 15 clusters in total you can estimate continuous or rate coefficients, with
 GEE inflate Type 1 error if few clusters; and vague hand waving about linear modelling's distributional assumptions not being easy to support if there are few clusters.
 
 Moving field: Bayesian, restricted maximum likelihood.
-
-# Distributions
-
-Probability Mass Function is >0 everywhere and the sum of the individual probabilities of possible values adds up to 1
-	
-Probability Density Function is >0 everywhere and has area =1 under it
-
-The area under the pdf corresponds to the probability for those values of that random variable
-The probability of a single specific number is 0
-Integrating the CDF yields the CDF
-Cumulative Distribution Function is the probability that a random variable takes the value $\leq x$
-	$F(x) = P(X \leqslant x)$
-Integrating the CDF at its limits yields an area of probability
-Survivor function is S(x) = 1-F(x)
-Quantiles: the $\alpha^{th}$ quantile of a distribution function F(x) is the point such that $F(x_{\alpha}) = \alpha$
 
 # Variance and error terms
 
