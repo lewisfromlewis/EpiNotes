@@ -347,7 +347,7 @@ Probability is always a _feature of populations_, not of data. The population is
     
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 			
-Probabilities in the same probability space are independent if $$P(A) \perp P(B)  P(A \cap B) = P(A).P(B)$$
+Probabilities in the same probability space are independent if $$P(A) \perp P(B) \textrm{,  if: }  P(A \cap B) = P(A).P(B)$$
 
 The conditional probability is obtained by dividing a joint probability by a marginal probability, _eg_
 $$P(x_3 | y_2) = \frac{p(x_3, y_2)}{p(y_2)}$$
@@ -357,19 +357,25 @@ The probability that a random variable such as $X$ will take on a particular val
 
 These are called [distributions]. For discrete values, it's a probability mass function which is positive for each value, and the probabilities at each value sum to 1. 
     
-For continuous probability, the probability density function PDF is a continuous function, and although the probability of a single specific number is 0 the area under which still integrates to 1; integrating the pdf yields to cumulative distribution function CDF. The area under a part of the pdf corresponds to the total probability for those values of that random variable. 
+For continuous probability, the probability density function PDF is a continuous function, and although the probability of a single specific number is 0 the area under which still integrates to 1; integrating the pdf yields to cumulative distribution function CDF. The area under a part of the pdf corresponds to the total probability for those values of that random variable. The Cumulative Distribution Function is therefore $CDF(x) = P(X \leqslant x)$.
 
-Integrating the PDF yields the CDF
-Cumulative Distribution Function is the probability that a random variable takes the value $\leq x$
-	$F(x) = P(X \leqslant x)$
-Integrating the CDF at its limits yields an area of probability
+Quantiles: the $\alpha^{th}$ quantile of the probability function f(x) is the point such that $F(x_{\alpha}) = \alpha$
+
 Survivor function is S(x) = 1-F(x)
-Quantiles: the $\alpha^{th}$ quantile of a distribution function F(x) is the point such that $F(x_{\alpha}) = \alpha$
 
+## Bayes rule 
+
+    $$f(\pi | x) = \frac{\textrm{prior} \cdot \textrm{Likelihood}}{\textrm{Normalising constant}}$$
+    $$f(\pi | x) = \frac{f(x) L(\pi | x)}{f(x)}$$
+The normalising constant is the marginal probability of the observed value of x. This is usually the integral of the probability of that value under all the hypotheses under consideration, and is needed to scale the likelihoods to sum to 1 and to represent a genuine probability. It can be left out for many uses, as it's a constant for each $\pi$ and so the relative probability of each hypothesised value of $\pi$ is the same without it. 
+
+$$f(\pi | x) = \frac{f(x) L(\pi | x)}{\sum_{\textrm{all }\pi} f(\pi) \cdot L(\pi | x)}$$ 
+$$\textrm{posterior} \propto \textrm{prior} \cdot \textrm{likelihood}$$ 
+... which is close enough for jazz. 
 
 ## Bayes rule and diagnosis 
 
-Remember the diagnostic likelihood ratio of a positive test (DLR+ve)
+Remember the diagnostic likelihood ratio of a positive test (DLR+)
 	$$\frac{P(+|D)}{P(+|D^{c})} = \frac{sensitivity}{(1-specificity)}$$
 
 and the complementary DLR-ve, which is $\frac{P(-|D)}{P(-|D^{c})} = \frac{(1-sensitivity)}{specificity}$. 	
