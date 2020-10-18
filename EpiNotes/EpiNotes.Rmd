@@ -432,6 +432,19 @@ $P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 
 This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. Teh inequality is that the probability that the observed value is more than k sigma away from its mean is small and rapidly decreasing with k 
 $$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$
+# Distributions 
+
+I don't know, maybe it's time to bring back some of these babies, just for fun. 
+
+## Beta binomial 
+
+First remember $\Gamma(z) = \int_0^\infty x^{z-1}e^{-x} dx$, and $\Gamma(z+1) = z\Gamma(z)$, and when _z_ is a positive integer, this simplifies to $\Gamma(z) = (z-1)!$. 
+
+Then the pdf is:
+$$f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-1} (1- \pi)^{\beta-1} \textrm{ for }\pi \in [0,1]$$
+$E(\pi) = \frac{\alpha}{\alpha + \beta}$
+$Mode(\pi) = \frac{\alpha-1}{\alpha + \beta - 2}$
+$Var(\pi) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$
 
 # Beyond subjectivity and objectivity
 
