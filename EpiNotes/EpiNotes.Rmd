@@ -371,7 +371,43 @@ The normalising constant is the marginal probability of the observed value of x.
 
 $$f(\pi | x) = \frac{f(x) L(\pi | x)}{\sum_{\textrm{all }\pi} f(\pi) \cdot L(\pi | x)}$$ 
 $$\textrm{posterior} \propto \textrm{prior} \cdot \textrm{likelihood}$$ 
-... which is close enough for jazz. 
+... which is close enough for jazz. In particular, it means that we needn't calculate the normalising constant in order to identify the posterior model:
+
+$$f(\pi | x) = \frac{f(x) L(\pi | x)}{f(x)} \propto f(\pi) L(\pi | x)$$
+
+```{r}
+#define constrained probabilities for wins, just to demonstrate the model 
+chess <- data.frame(pi = c(0.2, 0.5, 0.8))
+#define prior model, the relative probabilities we give to each of the win probabilities 
+prior <- c(0.1, 0.25, 0.65)
+#simulate 10000 values from the prior
+set.seed(84735)
+chess_sim <- dplyr::sample_n(chess,
+                      size=10000, weight = prior, replace = TRUE)
+#simulate match outcomes, depending each on the value of pi
+chess_sim <- chess_sim %>% 
+    mutate(x = rbinom(10000, size=6, prob=pi))
+# plot
+ggplot(chess_sim, aes(x = pi)) +
+    geom_bar()
+# tabulate with this potentially nice but oh I'm so tired of tables table generator in the janitor package
+chess_sim %>% 
+  janitor::tabyl(pi) %>% 
+  janitor::adorn_totals("row")
+#Plot x by pi using this kinky trick with count-to-proportions
+ggplot(chess_sim, aes(x=x)) +
+    stat_count(aes(y = ..prop..)) +
+    facet_wrap(~ pi)
+#narrow it down to those with only 1 win, then plot it. Piping it makes a ggplot object; take out the pipe to leave win_one as a data.frame 
+win_one <- chess_sim %>% 
+    filter(x==1)  
+ggplot(win_one, aes(x=pi)) +
+    geom_bar()
+#summarise the posterior in a table
+win_one %>% 
+  janitor::tabyl(pi) %>% 
+  janitor::adorn_totals("row")
+```
 
 ## Bayes rule and diagnosis 
 
