@@ -422,7 +422,7 @@ $$P(D|+) = \frac{P(+|D).P(D)}{P(+|D).P(D) + P(+|D^{c}).P(D^{c})}$$
 And the Bayes rule for negative predictive value therefore is $P(D^{c}|+) = \frac {P(+|D^{c}).P(D^{c})}{P(+|D).P(D)  +  P(+|D^{c}).P(D^{c})}$, and dividing one into the other gives the posterior odds being equal to the diagnostic likelihood ratio times the prior odds:
 
 $$\frac{P(D|+)}{P(D^{c}|+)} = \frac {P(+ | D)}{P(+ | D^{c})} \times \frac{P(D)}{P(D^{c})}$$
-In another statement of the same thing, the posterior probability mass function 
+When a prior has the same model family, or distribution, as the posterior (with different "tuning" or parameterisation due to the Likelihood), it's called a [conjugate] prior. 
 
 ## Presneill
 
