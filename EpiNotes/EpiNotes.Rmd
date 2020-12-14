@@ -2205,6 +2205,9 @@ round(data, digits=n)
 signif(data, digits=n)	
 p.adjust(method = c("bonferroni", "BH", "BY")
 
+## time series
+arima.sim is a terribly described function. arima.sim(model = list(order = c(p, d, q)), n= number of observations to simulate). p is the AR order, q is the MA order. Then separately the AR and MA parameters are provided. So `model = list(order = c(0, 0, 0))` is white noise, `model = list(order = c(0, 0, 1))` is MA(1) and order = c(0, 0, 1), `model = list(order = c(0, 0, 1), ma = 0.9)` is a MA(1) with MA parameter 0.9.
+
 ## SQL
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
 INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2); etc
