@@ -993,11 +993,11 @@ Autocorrelation can be estimated from the correlation coefficient between the ti
 ## Stationarity 
 Stationarity is an important concept: if it's entirely stationary then the mean is constant and can be estimated by the sample average. If the correlation structure is constant then it can be estimated by all pairs of observations that are a certain time lag apart. For a series $x_1, \dots x_i$ the lag 1 correlation is estimated from a simple average of the correlation of all pairs that are 1 time unit apart; the lag 2 correlation of all pairs that are 2 time units apart and so on. 
 
-A time series that is stationary for mean and correlation structure is **white noise**. 
+A time series that is stationary for mean and correlation structure is [**white noise**].
 
 A **Random Walk trend** is not stationary, as it can wander up and down a long way. The differenced data (the value at t minus the value at t-1, $X_t - X_{t-1}$) is stationary, however.
 
-**Trend stationarity** is displayed by random behaviour around a simple trend, such as an inflation-prone price in stable economic times. Differenced data still shows a stationary process, demonstrating that noise.
+**Trend stationarity** is displayed by random behaviour around a simple trend, such as an inflation-prone price in stable economic times. Differenced data still shows a stationary process, demonstrating that noise. This is often generated as $X_t = (1 + p_t)X_{t-1}$, being a way to separate the percentage change or [growth rate] $p_t$ from the value at time *t-1* and the result of each of those, the value at time *t*. The growth rate is approximated by $Y_t = \mathrm{log} X_t - \mathrm{log} X_{t-1} \approx p_t$. 
 
 If there is trend and heteroskedasticity, whereby neither mean nor correlation can be estimated from simple averages of the raw data, try logging and then differencing: logging positive data stabilises variance and differencing it removes the trend (*"detrends"* it). 
 
@@ -1009,16 +1009,13 @@ $X_t = \phi X_{t-1} + \epsilon_t$
 These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model needs to use a moving average. This describes an autoreggressive process with autocorrelated errors, where the remaining component $W_t$ is still white noise. Moving average:
 $\epsilon_t = W_t + \theta W_{t-1}$
 
-So ARMA is autocorrelated with autocorrelated errors. ARMA:
+So ARMA is autocorrelated with autocorrelated errors, an autoregressive moving average. [ARMA]:
 $$X_t = \phi X_{t-1} + W_t + \theta W_{t-1}$$
 
-The autocorrelation magnitude can be estimated by comparing values that are a constant distance apart; lag 1 correlation is contiguous pairs, lag 2 is pairs separated by one intervening variable and so on. A series is stationary over a time, if the mean over that time is always constant. Some fiddling can make it stationary over a trend (so if there is an underlying spurious rise in price due to inflation). Examples of stationary processes are linear predictors where $X_t$ is stationary or a random walk, where W is white noise added to the last value of X to produce the current value of X:
-$X_t = X_{t-1} + W_i$
-This is demonstrated by differencing in R, eg for the default lag 1
-```
-diff(x, lag = 1)
-```
-	
+After Wold, any stationary time series can be represented as a linear combination of white noise, as can any ARMA model. This [Wold decomposition] is shown below. The moving average with lag *q* is a Wold decomposition where constants are zero after the *q*th term:
+$$X_t = W_t + a_1W_{t-1} + a_2 W_{t-2} \dots$$
+A moving average is already of this form, where 
+
 # Multiple testing
 
 \begin{tabular}{| l | l | l | l | }
