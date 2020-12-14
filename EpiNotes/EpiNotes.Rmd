@@ -912,7 +912,7 @@ Robust standard errors, GEE and multilevel modelling are ways to address this.
 
 ## Robust standard errors
 
-Robust variance is proportional to the sum of the squared [residuals] (residuals being the difference between the observed values and those predicted by the model).  They can be calculated individually if the data are i.i.d or calculated for each cluster then summed, where there is correlation.  This still assumes independence between clusters.
+Robust variance is proportional to the sum of the squared [residuals] (residuals being the difference between the observed values and those predicted by the model).  They can be calculated individually if the data are *i.i.d* or calculated for each cluster then summed, where there is correlation.  This still assumes independence between clusters.
 
 Robust standard errors do not affect the calculation of the maximum likelihood and so a LRS and test are not valid and the MLE is not altered.  A quadratic approximation is not used so the standard errors are not excessively narrow; the cluster level residuals are used to generate the variance instead.  "Robust SE are correct provided the model is correct" and there are >30 clusters.
 
@@ -983,14 +983,34 @@ H(t) = lambda t
 Risk up to time t = 1- e^(-lambda t)
 Average survival time = 1/lambda
 
-ARIMA
-The error term $\epsilon$ in the usual linear model $Y_i = \alpha + \beta X_i + \epsilon_i$ is assumed to be composed of errors which are independent, identically distributed (usually normally distributed with common variance). This is the definition of white noise.
+# Time Series
 
-If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the Autoregression formula:
+A regression model $Y_i = \beta X_i + \epsilon_i$ assumes the errors are independent, normal and homoskedastic with a common variance (the definition of white noise). If the value of X depends on the last value of X, then the value is said to be regressed on its previous value. This is autoregression, but by separating out the autoregressive part the remaining errors can still be conceptualised, and so written and analysed, as white noise. $X_t = \phi X_{t-1} + \epsilon_t$ and $\epsilon_t$ is still allowed to be white noise, 
+
+## Autocorrelation 
+Autocorrelation can be estimated from the correlation coefficient between the time series and itself. For a yearly oscillating process the correlation is positive at a 1-month lag and negative at a 6-month lag, for example.
+
+## Stationarity 
+Stationarity is an important concept: if it's entirely stationary then the mean is constant and can be estimated by the sample average. If the correlation structure is constant then it can be estimated by all pairs of observations that are a certain time lag apart. For a series $x_1, \dots x_i$ the lag 1 correlation is estimated from a simple average of the correlation of all pairs that are 1 time unit apart; the lag 2 correlation of all pairs that are 2 time units apart and so on. 
+
+A time series that is stationary for mean and correlation structure is **white noise**. 
+
+A **Random Walk trend** is not stationary, as it can wander up and down a long way. The differenced data (the value at t minus the value at t-1, $X_t - X_{t-1}$) is stationary, however.
+
+**Trend stationarity** is displayed by random behaviour around a simple trend, such as an inflation-prone price in stable economic times. Differenced data still shows a stationary process, demonstrating that noise.
+
+If there is trend and heteroskedasticity, whereby neither mean nor correlation can be estimated from simple averages of the raw data, try logging and then differencing: logging positive data stabilises variance and differencing it removes the trend (*"detrends"* it). 
+
+
+## ARMA
+If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the above formula of Autoregression:
 $X_t = \phi X_{t-1} + \epsilon_t$
 
-These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model describes an autoreggressive process with autocorrelated errors:
+These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model needs to use a moving average. This describes an autoreggressive process with autocorrelated errors, where the remaining component $W_t$ is still white noise. Moving average:
 $\epsilon_t = W_t + \theta W_{t-1}$
+
+So ARMA is autocorrelated with autocorrelated errors. ARMA:
+$$X_t = \phi X_{t-1} + W_t + \theta W_{t-1}$$
 
 The autocorrelation magnitude can be estimated by comparing values that are a constant distance apart; lag 1 correlation is contiguous pairs, lag 2 is pairs separated by one intervening variable and so on. A series is stationary over a time, if the mean over that time is always constant. Some fiddling can make it stationary over a trend (so if there is an underlying spurious rise in price due to inflation). Examples of stationary processes are linear predictors where $X_t$ is stationary or a random walk, where W is white noise added to the last value of X to produce the current value of X:
 $X_t = X_{t-1} + W_i$
