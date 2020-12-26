@@ -1015,6 +1015,15 @@ After Wold, any stationary time series can be represented as a linear combinatio
 $$X_t = W_t + a_1W_{t-1} + a_2 W_{t-2} \dots$$
 After Gauss and Newton, the AR and MA order can be estimated in a similar way to [least squares estimation]. ^[Because there is simultaneously an error in the observation generating process, there are always uncertainties in ascribing the output to a particular process. The autocorrelation function [ACF] of a pure AR process tails off slowly but the partial autocorrelation function [PACF] cuts off at lag _p_. A pure MA process has a PACF which tails off slowly and ACF cuts off at lag _q_. ARMA tails off in both ACF and PACF.]
 
+## ARIMA 
+A time series is integrated ARMA or [ARIMA] if the differences data are ARMA. Easy. 
+
+## Regression for time series 
+The models are fit to the appropriately detrended data using a sort of trial and error starting from simple and progressing to more complex. Model fit is assessed by BIC and AIC, generally accepting the more simple model. 
+
+An important criterion in time series is [residual analysis]: if the residuals are not white noise then the maximum explanation of the data generating process has not been found. 
+
+
 # Multiple testing
 
 \begin{tabular}{| l | l | l | l | }
@@ -1627,13 +1636,11 @@ MAR – P(missing) does not depend on the the value itself; but may depend on ot
 
 Multiple correspondence analysis MCA graph on a "missingness matrix" shows neighbours in missingness; but doesn't imply a missingness definition (eg broken machine probably MCAR but if broken by a high value, then MNAR).
 
-[EM algorithm], or supplementary EM algorithm, allows a model that uses the observed data, then updates with the last estimate and so on.  Needs a new process for each assumed underlying model.
+[EM algorithm], or supplementary Expectation-Minimisation algorithm, allows a model that uses the observed data, then updates with the last estimate and so on.  Needs a new process for each assumed underlying model.
 
 Imputation using the mean shrinks the correlation to zero; by the regression line shrinks to 1; can impute by the regression line plus noise (stochastic regression) and preserve both the joint and marginal distribution of the data, so estimation has no bias added to the missingness bias itself.  It's an extension of this last to the multivariate case that results in the mice procedure.
 
-The impact of missingness is related to the difficulty of imputation and for the same reasons: both proportion and structure of the missingness, and of the data itself, are important in determining these. Get signposts to this by 
-
-[Cross validation] removes some values and repeats, checks the resulting inferences.
+The [impact of missingness] is related to the difficulty of imputation and for the same reasons: both proportion and structure of the missingness, and of the data itself, are important in determining these. Get signposts to this by cross validation, or PCA, or various other techniques.
 
 Principal Components minimises the distance between an observation and its projection. Estimates the single best projection matrix that does so.  With missing values there is no such single estimated matrix. Use instead one of the many algorithms, eg Iteraive PCA. Iterative PCA starts with values imputed somehow, eg the mean.  Constructs a vector using the left and right singular value matrices (check) then updates the imputation; then repeats. Always converges but it's not a convex method so there are local maxima; so Josse in missMDA use a "regularized PCA".
 PCA uses the observed linear relationships between variables and so is most efficient and predictive of reality when the true relationships are linear.  So you need subject knowledge, to interpret or even to reparameterise (eg by making interactions explicit). 
@@ -2060,13 +2067,13 @@ Causal: data from a randomised trial
 Mechanistic: rich data about all available responses and predictors
 
 # Model fit 
-All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. [Cross validation] is a powerful way. 
+All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [bias-variance tradeoff] is common in machine learning, for reasons of overuse of machine learning. [Cross validation] is a powerful way, often for "testing the skill" of a machine learning model. 
 
 The unobserved test set MSE of any model is always reducible to 
 
 $$E(y_0 - \hat{f}(x_0))^2 = Var(\hat{f}) + [Bias(\hat{f(x_0)})]^2 + Var(\epsilon)$$
 
-This means, if the error is a property of the population and not the model or the sample^[it is], that there is clearly a trade-off between test bias and test variance to minimise MSE.
+This means, if the error is a property of the population and not the model or the sample, that there is clearly a trade-off between test bias and test variance to minimise MSE^[The bias-variance trade-off is a condition of life for model builders.].
 
 
 ## Parameterisation 
@@ -2085,8 +2092,11 @@ The Mean Squared Error is a good generic way to determine Goodness of Fit. Train
 
 Goodness of fit metric is used to decide whether the model prediction fits the data.  Given a set of observations and their accompanying expected values at positions i under a certain model that takes parameter x, a goodness of fit function describes how well the model fits the data for a given value of x.  This function might be written g(E1, ... En, O1, On).
 A saturated model exactly fits all the data points.
-When an objective function describes how the goodness of fit function varies by the choice of x, it can be minimised for some value of x.  Formally,
-	$\textrm{Maximise } f(x)  \textrm{ subject to } x \in X$	 where $f(x) = g(E_1(x), \dots , E_n(x), O_1, \dots , O_n)$
+When an objective function describes how the goodness of fit function varies by the choice of x, it can be minimised for some value of x.  Formally, we maximise f(x) subject to x $\in$ X, where $f(x) = g(E_1(x), \dots , E_n(x), O_1, \dots , O_n)$.
+
+Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about [mean squared error], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: 
+    penalised error = MSE + k(p+q) 
+The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
 		
 Some options are linear residual distance (may not fit at all, positive and negative cancel),
 		absolute linear residual distance (may not fit at all, odd behaviour at zero)
@@ -2102,6 +2112,14 @@ $D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
 
 Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models.  This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the [AIC].
 The parameters that lead to the best fit are chosen by a fitting algorithm.
+
+## Cross Validation 
+Is a [resampling] technique often used to check the "skill" of a model, intended to reflect its ability to classify an unseen dataset. [k-Fold cross validation] is a common introduction, giving a less-optimistic estimate of the "skill" than will a simple train-test split. A sample of observations is split into k groups, _after_ which any data preparation is done on the sample: 
+    - one group is the test set and the remaining k-1 are the training set, the process for generating a model or its parameters is followed and the estimates for the test set are compared to its actual values 
+    - the process is repeated k times so each of the k groups is a test set once 
+    - the sample thus generated of model evaluation scores is used to estimate the model skill, reported as a mean with variance of the model skill scores 
+    - the choice of k is a complex one and integral to the bias-variance tradeoff; of just use k=10
+^[The data preparation is done after creating the sample for k-fold cross validation, to minimise information leakage where information obtained in the preparation optimises the model subtly for the entire set rather than estimating its behaviour for an unseen set. Note also that each member of the sample serves as a test subject once and a training member k-1 times, to the extreme of leave-one-out cross validation where k=n.]
 
 # Meta Analysis
 	- Provide a data display and objective review
@@ -2206,11 +2224,11 @@ p.adjust(method = c("bonferroni", "BH", "BY")
 
 ## time series
 stats::arima.sim is a terribly described function. 
-arima.sim(model = list(order = c(p, d, q)), n= number of observations to simulate). p is the AR order, q is the MA order (the highest lag) as in [ARMA]. Then separately the AR and MA parameters are provided, in positions corresponding to the individual lag and in number up to the order. So `model = list(order = c(0, 0, 0))` is white noise, `model = list(order = c(0, 0, 1))` is MA(1) and order = c(0, 0, 1), `model = list(order = c(0, 0, 1), ma = 0.9)` is a MA(1) with MA parameter 0.9. This generates an xcf object whatever that is, with a useful generic method to plot it.
-stats::acf computes the autocorrelation function. For a pure AR process this function "tails off", not seeming to have any informative maximum. For a pure MA process this function becomes zero above the MA order. These can be used to iterate to the best value of the order, starting with (1, 1)
+arima.sim(model = list(order = c(p, d, q)), n= number of observations to simulate). p is the AR order, q is the MA order (the highest lag) as in [ARMA]. Then separately the AR and MA parameters are provided, in positions corresponding to the individual lag and in number up to the order. So `model = list(order = c(0, 0, 0))` is white noise, `model = list(order = c(0, 0, 1))` is MA(1) and order = c(0, 0, 1), `model = list(order = c(0, 0, 1), ma = 0.9)` is a MA(1) with MA parameter 0.9. This generates an xcf object whatever that is, with a useful generic method to plot it. The last order entry is the differential: a d=1 means that the first difference of the ARMA is stationary in which case this is an ARIMA model.
+stats::acf computes the autocorrelation function. For a pure AR process this function "tails off", not seeming to have any informative maximum. For a pure MA process this function becomes zero above the MA order. These can be used to iterate to the best value of the order, starting with (1, 1). For an ARIMA the ACF tails off very slowly and the PACF is almost 1 at lag 1, whereas after differencing it once, if d=1 the ACF/PACF looks like that of an ARMA model.
 stats::pacf is the partial autocorrelation function.
 astsa::acf2 plots the acf and pacf 
-sarima from astsa estimates the parameters of the model.
+sarima from astsa estimates the parameters of the (specified) model, and provides some residual plots, including Q-Q, standardised residuals, Sample ACF of residuals and the Q-statistic p-values.
 
 ## SQL
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
