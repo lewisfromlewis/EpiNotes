@@ -1003,18 +1003,17 @@ If there is trend and heteroskedasticity, whereby neither mean nor correlation c
 
 
 ## ARMA
-If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the above formula of Autoregression:
-$X_t = \phi X_{t-1} + \epsilon_t$
+If the value of a variable at time t is either static or at least predicted mainly by its value at time t-1, then it's a time series. Some function of time $\phi X_t$, added to an error term, gives the above formula of Autoregression: $X_t = \phi X_{t-1} + \epsilon_t$. 
 
-These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model needs to use a moving average. This describes an autoreggressive process with autocorrelated errors, where the remaining component $W_t$ is still white noise. Moving average:
+These assume errors are white noise; but usually errors are correlated with the previous error, just as the underlying true value is autocorrelated.  So now the model needs to use a moving average. This describes an autoregressive process with autocorrelated errors, where the remaining component $W_t$ is still white noise. Moving average:
 $\epsilon_t = W_t + \theta W_{t-1}$
 
 So ARMA is autocorrelated with autocorrelated errors, an autoregressive moving average. [ARMA]:
 $$X_t = \phi X_{t-1} + W_t + \theta W_{t-1}$$
 
-After Wold, any stationary time series can be represented as a linear combination of white noise, as can any ARMA model. This [Wold decomposition] is shown below. The moving average with lag *q* is a Wold decomposition where constants are zero after the *q*th term:
+After Wold, any stationary time series can be represented as a linear combination of white noise, as can any ARMA model. This [Wold decomposition] is shown below. The moving average with lag (or "order") *q* is a Wold decomposition where constants are zero after the *q*th term:
 $$X_t = W_t + a_1W_{t-1} + a_2 W_{t-2} \dots$$
-A moving average is already of this form, where 
+After Gauss and Newton, the AR and MA order can be estimated in a similar way to [least squares estimation]. ^[Because there is simultaneously an error in the observation generating process, there are always uncertainties in ascribing the output to a particular process. The autocorrelation function [ACF] of a pure AR process tails off slowly but the partial autocorrelation function [PACF] cuts off at lag _p_. A pure MA process has a PACF which tails off slowly and ACF cuts off at lag _q_. ARMA tails off in both ACF and PACF.]
 
 # Multiple testing
 
@@ -1634,7 +1633,7 @@ Imputation using the mean shrinks the correlation to zero; by the regression lin
 
 The impact of missingness is related to the difficulty of imputation and for the same reasons: both proportion and structure of the missingness, and of the data itself, are important in determining these. Get signposts to this by 
 
-Cross validation removes some values and repeats, checks the resulting inferences.
+[Cross validation] removes some values and repeats, checks the resulting inferences.
 
 Principal Components minimises the distance between an observation and its projection. Estimates the single best projection matrix that does so.  With missing values there is no such single estimated matrix. Use instead one of the many algorithms, eg Iteraive PCA. Iterative PCA starts with values imputed somehow, eg the mean.  Constructs a vector using the left and right singular value matrices (check) then updates the imputation; then repeats. Always converges but it's not a convex method so there are local maxima; so Josse in missMDA use a "regularized PCA".
 PCA uses the observed linear relationships between variables and so is most efficient and predictive of reality when the true relationships are linear.  So you need subject knowledge, to interpret or even to reparameterise (eg by making interactions explicit). 
@@ -2061,7 +2060,7 @@ Causal: data from a randomised trial
 Mechanistic: rich data about all available responses and predictors
 
 # Model fit 
-All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Cross validation is a powerful way. 
+All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. [Cross validation] is a powerful way. 
 
 The unobserved test set MSE of any model is always reducible to 
 
@@ -2101,7 +2100,7 @@ The deviance allows model fit to be compared across models, and gives a sort of 
 
 $D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
 
-Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models.  This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the AIC.
+Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models.  This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the [AIC].
 The parameters that lead to the best fit are chosen by a fitting algorithm.
 
 # Meta Analysis
@@ -2206,7 +2205,12 @@ signif(data, digits=n)
 p.adjust(method = c("bonferroni", "BH", "BY")
 
 ## time series
-arima.sim is a terribly described function. arima.sim(model = list(order = c(p, d, q)), n= number of observations to simulate). p is the AR order, q is the MA order. Then separately the AR and MA parameters are provided. So `model = list(order = c(0, 0, 0))` is white noise, `model = list(order = c(0, 0, 1))` is MA(1) and order = c(0, 0, 1), `model = list(order = c(0, 0, 1), ma = 0.9)` is a MA(1) with MA parameter 0.9.
+stats::arima.sim is a terribly described function. 
+arima.sim(model = list(order = c(p, d, q)), n= number of observations to simulate). p is the AR order, q is the MA order (the highest lag) as in [ARMA]. Then separately the AR and MA parameters are provided, in positions corresponding to the individual lag and in number up to the order. So `model = list(order = c(0, 0, 0))` is white noise, `model = list(order = c(0, 0, 1))` is MA(1) and order = c(0, 0, 1), `model = list(order = c(0, 0, 1), ma = 0.9)` is a MA(1) with MA parameter 0.9. This generates an xcf object whatever that is, with a useful generic method to plot it.
+stats::acf computes the autocorrelation function. For a pure AR process this function "tails off", not seeming to have any informative maximum. For a pure MA process this function becomes zero above the MA order. These can be used to iterate to the best value of the order, starting with (1, 1)
+stats::pacf is the partial autocorrelation function.
+astsa::acf2 plots the acf and pacf 
+sarima from astsa estimates the parameters of the model.
 
 ## SQL
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
