@@ -2228,7 +2228,8 @@ arima.sim(model = list(order = c(p, d, q)), n= number of observations to simulat
 stats::acf computes the autocorrelation function. For a pure AR process this function "tails off", not seeming to have any informative maximum. For a pure MA process this function becomes zero above the MA order. These can be used to iterate to the best value of the order, starting with (1, 1). For an ARIMA the ACF tails off very slowly and the PACF is almost 1 at lag 1, whereas after differencing it once, if d=1 the ACF/PACF looks like that of an ARMA model.
 stats::pacf is the partial autocorrelation function.
 astsa::acf2 plots the acf and pacf 
-sarima from astsa estimates the parameters of the (specified) model, and provides some residual plots, including Q-Q, standardised residuals, Sample ACF of residuals and the Q-statistic p-values.
+sarima(data, p, d, q) from astsa estimates the parameters of the (specified) model, and provides some residual plots, including Q-Q, standardised residuals, Sample ACF of residuals and the Q-statistic p-values.
+sarima.for(data, p, d, q, n.ahead) produces forecasts
 
 ## SQL
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
