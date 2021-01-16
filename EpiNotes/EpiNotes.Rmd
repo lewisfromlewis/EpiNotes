@@ -1016,7 +1016,7 @@ $$X_t = W_t + a_1W_{t-1} + a_2 W_{t-2} \dots$$
 After Gauss and Newton, the AR and MA order can be estimated in a similar way to [least squares estimation]. ^[Because there is simultaneously an error in the observation generating process, there are always uncertainties in ascribing the output to a particular process. The autocorrelation function [ACF] of a pure AR process tails off slowly but the partial autocorrelation function [PACF] cuts off at lag _p_. A pure MA process has a PACF which tails off slowly and ACF cuts off at lag _q_. ARMA tails off in both ACF and PACF.]
 
 ## ARIMA 
-A time series is integrated ARMA or [ARIMA] if the differences data are ARMA. Easy. 
+A time series is integrated ARMA or [ARIMA] if the differenced data are ARMA. Easy. The number of times that differencing is required is given by *d*, which finishes the parameters needed for the usual model: p, d, q. 
 
 ## Regression for time series 
 The models are fit to the appropriately detrended data using a sort of trial and error starting from simple and progressing to more complex. Model fit is assessed by BIC and AIC, generally accepting the more simple model. 
