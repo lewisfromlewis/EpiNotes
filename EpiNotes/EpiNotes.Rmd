@@ -1021,7 +1021,20 @@ A time series is integrated ARMA or [ARIMA] if the differences data are ARMA. Ea
 ## Regression for time series 
 The models are fit to the appropriately detrended data using a sort of trial and error starting from simple and progressing to more complex. Model fit is assessed by BIC and AIC, generally accepting the more simple model. 
 
-An important criterion in time series is [residual analysis]: if the residuals are not white noise then the maximum explanation of the data generating process has not been found. 
+An important criterion in time series is [residual analysis]: if the residuals are not white noise then the maximum explanation of the data generating process has not been found, and a qualitative examination of the ACF and PACF plots might suggest how best to tune the model, before comparing the fit using AIC and BIC. 
+
+## Seasonal ARIMA 
+Seasonal models can be added on top of the non-seasonal effect, making quite complex predictions overall and using arbitrarily many algebraic expressions to autoregress on a previous value. This can be built in Base R or rely on premade packages for the usual case of a small number of lags at seasonal and nonseasonal levels. The seasonal dependence is split into AR and MA components, as is the nonseasonal, and for example using monthly data it might be seen that a pure AR at a lag of 12 $X_t = \Phi X_{t-12} + W_t$ exists. The seasonal components are denoted by capitals where the nonseasonal are denoted by lower case, so a seasonal model at lag S may be SARIMA(p, d, q, P, D, Q, S). 
+
+The ACF tails off with a pure AR model, cuts off at lag QS for a pure MA, vice versa for PACF, and both tail off for a SARMA model.
+
+As this is plausible in a facile sort of a way but hard to remember, here is a table: 
+
+\begin{tabular}{| l | l | l | l | }
+     & SAR(P)s         & SMA (Q)s        & SARMA(P,Q)s \\ 
+ACF  & Tails off       & Cuts off lag QS & Tails off \\ 
+PACF & Cuts off lag PS & Tails off       & Tails off \\ 
+\end{tabular}
 
 
 # Multiple testing
@@ -1903,32 +1916,34 @@ The Eight Ethical Principles
     6. Independent review 
     7. Informed Consent 
     8. Respect for human subjects 
-Protocols for the NIH contain
-Précis 
-    • Introduction 
-    • Objectives 
-    • Inclusion and Exclusion Criteria 
-    • Plan for Monitoring Subjects and Criteria for Withdrawal of Subjects from the Study 
-    • Analysis of the Study 
-    • Human Subject Protections 
-        ◦ Rationale for Subject Selection 
-        ◦ Recruitment Plan and Procedures 
-        ◦ Justify the Exclusion of Women, Minorities and Children (if applicable) 
-        ◦ Evaluation of Benefits and Risks/Discomforts of Participation 
-        ◦ Description of the Consent/Assent Process 
-        ◦ Plan for Maintaining Privacy and Confidentiality of Subject Records and Data 
-    • Data and Safety Monitoring Plan 
-    • Protocol Monitoring Plan 
-    • Data Management Plan 
-    • Plan for Research Use and Storage of Human Samples, Specimens or Data 
-    • Remuneration/Compensation 
-    • Scientific References 
+    
+Protocols for the NIH contain 
+
+    - Précis 
+    - Introduction 
+    - Objectives 
+    - Inclusion and Exclusion Criteria 
+    - Plan for Monitoring Subjects and Criteria for Withdrawal of Subjects from the Study 
+    - Analysis of the Study 
+    - Human Subject Protections 
+            - Rationale for Subject Selection 
+            - Recruitment Plan and Procedures 
+            - Justify the Exclusion of Women, Minorities and Children (if applicable) 
+            - Evaluation of Benefits and Risks/Discomforts of Participation 
+            - Description of the Consent/Assent Process 
+            - Plan for Maintaining Privacy and Confidentiality of Subject Records and Data 
+    - Data and Safety Monitoring Plan 
+    - Protocol Monitoring Plan 
+    - Data Management Plan 
+    - Plan for Research Use and Storage of Human Samples, Specimens or Data 
+    - Remuneration/Compensation 
+    - Scientific References 
 
 
 
 # Community Engagement 
-From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which aﬀect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."^[
-I thin there's a little too much of the White Man's Burden in this, where the inherent "good" of engagement is because of the researchers displaying cultural humility.  I'm sure it's nice to see but the studied community would get along just as well with nobody coming in to satisfy themselves about their cultural humility. The conduct of a trial does change things and the focus should be on whether those changes are beneficial enough to justify doing the study there.
+From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which affect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."^[
+I think there's a little too much of the White Man's Burden in this, where the inherent "good" of engagement is because of the researchers displaying cultural humility.  I'm sure it's nice to see but the studied community would get along just as well with nobody coming in to satisfy themselves about their cultural humility. The conduct of a trial does change things and the focus should be on whether those changes are beneficial enough to justify doing the study there.
 ]
 Should never be prefabricated, always negotiated and always actually strengthen participants' ability to control important aspects of their own lives or "empower" them. Find out, acknowledge and reconcile complexities in community attitudes and internal power structures, empower the unempowered^[
 This can surely cause problems? Breaking the wheel is not without collateral damage.
@@ -2228,8 +2243,8 @@ arima.sim(model = list(order = c(p, d, q)), n= number of observations to simulat
 stats::acf computes the autocorrelation function. For a pure AR process this function "tails off", not seeming to have any informative maximum. For a pure MA process this function becomes zero above the MA order. These can be used to iterate to the best value of the order, starting with (1, 1). For an ARIMA the ACF tails off very slowly and the PACF is almost 1 at lag 1, whereas after differencing it once, if d=1 the ACF/PACF looks like that of an ARMA model.
 stats::pacf is the partial autocorrelation function.
 astsa::acf2 plots the acf and pacf 
-sarima(data, p, d, q) from astsa estimates the parameters of the (specified) model, and provides some residual plots, including Q-Q, standardised residuals, Sample ACF of residuals and the Q-statistic p-values.
-sarima.for(data, p, d, q, n.ahead) produces forecasts
+sarima(data, p, d, q, P, D, Q) from astsa estimates the parameters of the (specified) model, and provides some residual plots, including Q-Q, standardised residuals, Sample ACF of residuals and the Q-statistic p-values.
+sarima.for(data, p, d, q, P, D, Q, n.ahead) produces forecasts
 
 ## SQL
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
