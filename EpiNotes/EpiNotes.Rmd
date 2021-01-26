@@ -2247,8 +2247,16 @@ sarima(data, p, d, q, P, D, Q) from astsa estimates the parameters of the (speci
 sarima.for(data, p, d, q, P, D, Q, n.ahead) produces forecasts
 
 ## SQL
+SQL doesn't have to be in capitals, or indented, or anything. 
+SELECT 
+FROM 
+aggregate functions such as MIN(), MAX(), AVG(), COUNT() 
+WHERE can't be used with aggregate functions so use 
+HAVING eg SELECT * FROM table HAVING AVG(parameter)>13
+
 CREATE TABLE tablename (fieldname FIELDTYPE); etc
 INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2); etc
+SEL
 
 
 ## xlsx
