@@ -2262,7 +2262,7 @@ SEL
 ## xlsx
 xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)	read.xlsx2	write.xlsx
 
-## XML and HTML
+## XML 
 HTML is a markup language. XML, Extended markup language, is a structured data store or formally, "a meta-language facility for defining a markup language", which is self-describing, extensible and yet with strict parsing rules. Apparently it also allows tool sharing across disciplines and I await enlightenment on that. Mainly works via tags, which can have attributes, and form elements. The `XML` package has short (good) and long (long) tutorials, and provides methods for XML and HTML which are moderately different protocols.
 
 - `<tag>` such as the tag surrounding this sentence `<\tag>` 
@@ -2280,10 +2280,30 @@ There is yet another language to learn, called `xPAth` language	with syntax such
 - `Node['@value'='thing']` a specified node; read the short intro at least. 
 `httr::GET, PATCH, POST, HEAD, PUT, DELETE` 
 
+## HTML 
+`tags` include 
+    - `<p></p>`, block element for paragraphs
+    - `<span></span>`, inline element for paragraphs
+    - `<img>`, a self closing inline element for images
+    - everything else, it seems 
+`<head>` comes above, `<body>` after. 
+
+## CSS 
+`style` can be found in many levels; the more specific cancels the less specific. 
+Comment a block by /* ... */
+`selector{property: value;}` = who{what:how;} For example, select by html tag value.
+
+`class` is made up on the spot in the html, and referenced with a preceding dot in the css. Many classes can exist, many elements can have the same `class`. May also be used to select. For example, `<img class = "x" src="">` then `.x{color:green;}` 
+`id` which is set within the html tag can also be used to select, referenced by a hashtag. Only one element can have a given `id` on each page. For example `<h1 id = "tops">` then `#tops{color:green;}` 
+
+`display` can be block (sequential lines), inline (same line, can't have width altered), block-inline (same line, can alter width), or none (is not rendered). Some elements are `block` by default, some `inline`, but they can have display types assigned in CSS.
+`visibility` can be set to `hidden`, when the element is rendered but not displayed
+
+
 ## JSON 
 
 Javascript Object Notation
-jsonlite::fromJSON		toJSON
+`jsonlite::fromJSON`		`toJSON`
 multiple nesting of data from the data frame resulting from fromJSON
 data.table
 subsets by expression, not column
@@ -2297,7 +2317,7 @@ fread for fast reading (substitute for read.table for tab separated files)
 tibble eg with list-columns so a data frame need not hold numbers or other low level entities in its cells but whole lists of interest such eg as a training resample from a dataset, a test resample, a model fitted to that test dataset and the resulting RMSE.  Tibbles are lazy and surly, don't require a list of vectors as the underlying structure and give a little more information in printing than data.frames.
 
 ## plyr
-plyr::arrange(X, var1)
+`plyr::arrange(X, var1)`
 		mutate(oldata, newvar = function(oldvar)
 		`.` or as.quoted allow a list of variables to me assembled for later evaluation in plyr
 		ddply(.data, .variable, .fun , ... others)
