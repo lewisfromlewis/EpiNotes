@@ -2296,8 +2296,23 @@ Comment a block by /* ... */
 `class` is made up on the spot in the html, and referenced with a preceding dot in the css. Many classes can exist, many elements can have the same `class`. May also be used to select. For example, `<img class = "x" src="">` then `.x{color:green;}` 
 `id` which is set within the html tag can also be used to select, referenced by a hashtag. Only one element can have a given `id` on each page. For example `<h1 id = "tops">` then `#tops{color:green;}` 
 
-`display` can be block (sequential lines), inline (same line, can't have width altered), block-inline (same line, can alter width), or none (is not rendered). Some elements are `block` by default, some `inline`, but they can have display types assigned in CSS.
-`visibility` can be set to `hidden`, when the element is rendered but not displayed
+`display` can be 
+- `block` (sequential lines)
+- `inline` (same line, can't have width altered) 
+- `block-inline` (same line, can alter width), or 
+- `none` (is not rendered). 
+Some elements are `block` by default, some `inline`, but they can have display types assigned in CSS. 
+
+`visibility` can be set to `hidden`, when the element is rendered but not displayed 
+
+`position` can be 
+- `static` (like default html-derived) 
+- `relative` to how it would have been had it been static, but pushed in the named direction by the amount defined (so `position: relative; top: 50px;` places the object downward by 50 pixels). It can then overlap other elements, while leaving its static ghost behind to interfere with the rendering. 
+- `absolute` which is, it turns out, relative to the parent and pushes the position within the parent away from the named edge. So the opposite of relative. so`position: absolute; top: 50px;` Moves the object 50px from the top of the parent. Can overlap, doesn't leave a ghost.
+- `fixed` stays where it is even while scrolling.
+
+`margin` can be looked up but auto is useful for horizontal centreing, along with `text-align`.
+
 
 
 ## JSON 
