@@ -2247,6 +2247,10 @@ sarima(data, p, d, q, P, D, Q) from astsa estimates the parameters of the (speci
 sarima.for(data, p, d, q, P, D, Q, n.ahead) produces forecasts
 
 ## SQL
+Install the software then start the service. This kind of doesn't work often. So 
+    `sudo service postgresql restart` 
+    `psql [database name]` 
+starts up a prompt in psql. Which can be exited, as can its submenu `\help`, with `\q`. 
 SQL doesn't have to be in capitals, or indented, or anything. 
 SELECT 
 FROM 
