@@ -270,12 +270,12 @@ knitr::kable(rel_risk, booktabs = TRUE, caption= "The proportions are initially 
 ```
 
 ```{r, echo=FALSE, message=FALSE}
-rel_risk <- tibble(" " = c("AR" "30/50 – 10/50" ".4"),
-            " " = c( "AF" , "((30/30+20) – (10/10+40))/(10/10+40)","2/3"),
-            " " = c(    "RR" , "(30/30+20) / (10/10+40)" , "3"),
-            "  " = c("Odds of O+ if E+", "30/20" , "1.5"),
-            " " = c("Odds of O+ if E-" , "10/40" ,  ".25"),
-            " " = c("Odds ratio of E+ versus E-" ," (30*40)/(10*20)"," 6")
+rel_risk <- tibble(c("AR", "30/50 – 10/50", ".4"),
+            c( "AF" , "((30/30+20) – (10/10+40))/(10/10+40)","2/3"),
+            c(    "RR" , "(30/30+20) / (10/10+40)" , "3"),
+            c("Odds of O+ if E+", "30/20" , "1.5"),
+            c("Odds of O+ if E-" , "10/40" ,  ".25"),
+            c("Odds ratio of E+ versus E-" ," (30*40)/(10*20)"," 6")
             )
 knitr::kable(rel_risk, booktabs = TRUE, caption= "The risks are initially as shown", align = 'c', escape=FALSE)
 
@@ -316,9 +316,9 @@ knitr::kable(rel_risk_right, booktabs = TRUE, caption= "Right-shifted", align = 
 Again, the "population attribution" is unstable. 
 
 ```{r, echo=FALSE, message=FALSE}
-rel_risk_PAR <- tibble("" = c("PAR", "40/40+60 – 10/10+40", ".2" ),
-            " " = c("PAF using RR", "40/40+60 – 10/10+40 / 40/40+60", "0.5"),
-            "  " = c("PAF using OR", "(0.5).(6-1) / (0.5).(6-1)+1", "0.71")
+rel_risk_PAR <- tibble(" " = c("PAR", "40/40+60 – 10/10+40", ".2" ),
+            "  " = c("PAF using RR", "40/40+60 – 10/10+40 / 40/40+60", "0.5"),
+            "   " = c("PAF using OR", "(0.5).(6-1) / (0.5).(6-1)+1", "0.71")
             )
 knitr::kable(rel_risk_PAR, booktabs = TRUE, caption= "Notice the unstable population attribution even if assumptions of causality are correct.", align = 'c', escape=FALSE)
 ```
@@ -1758,99 +1758,102 @@ Where S(i) is according to some coordinate reference system CRS (UTS in Eastings
 
 ## Case Control 
 
-The sampling is either one or more tier: "internal controls" are unexposed ones from the initial sample.  If a rare exposure the initial sample must be very large; or "similar" unexposed can be selected from the same or a similar population in another sample as "external controls".  The similarity is discussed in mechanistic terms needing experts, not advice on sufficient stochastic descriptions of the similarity.
-	"If the groups are comparable they have internal validity"; "if the conclusions are applicable to other populations it has external validity"
-	"In case studies the controls are only a subset of the NonCases in the population"
-	The OR is "Odds of exposure in those with outcome"; the logical flips assumes that the sampling probability of controls is the same whether exposed or unexposed.
+The sampling is either one or more tier: "internal controls" are unexposed ones from the initial sample.  If a rare exposure the initial sample must be very large; or "similar" unexposed can be selected from the same or a similar population in another sample as "external controls".  The similarity is discussed in mechanistic terms needing experts, not advice on sufficient stochastic descriptions of the similarity. 
+	"If the groups are comparable they have internal validity"; 
+	"if the conclusions are applicable to other populations it has external validity" 
+	"In case studies the controls are only a subset of the NonCases in the population" 
 
-Case definition
-	The method used to identify
-	The boundaries of cases – eg cutoff on a continuous measure, ins and outs for categorical
-	The unit of analysis – eg community, person, organ, events themselves
+The OR is "Odds of exposure in those with outcome"; the logical flips assumes that the sampling probability of controls is the same whether exposed or unexposed.
+
+Case definition is: 
+- The method used to identify 
+- The boundaries of cases – eg cutoff on a continuous measure, ins and outs for categorical 
+- The unit of analysis – eg community, person, organ, events themselves 
 
 Cohort E(D1) = Y1 *(D/Y) 
-	Exposure status is not biased by knowledge of outcome
-	Exposure status is known for all (because it's the definition of who is in)
-	Time sequence and course of events can be described	
-	More than one outcome or type of outcome can be reported
-	Consider
-		Source of controls
-		How many types of controls
-		How many controls per case (power gains fall from 4 per case)
-		Should they be matched?
-		Loss to follow up reduces power and certainty
-		Differential loss to follow up (by exposure or outcome) biases irretrievably
-		Information / classification bias if outcomes are not equally accurate by exposure
+	- Exposure status is not biased by knowledge of outcome
+	- Exposure status is known for all (because it's the definition of who is in) 
+	- Time sequence and course of events can be described	
+	- More than one outcome or type of outcome can be reported 
 
-Ecological studies use population values rather than individual values so n is small
-	Multi-group / Time-trend, descriptive / analytic
-	Cheap, easy, quick, maybe all that's possible, allow population inference
-		But don't allow individual inference and don't control confounders
-	"Ecological Fallacy" is extending ecological inferences to individuals.
-		Population average exposures would also have to vary by individual to account for
-			variability in outcomes per individual
-	Contextual effects of exposures: when grouped, may have effects contingent on others
-	Outcomes can become exposures for other or the same outcomes (also a contextual effect)
-	Summary / environmental / integral measures
-	Confounding is easily hidden by complexity and size and there are no opportunities to adjust
-	Associations, so confounders, may exist at population level that don't at individual level
+Consider
+		Source of controls 
+		How many types of controls 
+		How many controls per case (power gains fall from 4 per case) 
+		Should they be matched? 
+		Loss to follow up reduces power and certainty 
+		Differential loss to follow up (by exposure or outcome) biases irretrievably 
+		Information / classification bias if outcomes are not equally accurate by exposure 
+
+Ecological studies use population values rather than individual values so n is small 
+	Multi-group / Time-trend, descriptive / analytic 
+	Cheap, easy, quick, maybe all that's possible, allow population inference 
+		But don't allow individual inference and don't control confounders 
+	"Ecological Fallacy" is extending ecological inferences to individuals 
+		Population average exposures would also have to vary by individual to account for 
+			variability in outcomes per individual 
+	Contextual effects of exposures: when grouped, may have effects contingent on others 
+	Outcomes can become exposures for other or the same outcomes (also a contextual effect) 
+	Summary / environmental / integral measures 
+	Confounding is easily hidden by complexity and size and there are no opportunities to adjust 
+	Associations, so confounders, may exist at population level that don't at individual level 
 		Details of the distribution of confounders is often not available
-Bias: Information bias is common, often undetectable and severe
-	often due to the use of proxy, secondary or routine data at high risk of misclassification
-		"non-differential misclassification within groups in ecological studies",
-			unlike in individual level studies, "usually leads to bias away from the null"
-	Misclassification is very common and may be severe.
-	A sort of selection bias by examining exposure and (time dependent) outcome in the
-			same slice, eg measuring candidate risk factors and the cancers at
-			time t (not t+latent period).
-Correlations and regressions are the usual numbers generated after exploratory analysis.
-Having the Idea from Crombie has a holy feeling about it, for all that it was written humbly by a sharp witted amateur.
-	Review existing practice
-	Challenge accepted ideas
-	Look for conflicting ideas, ask around
-	Investigate geographical variation or interindividual variation
-	Identify Cinderella topics
-	Let loose the imagination / be kind to ideas / reject little
-Dissect the questions
-	Write
-	Discuss with colleagues over pints
-	Think in the bath
-	Read around the subject until you have read enough
-	Look upstream
-Choose the best question									
-	Will this method answer my question?
-	Evidence there is a problem							
-	Is it feasible?
-	Burden of disease									
-	Do I have the resources?
-	Big possible changes to patient outcome				
-Is method appropriate for the design?
-	Cheap solution or expensive problem
-	Question is a question other people can understand
-	An answer would be done by people
-	Urgency of good data / chance of bad practice to entrench
-	Feasibility
-Refine the question with a sharp tool and a high threshold for acceptance
-	Review as if newly seeing it
-	Is it as important as it looked?
-	Don't rush in: are you still sure that's the question?
-	Review and redo the analysis, simulate, simulate, simulate
-	Criticise mercilessly
-		Where could it go wrong?
-		Why might people not participate?
-		What necessary data might not be feasible to collect?
-		Do we have enough blood and treasure to spend?
-		Can we simplify it and still get an answer / will it be even better?
-	Be realistic
-		Ask the best version of the best question as well as you can, if you can do it well
-		Don't waste effort on getting incrementally closer to perfection
-		Don't start what you will never finish
-Qualitative
-	Seeks to interpret phenomena through the meanings people bring to them
-	When the topic is not familiar, the context is needed, rich views or the social world in which
-	others live is the goal.
-	Common features are flexibility, triangulation, contextualisation, iteration and reflexivity.
-	Techniques include interviews, focus groups, observation, participation.
+Bias: Information bias is common, often undetectable and severe 
+	often due to the use of proxy, secondary or routine data at high risk of misclassification 
+		"non-differential misclassification within groups in ecological studies", 
+			unlike in individual level studies, "usually leads to bias away from the null" 
+	Misclassification is very common and may be severe. 
+	A sort of selection bias by examining exposure and (time dependent) outcome in the 
+			same slice, eg measuring candidate risk factors and the cancers at 
+			time t (not t+latent period). 
+			
+Correlations and regressions are the usual numbers generated after exploratory analysis. Having the Idea from Crombie has a holy feeling about it, for all that it was written humbly by a sharp witted amateur. 
+	Review existing practice 
+	Challenge accepted ideas 
+	Look for conflicting ideas, ask around 
+	Investigate geographical variation or interindividual variation 
+	Identify Cinderella topics 
+	Let loose the imagination / be kind to ideas / reject little 
+Dissect the questions 
+	Write 
+	Discuss with colleagues over pints 
+	Think in the bath 
+	Read around the subject until you have read enough 
+	Look upstream 
+Choose the best question 
+	Will this method answer my question? 
+	Evidence there is a problem 				
+	Is it feasible? 
+	Burden of disease 
+	Do I have the resources? 
+	Big possible changes to patient outcome 
+Is method appropriate for the design? 
+	Cheap solution or expensive problem 
+	Question is a question other people can understand 
+	An answer would be done by people 
+	Urgency of good data / chance of bad practice to entrench 
+	Feasibility 
+Refine the question with a sharp tool and a high threshold for acceptance 
+	Review as if newly seeing it 
+	Is it as important as it looked? 
+	Don't rush in: are you still sure that's the question? 
+	Review and redo the analysis, simulate, simulate, simulate 
+	Criticise mercilessly 
+		Where could it go wrong? 
+		Why might people not participate? 
+		What necessary data might not be feasible to collect? 
+		Do we have enough blood and treasure to spend? 
+		Can we simplify it and still get an answer / will it be even better? 
+	Be realistic 
+		Ask the best version of the best question as well as you can, if you can do it well 
+		Don't waste effort on getting incrementally closer to perfection 
+		Don't start what you will never finish 
+Qualitative 
+	Seeks to interpret phenomena through the meanings people bring to them 
+	When the topic is not familiar, the context is needed, rich views or the social world in which 
+	others live is the goal. 
+	Common features are flexibility, triangulation, contextualisation, iteration and reflexivity. 
+	Techniques include interviews, focus groups, observation, participation. 
 
 # Utility 
 
@@ -2074,12 +2077,12 @@ Selection or some other process of bias can be modelled with DAGs as well, anoth
 	A Perceptron is the smallest form of neural network, with weighted inputs and a bias which feed an activation function to produce a single output.  The output is calibrated repeatedly against appropriate values and the weights altered to improve the closeness of prediction until either accuracy or number of repetition limits are crossed.
 
 The ideal type of data depends on the intended output.  eg 
-Description: whole population
-Exploratory: many variables on a random sample, up to the whole population
-Inferential: The right variables in the right population, randomly sampled
-Prediction: split training and test sets from same population
-Causal: data from a randomised trial
-Mechanistic: rich data about all available responses and predictors
+    Description: whole population
+    Exploratory: many variables on a random sample, up to the whole population 
+    Inferential: The right variables in the right population, randomly sampled 
+    Prediction: split training and test sets from same population
+    Causal: data from a randomised trial 
+    Mechanistic: rich data about all available responses and predictors
 
 # Model fit 
 All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [bias-variance tradeoff] is common in machine learning, for reasons of overuse of machine learning. [Cross validation] is a powerful way, often for "testing the skill" of a machine learning model. 
@@ -2098,9 +2101,10 @@ In any case the predictive index is then the individual result of the predictor 
 
 
 ## Features of a model 
+
 - Fitting = calibration and is parameterisation by selecting models with a "good fit" to data 
-- Validation is checking the model results by some standard (statistical or "face validity", see [@collins_sample_2016])
-- Discrimination is the ability of a prognostic model to differentiate between people with different outcomes, such that those without the outcome (*eg*, alive) have a lower predicted risk than those with the outcome (*eg*, dead). There are several ways to quote discrimination, such as *c*-indices (including Harrell's *c*-index, the probability that a subject experiencing an event earlier has a lower score in a survival predictor). The D index is the separation between two Cox regression curves, created by ordering all the Predictive Index values, transforming them using standard normal order statistics (then dividing by $\sqrt{8/\pi} \approxeq 1.596$) then fitting this as a single term Cox regression, whose coefficient and standard error are then D and its standard error.
+- Validation is checking the model results by some standard (statistical or "face validity", see [@collins_sample_2016]) 
+- Discrimination is the ability of a prognostic model to differentiate between people with different outcomes, such that those without the outcome (*eg*, alive) have a lower predicted risk than those with the outcome (*eg*, dead). There are several ways to quote discrimination, such as *c*-indices (including Harrell's *c*-index, the probability that a subject experiencing an event earlier has a lower score in a survival predictor). The D index is the separation between two Cox regression curves, created by ordering all the Predictive Index values, transforming them using standard normal order statistics (then dividing by $\sqrt{8/\pi} \approxeq 1.596$) then fitting this as a single term Cox regression, whose coefficient and standard error are then D and its standard error. 
 - Parametric sensitivity analysis is altering parameters in the model to check the change in results 
 
 The Mean Squared Error is a good generic way to determine Goodness of Fit. Training MSE is almost irrelevant to the purpose of a model, and test MSE is not estimable.
@@ -2110,15 +2114,16 @@ A saturated model exactly fits all the data points.
 When an objective function describes how the goodness of fit function varies by the choice of x, it can be minimised for some value of x.  Formally, we maximise f(x) subject to x $\in$ X, where $f(x) = g(E_1(x), \dots , E_n(x), O_1, \dots , O_n)$.
 
 Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about [mean squared error], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: 
-    penalised error = MSE + k(p+q) 
-The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
+    `penalised error = MSE + k(p+q)` 
+The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters. 
 		
-Some options are linear residual distance (may not fit at all, positive and negative cancel),
-		absolute linear residual distance (may not fit at all, odd behaviour at zero)
-		sum of squared residuals (SSR or SSQ) is the least squares method
+Some options are 
+- linear residual distance (may not fit at all, positive and negative cancel), 
+- absolute linear residual distance (may not fit at all, odd behaviour at zero) 
+- sum of squared residuals (SSR or SSQ) is the least squares method
 		$g(x) = \sum_i w_i (E_i(x) - O_i)^2$
 			
-If the deviances from model are uncorrelated, have equal variance expectation (and so wi = 1) and are normally distributed then uncertainty is not a problem for inferences on whether a model is superior to another model.  Under these preconditions the least squares estimate equals the maximum likelihood estimate.  On the other hand, there's no absolute statement possible about "how good" a fit is using this method, only that it's better than another one.  If variances are not equal they can be weighted, by the reciprocal of the variance at each observation if known, or by the reciprocal of the model value at each observation if not (the latter is Pearson's chi squared technique).
+If the deviances from model are uncorrelated, have equal variance expectation (and so wi = 1) and are normally distributed then uncertainty is not a problem for inferences on whether a model is superior to another model.  Under these preconditions the least squares estimate equals the maximum likelihood estimate.  On the other hand, there's no absolute statement possible about "how good" a fit is using this method, only that it's better than another one.  If variances are not equal they can be weighted, by the reciprocal of the variance at each observation if known, or by the reciprocal of the model value at each observation if not (the latter is Pearson's chi squared technique). 
 Maximum likelihood is another option: choose a likelihood function that expresses the probability of a certain parameter conditional on the data observed and conditional on the likelihood function.  For example, the likelihood that the probability of an event is p, given 5 observed successes out of 10, is given by the binomial function and is maximal at p=0.5. 
 
 The deviance allows model fit to be compared across models, and gives a sort of "absolute goodness" of fit by comparing the likelihood of a test model with the likelihood of the saturated model.  D clearly gives a number less than one, tending to 1 as the model approaches perfection.
@@ -2247,8 +2252,12 @@ sarima(data, p, d, q, P, D, Q) from astsa estimates the parameters of the (speci
 sarima.for(data, p, d, q, P, D, Q, n.ahead) produces forecasts
 
 ## SQL
-Install the software then start the service. This kind of doesn't work often. So 
+Install the software then start the service. This kind of doesn't work often. So check with 
+    `service postgresql status` which might say it's `down` 
+So then use
     `sudo service postgresql restart` 
+And then may need 
+    `sudo -u postgres psql` to log in as the user `postgres`, which is just the default non-root user.
     `psql [database name]` 
 starts up a prompt in psql. Which can be exited, as can its submenu `\help`, with `\q`. 
 SQL doesn't have to be in capitals, or indented, or anything. 
