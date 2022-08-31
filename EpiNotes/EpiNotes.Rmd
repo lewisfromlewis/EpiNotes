@@ -163,7 +163,7 @@ The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{
 
 ```{r, echo = FALSE, message=FALSE}
 DLRtable <- tibble::tibble(
-    "DLR+" = c("$\frac{P(+|D)}{P(+|D^C)}",
+    "DLR+" = c("$\frac{P(+|D)}{P(+|D^C)}$",
                   "sensitivity / (1-specificity)",
                   "Bayes Factor",
                   "Posterior Odds / Prior Odds",
@@ -622,7 +622,7 @@ $\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$
 ## Measures of clustering 
 
 IntraClass Correlation Coefficient (ICC or rho) is Between Cluster Variance/Total Variance 
-$$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$$
+$$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$
 
 , or $\rho = \frac{\sigma^2_B}{\sigma^2_B + \sigma^2_W}$ 
 where $\sigma c$ is the between cluster SD and $\sigma e$ is everything else (here, within-cluster variation). 
@@ -926,7 +926,7 @@ Exchangeable correlation is the usual GEE setting, where the effect estimate is 
 
 The effect of cluster, whether innate, unmeasured confounder or a true mechanistic effect, is represented in the regression model by a separate term for each cluster: this is rendered tractable by assuming a stochastic distribution of the size of these terms rather than attempting to measure or specify the cluster effect for each cluster (hence "random effects"):
 
-The log odds of the jth person in the ith cluster is then given by, where for example ui ~ N(0, sigmau2) and sigmau2 is estimated as part of the model building.  The same information is imparted by estimating rho, the within cluster (also called "intra-class") correlation coefficient.  A cluster specific effect is estimated: the odds of an individual having the outcome if exposed, divided by the odds if not exposed. 
+The log odds of the jth person in the ith cluster is then given by, where for example $u_i \sim N(0, \sigma_u^2)$ and $\sigma_u^2$ is estimated as part of the model building.  The same information is imparted by estimating rho, the within cluster (also called "intra-class") correlation coefficient.  A cluster specific effect is estimated: the odds of an individual having the outcome if exposed, divided by the odds if not exposed. 
 
 The intention is to derive a model that provides a fully specified likelihood: assuming that it has done so the LRT is appropriate.  That likelihood becomes complicated easily: a bivariate normal distribution for the likelihood is produced for a normal error plus normally distributed cluster effect, which has an algebraic solution, as does the combination of poisson error and gamma cluster effects to produce a negative binomial; but the combination of binomial error and normal cluster effects, or poisson error and normal cluster effects, produce mixture distributions without roots.  The reliability of estimates needs to be checked.
 
