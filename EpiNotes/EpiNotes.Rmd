@@ -849,7 +849,7 @@ $$\hat p \pm z_{\alpha / 2} . \sqrt{{\hat p \hat q} {n}}$$
 			$\tilde{n} = n + z^2, \> \tilde{p} = \frac{1}{\tilde{n}}(X + \frac{1}{2} z^2)$
 			and CI for z = $\tilde{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}$
 
-# Correlation
+# Correlation and distances 
 
 Correlation is the amount by which a value is more like another given value than it is like all the remaining values in a dataset. It's more usually defined as any statistical relationship between two variables, most usually meaning a linear relationship. 
 
@@ -900,7 +900,15 @@ For that straight line the regression coefficient for the straight line $y = \be
 $\beta_1 = \frac{\sum(x-\bar x)(y-\bar y)}{\sum(x- \bar x)^2}$
 					 or $\hat \beta_1 = Cor(Y, X) \frac{sd_y}{sd_x}$
 					 
-And Spearman's is Pearson's rho of the *ranks* of the values, rather than the values themselves.
+And Spearman's is Pearson's rho of the *ranks* of the values, rather than the values themselves. 
+
+## Distances 
+
+In many ways Pearson and Spearman are ways to quote distances between two vectors. Other metrics are available, such as  
+
+- Cook's distance, in regression roughly the effect of deleting the outlier $D_i = \frac{\sum_{j=1}^n (\hat y_j - \hat y_{j (i)})^2}{(k + 1)s^2}$ 
+- Mahalanobis distance of a point P from the distribution D along the principal component axes scaled for unit variance to make the Mahalanobis distance the standard Euclidean distance in the transformed space. The distance of each observation *i* from the centre of an $i = 1 \dots n$ by $p$ sample can be calculated by Wilk's method $MD_i = \sqrt{(x_i - t)^T C^{-1}()x_i - t}$, if t is the multivariable location,  C is the estimated (usually the sample) covariance matrix.  To detect a single outlier in this n by p multivariable sample, the squared Mahalanobis distances are compared with an F distribution with p and 1-p degrees of freedom 
+- $\chi^2$ distances, distances are more appropriate for multivariable situations 
 
 # Hypothesis Testing
 
@@ -1620,7 +1628,8 @@ Rule of 5 to check validity:
 	subtrahends of `c(sum(min(c(di, n1i))))` , `sum(max(c(0, (n1i – hi))))) – sum(Ei) > 5`
 Chi squared for heterogeneity tests H0: for all i, ORi = ORMH , so $\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$
 
-## Multivariable regression
+## Multivariable regression 
+
 Extending the line to a plane, or later to an n-dimensional plane.  Linear in the coefficients.  Least squares used again, fixing at zero (or removing ) coefficients and calculating regression through the new origin for the remainder, repeatedly.
 For a model with sum of squares $\sum (Y_i - X_{1i} \beta_1 - X_{2i} \beta_2)^2$ to estimate B2
 	define Y centred, $\tilde Y_i = Y_i - X_{1i} \beta_1$ then sum of squares = $\sum (\tilde Y_i - X_{2i} \beta_2)^2$
@@ -1634,7 +1643,22 @@ The model is then $Y_i = \sum_{k=1}^p x_{ik} \beta_k + \epsilon_i$ with fitted r
 	residuals are $e_i = Y_i - \hat Y_i$ and variance estimate $\hat \sigma^2 = \frac{1}{n-p} \sum_{i=1}^n e_i^2$
 	coefficients have standard errors $\hat \sigma_{\hat \beta_k}$ and H0:coeff=0 tested by the t-test $\frac{\hat \beta_k - \beta_k}{\hat \sigma_{\hat \beta_k}}$
 
-Outliers can be real or spurious, conform to the regression line or not.  Leverage is distance along the regression, influence is orthogonal distance from the line.  Influence measure diagnostics amount to leaving out a point and recalculating and all are a bit "in context".  Poor model fit includes heteroskedasticity, missing model terms, temporal patterns (find out by residuals versus collection order).  Residual Q-Q plots investigate normality.
+## Regression diagnostics 
+
+**Outliers** can be real or spurious, conform to the regression line or not. Outlier detection is partly started from the tablesor scatterplots. Supervised detection is pretty much by eyeball, noting that unidimensional outliers are the obvious ones in a box and whisker, but might need scatterplots of the 2D raw data, or a reduction of higher dimensional data such as principal components in order to detect outliers that are within one or both of the orthogonal dimensions, but in combination identify outlier observations. 
+
+Algorithms can be useful to start this: 
+- z scores $z = \frac{x_i - \bar x}{s}$ Tukey's method allocates possible for $1.5<z\leq3$, probable for $z>3$
+- "modified z score" >3.5, $M_i  = \frac{0.6754(x-i - \bar x)}{MAD}$ where MAD is median of the absolute difference $|x_i - \bar x |$ 
+- similar principle with Student distribution 
+- similar with log normal residuals 
+- Cook distance, roughly in this case the effect of deleting any given observation 
+- Mahalanobis distance with the critical values determined using Bonferroni bounds 
+
+
+
+
+Leverage is distance along the regression, influence is orthogonal distance from the line.  Influence measure diagnostics amount to leaving out a point and recalculating and all are a bit "in context".  Poor model fit includes heteroskedasticity, missing model terms, temporal patterns (find out by residuals versus collection order).  Residual Q-Q plots investigate normality.
 
 Adding spurious variables inflates the variance: as the true sigma is unknown the variance inflation factor of a predictor is the inflation of variance due to correlation of it with other variables, over the ideal situation in which it's orthogonal to all the other variables.
 Missing helpful variables out introduces bias in the estimate.
@@ -2085,7 +2109,7 @@ The ideal type of data depends on the intended output.  eg
     Mechanistic: rich data about all available responses and predictors
 
 # Model fit 
-All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [bias-variance tradeoff] is common in machine learning, for reasons of overuse of machine learning. [Cross validation] is a powerful way, often for "testing the skill" of a machine learning model. 
+All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This ^[bias-variance tradeoff] is common in machine learning, for reasons of overuse of machine learning. [Cross validation] is a powerful way, often for "testing the skill" of a machine learning model. 
 
 The unobserved test set MSE of any model is always reducible to 
 
@@ -2107,13 +2131,17 @@ In any case the predictive index is then the individual result of the predictor 
 - Discrimination is the ability of a prognostic model to differentiate between people with different outcomes, such that those without the outcome (*eg*, alive) have a lower predicted risk than those with the outcome (*eg*, dead). There are several ways to quote discrimination, such as *c*-indices (including Harrell's *c*-index, the probability that a subject experiencing an event earlier has a lower score in a survival predictor). The D index is the separation between two Cox regression curves, created by ordering all the Predictive Index values, transforming them using standard normal order statistics (then dividing by $\sqrt{8/\pi} \approxeq 1.596$) then fitting this as a single term Cox regression, whose coefficient and standard error are then D and its standard error. 
 - Parametric sensitivity analysis is altering parameters in the model to check the change in results 
 
+## Goodness of Fit
+
+Goodness of fit metric is used to decide whether the model prediction fits the data.  Given a set of observations and their accompanying expected values at positions i under a certain model that takes parameter x, a goodness of fit function describes how well the model fits the data for a given value of x.  This function might be written g(E1, ... En, O1, On). 
+
 The Mean Squared Error is a good generic way to determine Goodness of Fit. Training MSE is almost irrelevant to the purpose of a model, and test MSE is not estimable.
 
-Goodness of fit metric is used to decide whether the model prediction fits the data.  Given a set of observations and their accompanying expected values at positions i under a certain model that takes parameter x, a goodness of fit function describes how well the model fits the data for a given value of x.  This function might be written g(E1, ... En, O1, On).
 A saturated model exactly fits all the data points.
 When an objective function describes how the goodness of fit function varies by the choice of x, it can be minimised for some value of x.  Formally, we maximise f(x) subject to x $\in$ X, where $f(x) = g(E_1(x), \dots , E_n(x), O_1, \dots , O_n)$.
 
-Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about [mean squared error], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: 
+## Information Criteria 
+Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about MSE^[mean squared error], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: 
     `penalised error = MSE + k(p+q)` 
 The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters. 
 		
