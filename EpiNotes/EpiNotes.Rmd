@@ -1111,7 +1111,9 @@ Also have a row with variable names, which are human readable, and save in one f
 
 # Wrong conclusions
 
-If the effect of an identical exposure is not the same for all individuals, it may be because the exposure is not in fact identical at the mechanistic level (an identical dose of drug may be given to a small or large person, most simply) or because the measurement error or variabiity is high, or just doesn't measure the effect itself, or because there are other causes of the outcome acting at the same time but not altering the effect, or because there are genuine differences in effect either across a single population or due to categorical differences within identifiable subgroups. See [risk magnification](#risk) for how, even with identical effect, the scale of measure may give the appearance of heterogenous treatment effect.
+All models are wrong, but some are useful. Knowing their moving parts might alert us to where they will be importantly wrong, or wrong in a way that breaks their usefulness. 
+
+If the effect of an identical exposure is not the same for all individuals, it may be because it is true, or because of random error, measurement bias, confounders, selection bias, or differential treatment effect. In other words, maybe the exposure is not in fact identical at the mechanistic level or the measurement error or variability is high, or just doesn't measure the effect itself, or there are other causes of the outcome acting at the same time but not altering the effect, or because there are genuine differences in effect either across a single population or due to categorical differences within identifiable subgroups. See [risk magnification](#risk) for how, even with identical effect, the scale of measure may give the appearance of heterogenous treatment effect.
 
 ## The play of chance
 
@@ -1226,26 +1228,23 @@ Or not discarding but instead randomising. - Simple random "needs a whole popula
 
 # Reliability
 
-Reliability is almost the same as Repeatability. Reliability is sort of the long run and idealised version. If there is then both intra and interobserver reliability of a comparable population, then the result is repeatable. 
+Reliability is almost the same as Repeatability. Reliability is sort of the long run and idealised version. If there is then both intra and interobserver reliability of a comparable population, then the result is repeatable.
 
-Variability is an informal sort of word describing the difference between repetitions. "Sources of variation" is a slightly more formal concept, and if the measure that varies is a continuous measure then it is partitioned into systematic and random error. Variance is a formally defined measure of variability, as the mean squared deviation from the mean value. 
+Variability is an informal sort of word describing the difference between repetitions. "Sources of variation" is a slightly more formal concept, and if the measure that varies is a continuous measure then it is partitioned into systematic and random error. Variance is a formally defined measure of variability, as the mean squared deviation from the mean value.
 
-Partitioning can be assigned for example by ANOVA; the ratio of systematic to random error is the Intraclass Correlation Coefficient, *aka* reliability coefficient. The portion of variability that is due to a systematic component can be described by some correlation coefficient such as Pearson's method. 
+Partitioning can be assigned for example by ANOVA; the ratio of systematic to random error is the Intraclass Correlation Coefficient, *aka* reliability coefficient. The portion of variability that is due to a systematic component can be described by some correlation coefficient such as Pearson's method.
 
-Pearson's correlation of product-moment is defined for a population $$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$ 
+Pearson's correlation of product-moment is defined for a population $$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$
 
 In turn, the covariance of X with Y is the expectation of the the product of deviation of each from its mean $cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$. This allows the correlation coefficient to be defined purely in terms of the expected values of each parameter using the identities that define variance $\sigma_{X}^2 = E[(X- E[\bar{X}]^2)] = E[X] - E[X^2]$ and the expectation of each parameter independently $E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$, so that
 
 $$\rho (X, Y) = \frac{E[XY]-E[X]E[Y]}{\sqrt{E[X^2] - E[X]^2} \sqrt{E[Y^2]-E[Y]^2}}$$
 
-
 The sample correlation r is then of the same shape $$r = r_{xy} = \frac{\sum_{i=1}^n (x_{i} - \bar {x})(y_{i} - \bar {y})}{\sqrt{\sum_{i=1}^n (x_{i} - \bar {x})^2} \sqrt{\sum_{i=1}^n (y_{i} - \bar {y})^2}}$$
-
 
 That sample correlation coefficient for two vectors can also be quoted as the mean of the standard scores of x and y, that is their deviation from their mean, divided by their root variance: $$r = r_{xy} = \frac{1}{n-1} \sum_{i=1}^n (\frac{x_{i} - \bar {x}}{s_{x}})(\frac{y_{i} - \bar {y}}{s_{y}})$$
 
-Correlation between categorical variables starts by tabulation. A simple measure is mean pair agreement or Observed Agreement ($OA = \frac {a+d}{a+b+c+d}$). Having defined the observed agreement, the maximum chance agreement is defined as $CA = \frac {E[a]+E[d]}{a+b+c+d}$, using the expectation of each value and the assumption of consistency across the table $E[a] = \frac{\textrm{Row total } \times \textrm{ Column total}}{\textrm{Grand total}}$. As in the chi squared statistic, the Kappa statistic for excess agreement over max chance agreement is then 
-$$\frac{OA-CA}{1-CA}$$ 
+Correlation between categorical variables starts by tabulation. A simple measure is mean pair agreement or Observed Agreement ($OA = \frac {a+d}{a+b+c+d}$). Having defined the observed agreement, the maximum chance agreement is defined as $CA = \frac {E[a]+E[d]}{a+b+c+d}$, using the expectation of each value and the assumption of consistency across the table $E[a] = \frac{\textrm{Row total } \times \textrm{ Column total}}{\textrm{Grand total}}$. As in the chi squared statistic, the Kappa statistic for excess agreement over max chance agreement is then $$\frac{OA-CA}{1-CA}$$
 
 Regression is by $y = \beta_0 + \beta_1 x + \epsilon$ where epsilon is normal with SD estimated by s, below
 
@@ -1278,8 +1277,7 @@ In the special case of a 2x2 table the chi squared statistic is $\chi^2_{Yates} 
 
 including Yates's continuity correction of O-E-0.5 for each cell because of a tail of the underlying binomial continuous distribution being better estimated by a point midway between that cell count and one fewer. This sums to N/2 for a 2x2 table with N=20-40 and no value \<5. More generally chi squared can be used in a 2xC table if no value \<1 and 80% values are \>=5
 
-Otherwise Fisher's Exact:
-$$p_{table} = \frac{N_+ ! N_{+^c}! N_D! N_{D^c}!}{N! a! b! c! d!}$$ and either sum p_table across all the possible tables with lower probabilities or double the sum of probabilities of lower p_table (either acceptable, both differ!)
+Otherwise Fisher's Exact: $$p_{table} = \frac{N_+ ! N_{+^c}! N_D! N_{D^c}!}{N! a! b! c! d!}$$ and either sum p_table across all the possible tables with lower probabilities or double the sum of probabilities of lower p_table (either acceptable, both differ!)
 
 and for the test of a "trend" across scored levels of a variable which differs between groups Xi, hence having one degree of freedom as it's comparing two means-of-scores Xbar1 and Xbar2 is a t test squared, which is also the form of the Pearson Chi Squared: $$\chi^2_\rho = \frac{(X _{1} - X _{2})^2}
 {s^{2}.(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$$
@@ -1294,7 +1292,7 @@ Related to linear regression. A table of n observations y, in k groups The sum o
 
 The $R^2 = \frac{\textrm{Regression SS}}{\textrm{Total SS}}$, giving a proportion of variance explained by the regression or grouping.
 
-As $Var(X) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)^2$, so $Cov(X, Y) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y) = \frac{1}{n-1}  \sum_{i=1}^n (X_i Y_i - n \bar X \bar Y)$ and $Cor (X, Y) = \frac{Cov(X, Y)}{S_x S_y}$
+As $Var(X) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)^2$, so $Cov(X, Y) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y) = \frac{1}{n-1} \sum_{i=1}^n (X_i Y_i - n \bar X \bar Y)$ and $Cor (X, Y) = \frac{Cov(X, Y)}{S_x S_y}$
 
 Mantel-Haenszel estimate of the common Odds Ratio is weighted for the non-supporting information as a proportion of stratum size $\frac{\sum ({\frac{a_i d_i} {n_i}})}{\sum ({\frac{b_i c_i} {n_i}})}$, that is $\frac{(a_{1}.d_{1} / N_{1}) + ... (a_{j}.d_{j} / N_{j})}{(b_{1}.c_{1} / N_{1}) + ... (b_{j} c_{j} / N_{j}})$ or if $w_i = \frac{b_i c_i}{n_i}$ then $OR_{MH} = \frac{\sum w_i OR_i}{\sum w_i}$
 
@@ -1306,7 +1304,7 @@ $mu = \sum^k_{i = 1} \frac{n_i v_i}{N}$
 
 where each of k groups of observations are denoted as ri successes out of ni total with score vi assigned. R is the sum of all ri, N is the sum of all ni and p = R/N.
 
-# Regression 
+# Regression
 
 Linear regression is almost the canonical version of this, with Logistic, Cox, Poisson and even Mantel_Haenszel methods being special or extended cases.
 
@@ -1328,8 +1326,7 @@ the proportion of the total variability explained by the regression relationship
 
 $$R^2 = \frac {\sum_{i=1}^n (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2}$$
 
-    Which is literally the sample correlation squared.
-    Deleting data or adding terms to a regression model always increase R^2
+Which is literally the sample correlation squared. Deleting data or adding terms to a regression model always increase R-squared.
 
 Variance around the regression line is usually replaced by its estimate. $\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$
 
@@ -1337,20 +1334,19 @@ Variance around the regression line is usually replaced by its estimate. $\sigma
 
 Mantel-Haenszel in general uses an association measure in stratum i weighted for total exposure in the stratum. So for a cohort describing relative risk:
 
-    $RR_{MH} = \frac{\sum{\frac{d_{1i} \times T_{0i}}{T_i}}}{\sum{\frac{d_{0i} \times T_{1i}}{T_i}}} = \frac{Q}{R}$
-    or if $w_i = \frac{d_{0i}T_{1i}}{T_i}$ then 
-    $RR_{MH} = \frac{\sum(w_i \times RR_i)}{\sum w_i}$
+$RR_{MH} = \frac{\sum{\frac{d_{1i} \times T_{0i}}{T_i}}}{\sum{\frac{d_{0i} \times T_{1i}}{T_i}}} = \frac{Q}{R}$ or if $w_i = \frac{d_{0i}T_{1i}}{T_i}$ then $RR_{MH} = \frac{\sum(w_i \times RR_i)}{\sum w_i}$
 
-     $se_{MH} = \sqrt{\frac{V}{QR}}$ where $V = \sum V_i$ and $V_i = \frac{d_i T_{1i} T_{0i}}{T_i^2}$ and NHST is the MH chi squared
+$se_{MH} = \sqrt{\frac{V}{QR}}$ where $V = \sum V_i$ and $V_i = \frac{d_i T_{1i} T_{0i}}{T_i^2}$ and NHST is the MH chi squared
 
+$\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i}$ or $\frac{(O-E)^2}{V}$, df = 1
 
-     $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i}$ or $\frac{(O-E)^2}{V}$, df = 1
-
-    where Exi is overall stratumi rate times observation time for exposure x, $E_{1i} = \frac{d_i \times T_{1i}}{T_i}$
+where Exi is overall stratumi rate times observation time for exposure x, $E_{1i} = \frac{d_i \times T_{1i}}{T_i}$
 
 To detect effect modification the Chi Square test for heterogeneity $H_0: RR_i = RR_{MH}$
 
-$$\chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{, df = c-1}$$
+$$
+\chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{,  df = c-1} 
+$$ 
 
 Cohort E(D1) = Y1 \*(D/T) and U = D1 -- E(D1)
 
@@ -1360,10 +1356,10 @@ Var(U) = $D \frac{t_1}{t}(1 - \frac{t_1}{t})$ and test statistic $z= \frac{U}{SE
 
 is the weighted mean sum of odds ratios across strata generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$ weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ denominator of OR divided by the total or ORMH = Q/R where Q = $\sum \frac{d_{1i} h_{0i}}{n_i}$ and R = $\sum \frac{d_{0i} h_{1i}}{n_i}$ then se(log(ORMH)) = $\sqrt{\frac{V}{QR}}$, V = $\sum V_i = \sum \frac{d_i h_i n_{0i} n_{1i}}{n_i^2 (n_i - 1)}$, V calculated from the marginal totals because each stratum has equal variance Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \frac{(O-E)^2}{V} = \frac{U^2}{V} \textrm{, df=1}$,
 
-$E_{1i}= \frac{d_i n_{1i}}{n_iO} = \sum d_{1i}, \> E = \sum E_{1i} \textrm{, U = O-E}$
-    MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
+$E_{1i}= \frac{d_i n_{1i}}{n_iO} = \sum d_{1i}, \> E = \sum E_{1i} \textrm{, U = O-E}$ MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
 
-Rule of 5 to check validity: subtrahends of `c(sum(min(c(di, n1i))))` , `sum(max(c(0, (n1i – hi))))) – sum(Ei) > 5` Chi squared for heterogeneity tests H0: for all i, ORi = ORMH , so $\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$
+Rule of 5 to check validity: if all the expected values in the table are greater than 5, Chi squared is appropriate. Otherwise use an exact test such as Fisher's or an exact goodness of fit test. 
+For heterogeneity tests H0: for all i, ORi = ORMH , so $$\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$$
 
 ## Multivariable regression
 
@@ -1443,6 +1439,10 @@ Misclassification may be the original sin or due to some random error or bias in
 
 -   Non-differential outcome overestimates bias ratios and differences to null
 
+## Latent error 
+
+When an inference has been drawn, and is apparently correct or useful for the decision at hand, but later causes errors or even damage, then a latent error has been discovered. Racial bias in AI, edge case glitches, zero-day exploits an the like are latent errors. 
+
 # Analyse
 
 ## Stratification
@@ -1453,11 +1453,13 @@ Needs accurate identification of strata: if too broad will replicate the confoun
 
 Standardisation applies weights to observations in categories according to a standard distribution of observations expected in those categories.
 
-In eg direct standardisation for age, a standard demograph weights crude population mortality for age standardised mortality: the number "deaths per thousand person years of standard population" is the "deaths per thousand person years of actual population" (crude death rate) times comparative mortality figure (CMF, ratio of rates). I think the weight here is the area of a histogram where x=age range and y=observations, each of the steps of which are multiplied by a death rate to give a new histogram. The area under this new histogram is the population standardised mortality rate and the ratio of its area to the original is the CMF; clearly the standard matters, especially as they insist on probabilities not odds.
+In eg direct standardisation for age, a standard demograph weights crude population mortality for age standardised mortality: the number "deaths per thousand person years of standard population" is the "deaths per thousand person years of actual population" (crude death rate) times comparative mortality figure (CMF, ratio of rates)[^CMF]. 
 
-Indirect standardisation for age uses not size but death rates as the standard. It's the basis for the Standard Mortality Rates and hence ratio, SMR. [^17]
+[^CMF]:I think the weight here is the area of a histogram where x=age range and y=observations, each of the steps of which are multiplied by a death rate to give a new histogram. The area under this new histogram is the population standardised mortality rate and the ratio of its area to the original is the CMF; clearly the standard matters, especially as they insist on probabilities not odds.
 
-[^17]: "Direct standardisation is subject to less bias"; why? Because true rates are needed and so there's more finely grained data? Maybe, because "indirect may be the only possible" if rates aren't available at each stratum or numbers are small hence standard error high.
+Indirect standardisation for age uses not size but death rates as the standard. It's the basis for the Standard Mortality Rates and hence ratio, SMR. [^SMR]
+
+[^SMR]: "Direct standardisation is subject to less bias"; why? Because true rates are needed and so there's more finely grained data? Maybe, because "indirect may be the only possible" if rates aren't available at each stratum or numbers are small hence standard error high.
 
 So
 
@@ -1497,7 +1499,7 @@ Is it feasible? Burden of disease Do I have the resources? Big possible changes 
 
 # Utility
 
-This is something that needs to be expanded here. For now it's just a dumping ground for some interesting things. Such as:2E: Discrete Choice Experiment (DCE) to determine weighting Data Collection We will use a best-worst discrete choice experiment (BWS DCE; BWS Case 3) to determine the value placed on each dimension of the tool's descriptive system. We will use best practice methods for the design and analysis of choice experiments13 and follow approaches taken previously by CI Ratcliffe14 and CI Viney15, 16. The optimal sample size for a BWS DCE task is dependent upon the final number of dimensions and levels to be included in the tool's descriptive system, as determined by 2B and 2D of our study17. Sociodemographic information, eg age, sex, ill health experience, income, remoteness and family structure will also be collected. AnalysisHREC Application Form Version 13, March 2017 Page 26 The primary analysis will use a mixed multinomial logit (MMNL) model with a panel specification8. The MMNL can also identify heterogeneity in responses9; we will also examine alternative model specifications18, as different respondents may trade-off in different ways, reflecting cultural or social norms. From these analyses, we will develop a scoring algorithm for the instrument, based on the ratio of marginal utilities (RMU) approach, below. In valuing health gain, considering quantity of life (survival) separately from characteristics (QOL/wellbeing) of those extra years, and including simple interactions between them, as would usually be done for choice experiment analyses, may not be adequate in capturing this interrelatedness. An additional condition is also required for QALYs: that value of a health profile with zero life expectancy is zero irrespective of the quality of life in that period. The utility function for all models will, initially, be assumed to be linear with respect to time, and levels of QOL/wellbeing enter the utility function as an interaction with life expectancy (the TIME variable). Thus, the utility (U) of health state j in scenario s for individual i is in Equation 1. Thus, if TIME is set at zero, the systematic component of the utility function is also zero. $U_{isj} = \alpha TIME_{isj} + \beta X_{isj} ' TIME_{isj} + \epsilon_{isj}$ Generating a scoring system for QALYs To generate QALY weights for the health states to create the scoring algorithm of the tool, the initial analysis will use a ratio of marginal utilities (RMU) approach, as used by AI Viney15, 16. In a QALY model, ten years in full health provides 10 QALYs. If another health state provides 10 QALYs over a 15 year period, the QALY model values that health state at 10/15 = 0.667. Using Eq1, the systematic component of the utility function can be differentiated with respect to TIME, $\frac{\delta U}{\delta TIME} = \alpha + \beta X′$ The RMU between two health state profiles j and j\* can therefore be estimated as: $RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$ This gives a value for a health state with characteristics defined by the betaX isj ' term, relative to another health state defined by characteristics betaX isj ' \* . If betaX isj ' \* is set to full health (ie the best level of each dimension), the value generated using Eq 3 is a QALY weight15, 19.
+This is something that needs to be expanded here. For now it's just a dumping ground for some interesting things. Such as:2E: Discrete Choice Experiment (DCE) to determine weighting Data Collection We will use a best-worst discrete choice experiment (BWS DCE; BWS Case 3) to determine the value placed on each dimension of the tool's descriptive system. We will use best practice methods for the design and analysis of choice experiments13 and follow approaches taken previously by CI Ratcliffe14 and CI Viney15, 16. The optimal sample size for a BWS DCE task is dependent upon the final number of dimensions and levels to be included in the tool's descriptive system, as determined by 2B and 2D of our study17. Sociodemographic information, eg age, sex, ill health experience, income, remoteness and family structure will also be collected. AnalysisHREC Application Form Version 13, March 2017 Page 26 The primary analysis will use a mixed multinomial logit (MMNL) model with a panel specification. The MMNL can also identify heterogeneity in responses9; we will also examine alternative model specifications18, as different respondents may trade-off in different ways, reflecting cultural or social norms. From these analyses, we will develop a scoring algorithm for the instrument, based on the ratio of marginal utilities (RMU) approach, below. In valuing health gain, considering quantity of life (survival) separately from characteristics (QOL/wellbeing) of those extra years, and including simple interactions between them, as would usually be done for choice experiment analyses, may not be adequate in capturing this interrelatedness. An additional condition is also required for QALYs: that value of a health profile with zero life expectancy is zero irrespective of the quality of life in that period. The utility function for all models will, initially, be assumed to be linear with respect to time, and levels of QOL/wellbeing enter the utility function as an interaction with life expectancy (the TIME variable). Thus, the utility (U) of health state j in scenario s for individual i is in Equation 1. Thus, if TIME is set at zero, the systematic component of the utility function is also zero. $U_{isj} = \alpha TIME_{isj} + \beta X_{isj} ' TIME_{isj} + \epsilon_{isj}$ Generating a scoring system for QALYs To generate QALY weights for the health states to create the scoring algorithm of the tool, the initial analysis will use a ratio of marginal utilities (RMU) approach, as used by AI Viney15, 16. In a QALY model, ten years in full health provides 10 QALYs. If another health state provides 10 QALYs over a 15 year period, the QALY model values that health state at 10/15 = 0.667. Using Eq1, the systematic component of the utility function can be differentiated with respect to TIME, $\frac{\delta U}{\delta TIME} = \alpha + \beta X′$ The RMU between two health state profiles j and j\* can therefore be estimated as: $RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$ This gives a value for a health state with characteristics defined by the betaX isj ' term, relative to another health state defined by characteristics betaX isj ' \* . If betaX isj ' \* is set to full health (ie the best level of each dimension), the value generated using Eq 3 is a QALY weight15, 19.
 
 # Ethics
 
@@ -1710,11 +1712,11 @@ Is a [@resampling] technique often used to check the "skill" of a model, intende
 
 # Meta Analysis
 
-- Provide a data display and objective review
-- Give a summary interpretation
-- Test an overall hypothesis
-- Estimate an average exposure effect
-- Assess whether data compatible with the exposure effect being the same in all studies
+-   Provide a data display and objective review
+-   Give a summary interpretation
+-   Test an overall hypothesis
+-   Estimate an average exposure effect
+-   Assess whether data compatible with the exposure effect being the same in all studies
 
 Fixed Effect assumes the effect really is the same and any difference is due to sampling variation: provides a summary using a weighted average of the individual study estimates. Weights are eg 1/variance of the log odds ratio, so the summary OR is $\psi_F = \frac{\sum_{i=1}^k w_i \psi_i}{\sum_{i=1}^k w_i} , \pm \frac{1}{\sum_{i=1}^k w_i}$, which is the variance regenerated from the averaged weights. A Forest Plot represents each study (box size = weight, bars for CI, diamond width = CI of summary estimate) and the heterogeneity between them uses a Chi Squared test $Q = \sum_{i=1}^k w_i (\psi_i - \psi_F)$. If heterogenous then use Random Effect.
 
@@ -1722,19 +1724,7 @@ Random Effect assumes the true effects vary around an average: the between study
 
 # Git work
 
-`pwd` print working directory 
-`ls` 
-`clear` 
-`touch` newfilename for new file 
-`cp` file filetocopyto -r for recursive(=copy all within) 
-`mkdir` 
-`cd` 
-`cd ..` up one 
-`cd` home 
-`rm` thing to remove -r with caution! No undo! 
-`mv` object dir , also changes name if with file name 
-`echo` 
-`date`
+`pwd` print working directory `ls` `clear` `touch` newfilename for new file `cp` file filetocopyto -r for recursive(=copy all within) `mkdir` `cd` `cd ..` up one `cd` home `rm` thing to remove -r with caution! No undo! `mv` object dir , also changes name if with file name `echo` `date`
 
 git init git clone git add . Adds all new files to the index git add -u updates git add -A does both git commit -m "message" to local repository git push to remote directory git checkout -b branchname another version of the same directory git branch see what branch you're on pull request is not a git feature but on github
 
@@ -1742,69 +1732,39 @@ git init git clone git add . Adds all new files to the index git add -u updates 
 
 ## Base R
 
-`download.file` 
-`file.exists` 
-`dir.create` 
-`list.files` 
-`dir` 
-`ls` 
-`read.table(sep, quote, na.strings, nrows, skip)` 
-`read.csv` 
-`read.csv2` 
-`seq(from, to, by along )` 
-`cut(data, breaks)` 
-`factor()` 
-`relevel(data, ref)` 
-`intersect` 
-`split-apply-combine` 
-`sample`
+`download.file` `file.exists` `dir.create` `list.files` `dir` `ls` `read.table(sep, quote, na.strings, nrows, skip)` `read.csv` `read.csv2` `seq(from, to, by along )` `cut(data, breaks)` `factor()` `relevel(data, ref)` `intersect` `split-apply-combine` `sample`
 
 split-apply-combine with(tapply(X, factor, function)) type of structure or with(by(X, factor, function)) or aggregate(data \~ factor, source or environment, function) by position by logical statements sort order eg X[order(X$var1, X$var3),] add columns by X\$newvar or by Y \<- cbind(X, newvar) sum colSums rowSums any all is.na %in% head tail table xtabs(var1 \~ var2 + ., data=DF) where . is all the variables ftable(
 
 apply(data, dim, fun) tapply(apply along an index, a function to data) ie tapply(data, index, function) sapply(simplify the output of a function applied to data) eg perms \<- sapply(1:10000, function(i) testStat(DEcounts, sample(group))) lapply(apply a function across a list; unlist to simplify)
 
-`Hmisc::cut2(data, g)` 
-`reshape2::melt(data, id, measure.vars)` 
-`dcast(melteddata, formula, Aggregation value)` `transformations` 
-`plot` 
-    - `coplot` 
-    - `hist` 
-`abs`, `sqrt`, `ceiling`, `floor`, `cos`, `sin`, `log`, `log2`, `log10`, `exp`, `round(data, digits=n)`, `signif(data, digits=n) ` 
-`p.adjust(method = c("bonferroni", "BH", "BY")`
+`Hmisc::cut2(data, g)` `reshape2::melt(data, id, measure.vars)` `dcast(melteddata, formula, Aggregation value)` `transformations` `plot` - `coplot` - `hist` `abs`, `sqrt`, `ceiling`, `floor`, `cos`, `sin`, `log`, `log2`, `log10`, `exp`, `round(data, digits=n)`, `signif(data, digits=n)` `p.adjust(method = c("bonferroni", "BH", "BY")`
 
 ## time series
 
-`stats::arima.sim` is a terribly described function. 
-`arima.sim(model = list(order = c(p, d, q))` n= number of observations to simulate). p is the AR order, q is the MA order (the highest lag) as in [ARMA]. Then separately the AR and MA parameters are provided, in positions corresponding to the individual lag and in number up to the order. So `model = list(order = c(0, 0, 0))` is white noise, `model = list(order = c(0, 0, 1))` is MA(1) and order = c(0, 0, 1), `model = list(order = c(0, 0, 1), ma = 0.9)` is a MA(1) with MA parameter 0.9. 
+`stats::arima.sim` is a terribly described function. `arima.sim(model = list(order = c(p, d, q))` n= number of observations to simulate). p is the AR order, q is the MA order (the highest lag) as in [ARMA]. Then separately the AR and MA parameters are provided, in positions corresponding to the individual lag and in number up to the order. So `model = list(order = c(0, 0, 0))` is white noise, `model = list(order = c(0, 0, 1))` is MA(1) and order = c(0, 0, 1), `model = list(order = c(0, 0, 1), ma = 0.9)` is a MA(1) with MA parameter 0.9.
 
-This generates an xcf object whatever that is, with a useful generic method to plot it. The last order entry is the differential: a d=1 means that the first difference of the ARMA is stationary in which case this is an ARIMA model. 
-`stats::acf` computes the autocorrelation function. For a pure AR process this function "tails off", not seeming to have any informative maximum. For a pure MA process this function becomes zero above the MA order. These can be used to iterate to the best value of the order, starting with (1, 1). 
+This generates an xcf object whatever that is, with a useful generic method to plot it. The last order entry is the differential: a d=1 means that the first difference of the ARMA is stationary in which case this is an ARIMA model. `stats::acf` computes the autocorrelation function. For a pure AR process this function "tails off", not seeming to have any informative maximum. For a pure MA process this function becomes zero above the MA order. These can be used to iterate to the best value of the order, starting with (1, 1).
 
-For an ARIMA the ACF tails off very slowly and the PACF is almost 1 at lag 1, whereas after differencing it once, if d=1 the ACF/PACF looks like that of an ARMA model.  `stats::pacf` is the partial autocorrelation function. `astsa::acf2` plots the acf and pacf 
-`sarima(data, p, d, q, P, D, Q)` from astsa estimates the parameters of the (specified) model, and provides some residual plots, including Q-Q, standardised residuals, Sample ACF of residuals and the Q-statistic p-values. 
-`sarima.for(data, p, d, q, P, D, Q, n.ahead)` produces forecasts
+For an ARIMA the ACF tails off very slowly and the PACF is almost 1 at lag 1, whereas after differencing it once, if d=1 the ACF/PACF looks like that of an ARMA model. `stats::pacf` is the partial autocorrelation function. `astsa::acf2` plots the acf and pacf `sarima(data, p, d, q, P, D, Q)` from astsa estimates the parameters of the (specified) model, and provides some residual plots, including Q-Q, standardised residuals, Sample ACF of residuals and the Q-statistic p-values. `sarima.for(data, p, d, q, P, D, Q, n.ahead)` produces forecasts
 
 ## SQL
 
-Install the software then start the service. This kind of doesn't work often. So check with `service postgresql status` which might say it's `down`. 
+Install the software then start the service. This kind of doesn't work often. So check with `service postgresql status` which might say it's `down`.
 
-So then use `sudo service postgresql restart` And then may need `sudo -u postgres psql` to log in as the user `postgres`, which is just the default non-root user. 
+So then use `sudo service postgresql restart` And then may need `sudo -u postgres psql` to log in as the user `postgres`, which is just the default non-root user.
 
-`psql [database name]` starts up a prompt in psql. Which can be exited, as can its submenu `\help`, with `\q`. SQL doesn't have to be in capitals, or indented, or anything. 
+`psql [database name]` starts up a prompt in psql. Which can be exited, as can its submenu `\help`, with `\q`. SQL doesn't have to be in capitals, or indented, or anything.
 
-When finally in, there are some common queries. 
+When finally in, there are some common queries.
 
-`SELECT FROM` aggregate functions such as `MIN()`, `MAX()`, `AVG()`, `COUNT()` 
-`WHERE` can't be used with aggregate functions so use `HAVING` eg `SELECT \* FROM table HAVING AVG(parameter)\>13` 
+`SELECT FROM` aggregate functions such as `MIN()`, `MAX()`, `AVG()`, `COUNT()` `WHERE` can't be used with aggregate functions so use `HAVING` eg `SELECT \* FROM table HAVING AVG(parameter)\>13`
 
-`CREATE TABLE <tablename> (fieldname FIELDTYPE);` etc `INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2);` etc 
-`SEL`
+`CREATE TABLE <tablename> (fieldname FIELDTYPE);` etc `INSERT INTO table VALUES (valueforrow1col1, valueforrow1col2);` etc `SEL`
 
 ## xlsx
 
-`xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)` 
-`read.xlsx2` 
-`write.xlsx`
+`xlsx::read.xlsx(sheetIndex, rowIndex, colIndex)` `read.xlsx2` `write.xlsx`
 
 ## XML
 
@@ -1818,12 +1778,10 @@ HTML is a markup language. XML, Extended markup language, is a structured data s
 `xml::xmlTreeParse(fileURL, useInternal)` TreeParse returns a structured list which can be subset eg rootNode[[1]][[1]], or have components programmatically extracted `xmlRoot` `xmlName` `xmlSApply(doc, path fun, ...)`, *eg* `xmlSApply(rootNode, xmlValue)` is how to alter the content of the XML object There is yet another language to learn, called `xPAth` language with syntax such as - `/Node` a top level node - `//Node` a node at any level - `Node['@value'='thing']` a specified node; read the short intro at least. `httr::GET, PATCH, POST, HEAD, PUT, DELETE`
 
 ## HTML
-https://developer.mozilla.org/
 
-`tags` include - 
-`<p></p>` block element for paragraphs 
-`<span></span>` inline element for paragraphs 
-`<img>` a self closing inline element for images 
+<https://developer.mozilla.org/>
+
+`tags` include - `<p></p>` block element for paragraphs `<span></span>` inline element for paragraphs `<img>` a self closing inline element for images
 
 `<head>` comes above, `<body>` after.
 
@@ -1841,37 +1799,21 @@ https://developer.mozilla.org/
 
 `margin` can be looked up but auto is useful for horizontal centreing, along with `text-align`.
 
-## JSON: Javascript Object Notation 
+## JSON: Javascript Object Notation
 
-`jsonlite::fromJSON`, `toJSON` multiple nesting of data from the data frame resulting from from JSON 
+`jsonlite::fromJSON`, `toJSON` multiple nesting of data from the data frame resulting from from JSON
 
-## data.table 
+## data.table
 
-`data.table` subsets by expression, not column; does not copy data tables on subsetting, use copy function; uses plyr-like operations, for example on .N by some value; 
-`:=` adds a variable
-`N` is an integer length 1 containing the number of observations 
-`key` data.tables have keys to allow joins. 
-`setkey` and `merge` 
-`fread` for fast reading (substitute for `read.table` for tab separated files) 
+`data.table` subsets by expression, not column; does not copy data tables on subsetting, use copy function; uses plyr-like operations, for example on .N by some value; `:=` adds a variable `N` is an integer length 1 containing the number of observations `key` data.tables have keys to allow joins. `setkey` and `merge` `fread` for fast reading (substitute for `read.table` for tab separated files)
 
-## Tibble 
+## Tibble
 
 `tibble` can make packages eg with list-columns so a data frame need not hold numbers or other low level entities in its cells but whole lists of interest such eg as a training resample from a dataset, a test resample, a model fitted to that test dataset and the resulting RMSE. Tibbles are lazy and surly, don't require a list of vectors as the underlying structure and give a little more information in printing than data.frames.
 
-## dplyr 
+## dplyr
 
-`arrange` reorders rows 
-`filter` returns subset of rows based on a condition 
-`select` returns subset of columns (use `starts_with`, `contains`, `matches`, `ends_with` to specify), in the order specified 
-`mutate` transforms data and adds or replaces them in the data.frame 
-`rename` rename without otherwise changing 
-`summarise` summarises. Also spelled summarize 
-`group_by` reorders a data.frame "by group" 
-`merge` (x, y, by.x, by.y, all = T/F) where x is one dataset and y another, and "all" is whether to keep duplicate variables and add a subscript to the added variables to identify it . 
-`plyr::join` is faster but only works by a common variable. `plyr::join_all` takes a list (so need to form a list) of data frames and joins all by a common ID variable. 
-`%>%` chains operators in sequence 
-`*_join`: `left_join` includes all observations in the left data frame; `right_join` analogous, `inner_join` only observations in both, `full_join` all observations no matter the match 
-`dbi` package for using many other backends to dplyr
+`arrange` reorders rows `filter` returns subset of rows based on a condition `select` returns subset of columns (use `starts_with`, `contains`, `matches`, `ends_with` to specify), in the order specified `mutate` transforms data and adds or replaces them in the data.frame `rename` rename without otherwise changing `summarise` summarises. Also spelled summarize `group_by` reorders a data.frame "by group" `merge` (x, y, by.x, by.y, all = T/F) where x is one dataset and y another, and "all" is whether to keep duplicate variables and add a subscript to the added variables to identify it . `plyr::join` is faster but only works by a common variable. `plyr::join_all` takes a list (so need to form a list) of data frames and joins all by a common ID variable. `%>%` chains operators in sequence `*_join`: `left_join` includes all observations in the left data frame; `right_join` analogous, `inner_join` only observations in both, `full_join` all observations no matter the match `dbi` package for using many other backends to dplyr
 
 ## tidyr
 
@@ -1883,7 +1825,7 @@ Influence.measures . rstandard is residuals, hatvalues is for influential points
 
 ## Hadley Wickham on the Tidyverse:
 
-`Import-Tidy-{Transform Visualise Model} -- Communicate` 
+`Import-Tidy-{Transform Visualise Model} -- Communicate`
 
 The eye is drawn to the verbs and that's important because good data science can't be done without programming and the verbs are activities that can be programmed. But for good workflow it's the interactions between each of those that's important. Modelling is ultimately a computational approach that scales well but, because it uses assumptions at some level, and can't question those assumptions, can therefore not really surprise. Visualisation on the other hand is a human activity and it's much harder to throw more brains at the problem than to throw more computers at the problem
 
