@@ -33,7 +33,7 @@ options(htmltools.dir.version = FALSE)
 \frontmatter
 \tableofcontents
 ```
-# Introduction
+# Introduction {#intro}
 
 This is the notes from my *MSc Epidemiology* from LSHTM, one of the two most respected Epidemiology institutions in the world. It's been a hard road and I wish I had done it sooner and spared more time for writing actually good stuff.
 
@@ -87,7 +87,7 @@ The last part of the definition is wrapped up in both of the "methods of detecti
 
 The one clear answer is that transformations should probably allow recovery of the original value so that information is not irretrievably lost, and so that other ideas can compete of how cause is best described. And that is before we start on categorical outcomes and all the gritty point of confusion from them.
 
-# The contingency table
+# The contingency table {#contingency}
 
 A table allows things to be seen, and calculations referred to. "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ. The very first thing to say is that there must be sufficient items in each box, or as we'll call them later, each stratum, to say something about the expectation. You can't estimate the effect of a thing that is universal or absent in your sample, whether using this or most other methods.
 
@@ -313,7 +313,7 @@ knitr::kable(rel_risk_PAR, booktabs = TRUE, caption= "Notice the unstable popula
 
 Remember, kids: the assumption that PAF describes a causal relationship **might not be correct**: it might describe a confounder, or have an effect modification.
 
-# Probability and sampling
+# Probability and sampling {#probability}
 
 Probability is always a *feature of populations*, not of data. The population is *connected to the data* by a probability using assumptions, so a *sample quantity is an estimator* and not the true probability. The population value, that mythical value again which needs Greek letters to deepen the mythos, is the estimand.
 
@@ -420,11 +420,11 @@ First remember $\Gamma(z) = \int_0^\infty x^{z-1}e^{-x} dx$, and $\Gamma(z+1) = 
 
 Then the pdf is: $$f(\pi) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} \pi^{\alpha-1} (1- \pi)^{\beta-1} \textrm{ for }\pi \in [0,1]$$ $E(\pi) = \frac{\alpha}{\alpha + \beta}$ $Mode(\pi) = \frac{\alpha-1}{\alpha + \beta - 2}$ $Var(\pi) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$
 
-# Beyond subjectivity and objectivity
+# Beyond subjectivity and objectivity {#gelman}
 
 Gelman and Hennig at the RSS 2017 presented on the false dichotomy that hides bad behaviour by both sides[@gelman_beyond_]. They propose that Objectivity be replaced by transparency, consensus, impartiality and correspondence to observable reality, and subjectivity replaced by awareness of multiple perspectives and context dependence. Together with stability, these make up a collection of virtues that they think is helpful in discussions of statistical foundations and practice.
 
-# Exposure measurement
+# Exposure measurement {#exposure-measurement}
 
 The true exposure is like True Grail, only seen by indirect evidence of its presence by an Instrument: this is the Measured Exposure. Exposure measurement errors arises from the Instrument's design, its protocols, training or attention or malice or prejudice of those who use it; from the subjects in their memory, cyclic or random or circumstantial variability or recall; and from entering or coding or transforming data. Bias can be caused by differential measurement exposure error. If a parameter X is a proxy measure of the true parameter T, with a fixed bias b across any sample, and an additional random error E then $t_i = x_i + b + e_i$, where E(E)=0, E(X) = E(T)-b and so on. If the bias is not fixed, then the regression is not simple but multiple. This can be hard to detect if not suspected on the basis of mechanistic understanding, which couples with unpredictable "test coverage" of regression models to reflect the true situation. Non fixed bias is introduced by differential measurement error, among other things. Precision is given by the correlation of T with X, the validity coefficient. This all remains a bit theoretical unless the values of T can be known. $\rho^2_{TX} = 1 - \frac{\sigma^2_E}{\sigma^2_X} = \frac{\sigma^2_T}{\sigma^2_X}$ , and assuming linear relationships for Y with both T and X, if both $Y = \alpha_T + \beta_T T$ and $Y = \alpha_O + \beta_O T$ then $\beta_O = \rho^2_{TX} \beta_T$ but if X is a function of T rather than an addend, this doesn't hold.
 
@@ -434,7 +434,7 @@ The correlation can be expressed separately as sensitivity and specificity of X 
 
 Scatter plots of data allow clues about linearity or remote or influential points.
 
-# Sampling
+# Sampling {#sampling}
 
 The study population is the population available for study. A [sampling frame] is the entire extant list of possible units which could be sampled.
 
@@ -480,7 +480,7 @@ Matched Odds ratios are derived from MH summary odds ratios where only discordan
 
 Randomisation is distinct from random sampling - "In a properly randomised trial any difference between the groups outside that imparted by the intervention are due to chance." - "Any difference between the trial groups should be due to the outcome." - True randomisation depends on randomness of sequence and allocation concealment.
 
-# Likelihood
+# Likelihood {#likelihood}
 
 A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space, and those two likelihoods are not always the same. The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the likelihood which makes the data most likely under the model assumption: this is the maximum likelihood estimate MLE.
 
@@ -519,11 +519,11 @@ The plausible values of all but the likelihood ratio test depend on the units of
 
 In regression the LRS tests the joint null that all the variables equal their null values and tests any two models where one is a restricted form of the other.
 
-# Robustness
+# Robustness {#robust}
 
 Robust objects (estimators, statistics, models...) are ones which are changed little by perturbations in the data; good robust objects retain efficiency while being robust. Efficient objects are ones which need few observations to attain a given performance. Performance is the ability of an object to describe or predict reality, such as to describe variation reliably, reject a false claim or detect a true difference.
 
-# Clusters
+# Clusters {#clusters}
 
 Used when there's a direct effect plus indirect (ecological, herd, cooperative, etc) effect on participants, or when it's difficult to allocate individuals. Indirect include, for infections, that which reduces Quantity (herd, reduced carriage, vector death, epidemic periodicity) or Quality (less or more virulent strains, resistance, non-reproducing strains) of infection or the Immunity of victim (immune recency, cross reaction, polyvalency, multi-hit, immune mediated damage). "Direct" + "indirect" = "total"; if all in a cluster participate the effect is "total", otherwise the "overall" effect is the weighted average of direct + indirect on participants and indirect on non-participants. Individually allocated trials measure the Direct effect; cluster trials measure the Overall which depends on participation fraction and HTE combined with differential participation.
 
@@ -636,7 +636,7 @@ GEE inflate Type 1 error if few clusters; and vague hand waving about linear mod
 
 Moving field: Bayesian, restricted maximum likelihood.
 
-# Variance and error terms
+# Variance and error terms {#variance}
 
 For categorical data, variance is p(1-p) and sd therefore $\sqrt{p(1-p)}$ and standard error $\sqrt{\frac{p(1-p)}{n}}$ standard error for the difference in two proportions is $\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$
 
@@ -706,7 +706,11 @@ density by `dmvt(x, delta=c(i,j)`, sigma= `as.matrix(r, t, y, u), df=df, log=T)`
 
 Bivariate has delta=0 if standard and sigma=diag(2), ie rbind(c(2, 0, 0, 2))
 
-#Asymptotics
+# Generalised additive models {#gams}
+
+
+
+#Asymptotics {#asymptotics}
 
 Really very useful topic: the behaviour of functions as the size nears infinity, in this case the behaviour of estimators as the sample size approaches infinity; eg \>Strong Law of Large Numbers:
 
@@ -732,7 +736,7 @@ The estimator is $\hat{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{p(1-p)}{n}}$
 
 -   Agresti-Coull adjusts n by z^2^ so if X successes in n is the proportion p, and simplifying z of 1.96 as 2, adds 2 successes and 2 failures: so $\tilde{n} = n + z^2, \> \tilde{p} = \frac{1}{\tilde{n}}(X + \frac{1}{2} z^2)$ and CI for z = $\tilde{p} \pm z_{(1- \frac{\alpha}{2})} \sqrt{\frac{\tilde{p}(1-\tilde{p})}{\tilde{n}}}$
 
-# Correlation and distances
+# Correlation and distances {#correlation}
 
 Correlation is the amount by which a value is more like another given value than it is like all the remaining values in a dataset. It's more usually defined as any statistical relationship between two variables, most usually meaning a linear relationship.
 
@@ -786,7 +790,7 @@ In many ways Pearson and Spearman are ways to quote distances between two vector
 -   Mahalanobis distance of a point P from the distribution D along the principal component axes scaled for unit variance to make the Mahalanobis distance the standard Euclidean distance in the transformed space. The distance of each observation *i* from the centre of an $i = 1 \dots n$ by $p$ sample can be calculated by Wilk's method $MD_i = \sqrt{(x_i - t)^T C^{-1}()x_i - t}$, if t is the multivariable location, C is the estimated (usually the sample) covariance matrix. To detect a single outlier in this n by p multivariable sample, the squared Mahalanobis distances are compared with an F distribution with p and 1-p degrees of freedom
 -   $\chi^2$ distances, distances are more appropriate for multivariable situations
 
-# Hypothesis Testing
+# Hypothesis Testing {#nhst}
 
 The confidence interval is the set of observations for which H0 is rejected, that is an inversion of the alpha level under H0 (eg for the Binomial rather than use an asymptotic approximation to the CLT for 0.95 as the Wald interval (too narrow), this can be directly calculated as an exact interval, the Clopper-Pearson interval (too wide) or another procedure the Wilson Score method). Often overlooked is that evidence for a hypothesis is always relative to that for another hypothesis; often it's the same evidence.
 
@@ -804,7 +808,7 @@ GEE take account of correlation in the calculation of the effect estimate as wel
 
 Exchangeable correlation is the usual GEE setting, where the effect estimate is a weighted combination of the effect estimates in each cluster and the standard error is derived from the residuals outside the model. A population average effect is estimated: the average odds of an outcome among those exposed, divided by the average odds among those not exposed.
 
-# Multilevel Modelling (Random Effects models)
+# Multilevel Modelling and Random Effects models {#mlm}
 
 The effect of cluster, whether innate, unmeasured confounder or a true mechanistic effect, is represented in the regression model by a separate term for each cluster: this is rendered tractable by assuming a stochastic distribution of the size of these terms rather than attempting to measure or specify the cluster effect for each cluster (hence "random effects"):
 
@@ -818,7 +822,7 @@ If testing Ha: mu \> mu0, $1 - \beta = P (\bar X > \mu_{0} +z_{1-\alpha} \frac{\
 
 If assuming only the noncentral t distribution then power is $P = (\frac {\bar X - \mu_{0}} {s / \sqrt{n}} > t_{1-\alpha, n-1}; \mu = \mu_{a})$ ; note $P=(\alpha | \mu_a=\mu0)$ ; On the other hand power depends only on the difference in means divided by S.E.M $\frac {\sqrt{n}(\mu_{a} - \mu_{0})}{\sigma}$, and the effect size is dimensionless and can be used across contexts a bit.
 
-# Survival and logrank test
+# Survival and logrank test {#survival}
 
 Kaplan Meier survival probability is the cumulative probability of an entity that is initially at risk surviving subsequent epochs until the one in question, each epoch being "data-defined" and usually as containing one event: as $$P_{event} = \frac{n_{events}}{n_{at-risk}} – (0.5n_{censored})$$ if the censoring time is not defined for the interval P(Si) = (1-Pevent1).(1-Pevent2)...(1-Peventi) $P(S_x) = \prod_{i=1}^x (1-\frac{\textrm{events}}{\textrm{at risk} - 0.5 \times \textrm{censored}})_i$ , or $\widehat {S}(t)=\prod \limits_{i:\>t_{i}\leq t}\left(1-{\frac {d_{i}}{n_{i}}}\right),$ A good KM curve has ticks on the line for censoring occurrences and nat-risk below the line Log Rank test is a Chi Squared, with Observed totals and Expected E = (row total x column total)/(grand total). Summed across all intervals for each group, and added, giving the statistic: $\chi^2_{logrank} = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2}$ , df=1 or $Z=\frac {\sum _{{j=1}}^{J}(O_{1j}-E_{1j})}{\sqrt{\sum _{j=1}^J V_j}}$ Not sure whether you could substitute P(Sx) times number at risk at t=0 for E.
 
@@ -842,7 +846,7 @@ Assuming, then, that the hazard function is constant and the cumulative hazard r
 
 The log of the hazard ratio for two exposures is log(HR1) -- log(HR2) = log(constant) H(t) = -log(S(T)) or S(t) = e\^(-H(t)) S(t) = e\^(-lambda t) H(t) = lambda t Risk up to time t = 1- e\^(-lambda t) Average survival time = 1/lambda
 
-# Time Series
+# Time Series {#time-series}
 
 A regression model $Y_i = \beta X_i + \epsilon_i$ assumes the errors are independent, normal and homoskedastic with a common variance (the definition of white noise). If the value of X depends on the last value of X, then the value is said to be regressed on its previous value. This is autoregression, but by separating out the autoregressive part the remaining errors can still be conceptualised, and so written and analysed, as white noise. $X_t = \phi X_{t-1} + \epsilon_t$ and $\epsilon_t$ is still allowed to be white noise,
 
@@ -899,7 +903,7 @@ ACF  & Tails off       & Cuts off lag QS & Tails off \\
 PACF & Cuts off lag PS & Tails off       & Tails off \\ 
 \end{tabular}
 ```
-# Multiple testing
+# Multiple testing {#multiplicity}
 
 ```{=tex}
 \begin{tabular}{| l | l | l | l | }
@@ -937,7 +941,7 @@ For log proportions, using $\frac{SE(X)}{\mu}$, $SE(log (p)) \simeq \frac{\sqrt{
 
 For log rates $\textrm{SE(log}(\lambda)) = \frac{1}{\sqrt{D}}$ - The log of a product is the sum of the logs - The sum of the logs is the log of the products - The log of a quotient is the difference of the logs - The difference of the logs is the log of the quotient - The exponent on the argument is the coefficient of the log - The coefficient of the log is the exponent on the argument
 
-# Bootstraps
+# Bootstraps {#bootstrap}
 
 Efron and Tibshinari. Permits confidence intervals without very complex maths. Approximate the sampling distribution of a statistic using the distribution implied by the data. Use the data you have and sample within it, with replacement, B times. Calculate the statistic you need to estimate for each new sample you have made. The resampling distribution non-parametrically approximates the population distribution, so the standard deviation of it implies the standard error of the median, confidence intervals can be generated etc. Bias Corrected and Accelerated (BCA) interval performs MUCH better than the raw CI; use bootstrap package to construct it.
 
@@ -945,7 +949,7 @@ Efron and Tibshinari. Permits confidence intervals without very complex maths. A
 
 Powerful and manifold: eg Rank sum test permutes ranks for the rank sum, Fisher's Exact test permutes binary groups for a hypergeometric probability, an ordinary permutation test permutes the raw data. Randomisation tests eg if matched data have differences with signs randomly reassigned the signed rank test is the result; or a regressor of interest might be permuted for regression testing. When grouped / stratified data are compared the labels are irrelevant for forming H0. So take grouped data, calculate some comparative statistic. Reassort the group labels randomly across the data; calculate a statistic for each of these random bins. Repeat many times; this results in a distribution of statistics Observe number of times these differences are more extreme than the initially observed data.
 
-# Paired (matched) data
+# Paired (matched) data {#paired}
 
 If method A and method B are used on the same sample the discordance (r, s) is informative:
 
@@ -979,7 +983,7 @@ And chi squared is $\chi ^2 = \frac{(|D_1 - E(D_1)|-0.5)^2}{V(D_1)} \textrm{, df
 
 Chi squared for trend, where x is the group score or level, is $$\frac{(\sum D_i x_i - \lambda \sum t_i x_i)^2}{\lambda^2 (t \sum t_i x_i^2 - (\sum t_i x_i)^2)}$$
 
-# Non parametric hypothesis tests
+# Non parametric hypothesis tests {#nhst-non-parametric}
 
 These make very few assumptions about the distribution of a parameter. But not none: they don't assume the shape or skew or kurtosis, and they test the central tendency, but they mostly assume something about them, such as the most common assumption that they are independent and identically distributed (i.i.d), often that they are symmetrical, or that two distributions for comparison are identical to each other. Hence some common tests are of the hypothesis that the sample "differs in degree" from a measured or assumed value.
 
@@ -1013,7 +1017,7 @@ More broadly, and this escape me a little for now, is that across strata Ui is $
 
 Ranks for each observation are calculated (ties given average rank). Pearson's correlation coefficient calculated for the ranks as if they were x, y coordinates.
 
-# Data types and features
+# Data types and features {#data-types}
 
 This is partly covered by the [sampling] section, but it's integral to demonstrating epidemiological understanding.
 
@@ -1097,7 +1101,7 @@ Translation
 
 -   validity assessment
 
-# Tidy Data
+# Tidy Data {#tidy-data}
 
 -   Each observation is a row
 
@@ -1109,11 +1113,32 @@ Translation
 
 Also have a row with variable names, which are human readable, and save in one file per table. A fully **coherent data set** is the raw data, tidy data, a codebook and a recipe to go from one to the other. The **codebook** is the information about the variable which is not contained in the tidy dataset, including information about units, the choices you've made in selecting or presenting data and about the design of the research. Best as a text file with sections "codebook", "study design". The script or set of instructions to process raw -\> tidy data should not need parameters: having parameters introduces analyst degrees of freedom.
 
-# Wrong conclusions
+# Wrong conclusions and anatomy of an error {#error}
 
 All models are wrong, but some are useful. Knowing their moving parts might alert us to where they will be importantly wrong, or wrong in a way that breaks their usefulness. 
 
 If the effect of an identical exposure is not the same for all individuals, it may be because it is true, or because of random error, measurement bias, confounders, selection bias, or differential treatment effect. In other words, maybe the exposure is not in fact identical at the mechanistic level or the measurement error or variability is high, or just doesn't measure the effect itself, or there are other causes of the outcome acting at the same time but not altering the effect, or because there are genuine differences in effect either across a single population or due to categorical differences within identifiable subgroups. See [risk magnification](#risk) for how, even with identical effect, the scale of measure may give the appearance of heterogenous treatment effect.
+
+Measurement error: Validity and Reliability....! For continuous variables: Correlation coefficients. Mathematical coupling. Agreement versus correlation. For categorical: Classification f agreement. See also [Cronbach alpha] for a composite rating X as a sum of K items $Y_1 + Y_2 + Y_i \dots Y_K$
+
+$\alpha = \frac{K}{K-1}\left(1-\frac{\sum^K_{i=1}\sigma^2_{Y_i}}{\sigma^2_X}\right)$
+
+## Misclassification
+
+Misclassification may be the original sin or due to some random error or bias in measurement which then results in misclassification. This has variable effects but mostly:
+
+-   Differential misclassification may be decisively erroneous.
+
+-   Non-differential exposure misclassification biases estimates to null
+
+-   Non-differential outcome misclassification underestimates alter ratios by less, and bias differences to 0
+
+-   Non-differential outcome overestimates bias ratios and differences to null
+
+## Latent error 
+
+When an inference has been drawn, and is apparently correct or useful for the decision at hand, but later causes errors or even damage, then a latent error has been discovered. Racial bias in AI, edge case glitches, zero-day exploits an the like are latent errors. 
+
 
 ## The play of chance
 
@@ -1226,7 +1251,7 @@ Discarding information based on potential comparators having parameters that fal
 
 Or not discarding but instead randomising. - Simple random "needs a whole population list" although of course there are limits. - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample.
 
-# Reliability
+# Reliability {#reliability}
 
 Reliability is almost the same as Repeatability. Reliability is sort of the long run and idealised version. If there is then both intra and interobserver reliability of a comparable population, then the result is repeatable.
 
@@ -1286,25 +1311,8 @@ or if assessing against H0: increase in log(OR) per ration of x==0, which is a t
 
 $U = \sum d_i x_i - \frac{O}{N} \sum n_i x_i$ $V = \frac{O(N-O)}{N^2(N-1)} N \sum (n_i x_i^2) - (\sum n_i x_i)^2$ $S^2 = \frac{V}{QR}$ and error factor $EF = e^{1.96 S}$ $\chi^2_{trend}=\frac{U^2}{V} \textrm{, df=1}$ Increase in log odds for an increase in x is U/V; the variance of this estimate is $\sqrt{1/V}$. The difference between the standard Chi squared test for this table and the Chi squared test for trend is the Chi squared test for departure from linear trend with df = (number of exposure groups -- 2). Also $V = \sum V_i$ where $V_i = \frac{D_i H_i N_{0i} N_{1i}}{N_i^2 (N_1 -1)}$ which is called the Mantel-Haenszel Chi Squared in SM04 of EPM202.
 
-# ANOVA
 
-Related to linear regression. A table of n observations y, in k groups The sum of squares of deviations from the mean, $\sum (y - \bar y)^2$, is partitioned into between group $\sum n_i (\bar y_i - \bar y)^2$ with *k*-1 degrees of freedom within group $\sum (n_i - 1) s_i^2$ with *n-k* degrees of freedom for a line the total variability is from the 0-gradient line (null) at the mean of y, the y-distance from the null line to the regression line at each xi = SSregression, the y-distance from regression to point at xi = SSresidual and each SS is divided by its degrees of freedom giving the mean square, $MS = \frac{SS}{df}$ For a line, the residuals are $\sum (y - \hat{y})^2$ and the model SS is of deviations from the mean. The F statistic is $\frac {\textrm{Between Group MS}} {\textrm{Within Group MS}} , df = k-1, n-k$ or $\frac{regression}{residual}, df= 1, n-2$ for a line. For the F test, under the null hypothesis the ratio of two variances follows the F distribution and for a line, F = t^2^ . This can also be used for regression diagnostics where $F = \frac{\textrm{Model MS}}{\textrm {Residual MS}}$; A partial F test excludes the contribution of one covariate after adjustment for others, as a LRT equivalent.
-
-The $R^2 = \frac{\textrm{Regression SS}}{\textrm{Total SS}}$, giving a proportion of variance explained by the regression or grouping.
-
-As $Var(X) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)^2$, so $Cov(X, Y) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y) = \frac{1}{n-1} \sum_{i=1}^n (X_i Y_i - n \bar X \bar Y)$ and $Cor (X, Y) = \frac{Cov(X, Y)}{S_x S_y}$
-
-Mantel-Haenszel estimate of the common Odds Ratio is weighted for the non-supporting information as a proportion of stratum size $\frac{\sum ({\frac{a_i d_i} {n_i}})}{\sum ({\frac{b_i c_i} {n_i}})}$, that is $\frac{(a_{1}.d_{1} / N_{1}) + ... (a_{j}.d_{j} / N_{j})}{(b_{1}.c_{1} / N_{1}) + ... (b_{j} c_{j} / N_{j}})$ or if $w_i = \frac{b_i c_i}{n_i}$ then $OR_{MH} = \frac{\sum w_i OR_i}{\sum w_i}$
-
-and there's a corresponding Cochrane-Mantel-Haenszel Chi^2^ test of the same shape as the simple single table single stratum situation, $\chi^2_{MH} = \frac{[\sum a_{i} - \sum E (a_{i})]^2}{\sum Var[a_{i}]}$, equivalent to $\chi^2_{MH} = \frac {(|\sum{\frac{a-(a+b).(a+c)}{n}}|-0.5)^2} {\frac{\sum(a+b).(a+c).(b+d).(c+d)}{(n^3-n^2)}}$
-
-$\chi^2_{trend} = \frac{[\sum^k_{i = 1}r_i v_i – R \mu]^2}{p(1-p)[\sum^k_{i = 1} n_iv_i^2 – N \mu^2]}$
-
-$mu = \sum^k_{i = 1} \frac{n_i v_i}{N}$
-
-where each of k groups of observations are denoted as ri successes out of ni total with score vi assigned. R is the sum of all ri, N is the sum of all ni and p = R/N.
-
-# Regression
+# Regression {#glms}
 
 Linear regression is almost the canonical version of this, with Logistic, Cox, Poisson and even Mantel_Haenszel methods being special or extended cases.
 
@@ -1352,6 +1360,20 @@ Cohort E(D1) = Y1 \*(D/T) and U = D1 -- E(D1)
 
 Var(U) = $D \frac{t_1}{t}(1 - \frac{t_1}{t})$ and test statistic $z= \frac{U}{SE(U)} = \frac{U}{\sqrt{Var(U)}} or Z^2 = \frac{U^2}{V} \textrm{, Chi square df=1}$
 
+## Logistic regression
+
+The quantity estimated from the model is the log(Odds), from the log(OR)(="coefficient") and log(Other Odds). SE for log odds is as usual $\sqrt{\frac{1}{x_1}+\dots}$ so SE for odds is $e^{\textrm{SE(log odds)}}$ log(odds) = a + b1A1 + b2A2 ... Hypothesis testing by Wald tests (with SE for the null hypothesis, so the SE chosen depends on th null hypothesis chosen) H0: log(Odds) = 0 for each level of a potential variable for the model, $z=\frac{\textrm{coefficient}}{\textrm{SE}}$ Or LRS, H0: the likelihood is not significantly increased by addition of the variable Adjustment for other variables uses a proportional odds assumption. Because it's built from a square table the absolute numbers of cases and non cases determine the baseline odds (="constant"): therefore the sample fraction ratio is added to the model. log(odds) = log(constant) + log(sample fraction ratio)+ log(exposure) sample fraction ratio = proportion of cases sampled / proportion of non cases sampled log(constant) + log(sample fraction ratio) = constant\*
+
+Logistic regression for trend across levels of a variable: doesn't have to assume proportional odds (although this simplifies and gives more precision) this is parameter reduction eg from 4 parameters for different levels to 1 this is critically altered by the choice of grouping for levels of exposure eg choose the midpoint of arbitrary age bins to Hypothesis tests for trend are "test for linear trend": model is better with linear effect than without, then "test for departure from trend": for improved prediction with many versus one parameter both use LRS with df = difference in number of parameters.
+
+Interaction in the model is referred to as eg param1.param2 and is a single new parameter tests for interaction are against H0: the interaction is not greater than chance, using LRS.
+
+Interaction is not detected automatically and must be added to a model then tested, so there is no way to guarantee that all meaningful interactions are detected or that interactions detected are meaningful beyond the dataset.
+
+The assumptions of a linear model imply that the residuals are normally distributed, with a constant variance across x and y. Plots of standardised residuals (rescaled to mean = 0, sd = 1) help: density of Std Res for normality, Std Res versus corresponding fitted value for deviation from linear.
+
+
+
 ## The MH odds ratio across strata
 
 is the weighted mean sum of odds ratios across strata generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$ weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ denominator of OR divided by the total or ORMH = Q/R where Q = $\sum \frac{d_{1i} h_{0i}}{n_i}$ and R = $\sum \frac{d_{0i} h_{1i}}{n_i}$ then se(log(ORMH)) = $\sqrt{\frac{V}{QR}}$, V = $\sum V_i = \sum \frac{d_i h_i n_{0i} n_{1i}}{n_i^2 (n_i - 1)}$, V calculated from the marginal totals because each stratum has equal variance Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \frac{(O-E)^2}{V} = \frac{U^2}{V} \textrm{, df=1}$,
@@ -1379,9 +1401,41 @@ Leverage is distance along the regression, influence is orthogonal distance from
 
 Adding spurious variables inflates the variance: as the true sigma is unknown the variance inflation factor of a predictor is the inflation of variance due to correlation of it with other variables, over the ideal situation in which it's orthogonal to all the other variables. Missing helpful variables out introduces bias in the estimate.
 
-# Missing (from Josse)
+## ANOVA {#ANOVA}
 
-Missing for various reasons
+Related to linear regression. A table of n observations y, in k groups The sum of squares of deviations from the mean, $\sum (y - \bar y)^2$, is partitioned into between group $\sum n_i (\bar y_i - \bar y)^2$ with *k*-1 degrees of freedom within group $\sum (n_i - 1) s_i^2$ with *n-k* degrees of freedom for a line the total variability is from the 0-gradient line (null) at the mean of y, the y-distance from the null line to the regression line at each xi = SSregression, the y-distance from regression to point at xi = SSresidual and each SS is divided by its degrees of freedom giving the mean square, $MS = \frac{SS}{df}$ For a line, the residuals are $\sum (y - \hat{y})^2$ and the model SS is of deviations from the mean. The F statistic is $\frac {\textrm{Between Group MS}} {\textrm{Within Group MS}} , df = k-1, n-k$ or $\frac{regression}{residual}, df= 1, n-2$ for a line. For the F test, under the null hypothesis the ratio of two variances follows the F distribution and for a line, F = t^2^ . This can also be used for regression diagnostics where $F = \frac{\textrm{Model MS}}{\textrm {Residual MS}}$; A partial F test excludes the contribution of one covariate after adjustment for others, as a LRT equivalent.
+
+The $R^2 = \frac{\textrm{Regression SS}}{\textrm{Total SS}}$, giving a proportion of variance explained by the regression or grouping.
+
+As $Var(X) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)^2$, so $Cov(X, Y) = \frac{1}{n -1} \sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y) = \frac{1}{n-1} \sum_{i=1}^n (X_i Y_i - n \bar X \bar Y)$ and $Cor (X, Y) = \frac{Cov(X, Y)}{S_x S_y}$
+
+Mantel-Haenszel estimate of the common Odds Ratio is weighted for the non-supporting information as a proportion of stratum size $\frac{\sum ({\frac{a_i d_i} {n_i}})}{\sum ({\frac{b_i c_i} {n_i}})}$, that is $\frac{(a_{1}.d_{1} / N_{1}) + ... (a_{j}.d_{j} / N_{j})}{(b_{1}.c_{1} / N_{1}) + ... (b_{j} c_{j} / N_{j}})$ or if $w_i = \frac{b_i c_i}{n_i}$ then $OR_{MH} = \frac{\sum w_i OR_i}{\sum w_i}$
+
+and there's a corresponding Cochrane-Mantel-Haenszel Chi^2^ test of the same shape as the simple single table single stratum situation, $\chi^2_{MH} = \frac{[\sum a_{i} - \sum E (a_{i})]^2}{\sum Var[a_{i}]}$, equivalent to $\chi^2_{MH} = \frac {(|\sum{\frac{a-(a+b).(a+c)}{n}}|-0.5)^2} {\frac{\sum(a+b).(a+c).(b+d).(c+d)}{(n^3-n^2)}}$
+
+$\chi^2_{trend} = \frac{[\sum^k_{i = 1}r_i v_i – R \mu]^2}{p(1-p)[\sum^k_{i = 1} n_iv_i^2 – N \mu^2]}$
+
+$mu = \sum^k_{i = 1} \frac{n_i v_i}{N}$
+
+where each of k groups of observations are denoted as ri successes out of ni total with score vi assigned. R is the sum of all ri, N is the sum of all ni and p = R/N.
+
+## Conditional Logistic Regression
+
+Conditional on the membership of some stratum, such as a matched pair, the effect of a covariate is estimated. The effect of the matching variable is not estimated (because the procedure would be different) nor is the constant term (because that would need the effect of the matching variable to be included in it). Instead of logit(p) = log(odds) = beta + stratum + constant, we have log(OR) = beta.
+
+Confounding is assessed by excluding a covariate from the model to create nested models, which are then tested by the likelihood ratio test; interaction by stratifying and using LRT with or without strata; linear trend by a score test or by adding a linear predictor and LRT.
+
+Variables can, confusingly, be fixed or changing; if changing they can have a deterministic or stochastic relationship with the determinant of that change, such as time. Rates that vary systematically over time are accounted by splitting into epochs and calculating rates conditional on the occurence of an event, ignoring non event containing epochs (Lexis expansion or "episode splitting"). This looks like a sort of limit case for Cox regression, allowing estimates of the rate, not only rate ratio, during each epoch as long as there are sufficient events.
+
+# Generalised Additive models {#gams}
+
+This, shamefully, borrows heavily from a Stitchfix article
+
+
+
+# Missing {#missing}
+
+Missing data culled heavily from Julie Josse User!2018. Data is missing for various reasons
 
 MCAR -- P(missing) does not depend on either the missing value itself or any other value.
 
@@ -1401,49 +1455,7 @@ Multiple correspondence analysis MCA is like PCA for categorical data, using an 
 
 Low rank structures imply that you can use clusters to infer with greatest efficiency.
 
-# Logistic regression
-
-The quantity estimated from the model is the log(Odds), from the log(OR)(="coefficient") and log(Other Odds). SE for log odds is as usual $\sqrt{\frac{1}{x_1}+\dots}$ so SE for odds is $e^{\textrm{SE(log odds)}}$ log(odds) = a + b1A1 + b2A2 ... Hypothesis testing by Wald tests (with SE for the null hypothesis, so the SE chosen depends on th null hypothesis chosen) H0: log(Odds) = 0 for each level of a potential variable for the model, $z=\frac{\textrm{coefficient}}{\textrm{SE}}$ Or LRS, H0: the likelihood is not significantly increased by addition of the variable Adjustment for other variables uses a proportional odds assumption. Because it's built from a square table the absolute numbers of cases and non cases determine the baseline odds (="constant"): therefore the sample fraction ratio is added to the model. log(odds) = log(constant) + log(sample fraction ratio)+ log(exposure) sample fraction ratio = proportion of cases sampled / proportion of non cases sampled log(constant) + log(sample fraction ratio) = constant\*
-
-Logistic regression for trend across levels of a variable: doesn't have to assume proportional odds (although this simplifies and gives more precision) this is parameter reduction eg from 4 parameters for different levels to 1 this is critically altered by the choice of grouping for levels of exposure eg choose the midpoint of arbitrary age bins to Hypothesis tests for trend are "test for linear trend": model is better with linear effect than without, then "test for departure from trend": for improved prediction with many versus one parameter both use LRS with df = difference in number of parameters.
-
-Interaction in the model is referred to as eg param1.param2 and is a single new parameter tests for interaction are against H0: the interaction is not greater than chance, using LRS.
-
-Interaction is not detected automatically and must be added to a model then tested, so there is no way to guarantee that all meaningful interactions are detected or that interactions detected are meaningful beyond the dataset.
-
-The assumptions of a linear model imply that the residuals are normally distributed, with a constant variance across x and y. Plots of standardised residuals (rescaled to mean = 0, sd = 1) help: density of Std Res for normality, Std Res versus corresponding fitted value for deviation from linear.
-
-# Conditional Logistic Regression
-
-Conditional on the membership of some stratum, such as a matched pair, the effect of a covariate is estimated. The effect of the matching variable is not estimated (because the procedure would be different) nor is the constant term (because that would need the effect of the matching variable to be included in it). Instead of logit(p) = log(odds) = beta + stratum + constant, we have log(OR) = beta.
-
-Confounding is assessed by excluding a covariate from the model to create nested models, which are then tested by the likelihood ratio test; interaction by stratifying and using LRT with or without strata; linear trend by a score test or by adding a linear predictor and LRT.
-
-Variables can, confusingly, be fixed or changing; if changing they can have a deterministic or stochastic relationship with the determinant of that change, such as time. Rates that vary systematically over time are accounted by splitting into epochs and calculating rates conditional on the occurence of an event, ignoring non event containing epochs (Lexis expansion or "episode splitting"). This looks like a sort of limit case for Cox regression, allowing estimates of the rate, not only rate ratio, during each epoch as long as there are sufficient events.
-
-# Error
-
-Measurement error: Validity and Reliability....! For continuous variables: Correlation coefficients. Mathematical coupling. Agreement versus correlation. For categorical: Classification f agreement. See also [Cronbach alpha] for a composite rating X as a sum of K items $Y_1 + Y_2 + Y_i \dots Y_K$
-
-$\alpha = \frac{K}{K-1}\left(1-\frac{\sum^K_{i=1}\sigma^2_{Y_i}}{\sigma^2_X}\right)$
-
-## Misclassification
-
-Misclassification may be the original sin or due to some random error or bias in measurement which then results in misclassification. This has variable effects but mostly:
-
--   Differential misclassification may be decisively erroneous.
-
--   Non-differential exposure misclassification biases estimates to null
-
--   Non-differential outcome misclassification underestimates alter ratios by less, and bias differences to 0
-
--   Non-differential outcome overestimates bias ratios and differences to null
-
-## Latent error 
-
-When an inference has been drawn, and is apparently correct or useful for the decision at hand, but later causes errors or even damage, then a latent error has been discovered. Racial bias in AI, edge case glitches, zero-day exploits an the like are latent errors. 
-
-# Analyse
+# Analyse {#analyse}
 
 ## Stratification
 
@@ -1477,7 +1489,7 @@ $logit(P(x_i)) = z_i \beta + S(i) + u_i$
 
 Where S(i) is according to some coordinate reference system CRS (UTS in Eastings + Northings; or lat/long in unstructured ellipsoid projection)
 
-# Study designs
+# Study designs {#designs}
 
 ## Case Control
 
@@ -1497,11 +1509,11 @@ Ecological studies use population values rather than individual values so n is s
 Correlations and regressions are the usual numbers generated after exploratory analysis. Having the Idea from Crombie has a holy feeling about it, for all that it was written humbly by a sharp witted amateur. Review existing practice Challenge accepted ideas Look for conflicting ideas, ask around Investigate geographical variation or interindividual variation Identify Cinderella topics Let loose the imagination / be kind to ideas / reject little Dissect the questions Write Discuss with colleagues over pints Think in the bath Read around the subject until you have read enough Look upstream Choose the best question Will this method answer my question? Evidence there is a problem\
 Is it feasible? Burden of disease Do I have the resources? Big possible changes to patient outcome Is method appropriate for the design? Cheap solution or expensive problem Question is a question other people can understand An answer would be done by people Urgency of good data / chance of bad practice to entrench Feasibility Refine the question with a sharp tool and a high threshold for acceptance Review as if newly seeing it Is it as important as it looked? Don't rush in: are you still sure that's the question? Review and redo the analysis, simulate, simulate, simulate Criticise mercilessly Where could it go wrong? Why might people not participate? What necessary data might not be feasible to collect? Do we have enough blood and treasure to spend? Can we simplify it and still get an answer / will it be even better? Be realistic Ask the best version of the best question as well as you can, if you can do it well Don't waste effort on getting incrementally closer to perfection Don't start what you will never finish Qualitative Seeks to interpret phenomena through the meanings people bring to them When the topic is not familiar, the context is needed, rich views or the social world in which others live is the goal. Common features are flexibility, triangulation, contextualisation, iteration and reflexivity. Techniques include interviews, focus groups, observation, participation.
 
-# Utility
+# Utility {#utility}
 
 This is something that needs to be expanded here. For now it's just a dumping ground for some interesting things. Such as:2E: Discrete Choice Experiment (DCE) to determine weighting Data Collection We will use a best-worst discrete choice experiment (BWS DCE; BWS Case 3) to determine the value placed on each dimension of the tool's descriptive system. We will use best practice methods for the design and analysis of choice experiments13 and follow approaches taken previously by CI Ratcliffe14 and CI Viney15, 16. The optimal sample size for a BWS DCE task is dependent upon the final number of dimensions and levels to be included in the tool's descriptive system, as determined by 2B and 2D of our study17. Sociodemographic information, eg age, sex, ill health experience, income, remoteness and family structure will also be collected. AnalysisHREC Application Form Version 13, March 2017 Page 26 The primary analysis will use a mixed multinomial logit (MMNL) model with a panel specification. The MMNL can also identify heterogeneity in responses9; we will also examine alternative model specifications18, as different respondents may trade-off in different ways, reflecting cultural or social norms. From these analyses, we will develop a scoring algorithm for the instrument, based on the ratio of marginal utilities (RMU) approach, below. In valuing health gain, considering quantity of life (survival) separately from characteristics (QOL/wellbeing) of those extra years, and including simple interactions between them, as would usually be done for choice experiment analyses, may not be adequate in capturing this interrelatedness. An additional condition is also required for QALYs: that value of a health profile with zero life expectancy is zero irrespective of the quality of life in that period. The utility function for all models will, initially, be assumed to be linear with respect to time, and levels of QOL/wellbeing enter the utility function as an interaction with life expectancy (the TIME variable). Thus, the utility (U) of health state j in scenario s for individual i is in Equation 1. Thus, if TIME is set at zero, the systematic component of the utility function is also zero. $U_{isj} = \alpha TIME_{isj} + \beta X_{isj} ' TIME_{isj} + \epsilon_{isj}$ Generating a scoring system for QALYs To generate QALY weights for the health states to create the scoring algorithm of the tool, the initial analysis will use a ratio of marginal utilities (RMU) approach, as used by AI Viney15, 16. In a QALY model, ten years in full health provides 10 QALYs. If another health state provides 10 QALYs over a 15 year period, the QALY model values that health state at 10/15 = 0.667. Using Eq1, the systematic component of the utility function can be differentiated with respect to TIME, $\frac{\delta U}{\delta TIME} = \alpha + \beta X′$ The RMU between two health state profiles j and j\* can therefore be estimated as: $RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$ This gives a value for a health state with characteristics defined by the betaX isj ' term, relative to another health state defined by characteristics betaX isj ' \* . If betaX isj ' \* is set to full health (ie the best level of each dimension), the value generated using Eq 3 is a QALY weight15, 19.
 
-# Ethics
+# Ethics {#ethics}
 
     Beneficence, non-Maleficence, Autonomy, Justice
     Goal-, duty- or rights-based justifications.
@@ -1535,7 +1547,7 @@ Protocols for the NIH contain
     - Remuneration/Compensation 
     - Scientific References 
 
-# Community Engagement
+## Community Engagement
 
 From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which affect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."[^18] Should never be prefabricated, always negotiated and always actually strengthen participants' ability to control important aspects of their own lives or "empower" them. Find out, acknowledge and reconcile complexities in community attitudes and internal power structures, empower the unempowered[^19]. Pilot or engagement activities may reveal that much more work needs done just to understand the views of the community, before touching the research design. Locoregional administrators or governments, or relevant NGOs in some places, are also necessary[^20] Local health providers are usually just completely necessary for the intervention to work or be measured, and are also advised to be properly engaged for advice and "synergy".
 
@@ -1553,7 +1565,7 @@ Apparently visual aids are Participatory.
 
 They recommend onsidered and mediated feedback of overall results, but they also recommend using simple tests as a sop to the simple folk while sending off all the other tests.
 
-# Surveillance
+# Surveillance {#surveillance}
 
 Surveillance is "the ongoing systematic collection, analysis and interpretation of health data essential to the planning, implementation, and evaluation of public health practice, closely integrated with the timely dissemination of these data to those who need to know. The final link in the surveillance chain is the application of these data to prevention and control. A surveillance system includes a functional capacity for data collection, analysis and dissemination linked to public health programmes."(CDC, 1986)
 
@@ -1617,13 +1629,15 @@ $R_0 = c\beta t$, that is $R_0$ = contacts \* duration of infectiousness \* prob
 
 Estimation depends on being able to see direct and indirect effects; with some assumptions $VE_s$ and $VE_i$ can be jointly estimated from only the disease rate in vaccinated versus unvaccinated if there are different vaccinated proportions in strata, clusters or times. This joint estimation has a coverage estimate trading $VE_i$ against $VE_s$. If considering a 2nd stage cluster, infection probability $\beta$, $VE_s =0$, proportion infected at time t $I_t$, contact probability *c*, duration of contact *d* then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times $1-VE_i$.
 
-# Causality -- Bradford Hill -- 9 dogme
+# Causal reasoning {#causality}
+
+## Causality -- Bradford Hill -- 9 dogme
 
 "An active agent or a static condition" Temporality, Strength (size), Consistency (across types of information), Dose:Response (Biological gradient), Specificity, Biological plausibility, coherence (sort of biological plausibility but probably intended to mean borrowing from other situations supports the idea), "Experiment" (protection by removal, in the examples), analogy (the example is HepB / HIV). Predictive performance No alternative theories after rigorous testing
 
 X and Y are associated in the population if X causes Y, Y causes X, or both X and Y are caused by another variable, call it Z. In this case X and Y are not associated in strata defined by Z X and Y may not be associated in the population, but are associated within strata of Z, if Z is caused by both X and Y Z-conditioning can therefore create or remove X:Y associations depending on the causal structure.
 
-# Causal Complements
+## Causal Complements
 
 These are the things which together are "necessary and sufficient". Multi-causality is demonstrated by Directed Acyclic Graphs. Acyclic because the rules apply more clearly, without the loss of definite solutions induced by cyclic graphs.
 
@@ -1647,13 +1661,13 @@ Remove all arrows from the exposure; in this case investigating effect of E on D
 
 Selection or some other process of bias can be modelled with DAGs as well, another name for selection bias being Collider Stratification bias.
 
-# Machine Learning
+# Machine Learning {#ML}
 
     A Perceptron is the smallest form of neural network, with weighted inputs and a bias which feed an activation function to produce a single output.  The output is calibrated repeatedly against appropriate values and the weights altered to improve the closeness of prediction until either accuracy or number of repetition limits are crossed.
 
 The ideal type of data depends on the intended output. eg Description: whole population Exploratory: many variables on a random sample, up to the whole population Inferential: The right variables in the right population, randomly sampled Prediction: split training and test sets from same population Causal: data from a randomised trial Mechanistic: rich data about all available responses and predictors
 
-# Model fit
+# Model fit {#fit}
 
 All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [^21] is common in machine learning, for reasons of overuse of machine learning. [Cross validation] is a powerful way, often for "testing the skill" of a machine learning model.
 
@@ -1710,7 +1724,7 @@ Is a [@resampling] technique often used to check the "skill" of a model, intende
 
 [^24]: The data preparation is done after creating the sample for k-fold cross validation, to minimise information leakage where information obtained in the preparation optimises the model subtly for the entire set rather than estimating its behaviour for an unseen set. Note also that each member of the sample serves as a test subject once and a training member k-1 times, to the extreme of leave-one-out cross validation where k=n.
 
-# Meta Analysis
+# Meta Analysis {#meta-analysis}
 
 -   Provide a data display and objective review
 -   Give a summary interpretation
@@ -1722,13 +1736,13 @@ Fixed Effect assumes the effect really is the same and any difference is due to 
 
 Random Effect assumes the true effects vary around an average: the between study variance of the estimates (or alternatively, the residuals around the average of the estimates) is used to modify weights of each study. A summary OR is the same shape as the fixed model summary OR but with between-study-variance-adjusted weights, w\*i. These weights are far less dispersed than the Fixed Effect weights so smaller studies are weighted more heavily and the confidence intervals tend to be wider. So Random Effects models are more conservative.
 
-# Git work
+# Git work {#git}
 
 `pwd` print working directory `ls` `clear` `touch` newfilename for new file `cp` file filetocopyto -r for recursive(=copy all within) `mkdir` `cd` `cd ..` up one `cd` home `rm` thing to remove -r with caution! No undo! `mv` object dir , also changes name if with file name `echo` `date`
 
 git init git clone git add . Adds all new files to the index git add -u updates git add -A does both git commit -m "message" to local repository git push to remote directory git checkout -b branchname another version of the same directory git branch see what branch you're on pull request is not a git feature but on github
 
-# Syntax and reminders
+# Syntax and reminders {#syntax}
 
 ## Base R
 
