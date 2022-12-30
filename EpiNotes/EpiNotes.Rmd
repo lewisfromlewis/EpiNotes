@@ -1429,13 +1429,17 @@ Variables can, confusingly, be fixed or changing; if changing they can have a de
 
 # Generalised Additive models {#gams}
 
-This, shamefully, borrows heavily from a Stitchfix article
+GAMs describe the relationship between several predictors, and a response. As for linear models, they estimate the response based on levels of all the predictors. 
+
+One way to understand the point of all this is to start from scatterplot smoothing. Linear models $y = f(x) + \epsilon$ estimate the linear function that best minimises errors in predicting the response, for example by least squares. Even where the function is not linear in terms of the predictors it is linear in terms of the impact of the function on the predictor. For example, it may have polynomial transformations of the predictor, such as a $1, x, x^2$ sort of a Taylor expansion, or use a Fourier transformation with the _sine_ and _cosine_ of the predictor, or a wavelet expansion. 
+
+Instead, GAMs aim only for a smooth function, which can be non parametric and so can be very general indeed. They can
 
 
 
 # Missing {#missing}
 
-Missing data culled heavily from Julie Josse User!2018. Data is missing for various reasons
+This theory section around missing data is culled heavily from Julie Josse User!2018. Data is missing for various reasons
 
 MCAR -- P(missing) does not depend on either the missing value itself or any other value.
 
