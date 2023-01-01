@@ -626,7 +626,7 @@ With linear models, assume the data are all iid but that there is a cluster effe
 
 ## Generalised estimating equations
 
-GEE assume that any two points from separate clusters are uncorrelated, but within a cluster all points are identically correlated with each other, represented by an exchangeable correlation matrix derived from the data. This estimate of rho is the primary output; then the regression coefficients and their standard errrors are estimated from it in turn. The regression coefficient is a population average odds ratio, assuming no cluster level random effect but only correlation... I thiink. Overall the buzz words are exchangeable correlation matrices and robust standard errors, with a Wald test $z = \frac{\beta}{\textrm{SE}(\beta)}$.
+GEE assume that any two points from separate clusters are uncorrelated, but within a cluster all points are identically correlated with each other, represented by an exchangeable correlation matrix derived from the data. This estimate of rho is the primary output; then the regression coefficients and their standard errrors are estimated from it in turn. The regression coefficient is a population average odds ratio, assuming no cluster level random effect but only correlation... I thiink. Overall the buzz words are exchangeable correlation matrices and robust standard errors, with a simple Wald test $z = \frac{\beta}{\textrm{SE}(\beta)}$ once all the hard sums have been written around the robust errors.
 
 ## Cluster level t test
 
@@ -1465,15 +1465,24 @@ So far so simple, just extending the idea of linear models. This has been extend
 
 See the section on [smoothing](#loess) for more detail on how things are smoothed. Smoothing options are mainly down to local scoring (loess), smoothing splines or regression splines (such as B-spline, P-spline, or thin plate spline). Regression splines can be written as linear combinations of basis functions, which don't depend on the response variable.
 
-The original invention of GAMs was with a local scoring algorithm to smooth the scatterplot. The modern random effects seems similar to PIRLS, penalised iterative least squares.
+Remember GAMs involve estimating the smoothers for each predictor simultaneously, along with any covariance between the smoothers. 
+
+The local scoring algorithm is a extension of the backfitting algorithm, which is an extension of the Gauss-Seidel procedure, to solve any messy linear system. First set each function to zero, then use it to estimate each observation, then construct a "pseudo-dependent variable" and smooth that variable using weights which are roughly the variance of each observation, iterating to convergence. This is computationally expensive because the weights change with each iteration.
+
+Otherwise cast the GAM as a large GLM made of linear combinations of basis functions and corresponding coefficients. 
+
+The original invention of GAMs was with a local scoring algorithm to estimate them. The modern approach seems to be to solve as a large GLM with random effects, similar to the description of using PIRLS, penalised iterative least squares.
 
 ## Penalised likelihood 
 
-The object of the GAM is to maximise the penalised likelihood function. There is [much detail](#loess) on what this function would be, centred around the degree of smoothing using a smoothing parameter. 
+The object of the GAM is to maximise the penalised likelihood function. In general, this is $2l (\alpha, s_1(x_1), \dots , s_p(x_p)) - \mathrm{penalty}$ where _l_ is the standard log likelihood function. So then for a GAM modelling binary outcomes, with logistic link function, the likelihood is $\sum_{i=1}^n y_i\textrm{ log } \hat p_i + (1-y_i) \textrm{ log} (1- \hat p_i)$. In this case as well, $\hat p_i = P(Y =1|x_1, \dots, x_p) = \bigg(1 + e^{-\hat\alpha - \sum_{j=1}^p s_j(x_{ij})} \bigg)^{-1}$. 
 
-## Smoothing parameter 
+And the penalty can be $\lambda \int(s''(x))^2 dx$ as in the [section on smoothing](#loess).
 
-There are various ways of choosing the smoothing parameter. General cross validation is one, or restricted maximum likelihood (REML) as the modern, parameters-as-distributions approach. 
+## Choose model smoothing parameter 
+
+There are various ways of deciding how much smoothing is required (what value for lambda, how many knots, and so on). General cross validation is one, or restricted maximum likelihood (REML) as the modern, parameters-as-distributions approach. 
+
 
 # Missing {#missing}
 
