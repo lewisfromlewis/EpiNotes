@@ -706,9 +706,6 @@ density by `dmvt(x, delta=c(i,j)`, sigma= `as.matrix(r, t, y, u), df=df, log=T)`
 
 Bivariate has delta=0 if standard and sigma=diag(2), ie rbind(c(2, 0, 0, 2))
 
-# Generalised additive models {#gams}
-
-
 
 #Asymptotics {#asymptotics}
 
@@ -789,6 +786,26 @@ In many ways Pearson and Spearman are ways to quote distances between two vector
 -   Cook's distance, in regression roughly the effect of deleting the outlier $D_i = \frac{\sum_{j=1}^n (\hat y_j - \hat y_{j (i)})^2}{(k + 1)s^2}$
 -   Mahalanobis distance of a point P from the distribution D along the principal component axes scaled for unit variance to make the Mahalanobis distance the standard Euclidean distance in the transformed space. The distance of each observation *i* from the centre of an $i = 1 \dots n$ by $p$ sample can be calculated by Wilk's method $MD_i = \sqrt{(x_i - t)^T C^{-1}()x_i - t}$, if t is the multivariable location, C is the estimated (usually the sample) covariance matrix. To detect a single outlier in this n by p multivariable sample, the squared Mahalanobis distances are compared with an F distribution with p and 1-p degrees of freedom
 -   $\chi^2$ distances, distances are more appropriate for multivariable situations
+
+## Locally weighted scatterplot smoothing {#loess} 
+
+LOESS are local polynomial regression smoothers. The running mean smoother is the most simple nearest neighbour method, but isn't actually very smooth, and performs poorly at the edges of the data as there's little to change the average from the extreme values. Instead of the simple mean, LOESS uses a locally weighted regression within each sliding, symmetric, nearest-neighbour window. At each point x, the weight of neighbour points $x_i$ on the fitted value at x is reduced by a "tri-cube" function of their distance from x along the x axis within the sliding window. 
+
+Regression smoothing simply seeks to minimise the penalised sum of squares. The first half of the equation below is the sum of squared deviations between s(x), the function smoothing x, and the observed value. The second half is the penalty for wiggliness, using the smoothing parameter $\lambda$ to control the amount of penalty for wiggliness, integrating across the second derivatives of the curve and so producing a zero result for a straight line and ever higher results for more wiggles. The penalised sum of squares is minimised by a natural cubic spline with knots at every datapoint, which is not practical for large datasets, and is wasteful as the effective degrees of freedom are smaller than the number of knots. 
+
+$$\sum_{i=1}^n (y_i - s(x_i))^2 + \lambda \int(s''(x))^2 dx$$
+Regression splines are a bit more practical. They are a linear combination of basis functions.  Basis functions are defined by what they are components of: they are all members of a function space which is in turn made up of linear combinations of the basis functions. Piecewise polynomials are usually used. For example, a spline with a different set of cubic relationships ($y = \beta_0 + \beta_1 x_i^2 + \beta_2 x_i^2$, etc) with covariates above and below a cut point might have a coefficient times x to the power of 0, 1, 2, 3 for each window, hence 8 degrees of freedom to draw the overall relationship, and hence the ability to draw most conceivable shapes.  
+
+$$y = \Bigg\{{\beta_{01} + \beta_{11}x_i + \beta_{21}x_i^2 + \beta_{31} x_i^3 \textrm{ if } x_i < c;\\
+\beta_{02} + \beta_{12}x_i + \beta_{22}x_i^2 + \beta_{32} x_i^3 \textrm{ if } x_i \geq c}$$
+
+More simply and generally, the equation can be written as $s(x) = \sum_{l=1}^K B_{l,q}(x)\beta_l = B'\beta$ where B is the model matrix of the basis functions in this particular function space. The number of basis functions depends on the number of inner knots _m_ and on the order of the spline, fewer functions giving a smoother spline and residual sum of squares minimised by having $K = p + 1 + m$ basis functions.
+
+Penalised regression splines directly penalise wiggliness. Instead of the linear models from above, this leads to penalised sums of squares of the shape below, in which $\beta'P\beta$ is the penalty, and can be many things. 
+
+$$\underset{\beta}{\mathrm{min}} = \{ ||y - B'\beta ||^2 + \beta' P \beta \}$$
+For a P-spline, or penalised spline, the penalty might penalise the difference between adjacent coefficients, and look like $\beta' P \beta = \sum_{l=1}^{K-1}(\beta_{l+1}  - \beta_l)^2$.
+
 
 # Hypothesis Testing {#nhst}
 
@@ -1429,13 +1446,34 @@ Variables can, confusingly, be fixed or changing; if changing they can have a de
 
 # Generalised Additive models {#gams}
 
+## Intro to GAMs with hand waving 
+
 GAMs describe the relationship between several predictors, and a response. As for linear models, they estimate the response based on levels of all the predictors. 
 
-One way to understand the point of all this is to start from scatterplot smoothing. Linear models $y = f(x) + \epsilon$ estimate the linear function that best minimises errors in predicting the response, for example by least squares. Even where the function is not linear in terms of the predictors it is linear in terms of the impact of the function on the predictor. For example, it may have polynomial transformations of the predictor, such as a $1, x, x^2$ sort of a Taylor expansion, or use a Fourier transformation with the _sine_ and _cosine_ of the predictor, or a wavelet expansion. 
-
-Instead, GAMs aim only for a smooth function, which can be non parametric and so can be very general indeed. They can
+One way to understand the point of all this is to start from scatterplot smoothing. Linear models $y = f(x) + \epsilon$ estimate the linear function that best minimises errors in predicting the response, for example by least squares. 
 
 
+It seems that a GAM extends linear models. In the base linear model described so far, $\sum \beta_j X_j$ simply multiplies each $X_j$, or a defined transformation of it, by a covariate which is already chosen. In a GAM, there is a similar underlying shape but the covariate is replaced by a function _s_, so that the form is very subtly different $\sum s_j(X_j)$. Instead of simply multiplying X by a constant, requiring the relationship of X to Y to be linear, the functions _s_ can be any sort of function. For example, it may have polynomial transformations of the predictor, such as a $1, x, x^2$ sort of a Taylor expansion, or use a Fourier transformation with the _sine_ and _cosine_ of the predictor, or a wavelet expansion or a spline. If we think of these as bases, then we can cook up a fairly simple looking additive model that is analogous to a linear model.
+
+GAMs aim only for a smooth function, which can be non parametric and so can be very general indeed, which is where the motivating example of a scatterplot smoother is useful. A spline might be something like "for all x less than the knot point v, f(x) = 0, for all x greater than or equal to v, f(x) = x-v", or a version which has more useful mathematical properties by using $1, x, x^2$ terms and avoids zero derivatives at the knots, and so on.
+
+Then the functions can be estimated differently for exposed versus unexposed, assuming nothing about the type of effect that the exposure has. It could be u shaped, hill shaped, and so on, and there could be unlimited variety of modelled relationships such as several non linear and several linear predictors. Then $y = f(x) + Z\beta +\epsilon$ in the context of least squares analysis, or $g(E[y]) = f(x) + Z\beta$ for the generalised linear models. 
+
+So far so simple, just extending the idea of linear models. This has been extended even further, treating the parameters or even the bases as random effects with a distribution, say a normal distribution. This means that analytic choices matter much less (number of knots and so on), and mixed models become possible (allowing restricted maximum likelihood to be used to determine the local prediction rather than having to choose how smooth to make the model as a set of choices). 
+
+## Estimate smoothers 
+
+See the section on [smoothing](#loess) for more detail on how things are smoothed. Smoothing options are mainly down to local scoring (loess), smoothing splines or regression splines (such as B-spline, P-spline, or thin plate spline). Regression splines can be written as linear combinations of basis functions, which don't depend on the response variable.
+
+The original invention of GAMs was with a local scoring algorithm to smooth the scatterplot. The modern random effects seems similar to PIRLS, penalised iterative least squares.
+
+## Penalised likelihood 
+
+The object of the GAM is to maximise the penalised likelihood function. There is [much detail](#loess) on what this function would be, centred around the degree of smoothing using a smoothing parameter. 
+
+## Smoothing parameter 
+
+There are various ways of choosing the smoothing parameter. General cross validation is one, or restricted maximum likelihood (REML) as the modern, parameters-as-distributions approach. 
 
 # Missing {#missing}
 
