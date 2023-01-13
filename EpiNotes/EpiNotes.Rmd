@@ -63,6 +63,12 @@ The baseline odds, for example, is key to understanding the effect of a given od
 knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
 ```
 
+## Variables 
+
+All of this tends to assume one real value exists for each of these measures of effect. There is an underlying generative model for our hypotheses about these effects, whereby we may say "a causes b", or simply "for a of a certain value, we observe b of this predicable value". Because we can't observe every instance of every cause, or even the underlying _vis inertiae_ of every random process, we have to use a statistical model to generate these estimates. These need variables. 
+
+A variable is just a symbol that can take on different values. Unobserved variables are usually called parameters. They can represent any part of any of the models, including the data, the effect, and so on. 
+
 ## Measures of outcome
 
 Case definitions need
@@ -311,7 +317,7 @@ knitr::kable(rel_risk_PAR, booktabs = TRUE, caption= "Notice the unstable popula
 
 ## Final caution
 
-Remember, kids: the assumption that PAF describes a causal relationship **might not be correct**: it might describe a confounder, or have an effect modification.
+Remember, kids: the assumption that PAF describes a causal relationship **might not be correct**: it might describe a confounder, or have an effect modification. The PAF is a model, like any other. In this case it assumes a direct relationship between exposure and outcome, although not its size. In most other cases, we recognise uncertainty, and so we use statistical models to make inferences about the size of the effect. 
 
 # Probability and sampling {#probability}
 
@@ -410,7 +416,9 @@ $P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 
 ## Chebyshev's inequality
 
-This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. Teh inequality is that the probability that the observed value is more than k sigma away from its mean is small and rapidly decreasing with k $$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$ \# Distributions
+This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. The inequality is that the probability that the observed value is more than k sigma away from its mean is small and rapidly decreasing with k $$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$ 
+
+#Distributions
 
 I don't know, maybe it's time to bring back some of these babies, just for fun.
 
@@ -1482,6 +1490,29 @@ And the penalty can be $\lambda \int(s''(x))^2 dx$ as in the [section on smoothi
 ## Choose model smoothing parameter 
 
 There are various ways of deciding how much smoothing is required (what value for lambda, how many knots, and so on). General cross validation is one, or restricted maximum likelihood (REML) as the modern, parameters-as-distributions approach. 
+
+
+# Bayesian Models 
+
+This is based around Richard McElreath's Statistical Rethinking, which has the best setup for an open public course. Just hands down. As with all models, causal thinking is important to justify the shape of the model using information outside of the data. The causes of the data looking as it does, any assumptions about why future data might not look as the current data does, and how to estimate, predict or explain it, all have to come from outside of the data using generative models, and it's best if these generative models are causal in nature. 
+
+## Parameters 
+
+The parameters are not independent of each other except under very rare conditions, and so the parameters are not often independently interpretable. Instead of interpreting parameters, instead push out posterior predictions. A good entry to Bayesian estimation is just by re-looking at linear regression. In this paradigm, each of the parameters is modelled by a distribution: there's no one correct value that is being estimated, but a range of values with their associated plausibility. 
+
+The generative model might be that weight is determined by height and some unknown things, or $W = f(H, U)$. A Bayesian statistical model can then accept that every parameter of that model is itself uncertain, and can be modelled by a distribution. This powerful because the distributions can be updated, using a prior and data, and producing posterior predictions. The statistical model might be that $W \sim \mathcal{N}(\mu_i, \sigma)$, where the mean is itself represented by a statistical model $\mu_i = \alpha + \beta H_i$, and each part of that model is also represented by a distribution, each starting with a prior: 
+$\alpha \sim \mathcal{N}(0, 10) \\ \beta \sim \textrm{Uniform }(0,1) \\ \sigma \sim \textrm{Uniform }(0,10)$ 
+
+## Bayesian model variables 
+
+Just a quick note about variables. Continuous variables are easy in this Bayesian style, because they are directly represented by a continuous distribution, transforming each realised value. Categorical variables can be represented by indicator variables (0,1 as in the usual regression), or by index variables (1,2,3,4 ...). Index variables extend from one to many categories with no change in code or concepts, are better for specifying priors, and extend easily to multilevel models (involving clusters, sites, etc). The parameter value is estimated using only those cases where the index matches the value of the desired population. This is similar to using indicator variables, but doesn't make an assumption that one value of the indicator is just null. 
+
+## Priors 
+
+Priors are posteriors, posteriors are priors, they are all distributions and there is nothing special about any of them. In linear prediction, the priors are quickly overwhelmed by data so they don't matter all that much, but they are a very good place to practice and to get the justification right for priors. 
+
+There is no correct prior, only justifiable ones, useful ones, agreeable ones, reasonable ones. The preceding section on GAMs shows that a linear model can represent anything, at all (viz Tukey's statement about elephants).
+
 
 
 # Missing {#missing}
