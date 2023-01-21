@@ -1195,7 +1195,9 @@ Confounders are
 
 There are other definitions and literal reams devoted to identifying confounders, which have much more nuanced definitions and exacting analytic approaches. 
 
-The four elemental means of confounding could be The Fork:
+The four elemental means of confounding could be 
+
+The Fork, where X and Y share a common cause Z and so are correlated, that is they are not independent $Y \not\!\perp \!\!\! \perp X$. If stratified by Z though, we can say that in each stratum of Z or "conditional on Z", X and Y re independent $Y \perp \!\!\! \perp X | Z$ :
 
 ```{r confounding-fork}
 coord_dag_fork <- list(
@@ -1207,7 +1209,9 @@ dag_fork <- ggdag::dagify(x ~ z,
               coords = coord_dag_fork)
 ggdag::ggdag(dag_fork) + theme_void()
 ```
-The Pipe:
+
+The Pipe, where again X and Y are no independent $Y \not\!\perp \!\!\! \perp X$, but X is a cause of Z which is in turn a cause of Y. Z can be said to mediate the effect of X on Y. For any value of Z, X and Y are independent $Y \perp \!\!\! \perp X | Z$. In this case though, everything that monad Y knows about monad X is already known by monad Z. Sometimes that direct effect is included in the scientific question, sometimes it's not. Conditioning on Z can radically alter the estimate:
+
 ```{r confounding-pipe}
 coord_dag_pipe <- list(
     y=c(x=0,z=0,y=0),
@@ -1218,7 +1222,8 @@ dag_pipe <- ggdag::dagify(z ~ x,
               coords = coord_dag_pipe)
 ggdag::ggdag(dag_pipe) + theme_void()
 ```
-The Collider:
+
+The Collider, where X and Y share no common cause, don't cause each other, but do share a result Z. Here, $Y \perp \!\!\! \perp X$, until stratifying by Z. $Y \not\!\perp \!\!\! \perp X |Z$, which is unlikely to be the quantity you're looking for p(Y|do(X)). You can easily create a statistical phantom, a non-causal association, by conditioning on a collider:
 
 ```{r confounding-collider}
 coord_dag_collider <- list(
@@ -1578,7 +1583,11 @@ These estimates are whole distributions, not points: points are not estimates, t
 
 ## Centreing 
 
-Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define a scientifically meaningful prior. 
+Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define a scientifically meaningful prior, as does standardising. This leans on the behaviour of a linear model as a predictor, rather than on the generative causal model underlying the data, but it works as long as it's possible to recover the natural scale predictions (which look like the untransformed data) from the transformed version used to build the model. This avoids having to build potentially complex, although causally convincing, prior distributions. 
+
+## Posterior predictive effect of a single parameter 
+
+The point, or linear single predictor, of a single parameter is never right unless in the most simple model that has perfectly represented all the variation. The correct estimate uses all of the posterior distribution, from which samples can be taken and used to explain what's going on. The question, what is the effect of X on Y given Z, is best represented as p(Y|do(X)). This can be simply p(Y|X,Z) in the simplest situation of Z as a common cause, but it helps to phrase the eestimand in that causal language because it helps to consider the specific form of the estimator. If Z is a collider, for example, then the effect of X on Y is not estimated by p(Y|X,Z) but better by p(Y|X).
 
 # Missing {#missing}
 
