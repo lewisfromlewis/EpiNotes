@@ -99,13 +99,13 @@ The one clear answer is that transformations should probably allow recovery of t
 
 A table allows things to be seen, and calculations referred to. "Expected values" for the cells in the table can be calculated under various hypotheses using the marginal totals: these E don't have to be all possible at once, so "expected" for rows and columns will differ. The very first thing to say is that there must be sufficient items in each box, or as we'll call them later, each stratum, to say something about the expectation. You can't estimate the effect of a thing that is universal or absent in your sample, whether using this or most other methods.
 
-```{r, echo=FALSE, message=FALSE}
-contingency <- tibble(" " = c("D", "$D^c$", ""),
+```{r contingency-abcd, echo=FALSE, message=FALSE}
+contingencyabcd <- tibble(" " = c("D", "$D^c$", ""),
             "+" = c("a", "c", "$N_{+}$"),
             "-" = c("b", "d", "$N_{-}$"),
             "total" = c("$N_D$", "$N_{D^c}$", "$N$")
             )
-knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table. This table is the familiar medical school one where sensitivity and specificity are shown to mean completely different things about a positive test, depending on the prevalence of the disease in the population.", escape=FALSE)
+knitr::kable(contingencyabcd, booktabs = TRUE, caption= "Contingency table. This table is the familiar medical school one where sensitivity and specificity are shown to mean completely different things about a positive test, depending on the prevalence of the disease in the population.", escape=FALSE)
 
 
 #\begin{tabular}{| c |c | c | c| }
@@ -116,6 +116,16 @@ knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table. This tab
 #& $N_{+}$ &  $N_{-}$  & N \\ \hline
 #\end{tabular}
 ```
+
+```{r contingency-dh01, echo=FALSE, message=FALSE}
+contingencydh <- tibble(" " = c("Outcome", "No outcome", ""),
+            "Exposed" = c("d1", "h1", "1"),
+            "Unexposed" = c("d0", "h0", "0"),
+            "total" = c("d", "h", "n")
+            )
+knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table. This table is the same, but contains the d/h and 0/1 notation used later in some of the equations.", escape=FALSE)
+```
+
 
 ```{r, echo = FALSE, message=FALSE}
 Bayesmargins <- tibble::tibble(
@@ -161,6 +171,10 @@ The standard error for log odds ratio is
 $$\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$$ and the 95% confidence interval for the log(OR) is +/- 1.96 log(SE).
 
 The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$, whereby the 95% CI is OR/EF to OR\*EF or exp(log Estimate +/- 1.96 log SE)
+
+## The rare disease assumption 
+
+An often misunderstood insight was Cornfield 1951 noting that the ratio of exposed in cases to exposed in controls, weighted for the size of the sample by using the odds ratio, was similar to the ratio of risk of disease in the exposed to the non exposed, as long as all these probabilities are small, such that they are not distorted by approaching 1. This is misinterpreted as the far more trivial "odds ratios approximate risk ratios under the rare disease assumption".
 
 ## Diagnostic likelihood ratio
 
@@ -1457,7 +1471,7 @@ The assumptions of a linear model imply that the residuals are normally distribu
 
 ## The MH odds ratio across strata
 
-is the weighted mean sum of odds ratios across strata generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$ weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ denominator of OR divided by the total or ORMH = Q/R where Q = $\sum \frac{d_{1i} h_{0i}}{n_i}$ and R = $\sum \frac{d_{0i} h_{1i}}{n_i}$ then se(log(ORMH)) = $\sqrt{\frac{V}{QR}}$, V = $\sum V_i = \sum \frac{d_i h_i n_{0i} n_{1i}}{n_i^2 (n_i - 1)}$, V calculated from the marginal totals because each stratum has equal variance Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \frac{(O-E)^2}{V} = \frac{U^2}{V} \textrm{, df=1}$,
+is the weighted mean sum of odds ratios across strata generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$. The weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ are the fraction of "diseased unexposed times healthy exposed" in the grand total sample; equivalent to the denominator of OR divided by the total. In the same way $OR_{MH} = Q/R$ where $Q = \sum \frac{d_{1i} h_{0i}}{n_i}$ and $R =\sum \frac{d_{0i} h_{1i}}{n_i}$ then se(log(ORMH)) = $\sqrt{\frac{V}{QR}}$, V = $\sum V_i = \sum \frac{d_i h_i n_{0i} n_{1i}}{n_i^2 (n_i - 1)}$, V calculated from the marginal totals because each stratum has equal variance Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \frac{(O-E)^2}{V} = \frac{U^2}{V} \textrm{, df=1}$,
 
 $E_{1i}= \frac{d_i n_{1i}}{n_iO} = \sum d_{1i}, \> E = \sum E_{1i} \textrm{, U = O-E}$ MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
 
@@ -1484,7 +1498,9 @@ Adding spurious variables inflates the variance: as the true sigma is unknown th
 
 ## ANOVA {#ANOVA}
 
-Related to linear regression. A table of n observations y, in k groups The sum of squares of deviations from the mean, $\sum (y - \bar y)^2$, is partitioned into between group $\sum n_i (\bar y_i - \bar y)^2$ with *k*-1 degrees of freedom within group $\sum (n_i - 1) s_i^2$ with *n-k* degrees of freedom for a line the total variability is from the 0-gradient line (null) at the mean of y, the y-distance from the null line to the regression line at each xi = SSregression, the y-distance from regression to point at xi = SSresidual and each SS is divided by its degrees of freedom giving the mean square, $MS = \frac{SS}{df}$ For a line, the residuals are $\sum (y - \hat{y})^2$ and the model SS is of deviations from the mean. The F statistic is $\frac {\textrm{Between Group MS}} {\textrm{Within Group MS}} , df = k-1, n-k$ or $\frac{regression}{residual}, df= 1, n-2$ for a line. For the F test, under the null hypothesis the ratio of two variances follows the F distribution and for a line, F = t^2^ . This can also be used for regression diagnostics where $F = \frac{\textrm{Model MS}}{\textrm {Residual MS}}$; A partial F test excludes the contribution of one covariate after adjustment for others, as a LRT equivalent.
+Related to linear regression. A table of n observations y, in k groups The sum of squares of deviations from the mean, $\sum (y - \bar y)^2$, is partitioned into between group $\sum n_i (\bar y_i - \bar y)^2$ with *k*-1 degrees of freedom within group $\sum (n_i - 1) s_i^2$ with *n-k* degrees of freedom for a line the total variability is from the 0-gradient line (null) at the mean of y, the y-distance from the null line to the regression line at each xi = SSregression, the y-distance from regression to point at xi = SSresidual and each SS is divided by its degrees of freedom giving the mean square, $MS = \frac{SS}{df}$ For a line, the residuals are $\sum (y - \hat{y})^2$ and the model SS is of deviations from the mean. 
+
+The F statistic is $\frac {\textrm{Between Group MS}} {\textrm{Within Group MS}} , df = k-1, n-k$ or $\frac{regression}{residual}, df= 1, n-2$ for a line. For the F test, under the null hypothesis the ratio of two variances follows the F distribution and for a line, F = t^2^ . This can also be used for regression diagnostics where $F = \frac{\textrm{Model MS}}{\textrm {Residual MS}}$; A partial F test excludes the contribution of one covariate after adjustment for others, as a LRT equivalent.
 
 The $R^2 = \frac{\textrm{Regression SS}}{\textrm{Total SS}}$, giving a proportion of variance explained by the regression or grouping.
 
