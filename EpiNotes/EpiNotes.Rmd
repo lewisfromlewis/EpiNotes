@@ -53,6 +53,8 @@ I think this is mine. The possibility that a causal graph can be drawn to descri
 
 # Risk {#risk}
 
+Summarise last: this is not the usual way but if we use the whole distribution we will make better inferences thatn if we summarise first (comparing means) we lose information, whereas if we summarise last (compare contrasts) we retain information and correctly quote uncertainty.
+
 `r newthought('Risk is a conditional probability')`. This is the entry level, and is maybe a bit higher up than Epidemiology is usually sold. Conditional probabilities are talked about all over the place, but rarely in that language, which requires a retreat by many steps to get to the true underlying shape of the relationship. Relative risk and how it works, odds ratios, hazards and their ratios are fundamental but are maybe best understood via observing how they work in their more "advanced" utilities such as regression modelling.
 
 The baseline odds, for example, is key to understanding the effect of a given odds ratio on the absolute risk difference. By extension it helps to understand how risk and odds differ, how invertible odds are so useful and how a little mathematical manipulation of the relative probabilities opens up a whole set of ways to figure out the true underlying effect. While the odds ratio is the best way to state a constant effect of an exposure on the likelihood of a categorical outcome, it needs to be applied to a baseline absolute odds (and hence risk) to display itself.
@@ -1191,7 +1193,56 @@ Confounders are
 
 3 not a causal intermediate from exposure to outcome
 
-There are other definitions and literal reams devoted to identifying confounders, which have much more nuanced definitions and exacting analytic approaches in
+There are other definitions and literal reams devoted to identifying confounders, which have much more nuanced definitions and exacting analytic approaches. 
+
+The four elemental means of confounding could be The Fork:
+
+```{r confounding-fork}
+coord_dag_fork <- list(
+    y=c(x=0,z=0,y=0),
+    x=c(x=1, z=2, y=3)
+)
+dag_fork <- ggdag::dagify(x ~ z,
+              y ~ z,
+              coords = coord_dag_fork)
+ggdag::ggdag(dag_fork) + theme_void()
+```
+The Pipe:
+```{r confounding-pipe}
+coord_dag_pipe <- list(
+    y=c(x=0,z=0,y=0),
+    x=c(x=1, z=2, y=3)
+)
+dag_pipe <- ggdag::dagify(z ~ x,
+              y ~ z,
+              coords = coord_dag_pipe)
+ggdag::ggdag(dag_pipe) + theme_void()
+```
+The Collider:
+
+```{r confounding-collider}
+coord_dag_collider <- list(
+    y=c(x=0,z=0,y=0),
+    x=c(x=1, z=2, y=3)
+)
+dag_collider <- ggdag::dagify(z ~ x,
+              z ~ y,
+              coords = coord_dag_collider)
+ggdag::ggdag(dag_collider) + theme_void()
+```
+The Descendant:
+
+```{r confounding-descendant}
+coord_dag_descendant <- list(
+    y=c(x=1,z=1,y=1, a=-1),
+    x=c(x=1, z=2, y=3, a=2)
+)
+dag_fork <- ggdag::dagify(z ~ x,
+              y ~ z,
+              a ~ z,
+              coords = coord_dag_descendant)
+ggdag::ggdag(dag_fork) + theme_void()
+```
 
 ## Bias
 
@@ -1461,7 +1512,9 @@ GAMs describe the relationship between several predictors, and a response. As fo
 One way to understand the point of all this is to start from scatterplot smoothing. Linear models $y = f(x) + \epsilon$ estimate the linear function that best minimises errors in predicting the response, for example by least squares. 
 
 
-It seems that a GAM extends linear models. In the base linear model described so far, $\sum \beta_j X_j$ simply multiplies each $X_j$, or a defined transformation of it, by a covariate which is already chosen. In a GAM, there is a similar underlying shape but the covariate is replaced by a function _s_, so that the form is very subtly different $\sum s_j(X_j)$. Instead of simply multiplying X by a constant, requiring the relationship of X to Y to be linear, the functions _s_ can be any sort of function. For example, it may have polynomial transformations of the predictor, such as a $1, x, x^2$ sort of a Taylor expansion, or use a Fourier transformation with the _sine_ and _cosine_ of the predictor, or a wavelet expansion or a spline. If we think of these as bases, then we can cook up a fairly simple looking additive model that is analogous to a linear model.
+It seems that a GAM extends linear models. In the base linear model described so far, $\sum \beta_j X_j$ simply multiplies each $X_j$, or a defined transformation of it, by a covariate which is already chosen. In a GAM, there is a similar underlying shape but the covariate is replaced by a function _s_, so that the form is very subtly different $\sum s_j(X_j)$. Instead of simply multiplying X by a constant, requiring the relationship of X to Y to be linear, the functions _s_ can be any sort of function. For example, it may have polynomial transformations of the predictor, such as a $1, x, x^2$ sort of a Taylor expansion, or use a Fourier transformation with the _sine_ and _cosine_ of the predictor, or a wavelet expansion or a spline. If we think of these as bases, then we can cook up a fairly simple looking additive model that is analogous to a linear model. McElreath says polynomials are awful, splines and GAMs and Gaussian processes are less awful, absent some more mechanistic model.
+
+"Polynomials have strange symmetries and explosive uncertainty at the edges". 
 
 GAMs aim only for a smooth function, which can be non parametric and so can be very general indeed, which is where the motivating example of a scatterplot smoother is useful. A spline might be something like "for all x less than the knot point v, f(x) = 0, for all x greater than or equal to v, f(x) = x-v", or a version which has more useful mathematical properties by using $1, x, x^2$ terms and avoids zero derivatives at the knots, and so on.
 
@@ -1471,7 +1524,9 @@ So far so simple, just extending the idea of linear models. This has been extend
 
 ## Estimate smoothers 
 
-See the section on [smoothing](#loess) for more detail on how things are smoothed. Smoothing options are mainly down to local scoring (loess), smoothing splines or regression splines (such as B-spline, P-spline, or thin plate spline). Regression splines can be written as linear combinations of basis functions, which don't depend on the response variable.
+See the section on [smoothing](#loess) for more detail on how things are smoothed. Smoothing options are mainly down to local scoring (loess), smoothing splines or regression splines (such as B-spline, P-spline, or thin plate spline). Regression splines can be written as linear combinations of basis functions, which don't depend on the response variable. 
+
+Polynomials, such as $\mu_i = \alpha + \beta_1 x_i + \beta_2 x_i^2$ for a parabola, can fit all kinds of shapes and are technically linear because they are an additive function of the parameters, but they have strange and often undesirable symmetries and have explosive uncertainty at the edges. They have no local smoothing, only global smoothing (so that any data point on any part of the x axis can change the curve arbitrarily far from itself). 
 
 Remember GAMs involve estimating the smoothers for each predictor simultaneously, along with any covariance between the smoothers. 
 
@@ -1511,9 +1566,19 @@ Just a quick note about variables. Continuous variables are easy in this Bayesia
 
 Priors are posteriors, posteriors are priors, they are all distributions and there is nothing special about any of them. In linear prediction, the priors are quickly overwhelmed by data so they don't matter all that much, but they are a very good place to practice and to get the justification right for priors. 
 
-There is no correct prior, only justifiable ones, useful ones, agreeable ones, reasonable ones. The preceding section on GAMs shows that a linear model can represent anything, at all (viz Tukey's statement about elephants).
+There is no correct prior, only justifiable ones, useful ones, agreeable ones, reasonable ones. The preceding section on GAMs shows that a linear model can represent anything, at all (viz von Neumann's statement about elephants).
 
+## Contrasts 
 
+The causal contrast is really what we want to compare between groups, or a group and a hypothesis. It is never legitimate to compare the degree of overlap of two distributions: this means that it's never legitimate to compare their confidence intervals or p values either, but rather their contrast,derived from the posterior distribution (such as is obtained by a Bayesian posterior, or, I suppose, by bootstrapping). 
+
+The difference in means, or the whole distribution of differences, is something that can be modelled as a posterior distribution, and so can be estimated in light of evidence. 
+
+These estimates are whole distributions, not points: points are not estimates, they are decisions.
+
+## Centreing 
+
+Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define a scientifically meaningful prior. 
 
 # Missing {#missing}
 
