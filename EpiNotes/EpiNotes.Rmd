@@ -117,13 +117,13 @@ knitr::kable(contingencyabcd, booktabs = TRUE, caption= "Contingency table. This
 #\end{tabular}
 ```
 
-```{r contingency-dh01, echo=FALSE, message=FALSE}
+```{r contingency-dh01, echo=FALSE, message=FALSE, cache=FALSE}
 contingencydh <- tibble(" " = c("Outcome", "No outcome", ""),
             "Exposed" = c("d1", "h1", "1"),
             "Unexposed" = c("d0", "h0", "0"),
             "total" = c("d", "h", "n")
             )
-knitr::kable(contingency, booktabs = TRUE, caption= "Contingency table. This table is the same, but contains the d/h and 0/1 notation used later in some of the equations.", escape=FALSE)
+knitr::kable(contingencydh, booktabs = TRUE, caption= "Contingency table. This table is the same, but contains the d/h and 0/1 notation used later in some of the equations.", escape=FALSE)
 ```
 
 
@@ -1195,11 +1195,9 @@ If the effect varies continuously across a continuous variable that is [heteroge
 
 Overall, where the effect itself varies by the magnitude of another factor, this is called interaction or effect modification. It's often described as a departure from a combined linear effect of two independent exposures, such that the combined effect is greater or lesser than would have been predicted by simply combining the isolated effects of the exposures. This definition allows a statistical test, such as the chi squared test for heterogeneity across ordered categories of exposure, or a test of the null hypothesis that the effect is additive in a general linear model.
 
-## Confounding
+## Definitions of confounding
 
-Confounding is defined quite divergently. As a working definition, it is a nuisance which distorts the estimate of the independent effect of a certain exposure. The confounder will have not change the true magnitude of the effect being estimated, but it will alter the estimate by an independent and possibly unmeasured mechanism. It is identified as the unequal distribution of a further influential risk factor between those exposed and unexposed to the exposure of interest. Confounding is distinguished from bias because it depends on a measurable quantity. The quantity can then potentially be controlled for, such as by comparing strata with and without it, or including it in a model which explains the observed outcome. A variable might be a confounder, but not alter the estimate by very much. In that case it may be safer to ignore it rather than risk introducing bias by conditioning on it. The approach to this depends very much on the amount by which the effect estimate alters with the confounder, and the causal model for generating the data under which the analysis is carried out.
-
-Confounders are
+Confounders in Classical Epidemiology are
 
 1 associated with the exposure in the source population
 
@@ -1207,11 +1205,26 @@ Confounders are
 
 3 not a causal intermediate from exposure to outcome
 
-There are other definitions and literal reams devoted to identifying confounders, which have much more nuanced definitions and exacting analytic approaches. 
+Confounding is defined quite divergently. As a working definition, it is a nuisance which distorts the estimate of the independent effect of a certain exposure. The confounder will have not change the true magnitude of the effect being estimated, but it will alter the estimate by an independent and possibly unmeasured mechanism. It is identified as the unequal distribution of a further influential risk factor between those exposed and unexposed to the exposure of interest. Confounding is distinguished from bias because it depends on a measurable quantity. The quantity can then potentially be controlled for, such as by comparing strata with and without it, or including it in a model which explains the observed outcome. A variable might be a confounder, but not alter the estimate by very much. In that case it may be safer to ignore it rather than risk introducing bias by conditioning on it. The approach to this depends very much on the amount by which the effect estimate alters with the confounder, and the causal model for generating the data under which the analysis is carried out.
 
-The four elemental means of confounding could be 
 
-The Fork, where X and Y share a common cause Z and so are correlated, that is they are not independent $Y \not\!\perp \!\!\! \perp X$. If stratified by Z though, we can say that in each stratum of Z or "conditional on Z", X and Y re independent $Y \perp \!\!\! \perp X | Z$ :
+## Directed Acyclic graphs {#DAGs}
+
+DAGs are basically all the causal model that most people will ever use. Although the information they contain can be written in any other format of causal model, such as structural equations and potential outcomes frameworks or structural causal models, they have the advantage of being understandable in more than one way, because they are pictures, yet analysable as text because they are a list of relationships. Part of the attraction is that they can be used in the do-calculus. 
+
+Acyclic means they don't contain loops. Thus the rules apply more clearly, without the loss of definite solutions induced by cyclic graphs. They are made of: 
+
+-   Nodes, Edges, Directed or not; Parents, Children, Ancestors, Descendants. 
+
+-   a front door path is all forward arrows eg AC or AEDF, 
+
+-   a backdoor path is one starting with a "block" or reversed arrow eg EACD 
+
+## The elemental confounds  
+
+The four elemental structures of confounding could be 
+
+- The Fork, where X and Y share a common cause Z and so are correlated, that is they are not independent $Y \not\!\perp \!\!\! \perp X$. If stratified by Z though, we can say that in each stratum of Z or "conditional on Z", X and Y re independent $Y \perp \!\!\! \perp X | Z$ : 
 
 ```{r confounding-fork}
 coord_dag_fork <- list(
@@ -1224,7 +1237,7 @@ dag_fork <- ggdag::dagify(x ~ z,
 ggdag::ggdag(dag_fork) + theme_void()
 ```
 
-The Pipe, where again X and Y are no independent $Y \not\!\perp \!\!\! \perp X$, but X is a cause of Z which is in turn a cause of Y. Z can be said to mediate the effect of X on Y. For any value of Z, X and Y are independent $Y \perp \!\!\! \perp X | Z$. In this case though, everything that monad Y knows about monad X is already known by monad Z. Sometimes that direct effect is included in the scientific question, sometimes it's not. Conditioning on Z can radically alter the estimate:
+- The Pipe, where again X and Y are no independent $Y \not\!\perp \!\!\! \perp X$, but X is a cause of Z which is in turn a cause of Y. Z can be said to mediate the effect of X on Y. For any value of Z, X and Y are independent $Y \perp \!\!\! \perp X | Z$. In this case though, everything that monad Y knows about monad X is already known by monad Z. Sometimes that direct effect is included in the scientific question, sometimes it's not. Conditioning on Z can radically alter the estimate: 
 
 ```{r confounding-pipe}
 coord_dag_pipe <- list(
@@ -1237,7 +1250,7 @@ dag_pipe <- ggdag::dagify(z ~ x,
 ggdag::ggdag(dag_pipe) + theme_void()
 ```
 
-The Collider, where X and Y share no common cause, don't cause each other, but do share a result Z. Here, $Y \perp \!\!\! \perp X$, until stratifying by Z. $Y \not\!\perp \!\!\! \perp X |Z$, which is unlikely to be the quantity you're looking for p(Y|do(X)). You can easily create a statistical phantom, a non-causal association, by conditioning on a collider:
+- The Collider, where X and Y share no common cause, don't cause each other, but do share a result Z. Here, $Y \perp \!\!\! \perp X$, until stratifying by Z. $Y \not\!\perp \!\!\! \perp X |Z$, which is unlikely to be the quantity you're looking for p(Y|do(X)). You can easily create a statistical phantom, a non-causal association, by conditioning on a collider: 
 
 ```{r confounding-collider}
 coord_dag_collider <- list(
@@ -1249,7 +1262,8 @@ dag_collider <- ggdag::dagify(z ~ x,
               coords = coord_dag_collider)
 ggdag::ggdag(dag_collider) + theme_void()
 ```
-The Descendant:
+
+- The Descendant, may be a visible thing that is a descendant of an unobserved important thing. Its effect depends on which type of thing it's a descendant of but in each case it holds information about its ancestor. If its ancestor is a mediator in the pipe structure as in the picture below, then adjusting for the descendant acts a little as adjusting for the ancestor. So in this particular example $Y \not\!\perp \!\!\! \perp X$ because of the causal chain through Z. Just as conditioning for Z would remove truly causal information, A will remove the proportion of causal information that it holds about Z and might even completely remove the causal effect of Z so that X and Y appear artefactually independent $Y \perp \!\!\! \perp X|A$: 
 
 ```{r confounding-descendant}
 coord_dag_descendant <- list(
@@ -1263,17 +1277,19 @@ dag_fork <- ggdag::dagify(z ~ x,
 ggdag::ggdag(dag_fork) + theme_void()
 ```
 
+
+
 ## Bias
 
 Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. Any of the other influences in this section will count as a bias, if it is not detected. If it is detected and cannot be controlled for, or controlling for it introduces another influence, then it is also a bias[^9].
 
 [^9]: This reading may be wrong, because very few commentators are willing to go outside the lines when describing fundamental concepts. A note from London divides it into descriptive studies, where bias arises if the sample is not representative of the population, and analytic studies, where bias arises if the groups to be compared are not comparable. I think they're talking about the parameter estimate, which in "descriptive" is an estimate of an unobserved population parameter and in "analytic" is an estimate of an unobserved generalisable parameter of the difference between groups.
 
-Fortunately there are various types of bias that have been identified.
+Fortunately there are various types of bias that have been identified. In modern epidemiology all of these are in essence either a selection or an information bias (the latter also called a misclassification bias in some quarters). 
 
 ## Selection bias
 
-Selection bias is present when there is a systematic difference in the exposure or outcome between those who are observed and those who are not, or more broadly where one or both of these groups in the sample fail to reflect the target population. That is:
+Selection bias is present when there is a systematic difference in the exposure or outcome between those who are observed and those who are not, or more broadly where one or both of these groups in the sample fail to reflect the target population. The probability of being observed is therefore not the same between the groups or strata to be considered, and so they are non-comparable. That is:
 
 -   The sampling frame may not be representative of the target population
 
@@ -1285,7 +1301,7 @@ Response bias is a type of selection bias, the odds ratio among those who respon
 
 -   Surveillance bias, where there is greater intensity of observation on particular individuals who are then more likely to be identified as having further characteristics, irrespective of the mechanistic relationship of those characteristics to either exposure or outcome
 
--   Differential Follow-up is one of the very many [missing data] problems, this one particularly in situations where individuals either leave or are ignored for the duration in which they may develop outcomes or even further exposures, confounders, and so on[^11]
+-   Differential Follow-up has been treated as one of the very many [missing data] problems. This one particularly in situations where individuals either leave or are ignored for the duration in which they may develop outcomes or even further exposures, confounders, and so on[^11].
 
 -   Healthy worker effect
 
@@ -1318,11 +1334,7 @@ Information bias is present when there is a difference in the accuracy of inform
 
 [^15]: For example, the outcome is reported with greater deviation or variation in the exposed, or vice versa
 
-## Systematic bias
-
-The data are insufficient to compute a causal effect even with an infinite sample size.
-
-## To avoid.
+## To avoid bias 
 
 -   Blinding[^16]
 
@@ -1344,7 +1356,52 @@ The data are insufficient to compute a causal effect even with an infinite sampl
 
 Discarding information based on potential comparators having parameters that fall outside acceptable ranges: - Restriction is absolute and simple but reduces potential comparisons, hence inferences - Matching - by individual (search for control with Value = case Value +/- acceptable range) - by group aka frequency (distribution in case group matched by that in control group) - re-note Case Definitions: clear method, clear boundaries, defined source population
 
-Or not discarding but instead randomising. - Simple random "needs a whole population list" although of course there are limits. - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample.
+Or not discarding but instead randomising. - Simple random "needs a whole population list" although of course there are limits. - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample. 
+
+# Causal reasoning and the do-calculus {#causality} 
+
+DAGs are a subclass of the entity "causal model". Structural Causal Models, for example, encode the information as a Tuple M = (U, V, F, P(U)) where U is endogenous variables and F a function describing the distribution of the endogenous variables U, V is exogenous variables, and P(U) a probability distribution over the domain of U. Then F is replaced by $F_x$ when modelling the result of intervention. 
+
+Backdoor paths using DAGs were dealt with [above](#DAGs).
+
+## Bradford Hill's viewpoints
+
+Having had these taught as criteria, it's reassuring to hear them as simply things to consider in a pondering, while-running sort of way. ABH himself called them viewpoints and there it stood until DAGs. The list is:
+
+- "An active agent or a static condition" Temporality 
+- Strength (size) 
+- Consistency (across types of information) 
+- Dose:Response (Biological gradient) 
+- Specificity 
+- Biological plausibility 
+- Coherence (sort of biological plausibility but probably intended to mean that borrowing from other  situations supports the idea) 
+- "Experiment" (protection by removal, in the examples) 
+- Analogy (the example is HepB / HIV) 
+- Predictive performance (no alternative theories after rigorous testing) 
+
+X and Y are associated in the population if X causes Y, Y causes X, or both X and Y are caused by another variable, call it Z. In this case X and Y are not associated in strata defined by Z X and Y may not be associated in the population, but are associated within strata of Z, if Z is caused by both X and Y Z-conditioning can therefore create or remove X:Y associations depending on the causal structure.
+
+## Axioms of the do-Calculus {#do-calculus}
+
+A graphical algorithm for back door adjustment is a good entry to this: back door because all causation goes through the front door, in the direction of the causal arrows from the exposure of interest. The back door is all those paths from exposure to outcome which start by going backwards up an arrow that points to the exposure. 
+
+Remove all front door arrows from the exposure, and if there are unblocked paths there is confounding. Draw dotted lines connecting any nodes that share a child that is either in S or descends to S. A set S of candidate confounders will be sufficient to control confounding if
+
+-   none is a descendant of the exposure
+
+-   there is no open path from the exposure to the outcome that avoids a member of S,
+
+-   including the new, dotted lines that denote 1st-gen sharing of S ancestry S can induce open paths by causing the dotted lines: this demonstrates the creation of conditional association by stratum creation.
+
+The do-Calculus simulates intervention by deleting certain functions from the model, replacing random parameters X with a constant x. This allows $P(Y|do(X))$ to be estimated in terms of the joint probability of the observed distribution. There are three rules to this do-Calculus, derived from rules of probability and straightforward reading of the DAG: 
+
+1. We can ignore any node that doesn't sit on a path from exposure to outcome. This is called a node that's d-separated. The graph removing these paths is called $G_{\bar x}$.
+
+$$P(y|z, do(x). w) = P(y|do(x),w) \textrm{   if   }(Y \perp Z | W, X)G_{\bar X} $$ 
+
+2. If a set of variables Z blocks all back door paths from exposure X to outcome Y, then simply observing them is sufficient to estimate their causal effect. The observations can be treated as intervention, $P(Y | do(X), Z) = P(Y| X , Z)$. 
+
+3. If there are no causal paths from X to Y through Z, then $P(Y|do(X)) = P(Y)$. This can also be stated as ignoring the variables Z if $(Y \perp Z|W,X)$ in $G_{\bar X \bar{W(Z)}}$, the graph with arrows removed that go into X and into all W that are descendant of Z. 
 
 # Reliability {#reliability}
 
@@ -1801,37 +1858,6 @@ $R_0 = c\beta t$, that is $R_0$ = contacts \* duration of infectiousness \* prob
 
 Estimation depends on being able to see direct and indirect effects; with some assumptions $VE_s$ and $VE_i$ can be jointly estimated from only the disease rate in vaccinated versus unvaccinated if there are different vaccinated proportions in strata, clusters or times. This joint estimation has a coverage estimate trading $VE_i$ against $VE_s$. If considering a 2nd stage cluster, infection probability $\beta$, $VE_s =0$, proportion infected at time t $I_t$, contact probability *c*, duration of contact *d* then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times $1-VE_i$.
 
-# Causal reasoning {#causality}
-
-## Causality -- Bradford Hill -- 9 dogme
-
-"An active agent or a static condition" Temporality, Strength (size), Consistency (across types of information), Dose:Response (Biological gradient), Specificity, Biological plausibility, coherence (sort of biological plausibility but probably intended to mean borrowing from other situations supports the idea), "Experiment" (protection by removal, in the examples), analogy (the example is HepB / HIV). Predictive performance No alternative theories after rigorous testing
-
-X and Y are associated in the population if X causes Y, Y causes X, or both X and Y are caused by another variable, call it Z. In this case X and Y are not associated in strata defined by Z X and Y may not be associated in the population, but are associated within strata of Z, if Z is caused by both X and Y Z-conditioning can therefore create or remove X:Y associations depending on the causal structure.
-
-## Causal Complements
-
-These are the things which together are "necessary and sufficient". Multi-causality is demonstrated by Directed Acyclic Graphs. Acyclic because the rules apply more clearly, without the loss of definite solutions induced by cyclic graphs.
-
--   Nodes, Edges, Directed or not; Parents, Children, Ancestors, Descendants.
-
--   directed path is all forward arrows eg AC or AEDF,
-
--   backdoor path is one starting with a block eg EACD
-
--   collider: C is a collider on ACB but not ECD
-
--   Blocked path has a collider along it; otherwise open
-
-Remove all arrows from the exposure; in this case investigating effect of E on D. If there are unblocked paths there is confounding. Draw dotted lines connecting any nodes that share a child that is either in S or descends to S. A set S of candidate confounders will be sufficient to control confounding if
-
--   none is a descendant of the exposure
-
--   there is no open path from the exposure to the outcome that avoids a member of S,
-
--   including the new, dotted lines that denote 1st-gen sharing of S ancestry S can induce open paths by causing the dotted lines: this demonstrates the creation of conditional association by stratum creation.
-
-Selection or some other process of bias can be modelled with DAGs as well, another name for selection bias being Collider Stratification bias.
 
 # Machine Learning {#ML}
 
