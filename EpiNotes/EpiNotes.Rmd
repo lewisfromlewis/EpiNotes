@@ -1399,7 +1399,21 @@ The do-Calculus simulates intervention by deleting certain functions from the mo
 
 $$P(y|z, do(x). w) = P(y|do(x),w) \textrm{   if   }(Y \perp Z | W, X)G_{\bar X} $$ 
 
-2. If a set of variables Z blocks all back door paths from exposure X to outcome Y, then simply observing them is sufficient to estimate their causal effect. The observations can be treated as intervention, $P(Y | do(X), Z) = P(Y| X , Z)$. 
+2. If a set of variables Z blocks all back door paths from exposure X to outcome Y, then simply observing them is sufficient to estimate their causal effect. The observations can be treated as intervention, $P(Y | do(X), Z) = P(Y| X , Z)$. More generally, in the DAG below with a cause X and an observed control variable U, the probability of Y consequent to intervening on X is the distribution of Y, stratified by X and by the control variable, averaged over the distributin of the control variables $P(Y| do(X)) = \sum_U P(Y|X,U) P(U) = E_U P(Y|X,U)$. Marginalising (or averaging) over the control variables changes the causal effect of X on Y and is important, except perhaps in the simplest clearest models. So, again, we don't use the coefficient relating X to Y after controlling for U, but samples and a description from the entire posterior predictive distribution.
+
+```{r confounding-do-calc}
+coord_dag_fork_do <- list(
+    y=c(x=0,u=1,y=0),
+    x=c(x=1, u=2, y=3)
+)
+dag_fork_do <- ggdag::dagify(
+    x ~ u,
+    y ~ u,
+    y ~ x,
+              coords = coord_dag_fork_do)
+ggdag::ggdag(dag_fork_do) + theme_void()
+```
+
 
 3. If there are no causal paths from X to Y through Z, then $P(Y|do(X)) = P(Y)$. This can also be stated as ignoring the variables Z if $(Y \perp Z|W,X)$ in $G_{\bar X \bar{W(Z)}}$, the graph with arrows removed that go into X and into all W that are descendant of Z. 
 
