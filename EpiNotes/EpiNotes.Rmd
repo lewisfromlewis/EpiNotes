@@ -1415,7 +1415,9 @@ ggdag::ggdag(dag_fork_do) + theme_void()
 ```
 
 
-3. If there are no causal paths from X to Y through Z, then $P(Y|do(X)) = P(Y)$. This can also be stated as ignoring the variables Z if $(Y \perp Z|W,X)$ in $G_{\bar X \bar{W(Z)}}$, the graph with arrows removed that go into X and into all W that are descendant of Z. 
+3. If there are no causal paths from X to Y through Z, then $P(Y|do(X)) = P(Y)$. This can also be stated as ignoring the variables Z if $(Y \perp Z|W,X)$ in the graph with arrows removed that go into X and into all W that are descendant of Z, called: $G_{\bar X \bar{W(Z)}}$. 
+
+4. Use [https://daggity.net] to check it! Use \@(ref:greenland_causal_1999)
 
 # Reliability {#reliability}
 
