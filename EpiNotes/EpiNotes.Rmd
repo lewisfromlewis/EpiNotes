@@ -1678,6 +1678,18 @@ Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define
 
 The point, or linear single predictor, of a single parameter is never right unless in the most simple model that has perfectly represented all the variation. The correct estimate uses all of the posterior distribution, from which samples can be taken and used to explain what's going on. The question, what is the effect of X on Y given Z, is best represented as p(Y|do(X)). This can be simply p(Y|X,Z) in the simplest situation of Z as a common cause, but it helps to phrase the eestimand in that causal language because it helps to consider the specific form of the estimator. If Z is a collider, for example, then the effect of X on Y is not estimated by p(Y|X,Z) but better by p(Y|X).
 
+# Model fit 
+
+The fit is assessed internally to produce some kind of optimisation of the way the parameters are estimated. Mean squared error and its pals are common ways to assess that fit, or binary prediction error for binary models, and so on. Generally, though, it's not really the fit of the model to the sample that is important. 
+
+There's a good heuristic that a less complex model, having the same fit as a more complex one, is preferable. It's not clear what makes this so, apart from a philosophical preference. One thing is the predictive accuracy, or at least the fidelity to an underlying truth. Having fit the model to a training set, we can use a test set to judge its predictive accuracy, and we find that in fairly simple models there is a trade-off between in-sample accuracy, and out-of sample predictive accuracy. 
+
+Out of sample accuracy is as good a judge of value of a model as any.
+
+## Cross validation 
+
+Leave-one-out (LOO cross validation) is a common way to do this. Take one observation out of the model and re-estimate the parameters; now check how well the model fits all the points, including the one left out. Do that for all the points, 
+
 # Missing {#missing}
 
 This theory section around missing data is culled heavily from Julie Josse User!2018. Data is missing for various reasons
