@@ -1655,6 +1655,10 @@ There are various ways of deciding how much smoothing is required (what value fo
 
 This is based around Richard McElreath's Statistical Rethinking, which has the best setup for an open public course. Just hands down. As with all models, causal thinking is important to justify the shape of the model using information outside of the data. The causes of the data looking as it does, any assumptions about why future data might not look as the current data does, and how to estimate, predict or explain it, all have to come from outside of the data using generative models, and it's best if these generative models are causal in nature. 
 
+## Variables 
+
+Variables are things that are independent or estimated in the model. They can be parameters, and they can also be data. Parameters can be represented by a distribution, and distributions can be represented by a distribution. Mind. Blown. 
+
 ## Parameters 
 
 The parameters are not independent of each other except under very rare conditions, and so the parameters are not often independently interpretable. Instead of interpreting parameters, instead push out posterior predictions. A good entry to Bayesian estimation is just by re-looking at linear regression. In this paradigm, each of the parameters is modelled by a distribution: there's no one correct value that is being estimated, but a range of values with their associated plausibility. 
@@ -1686,7 +1690,17 @@ Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define
 
 ## Posterior predictive effect of a single parameter 
 
-The point, or linear single predictor, of a single parameter is never right unless in the most simple model that has perfectly represented all the variation. The correct estimate uses all of the posterior distribution, from which samples can be taken and used to explain what's going on. The question, what is the effect of X on Y given Z, is best represented as p(Y|do(X)). This can be simply p(Y|X,Z) in the simplest situation of Z as a common cause, but it helps to phrase the eestimand in that causal language because it helps to consider the specific form of the estimator. If Z is a collider, for example, then the effect of X on Y is not estimated by p(Y|X,Z) but better by p(Y|X).
+The point, or linear single predictor, of a single parameter is never right unless in the most simple model that has perfectly represented all the variation. The correct estimate uses all of the posterior distribution, from which samples can be taken and used to explain what's going on. The question, what is the effect of X on Y given Z, is best represented as p(Y|do(X)). This can be simply p(Y|X,Z) in the simplest situation of Z as a common cause, but it helps to phrase the eestimand in that causal language because it helps to consider the specific form of the estimator. If Z is a collider, for example, then the effect of X on Y is not estimated by p(Y|X,Z) but better by p(Y|X). 
+
+## Bayesian linear model 
+
+Just a Bayesian model, where outcome variable is a linear function of (has a constant and additive relationship with) the predictor variable, and of other variables. The model considers all possible values of this constant relationship, with the posterior distribution of plausibility for each combination of relationships being the model output. For example, to predict height from a prior of mean 178, sd 20:
+
+$h_i ~ \textrm{Normal} (\mu_i, \sigma)$
+$\mu_i = \alpha + \beta(x_i - \bar{x})$: Note this is not stochastic. Also that it's not special to make it linear. It's just easy to explain. If another relationship is easy to explain, and makes more sense, then use that. 
+$\alpha ~ \textrm{Normal}(178,20)$ "what is the value of height when $x_i$ at the mean, $\bar{x}$?
+$\beta ~ \textrm{Normal}(0,10)$ "what is the change in height when $\x_i$ changes by one unit?"; this prior allows negative relationships and maybe a log normal, forcing $\beta$ to be positive and allowing log($\beta$) to be normal and centred on zero, like a Gaussian and so quite easy.
+$\sigma ~ \textrm{Uniform}(0,50)$
 
 # Model fit 
 
