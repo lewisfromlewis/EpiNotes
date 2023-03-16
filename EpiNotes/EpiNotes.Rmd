@@ -1510,7 +1510,11 @@ $$R^2 = \frac {\sum_{i=1}^n (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2
 
 Which is literally the sample correlation squared. Deleting data or adding terms to a regression model always increase R-squared.
 
-Variance around the regression line is usually replaced by its estimate. $\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$
+Variance around the regression line is usually replaced by its estimate. $\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$ 
+
+## Shrinkage 
+
+When assigning individuals a common distribution, and fitting that distribution to the sample, then each individual informs the value of each other. This is important in father-son height prediction and I think in the partial model shrinkage of an integer-substituted regression model. 
 
 ## Mantel-Haenszel
 
@@ -1708,7 +1712,7 @@ Multiple correspondence analysis MCA graph on a "missingness matrix" shows neigh
 
 [EM algorithm], or supplementary Expectation-Minimisation algorithm, allows a model that uses the observed data, then updates with the last estimate and so on. Needs a new process for each assumed underlying model.
 
-Imputation using the mean shrinks the correlation to zero; by the regression line shrinks to 1; can impute by the regression line plus noise (stochastic regression) and preserve both the joint and marginal distribution of the data, so estimation has no bias added to the missingness bias itself. It's an extension of this last to the multivariate case that results in the mice procedure.
+Imputation using the mean shrinks the correlation to zero; by the regression line shrinks to 1; can impute by the regression line plus noise (stochastic regression) and preserve both the joint and marginal distribution of the data, so estimation has no bias added to the missingness bias itself. It's an extension of this last to the multivariate case that results in the mice procedure. 
 
 The [impact of missingness] is related to the difficulty of imputation and for the same reasons: both proportion and structure of the missingness, and of the data itself, are important in determining these. Get signposts to this by cross validation, or PCA, or various other techniques.
 
