@@ -51,6 +51,10 @@ This initially parasitises on Kenny Baillie's work but the idea that local densi
 
 I think this is mine. The possibility that a causal graph can be drawn to describe the mechanistic processes for an overall effect. Then, using probabilistic or perhaps even deterministic relationships, the force of effect down each edge is somehow elicited. Each edge is modified by incoming information from live biological information, as a sort of informative meta analysis. These can be used just to explain but I'm most interested in using them for randomisation probabilities to improve causal understanding in the middle of a trial which also informs about endpoints.
 
+# Epistemology 
+
+The way in which we know things, or more generally the way in which we justify claims, is related to the truth and to the way the world is made, but only in the long run and there is no guarantee that an epistemologically rigorous statement, holding a strong basis for past and future inference, reflects ontological truth. Ontology is the generation of things, such as truths, and would allow epistemologically sound inference, but isn't always necessary to understand the world (see the geocentric model, and so on). The inner need to assert that an epistemological claim is in fact an ontological one is common, leads to people arguing that odds ratios are satan, and was called the mind projection fallacy by ET Jaynes.
+
 # Risk {#risk}
 
 Summarise last: this is not the usual way but if we use the whole distribution we will make better inferences thatn if we summarise first (comparing means) we lose information, whereas if we summarise last (compare contrasts) we retain information and correctly quote uncertainty.
