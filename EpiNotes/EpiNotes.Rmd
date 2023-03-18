@@ -442,7 +442,39 @@ This helps to prove the law of large numbers. The probability that a variable ta
 
 #Distributions
 
-I don't know, maybe it's time to bring back some of these babies, just for fun.
+I don't know, maybe it's time to bring back some of these babies, just for fun. 
+
+## Bernoulli mass function
+
+$p(X=x) = p^x.(1-p)^{1-x}$ $p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom {n}{k} = \frac {n!}{k!(n-k)!}$ (remembering that $\binom {n}{0} = \binom {n}{n} = 1$)
+
+## Normal distribution
+
+Any normal distribution is a multiple of sigma and an addend of mu from Z, the Standard Normal Distribution: $$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$$ So if X is a normally distributed variable with mean mu and sd sigma then $X = \mu + \sigma Z, N \sim (\mu,\sigma^2)$
+
+65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of mu
+
+## Multinomial distribution is
+
+$$P(x_{1},\dots x_{n};k) = \frac{k!}{x_{1}!x_{2}!\dots {x_{n}!}}.p_{1}^{x_{1}} \dots p_{n}^{x_{n}}$$
+
+of which a special case is the binomial distribution $P(x, k) = \frac{k!}{x!(k-x)!} \times p^{x}.q^{k-x}$
+
+T distribution is descended from the standard normal, and assumed to be symmetric and centred on 0 so with only 1 parameter, the degrees of freedom. Skew can be exponentially transformed or another distribution used.
+
+## Poisson
+
+The Poisson distribution has both mean and variance equal to lambda, which is events over a given time, $\lambda = \frac{D}{t}$ and noting $1-x \approx e^{-x}$ so $(1 - x)^n \approx e^{-nx}$ its probability mass function for the unrealised variable X adopting a certain non negative, integer value x is: $$P(X=x;\lambda) = \frac{\lambda^x.e^{-\lambda}}{x!}$$
+
+The relationshiip between the rate, time spent at that rate and the risk for a given proportion of the initial population to have experienced the event, or for any given member to have experienced it, is given in the way hinted by the above exponential relationship for survivor proportion:
+
+$$\textrm{Risk} = 1 - e^{-\lambda t}$$
+
+Standard Error of a rate is SE(number of events)/person-time at risk $SE_{events} = \sqrt{D}, SE_{risk} = \frac{\sqrt D}{t}$ and $\lambda = \frac{D}{t}$ so $SE = \sqrt{\frac{\lambda}{t}}$.
+
+Standard Error of a log rate is $\frac{1}{\sqrt{D}}$, CI is $\lambda^{\times}_{\div} EF$, and EF=$e^{\frac{1.96}{\sqrt D}}$. A difference of log rates is the same as the log of the rate ratio on the original scale, = ${\lambda_0-\lambda_1}^{\times}_{\div} e^{1.96 \sqrt{\frac{1}{D_0} + \frac{1}{D_1}}}$
+
+Used for example in modelling especially unbounded count data, $X \sim Poisson (\lambda t)$ where $\lambda = E[X/t]$ approximating the binomial for large n and small p; let lambda=np modelling contingency tables. In censoring survival models (as an "unbounded" problem). NHST is the Wald against H0: lambda0 = lambda1, $z = \frac{\textrm{log}(rate \> ratio)}{s.e. \textrm{log}(rate \> ratio)}$
 
 ## Beta binomial
 
@@ -514,7 +546,11 @@ Randomisation is distinct from random sampling - "In a properly randomised trial
 
 A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space, and those two likelihoods are not always the same. The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the likelihood which makes the data most likely under the model assumption: this is the maximum likelihood estimate MLE.
 
-Because the whole curve is fitted, it has to depart from at least some of the observed values at least some of the time. This means that it rejects data, but it adds clarity and comparability between well designed tests. If the likelihood is normal, so log(likelihood) is quadratic and so easily solved using the pattern $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. If it's not standard normal then it's not easy to do and iteration is probably as good as algebra. The quadratic is chosen so that the curvature of the actual log likelihood and the quadratic fitted approximation are identical at the fit point, whether the MLE or the null, depending on whether the aim is to test or derive a confidence interval, or to determine the MLE. Wald tests fit at the MLE.
+Because the whole curve is fitted, it has to depart from at least some of the observed values at least some of the time. This means that it rejects data, but it adds clarity and comparability between well designed tests. 
+
+## Quadratic approximation of the Likelihood 
+
+If the likelihood is normal, so log(likelihood) is quadratic and so easily solved using the pattern $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. If it's not standard normal then it's not easy to do and iteration is probably as good as algebra. The quadratic is chosen so that the curvature of the actual log likelihood and the quadratic fitted approximation are identical at the fit point, whether the MLE or the null, depending on whether the aim is to test or derive a confidence interval, or to determine the MLE. Wald tests fit at the MLE.
 
 Other points are divided by the MLE to yield the likelihood ratio. They are standardised by comparing to the MLE, so that with all the approximations above the ratio at the MLE is 1 and the ratio at each 97.5% centile is 0.1465. A ratio is the exponential of a difference, and logs of likelihood ratios to the MLE are convenient because they are all negative.
 
@@ -684,37 +720,7 @@ and for proportions
 
 standard error for a confidence interval: $\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$ standard error for a hypothesis test assumes both are from the same true population probability $\pi$ so uses the common proportion (all +ve / all n) before repeating the above formula: $\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$
 
-## Bernoulli mass function
 
-$p(X=x) = p^x.(1-p)^{1-x}$ $p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom {n}{k} = \frac {n!}{k!(n-k)!}$ (remembering that $\binom {n}{0} = \binom {n}{n} = 1$)
-
-## Normal distribution
-
-Any normal distribution is a multiple of sigma and an addend of mu from Z, the Standard Normal Distribution: $$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$$ So if X is a normally distributed variable with mean mu and sd sigma then $X = \mu + \sigma Z, N \sim (\mu,\sigma^2)$
-
-65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of mu
-
-## Multinomial distribution is
-
-$$P(x_{1},\dots x_{n};k) = \frac{k!}{x_{1}!x_{2}!\dots {x_{n}!}}.p_{1}^{x_{1}} \dots p_{n}^{x_{n}}$$
-
-of which a special case is the binomial distribution $P(x, k) = \frac{k!}{x!(k-x)!} \times p^{x}.q^{k-x}$
-
-T distribution is descended from the standard normal, and assumed to be symmetric and centred on 0 so with only 1 parameter, the degrees of freedom. Skew can be exponentially transformed or another distribution used.
-
-## Poisson
-
-The Poisson distribution has both mean and variance equal to lambda, which is events over a given time, $\lambda = \frac{D}{t}$ and noting $1-x \approx e^{-x}$ so $(1 - x)^n \approx e^{-nx}$ its probability mass function for the unrealised variable X adopting a certain non negative, integer value x is: $$P(X=x;\lambda) = \frac{\lambda^x.e^{-\lambda}}{x!}$$
-
-The relationshiip between the rate, time spent at that rate and the risk for a given proportion of the initial population to have experienced the event, or for any given member to have experienced it, is given in the way hinted by the above exponential relationship for survivor proportion:
-
-$$\textrm{Risk} = 1 - e^{-\lambda t}$$
-
-Standard Error of a rate is SE(number of events)/person-time at risk $SE_{events} = \sqrt{D}, SE_{risk} = \frac{\sqrt D}{t}$ and $\lambda = \frac{D}{t}$ so $SE = \sqrt{\frac{\lambda}{t}}$.
-
-Standard Error of a log rate is $\frac{1}{\sqrt{D}}$, CI is $\lambda^{\times}_{\div} EF$, and EF=$e^{\frac{1.96}{\sqrt D}}$. A difference of log rates is the same as the log of the rate ratio on the original scale, = ${\lambda_0-\lambda_1}^{\times}_{\div} e^{1.96 \sqrt{\frac{1}{D_0} + \frac{1}{D_1}}}$
-
-Used for example in modelling especially unbounded count data, $X \sim Poisson (\lambda t)$ where $\lambda = E[X/t]$ approximating the binomial for large n and small p; let lambda=np modelling contingency tables. In censoring survival models (as an "unbounded" problem). NHST is the Wald against H0: lambda0 = lambda1, $z = \frac{\textrm{log}(rate \> ratio)}{s.e. \textrm{log}(rate \> ratio)}$
 
 ## Poisson regression
 
@@ -728,9 +734,9 @@ limits each timeband to that containing one event (call it a timeclick). So rate
 
 MV norm has mean as a vector, sigma is the variance / covariance matrix
 
-These have parameters of location, scale and skew. Normal location is the mean, t location is the non centrality parameter which are a scalar for univariate and an n-element vector for n-dimensional distributions (eg an n-variate distribution of densities). Scale for a univariate is the variance for univariate normal and t distributions, but is a dispersion matrix sigma of n by n elements for for n-variate distributions (it's the variance / covariance matrix). The skew parameter is a vector of length n for n-variate distributions.
+These have parameters of location, scale and skew. Normal location is the mean, t location is the non centrality parameter which are a scalar for univariate and an n-element vector for n-dimensional distributions (eg an n-variate distribution of densities). Scale for a univariate is the variance for univariate normal and t distributions, but is a dispersion matrix sigma of n by n elements for n-variate distributions (it's the variance / covariance matrix). The skew parameter is a vector of length n for n-variate distributions.
 
-MV t has degrees of freedom usually presumed identical across al variates, a parameter for centrality delta, and a variance / covariance matrix sigma
+MV t has degrees of freedom usually presumed identical across all variates, a parameter for centrality delta, and a variance / covariance matrix sigma
 
 density by `dmvt(x, delta=c(i,j)`, sigma= `as.matrix(r, t, y, u), df=df, log=T)`
 
@@ -1692,6 +1698,12 @@ Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define
 
 The point, or linear single predictor, of a single parameter is never right unless in the most simple model that has perfectly represented all the variation. The correct estimate uses all of the posterior distribution, from which samples can be taken and used to explain what's going on. The question, what is the effect of X on Y given Z, is best represented as p(Y|do(X)). This can be simply p(Y|X,Z) in the simplest situation of Z as a common cause, but it helps to phrase the eestimand in that causal language because it helps to consider the specific form of the estimator. If Z is a collider, for example, then the effect of X on Y is not estimated by p(Y|X,Z) but better by p(Y|X). 
 
+The posterior probability at each proposed parameter value can be constructed in a few ways: 
+
+- grid approximation, directly calculating at each chosen proposal using the entire likelihood (or, plausibility), which gets comutationally intensive quickly 
+- quadratic approximation, assuming that most curves can be reproduced by a quadratic formula 
+- simulation such as MCMC, which assumes very little indeed 
+
 ## Bayesian linear model 
 
 Just a Bayesian model, where outcome variable is a linear function of (has a constant and additive relationship with) the predictor variable, and of other variables. The model considers all possible values of this constant relationship, with the posterior distribution of plausibility for each combination of relationships being the model output. For example, to predict height from a prior of mean 178, sd 20:
@@ -1700,7 +1712,13 @@ $h_i ~ \textrm{Normal} (\mu_i, \sigma)$
 $\mu_i = \alpha + \beta(x_i - \bar{x})$: Note this is not stochastic. Also that it's not special to make it linear. It's just easy to explain. If another relationship is easy to explain, and makes more sense, then use that. 
 $\alpha ~ \textrm{Normal}(178,20)$ "what is the value of height when $x_i$ at the mean, $\bar{x}$?
 $\beta ~ \textrm{Normal}(0,10)$ "what is the change in height when $\x_i$ changes by one unit?"; this prior allows negative relationships and maybe a log normal, forcing $\beta$ to be positive and allowing log($\beta$) to be normal and centred on zero, like a Gaussian and so quite easy.
-$\sigma ~ \textrm{Uniform}(0,50)$
+$\sigma ~ \textrm{Uniform}(0,50)$ 
+
+Many possible lines (because, we asked for lines) are generated from the infinite number of lines that could be generated. The most plausible of them, meaning the most plausible state of the world which is consistent with the data, is chosen. 
+
+## Multivariable Bayesian linear model 
+
+Same as before: in the simple condition, a normal distribution is completely described by its mean and variance, and a multivariate normal is described by a vector of means, and a variance-covariance matrix. 
 
 # Model fit 
 
