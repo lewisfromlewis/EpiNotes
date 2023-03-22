@@ -1697,6 +1697,10 @@ Priors are posteriors, posteriors are priors, they are all distributions and the
 
 There is no correct prior, only justifiable ones, useful ones, agreeable ones, reasonable ones. The preceding section on GAMs shows that a linear model can represent anything, at all (viz von Neumann's statement about elephants).
 
+## Likelihood in Bayesian models 
+
+The posterior is the prior times the likelihood; the likelihood is the number of ways an observation can be produced, with the span of parameters that are chosen, which then acts to convert the observed data into a probability. 
+
 ## Contrasts 
 
 The causal contrast is really what we want to compare between groups, or a group and a hypothesis. It is never legitimate to compare the degree of overlap of two distributions: this means that it's never legitimate to compare their confidence intervals or p values either, but rather their contrast,derived from the posterior distribution (such as is obtained by a Bayesian posterior, or, I suppose, by bootstrapping). 
