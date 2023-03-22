@@ -1636,7 +1636,7 @@ So far so simple, just extending the idea of linear models. This has been extend
 
 See the section on [smoothing](#loess) for more detail on how things are smoothed. Smoothing options are mainly down to local scoring (loess), smoothing splines or regression splines (such as B-spline, P-spline, or thin plate spline). Regression splines can be written as linear combinations of basis functions, which don't depend on the response variable. 
 
-Polynomials, such as $\mu_i = \alpha + \beta_1 x_i + \beta_2 x_i^2$ for a parabola, can fit all kinds of shapes and are technically linear because they are an additive function of the parameters, but they have strange and often undesirable symmetries and have explosive uncertainty at the edges. They have no local smoothing, only global smoothing (so that any data point on any part of the x axis can change the curve arbitrarily far from itself). 
+Polynomials, such as $\mu_i = \alpha + \beta_1 x_i + \beta_2 x_i^2$ for a parabola, can fit all kinds of shapes and are technically linear because they are an additive function of the parameters, but they have "strange and often undesirable symmetries and have explosive uncertainty at the edges". They have no local smoothing, only global smoothing (so that any data point on any part of the x axis can change the curve arbitrarily far from itself). 
 
 Remember GAMs involve estimating the smoothers for each predictor simultaneously, along with any covariance between the smoothers. 
 
@@ -1760,7 +1760,7 @@ Low rank structures imply that you can use clusters to infer with greatest effic
 
 Needs accurate identification of strata: if too broad will replicate the confounding, if misclassified could unpredictably increase or decrease the confounding: "residual confounding". If matched by strata, those strata are reported as if unmatched then results pooled somehow. If perfectly matched for the confounder then the groups can't study the effect of the confounder unless they're also perfectly matched for another cause (resulting in tiny fractured groups, for which a solution is Bayesian Borrowing). Stratum specific probabilities are either randomly distributed about the true total population value if there is partially controlled confounding, or are real, and display the effect modification.
 
-## Standardisation
+## Standardising to a standard population 
 
 Standardisation applies weights to observations in categories according to a standard distribution of observations expected in those categories.
 
@@ -1798,12 +1798,17 @@ The OR is "Odds of exposure in those with outcome"; the logical flips assumes th
 
 Case definition is: - The method used to identify - The boundaries of cases -- eg cutoff on a continuous measure, ins and outs for categorical - The unit of analysis -- eg community, person, organ, events themselves
 
-Cohort E(D1) = Y1 \*(D/Y) - Exposure status is not biased by knowledge of outcome - Exposure status is known for all (because it's the definition of who is in) - Time sequence and course of events can be described\
+## Cohort 
+
+E(D1) = Y1 \*(D/Y) - Exposure status is not biased by knowledge of outcome - Exposure status is known for all (because it's the definition of who is in) - Time sequence and course of events can be described\
 - More than one outcome or type of outcome can be reported
 
 Consider Source of controls How many types of controls How many controls per case (power gains fall from 4 per case) Should they be matched? Loss to follow up reduces power and certainty Differential loss to follow up (by exposure or outcome) biases irretrievably Information / classification bias if outcomes are not equally accurate by exposure
 
-Ecological studies use population values rather than individual values so n is small Multi-group / Time-trend, descriptive / analytic Cheap, easy, quick, maybe all that's possible, allow population inference But don't allow individual inference and don't control confounders "Ecological Fallacy" is extending ecological inferences to individuals Population average exposures would also have to vary by individual to account for variability in outcomes per individual Contextual effects of exposures: when grouped, may have effects contingent on others Outcomes can become exposures for other or the same outcomes (also a contextual effect) Summary / environmental / integral measures Confounding is easily hidden by complexity and size and there are no opportunities to adjust Associations, so confounders, may exist at population level that don't at individual level Details of the distribution of confounders is often not available Bias: Information bias is common, often undetectable and severe often due to the use of proxy, secondary or routine data at high risk of misclassification "non-differential misclassification within groups in ecological studies", unlike in individual level studies, "usually leads to bias away from the null" Misclassification is very common and may be severe. A sort of selection bias by examining exposure and (time dependent) outcome in the same slice, eg measuring candidate risk factors and the cancers at time t (not t+latent period).
+##  Ecological studies 
+These use population values rather than individual values so n is small Multi-group / Time-trend, descriptive / analytic Cheap, easy, quick, maybe all that's possible, allow population inference But don't allow individual inference and don't control confounders "Ecological Fallacy" is extending ecological inferences to individuals Population average exposures would also have to vary by individual to account for variability in outcomes per individual 
+
+Contextual effects of exposures: when grouped, may have effects contingent on others Outcomes can become exposures for other or the same outcomes (also a contextual effect) Summary / environmental / integral measures Confounding is easily hidden by complexity and size and there are no opportunities to adjust Associations, so confounders, may exist at population level that don't at individual level Details of the distribution of confounders is often not available Bias: Information bias is common, often undetectable and severe often due to the use of proxy, secondary or routine data at high risk of misclassification "non-differential misclassification within groups in ecological studies", unlike in individual level studies, "usually leads to bias away from the null" Misclassification is very common and may be severe. A sort of selection bias by examining exposure and (time dependent) outcome in the same slice, eg measuring candidate risk factors and the cancers at time t (not t+latent period).
 
 Correlations and regressions are the usual numbers generated after exploratory analysis. Having the Idea from Crombie has a holy feeling about it, for all that it was written humbly by a sharp witted amateur. Review existing practice Challenge accepted ideas Look for conflicting ideas, ask around Investigate geographical variation or interindividual variation Identify Cinderella topics Let loose the imagination / be kind to ideas / reject little Dissect the questions Write Discuss with colleagues over pints Think in the bath Read around the subject until you have read enough Look upstream Choose the best question Will this method answer my question? Evidence there is a problem\
 Is it feasible? Burden of disease Do I have the resources? Big possible changes to patient outcome Is method appropriate for the design? Cheap solution or expensive problem Question is a question other people can understand An answer would be done by people Urgency of good data / chance of bad practice to entrench Feasibility Refine the question with a sharp tool and a high threshold for acceptance Review as if newly seeing it Is it as important as it looked? Don't rush in: are you still sure that's the question? Review and redo the analysis, simulate, simulate, simulate Criticise mercilessly Where could it go wrong? Why might people not participate? What necessary data might not be feasible to collect? Do we have enough blood and treasure to spend? Can we simplify it and still get an answer / will it be even better? Be realistic Ask the best version of the best question as well as you can, if you can do it well Don't waste effort on getting incrementally closer to perfection Don't start what you will never finish Qualitative Seeks to interpret phenomena through the meanings people bring to them When the topic is not familiar, the context is needed, rich views or the social world in which others live is the goal. Common features are flexibility, triangulation, contextualisation, iteration and reflexivity. Techniques include interviews, focus groups, observation, participation.
@@ -1814,15 +1819,36 @@ This is something that needs to be expanded here. For now it's just a dumping gr
 
 # Ethics {#ethics}
 
-    Beneficence, non-Maleficence, Autonomy, Justice
-    Goal-, duty- or rights-based justifications.
-    Validity, welfare, dignity (where Dignity = Confidentiality, Consent, Coercion)
-    Consequentialism, Deontology, Communitarian schemata
-    Reseach is not valueless and ethics are not universal: it's a process to ensure the dilemma is continuously resolved.
+Beneficence, non-Maleficence, Autonomy, Justice
+Goal-, duty- or rights-based justifications.
+Validity, welfare, dignity (where Dignity = Confidentiality, Consent, Coercion)
+Consequentialism, Deontology, Communitarian schemata
 
-ICH GCP principles 1. Do it with GCP 2. Benefit \> Risk 3. Rights of subjects \> Society 4. Info supports the trial 5. Protocol 6. Approved by Ethics 7. Supervised by Dr 8. Qualified team 9. Informed consent 10. Data protected 11. Privacy / confidentiality AND GMP manufactured products 12. Quality control in trial
+Reseach is not valueless and ethics are not universal: it's a process to ensure the dilemma is continuously resolved.
 
-NIH has the... The Eight Ethical Principles 1. Collaborative Partnership 2. Social Value 3. Scientific Validity 4. Fair subject selection 5. Favorable risk-benefit ratio 6. Independent review 7. Informed Consent 8. Respect for human subjects
+ICH GCP principles 
+    1. Do it with GCP 
+    2. Benefit \> Risk 
+    3. Rights of subjects \> Society 
+    4. Info supports the trial 
+    5. Protocol 
+    6. Approved by Ethics 
+    7. Supervised by Dr 
+    8. Qualified team 
+    9. Informed consent 
+    10. Data protected 
+    11. Privacy / confidentiality AND GMP manufactured products 
+    12. Quality control in trial
+
+NIH has the... The Eight Ethical Principles 
+    1. Collaborative Partnership 
+    2. Social Value 
+    3. Scientific Validity 
+    4. Fair subject selection 
+    5. Favorable risk-benefit ratio 
+    6. Independent review 
+    7. Informed Consent 
+    8. Respect for human subjects
 
 Protocols for the NIH contain
 
@@ -1862,7 +1888,7 @@ Apparently visual aids are Participatory.
 
 ## Communicating results
 
-They recommend onsidered and mediated feedback of overall results, but they also recommend using simple tests as a sop to the simple folk while sending off all the other tests.
+They recommend considered and mediated feedback of overall results, but they also recommend using simple tests as a sop to the simple folk while sending off all the other tests.
 
 # Surveillance {#surveillance}
 
@@ -1920,7 +1946,7 @@ $R_0$, or the basic reproduction number, is the number of new infections from th
 
 $R_0 = c\beta t$, that is $R_0$ = contacts \* duration of infectiousness \* probability of infection per contact. If x is the proportion susceptible and "herd immunity" is 1-x then when R is 1: $HI = 1-\frac{R}{R_0} = 1-\frac{1}{R_0} = \frac{R_0}{R_0}-\frac{1}{R_0}$, so HIT (herd immunity threshold) is $HIT = \frac{R_0-1}{R_0}$
 
-**Vaccine efficacy** is a foolish concept and has resuted n much unwanted inference and communication. It is "usually" 1-relative risk reduction (1 - Risk in vaccinated/Risk in Unvaccinated). If due to reducing infectiousness it's $VE_i$, if susceptibility $VE_s$.
+**Vaccine efficacy** is a foolish concept and has resulted in much unwanted inference and communication. It is "usually" 1-relative risk reduction (1 - Risk in vaccinated/Risk in Unvaccinated). If due to reducing infectiousness it's $VE_i$, if susceptibility $VE_s$.
 
 -   If $VE_s=0$, $VE_i=1$ and f is the proportion vaccinated then $R_f=(1-f)R_0$
 
@@ -2021,6 +2047,12 @@ split-apply-combine with(tapply(X, factor, function)) type of structure or with(
 apply(data, dim, fun) tapply(apply along an index, a function to data) ie tapply(data, index, function) sapply(simplify the output of a function applied to data) eg perms \<- sapply(1:10000, function(i) testStat(DEcounts, sample(group))) lapply(apply a function across a list; unlist to simplify)
 
 `Hmisc::cut2(data, g)` `reshape2::melt(data, id, measure.vars)` `dcast(melteddata, formula, Aggregation value)` `transformations` `plot` - `coplot` - `hist` `abs`, `sqrt`, `ceiling`, `floor`, `cos`, `sin`, `log`, `log2`, `log10`, `exp`, `round(data, digits=n)`, `signif(data, digits=n)` `p.adjust(method = c("bonferroni", "BH", "BY")`
+
+## Rethinking 
+
+`quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. 
+`link()` samples from the posterior distribution of the parameters calculated by quap(). 
+`sim()` produces samples from the full posterior model (simulated values), including both uncertainty in parameter values and uncertainty in a sampling process. 
 
 ## time series
 
