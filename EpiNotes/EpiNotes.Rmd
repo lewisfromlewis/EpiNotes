@@ -454,6 +454,10 @@ Any normal distribution is a multiple of sigma and an addend of mu from Z, the S
 
 65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of mu
 
+## Exponential 
+
+Useful when it must be strictly positive, such as a scale parameter. The average is the inverse of the rate. 
+
 ## Multinomial distribution is
 
 $$P(x_{1},\dots x_{n};k) = \frac{k!}{x_{1}!x_{2}!\dots {x_{n}!}}.p_{1}^{x_{1}} \dots p_{n}^{x_{n}}$$
@@ -830,6 +834,8 @@ LOESS are local polynomial regression smoothers. The running mean smoother is th
 Regression smoothing simply seeks to minimise the penalised sum of squares. The first half of the equation below is the sum of squared deviations between s(x), the function smoothing x, and the observed value. The second half is the penalty for wiggliness, using the smoothing parameter $\lambda$ to control the amount of penalty for wiggliness, integrating across the second derivatives of the curve and so producing a zero result for a straight line and ever higher results for more wiggles. The penalised sum of squares is minimised by a natural cubic spline with knots at every datapoint, which is not practical for large datasets, and is wasteful as the effective degrees of freedom are smaller than the number of knots. 
 
 $$\sum_{i=1}^n (y_i - s(x_i))^2 + \lambda \int(s''(x))^2 dx$$
+## B-splines 
+
 Regression splines are a bit more practical. They are a linear combination of basis functions.  Basis functions are defined by what they are components of: they are all members of a function space which is in turn made up of linear combinations of the basis functions. Piecewise polynomials are usually used. For example, a spline with a different set of cubic relationships ($y = \beta_0 + \beta_1 x_i^2 + \beta_2 x_i^2$, etc) with covariates above and below a cut point might have a coefficient times x to the power of 0, 1, 2, 3 for each window, hence 8 degrees of freedom to draw the overall relationship, and hence the ability to draw most conceivable shapes.  
 
 $$y = \Bigg\{{\beta_{01} + \beta_{11}x_i + \beta_{21}x_i^2 + \beta_{31} x_i^3 \textrm{ if } x_i < c;\\
@@ -1665,6 +1671,15 @@ This is based around Richard McElreath's Statistical Rethinking, which has the b
 
 Variables are things that are independent or estimated in the model. They can be parameters, and they can also be data. Parameters can be represented by a distribution, and distributions can be represented by a distribution. Mind. Blown. 
 
+## Common transformations 
+
+These are best done as pre-processing, before iterating through many instances of the model, to save redoing the processing every time. 
+
+Standardisation such as by $\frac{variable-mean}{SD}$ is often useful for polynomial or various other models where squares of large numbers become unbalanced and can even challenge the maths of a computer. 
+
+Log transformation stops numbers from being smaller than the floating point arithmetic can handle, and exponentiation then retrieves the original units anyway.
+
+
 ## Parameters 
 
 The parameters are not independent of each other except under very rare conditions, and so the parameters are not often independently interpretable. Instead of interpreting parameters, instead push out posterior predictions. A good entry to Bayesian estimation is just by re-looking at linear regression. In this paradigm, each of the parameters is modelled by a distribution: there's no one correct value that is being estimated, but a range of values with their associated plausibility. 
@@ -2051,7 +2066,7 @@ apply(data, dim, fun) tapply(apply along an index, a function to data) ie tapply
 ## Rethinking 
 
 `quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. 
-`link()` samples from the posterior distribution of the parameters calculated by quap(). 
+`link()` samples from the posterior distribution of the parameters calculated by quap(). Defaults to using the original dat so pass it a vector of predictor values over which to sample. Then use `mean` or `PI` to compute averages and bounds for each value of the predictor variable (rather than analytically). Then use `line` and `shade` to draw these if it seems like a good idea.  
 `sim()` produces samples from the full posterior model (simulated values), including both uncertainty in parameter values and uncertainty in a sampling process. 
 
 ## time series
