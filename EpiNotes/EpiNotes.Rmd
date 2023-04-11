@@ -452,7 +452,9 @@ $p(X=x) = p^x.(1-p)^{1-x}$ $p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom
 
 Any normal distribution is a multiple of sigma and an addend of mu from Z, the Standard Normal Distribution: $$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$$ So if X is a normally distributed variable with mean mu and sd sigma then $X = \mu + \sigma Z, N \sim (\mu,\sigma^2)$
 
-65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of mu
+65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of $\mu$. 
+
+Another identical way to state the Gaussian distribution is with $\tau = 1/\sigma^2$. BUGS and JAGS like this. The resulting probability density function is $p(y | \mu, \tau) = \sqrt{\frac{\tau}{2\pi} e^{-\frac{1}{2}(y-\mu)^2}}$.
 
 ## Exponential 
 
@@ -2069,9 +2071,10 @@ apply(data, dim, fun) tapply(apply along an index, a function to data) ie tapply
 
 ## Rethinking 
 
-`quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. 
+`quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. `dens` plots the density of each of the distributions to allow checking for sense and whether it's what you intended. `precis` gives a summary of the posterior distribution (made from the variance-covariance matrix). `extract.samples` can then make up samples from the relevant multidimensional Gaussian distribution. 
 `link()` samples from the posterior distribution of the parameters calculated by quap(). Defaults to using the original dat so pass it a vector of predictor values over which to sample. Then use `mean` or `PI` to compute averages and bounds for each value of the predictor variable (rather than analytically). Then use `line` and `shade` to draw these if it seems like a good idea.  
 `sim()` produces samples from the full posterior model (simulated values), including both uncertainty in parameter values and uncertainty in a sampling process. 
+`splines::bs` can produce the basis functions.
 
 ## time series
 
