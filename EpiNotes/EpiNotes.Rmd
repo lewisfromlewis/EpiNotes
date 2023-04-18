@@ -51,11 +51,11 @@ This initially parasitises on Kenny Baillie's work but the idea that local densi
 
 I think this is mine. The possibility that a causal graph can be drawn to describe the mechanistic processes for an overall effect. Then, using probabilistic or perhaps even deterministic relationships, the force of effect down each edge is somehow elicited. Each edge is modified by incoming information from live biological information, as a sort of informative meta analysis. These can be used just to explain but I'm most interested in using them for randomisation probabilities to improve causal understanding in the middle of a trial which also informs about endpoints.
 
-# Epistemology 
+# Epistemology
 
-The way in which we know things, or more generally the way in which we justify claims, is related to the truth and to the way the world is made, but only in the long run and there is no guarantee that an epistemologically rigorous statement, holding a strong basis for past and future inference, reflects ontological truth. Ontology is the generation of things, such as truths, and would allow epistemologically sound inference, but isn't always necessary to understand the world (see the geocentric model, and so on). The inner need to assert that an epistemological claim is in fact an ontological one is common, leads to people arguing that odds ratios are satan, and was called the mind projection fallacy by ET Jaynes. 
+The way in which we know things, or more generally the way in which we justify claims, is related to the truth and to the way the world is made, but only in the long run and there is no guarantee that an epistemologically rigorous statement, holding a strong basis for past and future inference, reflects ontological truth. Ontology is the generation of things, such as truths, and would allow epistemologically sound inference, but isn't always necessary to understand the world (see the geocentric model, and so on). The inner need to assert that an epistemological claim is in fact an ontological one is common, leads to people arguing that odds ratios are satan, and was called the mind projection fallacy by ET Jaynes.
 
-Also, see later for iid values; de Finetti's theorem is that exchangeable values (~= "can be reordered", and so "don't have an important correlation structure") can be approximated by mixtures of iid distributions. So '"iid" cannot be read literally' as McElreath says: we don't need to think that the generative process is iid at all, let alone the specified iid process, to hold that as an effective and safe epistemological assumption. Further, correlation may just alter small things about a distribution such as the ordering of importantly ordered small parts of it, leaving the overall distribution useably similar: just look at MCMC... 
+Also, see later for iid values; de Finetti's theorem is that exchangeable values (\~= "can be reordered", and so "don't have an important correlation structure") can be approximated by mixtures of iid distributions. So '"iid" cannot be read literally' as McElreath says: we don't need to think that the generative process is iid at all, let alone the specified iid process, to hold that as an effective and safe epistemological assumption. Further, correlation may just alter small things about a distribution such as the ordering of importantly ordered small parts of it, leaving the overall distribution useably similar: just look at MCMC...
 
 # Risk {#risk}
 
@@ -71,11 +71,11 @@ The baseline odds, for example, is key to understanding the effect of a given od
 knitr::include_graphics('C:/Users/lewis/Documents/Studying/Epidemiology/EpiNotes/Risk_magnification.jpeg')
 ```
 
-## Variables 
+## Variables
 
-All of this tends to assume one real value exists for each of these measures of effect. There is an underlying generative model for our hypotheses about these effects, whereby we may say "a causes b", or simply "for a of a certain value, we observe b of this predicable value". Because we can't observe every instance of every cause, or even the underlying _vis inertiae_ of every random process, we have to use a statistical model to generate these estimates. These need variables. 
+All of this tends to assume one real value exists for each of these measures of effect. There is an underlying generative model for our hypotheses about these effects, whereby we may say "a causes b", or simply "for a of a certain value, we observe b of this predicable value". Because we can't observe every instance of every cause, or even the underlying *vis inertiae* of every random process, we have to use a statistical model to generate these estimates. These need variables.
 
-A variable is just a symbol that can take on different values. Unobserved variables are usually called parameters. They can represent any part of any of the models, including the data, the effect, and so on. 
+A variable is just a symbol that can take on different values. Unobserved variables are usually called parameters. They can represent any part of any of the models, including the data, the effect, and so on.
 
 ## Measures of outcome
 
@@ -132,7 +132,6 @@ contingencydh <- tibble(" " = c("Outcome", "No outcome", ""),
 knitr::kable(contingencydh, booktabs = TRUE, caption= "Contingency table. This table is the same, but contains the d/h and 0/1 notation used later in some of the equations.", escape=FALSE)
 ```
 
-
 ```{r, echo = FALSE, message=FALSE}
 Bayesmargins <- tibble::tibble(
     "measure" = c("sensitivity or recall",
@@ -178,13 +177,13 @@ $$\sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}$$ and the 95% con
 
 The exponential version of this it the Error Factor $e^{z_{\alpha} \times \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}}$, whereby the 95% CI is OR/EF to OR\*EF or exp(log Estimate +/- 1.96 log SE)
 
-## The rare disease assumption 
+## The rare disease assumption
 
 An often misunderstood insight was Cornfield 1951 noting that the ratio of exposed in cases to exposed in controls, weighted for the size of the sample by using the odds ratio, was similar to the ratio of risk of disease in the exposed to the non exposed, as long as all these probabilities are small, such that they are not distorted by approaching 1. This is misinterpreted as the far more trivial "odds ratios approximate risk ratios under the rare disease assumption".
 
 ## Diagnostic likelihood ratio
 
-[Likelihood] is covered later in plenty detail. For now, the diagnostic likelihood ratio for this limited situation of mutually exclusive states is revealed by the table, and is a measure of how inhomogenous are the numbers across the table. A certain hypothesis, such as "the disease is present" is more likely than its complement if the test is positive, by an amount equal to the ratio of positive results among the diseased compared to those without the disease.
+[Likelihood](#likelihood) is covered later in plenty detail. For now, the diagnostic likelihood ratio for this limited situation of mutually exclusive states is revealed by the table, and is a measure of how inhomogenous are the numbers across the table. A certain hypothesis, such as "the disease is present" is more likely than its complement if the test is positive, by an amount equal to the ratio of positive results among the diseased compared to those without the disease.
 
 ```{r, echo = FALSE, message=FALSE}
 DLRtable <- tibble::tibble(
@@ -339,7 +338,7 @@ knitr::kable(rel_risk_PAR, booktabs = TRUE, caption= "Notice the unstable popula
 
 ## Final caution
 
-Remember, kids: the assumption that PAF describes a causal relationship **might not be correct**: it might describe a confounder, or have an effect modification. The PAF is a model, like any other. In this case it assumes a direct relationship between exposure and outcome, although not its size. In most other cases, we recognise uncertainty, and so we use statistical models to make inferences about the size of the effect. 
+Remember, kids: the assumption that PAF describes a causal relationship **might not be correct**: it might describe a confounder, or have an effect modification. The PAF is a model, like any other. In this case it assumes a direct relationship between exposure and outcome, although not its size. In most other cases, we recognise uncertainty, and so we use statistical models to make inferences about the size of the effect.
 
 # Probability and sampling {#probability}
 
@@ -347,17 +346,19 @@ Probability is always a *feature of populations*, not of data. The population is
 
 ## Kolmogorov's axioms
 
-    1. Probability of something happening is 1 $P(\Omega) = 1$
+```         
+1. Probability of something happening is 1 $P(\Omega) = 1$
 
-    2. Probability of nothing happening is 0 $P(E)\geq 0, P(E) \in R$
+2. Probability of nothing happening is 0 $P(E)\geq 0, P(E) \in R$
 
-    3. Probability of a thing is 1-its opposite 
+3. Probability of a thing is 1-its opposite 
 
-    4. Probability of at least one of some mutually exclusive things is the sum of their probabilities 
+4. Probability of at least one of some mutually exclusive things is the sum of their probabilities 
 
-    5. If event A implies event B then probability of A < probability of B 
+5. If event A implies event B then probability of A < probability of B 
 
-    6. The joint probability of any 2 events is the sum minus their intersection 
+6. The joint probability of any 2 events is the sum minus their intersection 
+```
 
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
@@ -377,8 +378,10 @@ Survivor function is S(x) = 1-F(x)
 
 ## Bayes rule
 
-    $$f(\pi | x) = \frac{\textrm{prior} \cdot \textrm{Likelihood}}{\textrm{Normalising constant}}$$
-    $$f(\pi | x) = \frac{f(x) L(\pi | x)}{f(x)}$$
+```         
+$$f(\pi | x) = \frac{\textrm{prior} \cdot \textrm{Likelihood}}{\textrm{Normalising constant}}$$
+$$f(\pi | x) = \frac{f(x) L(\pi | x)}{f(x)}$$
+```
 
 The normalising constant is the marginal probability of the observed value of x. This is usually the integral of the probability of that value under all the hypotheses under consideration, and is needed to scale the likelihoods to sum to 1 and to represent a genuine probability. It can be left out for many uses, as it's a constant for each $\pi$ and so the relative probability of each hypothesised value of $\pi$ is the same without it.
 
@@ -438,11 +441,11 @@ $P(B_{k}|A) = \frac{P(A|B_{k})}{\sum_{i=1}^n[P(A|B_{i}).P(B_{i})]}.P(B)$
 
 ## Chebyshev's inequality
 
-This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. The inequality is that the probability that the observed value is more than k sigma away from its mean is small and rapidly decreasing with k $$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$ 
+This helps to prove the law of large numbers. The probability that a variable takes the value of k standard deviations from the mean is a maximum of 1/k squared, for any distribution where the mean has a single value. This is conservative, but follows from axioms. The slight downfall is that of course there is still considerable uncertainty over $\sigma$ after observing a single sample standard deviation. The inequality is that the probability that the observed value is more than k sigma away from its mean is small and rapidly decreasing with k $$P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}$$
 
 #Distributions
 
-I don't know, maybe it's time to bring back some of these babies, just for fun. 
+I don't know, maybe it's time to bring back some of these babies, just for fun.
 
 ## Bernoulli mass function
 
@@ -452,13 +455,13 @@ $p(X=x) = p^x.(1-p)^{1-x}$ $p(X=k) = \binom {n}{k} p^k(1-p)^{n-k}$ where $\binom
 
 Any normal distribution is a multiple of sigma and an addend of mu from Z, the Standard Normal Distribution: $$Z = \frac{x - \mu}{\sigma},  N \sim (0,1)$$ So if X is a normally distributed variable with mean mu and sd sigma then $X = \mu + \sigma Z, N \sim (\mu,\sigma^2)$
 
-65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of $\mu$. 
+65%, 95% and 99% of the SND lie within 1, 2 and 3 SD of $\mu$.
 
 Another identical way to state the Gaussian distribution is with $\tau = 1/\sigma^2$. BUGS and JAGS like this. The resulting probability density function is $p(y | \mu, \tau) = \sqrt{\frac{\tau}{2\pi} e^{-\frac{1}{2}(y-\mu)^2}}$.
 
-## Exponential 
+## Exponential
 
-Useful when it must be strictly positive, such as a scale parameter. The average is the inverse of the rate. 
+Useful when it must be strictly positive, such as a scale parameter. The average is the inverse of the rate.
 
 ## Multinomial distribution is
 
@@ -552,9 +555,9 @@ Randomisation is distinct from random sampling - "In a properly randomised trial
 
 A probability conditioned for a model; or a probability of a model given some data; the likelihood is numerically (and can be computationally) equal to a probability of the data given the model; eg a binomial and cauchy likelihood exist for the same data and the same parameter space, and those two likelihoods are not always the same. The likelihood is calculated for each point in the parameter space and where it is maximal is the point best supported by the data, that is the likelihood which makes the data most likely under the model assumption: this is the maximum likelihood estimate MLE.
 
-Because the whole curve is fitted, it has to depart from at least some of the observed values at least some of the time. This means that it rejects data, but it adds clarity and comparability between well designed tests. 
+Because the whole curve is fitted, it has to depart from at least some of the observed values at least some of the time. This means that it rejects data, but it adds clarity and comparability between well designed tests.
 
-## Quadratic approximation of the Likelihood 
+## Quadratic approximation of the Likelihood
 
 If the likelihood is normal, so log(likelihood) is quadratic and so easily solved using the pattern $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. If it's not standard normal then it's not easy to do and iteration is probably as good as algebra. The quadratic is chosen so that the curvature of the actual log likelihood and the quadratic fitted approximation are identical at the fit point, whether the MLE or the null, depending on whether the aim is to test or derive a confidence interval, or to determine the MLE. Wald tests fit at the MLE.
 
@@ -726,8 +729,6 @@ and for proportions
 
 standard error for a confidence interval: $\sqrt{\frac{p_{1}.(p_{1}-1)}{n_{1}} + \frac{p_{2}.(p_{2}-1)}{n_{2}}}$ standard error for a hypothesis test assumes both are from the same true population probability $\pi$ so uses the common proportion (all +ve / all n) before repeating the above formula: $\sqrt{p(1-p).(\frac{1}{n_{1}} + \frac{1}{n_{2}})}$
 
-
-
 ## Poisson regression
 
 This is very similarly shaped to other regressions: rate = constant x timeband x exposure. Under a poisson distribution the lambda is equal across strata; if it's not and especially if there's a linear trend, there is overdispersion. If overdispersion is suspected by qualitative examination of rates, or by the ratio of LRS:df being greater than 1, then ~~an adult must be asked for help~~ a value (constant or distributed) can be added to the regression model to account for the departure from poisson. The value is called the frailty and the resulting model is a negative binomial model.
@@ -747,7 +748,6 @@ MV t has degrees of freedom usually presumed identical across all variates, a pa
 density by `dmvt(x, delta=c(i,j)`, sigma= `as.matrix(r, t, y, u), df=df, log=T)`
 
 Bivariate has delta=0 if standard and sigma=diag(2), ie rbind(c(2, 0, 0, 2))
-
 
 #Asymptotics {#asymptotics}
 
@@ -793,9 +793,11 @@ Continuous variation is partitioned into systematic and random error, *eg* by AN
 
 $$\rho (X, Y) = \frac{cov (X, Y)}{\sigma_{X}.\sigma_{Y}}$$ , where $cov (X, Y) = E[(X-\mu_{X})(Y-\mu_{Y})]$ and using the identities $\sigma_{X}^2 = E[(X- E[X])^2] = E[X]^2 - E[X^2]$ and
 
-    $E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$, so
-    $\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]} {\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$
-                    
+```         
+$E[(X-\mu_{X}).(Y-\mu_{Y})] = E[(X-E[X]).(Y-E[Y])]$, so
+$\rho_{(X, Y)} = \frac{E[XY]-E[X]E[Y]} {\sqrt{E[X]^2 - E[X^2]} \sqrt{E[Y]^2-E[Y^2]} }$
+                
+```
 
 then the sample correlation r, assuming
 
@@ -829,27 +831,24 @@ In many ways Pearson and Spearman are ways to quote distances between two vector
 -   Mahalanobis distance of a point P from the distribution D along the principal component axes scaled for unit variance to make the Mahalanobis distance the standard Euclidean distance in the transformed space. The distance of each observation *i* from the centre of an $i = 1 \dots n$ by $p$ sample can be calculated by Wilk's method $MD_i = \sqrt{(x_i - t)^T C^{-1}()x_i - t}$, if t is the multivariable location, C is the estimated (usually the sample) covariance matrix. To detect a single outlier in this n by p multivariable sample, the squared Mahalanobis distances are compared with an F distribution with p and 1-p degrees of freedom
 -   $\chi^2$ distances, distances are more appropriate for multivariable situations
 
-## Locally weighted scatterplot smoothing {#loess} 
+## Locally weighted scatterplot smoothing {#loess}
 
-LOESS are local polynomial regression smoothers. The running mean smoother is the most simple nearest neighbour method, but isn't actually very smooth, and performs poorly at the edges of the data as there's little to change the average from the extreme values. Instead of the simple mean, LOESS uses a locally weighted regression within each sliding, symmetric, nearest-neighbour window. At each point x, the weight of neighbour points $x_i$ on the fitted value at x is reduced by a "tri-cube" function of their distance from x along the x axis within the sliding window. 
+LOESS are local polynomial regression smoothers. The running mean smoother is the most simple nearest neighbour method, but isn't actually very smooth, and performs poorly at the edges of the data as there's little to change the average from the extreme values. Instead of the simple mean, LOESS uses a locally weighted regression within each sliding, symmetric, nearest-neighbour window. At each point x, the weight of neighbour points $x_i$ on the fitted value at x is reduced by a "tri-cube" function of their distance from x along the x axis within the sliding window.
 
-Regression smoothing simply seeks to minimise the penalised sum of squares. The first half of the equation below is the sum of squared deviations between s(x), the function smoothing x, and the observed value. The second half is the penalty for wiggliness, using the smoothing parameter $\lambda$ to control the amount of penalty for wiggliness, integrating across the second derivatives of the curve and so producing a zero result for a straight line and ever higher results for more wiggles. The penalised sum of squares is minimised by a natural cubic spline with knots at every datapoint, which is not practical for large datasets, and is wasteful as the effective degrees of freedom are smaller than the number of knots. 
+Regression smoothing simply seeks to minimise the penalised sum of squares. The first half of the equation below is the sum of squared deviations between s(x), the function smoothing x, and the observed value. The second half is the penalty for wiggliness, using the smoothing parameter $\lambda$ to control the amount of penalty for wiggliness, integrating across the second derivatives of the curve and so producing a zero result for a straight line and ever higher results for more wiggles. The penalised sum of squares is minimised by a natural cubic spline with knots at every datapoint, which is not practical for large datasets, and is wasteful as the effective degrees of freedom are smaller than the number of knots.
 
-$$\sum_{i=1}^n (y_i - s(x_i))^2 + \lambda \int(s''(x))^2 dx$$
-## B-splines 
+$$\sum_{i=1}^n (y_i - s(x_i))^2 + \lambda \int(s''(x))^2 dx$$ \## B-splines
 
-Regression splines are a bit more practical. They are a linear combination of basis functions.  Basis functions are defined by what they are components of: they are all members of a function space which is in turn made up of linear combinations of the basis functions. Piecewise polynomials are usually used. For example, a spline with a different set of cubic relationships ($y = \beta_0 + \beta_1 x_i^2 + \beta_2 x_i^2$, etc) with covariates above and below a cut point might have a coefficient times x to the power of 0, 1, 2, 3 for each window, hence 8 degrees of freedom to draw the overall relationship, and hence the ability to draw most conceivable shapes.  
+Regression splines are a bit more practical. They are a linear combination of basis functions. Basis functions are defined by what they are components of: they are all members of a function space which is in turn made up of linear combinations of the basis functions. Piecewise polynomials are usually used. For example, a spline with a different set of cubic relationships ($y = \beta_0 + \beta_1 x_i^2 + \beta_2 x_i^2$, etc) with covariates above and below a cut point might have a coefficient times x to the power of 0, 1, 2, 3 for each window, hence 8 degrees of freedom to draw the overall relationship, and hence the ability to draw most conceivable shapes.
 
 $$y = \Bigg\{{\beta_{01} + \beta_{11}x_i + \beta_{21}x_i^2 + \beta_{31} x_i^3 \textrm{ if } x_i < c;\\
 \beta_{02} + \beta_{12}x_i + \beta_{22}x_i^2 + \beta_{32} x_i^3 \textrm{ if } x_i \geq c}$$
 
-More simply and generally, the equation can be written as $s(x) = \sum_{l=1}^K B_{l,q}(x)\beta_l = B'\beta$ where B is the model matrix of the basis functions in this particular function space. The number of basis functions depends on the number of inner knots _m_ and on the order of the spline, fewer functions giving a smoother spline and residual sum of squares minimised by having $K = p + 1 + m$ basis functions.
+More simply and generally, the equation can be written as $s(x) = \sum_{l=1}^K B_{l,q}(x)\beta_l = B'\beta$ where B is the model matrix of the basis functions in this particular function space. The number of basis functions depends on the number of inner knots *m* and on the order of the spline, fewer functions giving a smoother spline and residual sum of squares minimised by having $K = p + 1 + m$ basis functions.
 
-Penalised regression splines directly penalise wiggliness. Instead of the linear models from above, this leads to penalised sums of squares of the shape below, in which $\beta'P\beta$ is the penalty, and can be many things. 
+Penalised regression splines directly penalise wiggliness. Instead of the linear models from above, this leads to penalised sums of squares of the shape below, in which $\beta'P\beta$ is the penalty, and can be many things.
 
-$$\underset{\beta}{\mathrm{min}} = \{ ||y - B'\beta ||^2 + \beta' P \beta \}$$
-For a P-spline, or penalised spline, the penalty might penalise the difference between adjacent coefficients, and look like $\beta' P \beta = \sum_{l=1}^{K-1}(\beta_{l+1}  - \beta_l)^2$.
-
+$$\underset{\beta}{\mathrm{min}} = \{ ||y - B'\beta ||^2 + \beta' P \beta \}$$ For a P-spline, or penalised spline, the penalty might penalise the difference between adjacent coefficients, and look like $\beta' P \beta = \sum_{l=1}^{K-1}(\beta_{l+1} - \beta_l)^2$.
 
 # Hypothesis Testing {#nhst}
 
@@ -1080,27 +1079,31 @@ Ranks for each observation are calculated (ties given average rank). Pearson's c
 
 # Data types and features {#data-types}
 
-This is partly covered by the [sampling] section, but it's integral to demonstrating epidemiological understanding.
+This is partly covered by the [sampling](#sampling) section, but it's integral to demonstrating epidemiological understanding.
 
 ## Questionnaires
 
 Questionnaires are able to ask about
 
-    attitudes
-    beliefs
-    behaviours
-    experiences
-    attributes
+```         
+attitudes
+beliefs
+behaviours
+experiences
+attributes
+```
 
 Methods of applying the question are by
 
-    Interview
-    Questionnaire
-    Diary
-    Observation
-    Routine Record Reaching
-    Measurements
-    Environmental Measurements
+```         
+Interview
+Questionnaire
+Diary
+Observation
+Routine Record Reaching
+Measurements
+Environmental Measurements
+```
 
 Standard introductions are important. If appropriate to use a questionnaire, develop one that samples the minimum amount of an individual's total experience that will provide sufficient information concerning the problem under study (including exposure and covariates). It must:
 
@@ -1176,7 +1179,7 @@ Also have a row with variable names, which are human readable, and save in one f
 
 # Wrong conclusions and anatomy of an error {#error}
 
-All models are wrong, but some are useful. Knowing their moving parts might alert us to where they will be importantly wrong, or wrong in a way that breaks their usefulness. 
+All models are wrong, but some are useful. Knowing their moving parts might alert us to where they will be importantly wrong, or wrong in a way that breaks their usefulness.
 
 If the effect of an identical exposure is not the same for all individuals, it may be because it is true, or because of random error, measurement bias, confounders, selection bias, or differential treatment effect. In other words, maybe the exposure is not in fact identical at the mechanistic level or the measurement error or variability is high, or just doesn't measure the effect itself, or there are other causes of the outcome acting at the same time but not altering the effect, or because there are genuine differences in effect either across a single population or due to categorical differences within identifiable subgroups. See [risk magnification](#risk) for how, even with identical effect, the scale of measure may give the appearance of heterogenous treatment effect.
 
@@ -1196,10 +1199,9 @@ Misclassification may be the original sin or due to some random error or bias in
 
 -   Non-differential outcome overestimates bias ratios and differences to null
 
-## Latent error 
+## Latent error
 
-When an inference has been drawn, and is apparently correct or useful for the decision at hand, but later causes errors or even damage, then a latent error has been discovered. Racial bias in AI, edge case glitches, zero-day exploits an the like are latent errors. 
-
+When an inference has been drawn, and is apparently correct or useful for the decision at hand, but later causes errors or even damage, then a latent error has been discovered. Racial bias in AI, edge case glitches, zero-day exploits an the like are latent errors.
 
 ## The play of chance
 
@@ -1225,26 +1227,29 @@ Confounders in Classical Epidemiology are
 
 3 not a causal intermediate from exposure to outcome
 
-Confounding is defined quite divergently. As a working definition, it is a nuisance which distorts the estimate of the independent effect of a certain exposure. The confounder will have not change the true magnitude of the effect being estimated, but it will alter the estimate by an independent and possibly unmeasured mechanism. It is identified as the unequal distribution of a further influential risk factor between those exposed and unexposed to the exposure of interest. Confounding is distinguished from bias because it depends on a measurable quantity. The quantity can then potentially be controlled for, such as by comparing strata with and without it, or including it in a model which explains the observed outcome. A variable might be a confounder, but not alter the estimate by very much. In that case it may be safer to ignore it rather than risk introducing bias by conditioning on it. The approach to this depends very much on the amount by which the effect estimate alters with the confounder, and the causal model for generating the data under which the analysis is carried out.
+Confounding is defined quite divergently. As a working definition, it is a nuisance which distorts the estimate of the independent effect of a certain exposure. The confounder will have not change the true magnitude of the effect being estimated, but it will alter the estimate by an independent and possibly unmeasured mechanism. It is identified as the unequal distribution of a further influential risk factor between those exposed and unexposed to the exposure of interest. Confounding is distinguished from bias because it depends on a measurable quantity. The quantity can then potentially be controlled for, such as by comparing strata with and without it, or including it in a model which explains the observed outcome. A variable might be a confounder, but not alter the estimate by very much. In that case it may be safer to ignore it rather than risk introducing bias by conditioning on it. The approach to this depends very much on the amount by which the effect estimate alters with the confounder, and the causal model for generating the data under which the analysis is carried out. 
 
+When things are not confounded they are conditionally independent (eg Y is independent of X, given knowledge of A, or $Y \perp \!\!\! \perp X|A$). Fortunately that conditional dependence structure can be deduced from causal graphs, in the next section. Unfortunately, there may be very many causal pathways that give the same conditional independence structures (these are called a Markov Equivalent Set of DAGs).
 
 ## Directed Acyclic graphs {#DAGs}
 
-DAGs are basically all the causal model that most people will ever use. Although the information they contain can be written in any other format of causal model, such as structural equations and potential outcomes frameworks or structural causal models, they have the advantage of being understandable in more than one way, because they are pictures, yet analysable as text because they are a list of relationships. Part of the attraction is that they can be used in the do-calculus. 
+DAGs are basically all the causal model that most people will ever use. Although the information they contain can be written in any other format of causal model, such as structural equations and potential outcomes frameworks or structural causal models, they have the advantage of being understandable in more than one way, because they are pictures, yet analysable as text because they are a list of relationships. Part of the attraction is that they can be used in the do-calculus.
 
-Acyclic means they don't contain loops. Thus the rules apply more clearly, without the loss of definite solutions induced by cyclic graphs. They are made of: 
+Acyclic means they don't contain loops. Thus the rules apply more clearly, without the loss of definite solutions induced by cyclic graphs. They are made of:
 
--   Nodes, Edges, Directed or not; Parents, Children, Ancestors, Descendants. 
+-   Nodes, Edges, Directed or not; Parents, Children, Ancestors, Descendants.
 
--   a front door path is all forward arrows eg AC or AEDF, 
+-   a front door path is all forward arrows eg AC or AEDF,
 
 -   a backdoor path is one starting with a "block" or reversed arrow eg EACD 
 
-## The elemental confounds  
+Markov Equivalence is when two structurally different DAGs have the same conditional independence structure. The entire Markov Equivalence Set can be generated algorithmically, and the silliest ones then rejectedfor greater confidence.  
 
-The four elemental structures of confounding could be 
+## The elemental confounds
 
-- The Fork, where X and Y share a common cause Z and so are correlated, that is they are not independent $Y \not\!\perp \!\!\! \perp X$. If stratified by Z though, we can say that in each stratum of Z or "conditional on Z", X and Y re independent $Y \perp \!\!\! \perp X | Z$ : 
+The four elemental structures of confounding could be
+
+-   The Fork, where X and Y share a common cause Z and so are correlated, that is they are not independent $Y \not\!\perp \!\!\! \perp X$. If stratified by Z though, we can say that in each stratum of Z or "conditional on Z", X and Y re independent $Y \perp \!\!\! \perp X | Z$ :
 
 ```{r confounding-fork}
 coord_dag_fork <- list(
@@ -1257,7 +1262,7 @@ dag_fork <- ggdag::dagify(x ~ z,
 ggdag::ggdag(dag_fork) + theme_void()
 ```
 
-- The Pipe, where again X and Y are no independent $Y \not\!\perp \!\!\! \perp X$, but X is a cause of Z which is in turn a cause of Y. Z can be said to mediate the effect of X on Y. For any value of Z, X and Y are independent $Y \perp \!\!\! \perp X | Z$. In this case though, everything that monad Y knows about monad X is already known by monad Z. Sometimes that direct effect is included in the scientific question, sometimes it's not. Conditioning on Z can radically alter the estimate: 
+-   The Pipe, where again X and Y are no independent $Y \not\!\perp \!\!\! \perp X$, but X is a cause of Z which is in turn a cause of Y. Z can be said to mediate the effect of X on Y. For any value of Z, X and Y are independent $Y \perp \!\!\! \perp X | Z$. In this case though, everything that monad Y knows about monad X is already known by monad Z. Sometimes that direct effect is included in the scientific question, sometimes it's not. Conditioning on Z can radically alter the estimate:
 
 ```{r confounding-pipe}
 coord_dag_pipe <- list(
@@ -1270,7 +1275,7 @@ dag_pipe <- ggdag::dagify(z ~ x,
 ggdag::ggdag(dag_pipe) + theme_void()
 ```
 
-- The Collider, where X and Y share no common cause, don't cause each other, but do share a result Z. Here, $Y \perp \!\!\! \perp X$, until stratifying by Z. $Y \not\!\perp \!\!\! \perp X |Z$, which is unlikely to be the quantity you're looking for p(Y|do(X)). You can easily create a statistical phantom, a non-causal association, by conditioning on a collider: 
+-   The Collider, where X and Y share no common cause, don't cause each other, but do share a result Z. Here, $Y \perp \!\!\! \perp X$, until stratifying by Z. $Y \not\!\perp \!\!\! \perp X |Z$, which is unlikely to be the quantity you're looking for p(Y\|do(X)). You can easily create a statistical phantom, a non-causal association, by conditioning on a collider:
 
 ```{r confounding-collider}
 coord_dag_collider <- list(
@@ -1283,7 +1288,7 @@ dag_collider <- ggdag::dagify(z ~ x,
 ggdag::ggdag(dag_collider) + theme_void()
 ```
 
-- The Descendant, may be a visible thing that is a descendant of an unobserved important thing. Its effect depends on which type of thing it's a descendant of but in each case it holds information about its ancestor. If its ancestor is a mediator in the pipe structure as in the picture below, then adjusting for the descendant acts a little as adjusting for the ancestor. So in this particular example $Y \not\!\perp \!\!\! \perp X$ because of the causal chain through Z. Just as conditioning for Z would remove truly causal information, A will remove the proportion of causal information that it holds about Z and might even completely remove the causal effect of Z so that X and Y appear artefactually independent $Y \perp \!\!\! \perp X|A$: 
+-   The Descendant, may be a visible thing that is a descendant of an unobserved important thing. Its effect depends on which type of thing it's a descendant of but in each case it holds information about its ancestor. If its ancestor is a mediator in the pipe structure as in the picture below, then adjusting for the descendant acts a little as adjusting for the ancestor. So in this particular example $Y \not\!\perp \!\!\! \perp X$ because of the causal chain through Z. Just as conditioning for Z would remove truly causal information, A will remove the proportion of causal information that it holds about Z and might even completely remove the causal effect of Z so that X and Y appear artefactually independent $Y \perp \!\!\! \perp X|A$:
 
 ```{r confounding-descendant}
 coord_dag_descendant <- list(
@@ -1298,14 +1303,13 @@ ggdag::ggdag(dag_fork) + theme_void()
 ```
 
 
-
 ## Bias
 
 Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. Any of the other influences in this section will count as a bias, if it is not detected. If it is detected and cannot be controlled for, or controlling for it introduces another influence, then it is also a bias[^9].
 
 [^9]: This reading may be wrong, because very few commentators are willing to go outside the lines when describing fundamental concepts. A note from London divides it into descriptive studies, where bias arises if the sample is not representative of the population, and analytic studies, where bias arises if the groups to be compared are not comparable. I think they're talking about the parameter estimate, which in "descriptive" is an estimate of an unobserved population parameter and in "analytic" is an estimate of an unobserved generalisable parameter of the difference between groups.
 
-Fortunately there are various types of bias that have been identified. In modern epidemiology all of these are in essence either a selection or an information bias (the latter also called a misclassification bias in some quarters). 
+Fortunately there are various types of bias that have been identified. In modern epidemiology all of these are in essence either a selection or an information bias (the latter also called a misclassification bias in some quarters).
 
 ## Selection bias
 
@@ -1354,7 +1358,7 @@ Information bias is present when there is a difference in the accuracy of inform
 
 [^15]: For example, the outcome is reported with greater deviation or variation in the exposed, or vice versa
 
-## To avoid bias 
+## To avoid bias
 
 -   Blinding[^16]
 
@@ -1376,11 +1380,11 @@ Information bias is present when there is a difference in the accuracy of inform
 
 Discarding information based on potential comparators having parameters that fall outside acceptable ranges: - Restriction is absolute and simple but reduces potential comparisons, hence inferences - Matching - by individual (search for control with Value = case Value +/- acceptable range) - by group aka frequency (distribution in case group matched by that in control group) - re-note Case Definitions: clear method, clear boundaries, defined source population
 
-Or not discarding but instead randomising. - Simple random "needs a whole population list" although of course there are limits. - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample. 
+Or not discarding but instead randomising. - Simple random "needs a whole population list" although of course there are limits. - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample.
 
-# Causal reasoning and the do-calculus {#causality} 
+# Causal reasoning and the do-calculus {#causality}
 
-DAGs are a subclass of the entity "causal model". Structural Causal Models, for example, encode the information as a Tuple M = (U, V, F, P(U)) where U is endogenous variables and F a function describing the distribution of the endogenous variables U, V is exogenous variables, and P(U) a probability distribution over the domain of U. Then F is replaced by $F_x$ when modelling the result of intervention. 
+DAGs are a subclass of the entity "causal model". Structural Causal Models, for example, encode the information as a Tuple M = (U, V, F, P(U)) where U is endogenous variables and F a function describing the distribution of the endogenous variables U, V is exogenous variables, and P(U) a probability distribution over the domain of U. Then F is replaced by $F_x$ when modelling the result of intervention.
 
 Backdoor paths using DAGs were dealt with [above](#DAGs).
 
@@ -1388,22 +1392,22 @@ Backdoor paths using DAGs were dealt with [above](#DAGs).
 
 Having had these taught as criteria, it's reassuring to hear them as simply things to consider in a pondering, while-running sort of way. ABH himself called them viewpoints and there it stood until DAGs. The list is:
 
-- "An active agent or a static condition" Temporality 
-- Strength (size) 
-- Consistency (across types of information) 
-- Dose:Response (Biological gradient) 
-- Specificity 
-- Biological plausibility 
-- Coherence (sort of biological plausibility but probably intended to mean that borrowing from other  situations supports the idea) 
-- "Experiment" (protection by removal, in the examples) 
-- Analogy (the example is HepB / HIV) 
-- Predictive performance (no alternative theories after rigorous testing) 
+-   "An active agent or a static condition" Temporality
+-   Strength (size)
+-   Consistency (across types of information)
+-   Dose:Response (Biological gradient)
+-   Specificity
+-   Biological plausibility
+-   Coherence (sort of biological plausibility but probably intended to mean that borrowing from other situations supports the idea)
+-   "Experiment" (protection by removal, in the examples)
+-   Analogy (the example is HepB / HIV)
+-   Predictive performance (no alternative theories after rigorous testing)
 
 X and Y are associated in the population if X causes Y, Y causes X, or both X and Y are caused by another variable, call it Z. In this case X and Y are not associated in strata defined by Z X and Y may not be associated in the population, but are associated within strata of Z, if Z is caused by both X and Y Z-conditioning can therefore create or remove X:Y associations depending on the causal structure.
 
 ## Axioms of the do-Calculus {#do-calculus}
 
-A graphical algorithm for back door adjustment is a good entry to this: back door because all causation goes through the front door, in the direction of the causal arrows from the exposure of interest. The back door is all those paths from exposure to outcome which start by going backwards up an arrow that points to the exposure. 
+A graphical algorithm for back door adjustment is a good entry to this: back door because all causation goes through the front door, in the direction of the causal arrows from the exposure of interest. The back door is all those paths from exposure to outcome which start by going backwards up an arrow that points to the exposure.
 
 Remove all front door arrows from the exposure, and if there are unblocked paths there is confounding. Draw dotted lines connecting any nodes that share a child that is either in S or descends to S. A set S of candidate confounders will be sufficient to control confounding if
 
@@ -1413,13 +1417,13 @@ Remove all front door arrows from the exposure, and if there are unblocked paths
 
 -   including the new, dotted lines that denote 1st-gen sharing of S ancestry S can induce open paths by causing the dotted lines: this demonstrates the creation of conditional association by stratum creation.
 
-The do-Calculus simulates intervention by deleting certain functions from the model, replacing random parameters X with a constant x. This allows $P(Y|do(X))$ to be estimated in terms of the joint probability of the observed distribution. There are three rules to this do-Calculus, derived from rules of probability and straightforward reading of the DAG: 
+The do-Calculus simulates intervention by deleting certain functions from the model, replacing random parameters X with a constant x. This allows $P(Y|do(X))$ to be estimated in terms of the joint probability of the observed distribution. There are three rules to this do-Calculus, derived from rules of probability and straightforward reading of the DAG:
 
-1. We can ignore any node that doesn't sit on a path from exposure to outcome. This is called a node that's d-separated. The graph removing these paths is called $G_{\bar x}$.
+1.  We can ignore any node that doesn't sit on a path from exposure to outcome. This is called a node that's d-separated. The graph removing these paths is called $G_{\bar x}$.
 
-$$P(y|z, do(x). w) = P(y|do(x),w) \textrm{   if   }(Y \perp Z | W, X)G_{\bar X} $$ 
+$$P(y|z, do(x). w) = P(y|do(x),w) \textrm{   if   }(Y \perp Z | W, X)G_{\bar X} $$
 
-2. If a set of variables Z blocks all back door paths from exposure X to outcome Y, then simply observing them is sufficient to estimate their causal effect. The observations can be treated as intervention, $P(Y | do(X), Z) = P(Y| X , Z)$. More generally, in the DAG below with a cause X and an observed control variable U, the probability of Y consequent to intervening on X is the distribution of Y, stratified by X and by the control variable, averaged over the distributin of the control variables $P(Y| do(X)) = \sum_U P(Y|X,U) P(U) = E_U P(Y|X,U)$. Marginalising (or averaging) over the control variables changes the causal effect of X on Y and is important, except perhaps in the simplest clearest models. So, again, we don't use the coefficient relating X to Y after controlling for U, but samples and a description from the entire posterior predictive distribution.
+2.  If a set of variables Z blocks all back door paths from exposure X to outcome Y, then simply observing them is sufficient to estimate their causal effect. The observations can be treated as intervention, $P(Y | do(X), Z) = P(Y| X , Z)$. More generally, in the DAG below with a cause X and an observed control variable U, the probability of Y consequent to intervening on X is the distribution of Y, stratified by X and by the control variable, averaged over the distributin of the control variables $P(Y| do(X)) = \sum_U P(Y|X,U) P(U) = E_U P(Y|X,U)$. Marginalising (or averaging) over the control variables changes the causal effect of X on Y and is important, except perhaps in the simplest clearest models. So, again, we don't use the coefficient relating X to Y after controlling for U, but samples and a description from the entire posterior predictive distribution.
 
 ```{r confounding-do-calc}
 coord_dag_fork_do <- list(
@@ -1434,10 +1438,9 @@ dag_fork_do <- ggdag::dagify(
 ggdag::ggdag(dag_fork_do) + theme_void()
 ```
 
+3.  If there are no causal paths from X to Y through Z, then $P(Y|do(X)) = P(Y)$. This can also be stated as ignoring the variables Z if $(Y \perp Z|W,X)$ in the graph with arrows removed that go into X and into all W that are descendant of Z, called: $G_{\bar X \bar{W(Z)}}$.
 
-3. If there are no causal paths from X to Y through Z, then $P(Y|do(X)) = P(Y)$. This can also be stated as ignoring the variables Z if $(Y \perp Z|W,X)$ in the graph with arrows removed that go into X and into all W that are descendant of Z, called: $G_{\bar X \bar{W(Z)}}$. 
-
-4. Use [https://daggity.net] to check it! Use \@(ref:greenland_causal_1999)
+4.  Use [<https://daggity.net>] to check it! Use \@(ref:greenland_causal_1999)
 
 # Reliability {#reliability}
 
@@ -1499,7 +1502,6 @@ or if assessing against H0: increase in log(OR) per ration of x==0, which is a t
 
 $U = \sum d_i x_i - \frac{O}{N} \sum n_i x_i$ $V = \frac{O(N-O)}{N^2(N-1)} N \sum (n_i x_i^2) - (\sum n_i x_i)^2$ $S^2 = \frac{V}{QR}$ and error factor $EF = e^{1.96 S}$ $\chi^2_{trend}=\frac{U^2}{V} \textrm{, df=1}$ Increase in log odds for an increase in x is U/V; the variance of this estimate is $\sqrt{1/V}$. The difference between the standard Chi squared test for this table and the Chi squared test for trend is the Chi squared test for departure from linear trend with df = (number of exposure groups -- 2). Also $V = \sum V_i$ where $V_i = \frac{D_i H_i N_{0i} N_{1i}}{N_i^2 (N_1 -1)}$ which is called the Mantel-Haenszel Chi Squared in SM04 of EPM202.
 
-
 # Regression {#glms}
 
 Linear regression is almost the canonical version of this, with Logistic, Cox, Poisson and even Mantel_Haenszel methods being special or extended cases.
@@ -1524,11 +1526,11 @@ $$R^2 = \frac {\sum_{i=1}^n (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2
 
 Which is literally the sample correlation squared. Deleting data or adding terms to a regression model always increase R-squared.
 
-Variance around the regression line is usually replaced by its estimate. $\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$ 
+Variance around the regression line is usually replaced by its estimate. $\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2}$
 
-## Shrinkage 
+## Shrinkage
 
-When assigning individuals a common distribution, and fitting that distribution to the sample, then each individual informs the value of each other. This is important in father-son height prediction and I think in the partial model shrinkage of an integer-substituted regression model. 
+When assigning individuals a common distribution, and fitting that distribution to the sample, then each individual informs the value of each other. This is important in father-son height prediction and I think in the partial model shrinkage of an integer-substituted regression model.
 
 ## Mantel-Haenszel
 
@@ -1546,7 +1548,7 @@ To detect effect modification the Chi Square test for heterogeneity $H_0: RR_i =
 
 $$
 \chi^2_{het} = \sum \frac{(d_{1i} T_{0i} - RR_{MH} d_{01} T_{1i})^2}{RR_{MH} V_i T_i^2} \textrm{,  df = c-1} 
-$$ 
+$$
 
 Cohort E(D1) = Y1 \*(D/T) and U = D1 -- E(D1)
 
@@ -1564,16 +1566,13 @@ Interaction is not detected automatically and must be added to a model then test
 
 The assumptions of a linear model imply that the residuals are normally distributed, with a constant variance across x and y. Plots of standardised residuals (rescaled to mean = 0, sd = 1) help: density of Std Res for normality, Std Res versus corresponding fitted value for deviation from linear.
 
-
-
 ## The MH odds ratio across strata
 
 is the weighted mean sum of odds ratios across strata generally $OR_{MH} = \frac{\sum(w_i OR_i)}{w_i}$. The weights $w_i = \frac{d_{0i} h_{1i}}{n_i}$ are the fraction of "diseased unexposed times healthy exposed" in the grand total sample; equivalent to the denominator of OR divided by the total. In the same way $OR_{MH} = Q/R$ where $Q = \sum \frac{d_{1i} h_{0i}}{n_i}$ and $R =\sum \frac{d_{0i} h_{1i}}{n_i}$ then se(log(ORMH)) = $\sqrt{\frac{V}{QR}}$, V = $\sum V_i = \sum \frac{d_i h_i n_{0i} n_{1i}}{n_i^2 (n_i - 1)}$, V calculated from the marginal totals because each stratum has equal variance Chi squared is $\chi^2_{MH} = \frac{(\sum d_{1i} - \sum E_{1i})^2}{\sum V_i} = \frac{(O-E)^2}{V} = \frac{U^2}{V} \textrm{, df=1}$,
 
 $E_{1i}= \frac{d_i n_{1i}}{n_iO} = \sum d_{1i}, \> E = \sum E_{1i} \textrm{, U = O-E}$ MH chi squared is (n-1)/n times the size of the non MH chi squared in the simple 2x2 table.
 
-Rule of 5 to check validity: if all the expected values in the table are greater than 5, Chi squared is appropriate. Otherwise use an exact test such as Fisher's or an exact goodness of fit test. 
-For heterogeneity tests H0: for all i, ORi = ORMH , so $$\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$$
+Rule of 5 to check validity: if all the expected values in the table are greater than 5, Chi squared is appropriate. Otherwise use an exact test such as Fisher's or an exact goodness of fit test. For heterogeneity tests H0: for all i, ORi = ORMH , so $$\chi^2_{het} = \sum \frac{(d_{1i} h_{0i} - OR_{MH} d_{0i} h_{1i})^2}{OR_{MH} V_i n^2_i}$$
 
 ## Multivariable regression
 
@@ -1595,7 +1594,7 @@ Adding spurious variables inflates the variance: as the true sigma is unknown th
 
 ## ANOVA {#ANOVA}
 
-Related to linear regression. A table of n observations y, in k groups The sum of squares of deviations from the mean, $\sum (y - \bar y)^2$, is partitioned into between group $\sum n_i (\bar y_i - \bar y)^2$ with *k*-1 degrees of freedom within group $\sum (n_i - 1) s_i^2$ with *n-k* degrees of freedom for a line the total variability is from the 0-gradient line (null) at the mean of y, the y-distance from the null line to the regression line at each xi = SSregression, the y-distance from regression to point at xi = SSresidual and each SS is divided by its degrees of freedom giving the mean square, $MS = \frac{SS}{df}$ For a line, the residuals are $\sum (y - \hat{y})^2$ and the model SS is of deviations from the mean. 
+Related to linear regression. A table of n observations y, in k groups The sum of squares of deviations from the mean, $\sum (y - \bar y)^2$, is partitioned into between group $\sum n_i (\bar y_i - \bar y)^2$ with *k*-1 degrees of freedom within group $\sum (n_i - 1) s_i^2$ with *n-k* degrees of freedom for a line the total variability is from the 0-gradient line (null) at the mean of y, the y-distance from the null line to the regression line at each xi = SSregression, the y-distance from regression to point at xi = SSresidual and each SS is divided by its degrees of freedom giving the mean square, $MS = \frac{SS}{df}$ For a line, the residuals are $\sum (y - \hat{y})^2$ and the model SS is of deviations from the mean.
 
 The F statistic is $\frac {\textrm{Between Group MS}} {\textrm{Within Group MS}} , df = k-1, n-k$ or $\frac{regression}{residual}, df= 1, n-2$ for a line. For the F test, under the null hypothesis the ratio of two variances follows the F distribution and for a line, F = t^2^ . This can also be used for regression diagnostics where $F = \frac{\textrm{Model MS}}{\textrm {Residual MS}}$; A partial F test excludes the contribution of one covariate after adjustment for others, as a LRT equivalent.
 
@@ -1623,135 +1622,136 @@ Variables can, confusingly, be fixed or changing; if changing they can have a de
 
 # Generalised Additive models {#gams}
 
-## Intro to GAMs with hand waving 
+## Intro to GAMs with hand waving
 
-GAMs describe the relationship between several predictors, and a response. As for linear models, they estimate the response based on levels of all the predictors. 
+GAMs describe the relationship between several predictors, and a response. As for linear models, they estimate the response based on levels of all the predictors.
 
-One way to understand the point of all this is to start from scatterplot smoothing. Linear models $y = f(x) + \epsilon$ estimate the linear function that best minimises errors in predicting the response, for example by least squares. 
+One way to understand the point of all this is to start from scatterplot smoothing. Linear models $y = f(x) + \epsilon$ estimate the linear function that best minimises errors in predicting the response, for example by least squares.
 
+It seems that a GAM extends linear models. In the base linear model described so far, $\sum \beta_j X_j$ simply multiplies each $X_j$, or a defined transformation of it, by a covariate which is already chosen. In a GAM, there is a similar underlying shape but the covariate is replaced by a function *s*, so that the form is very subtly different $\sum s_j(X_j)$. Instead of simply multiplying X by a constant, requiring the relationship of X to Y to be linear, the functions *s* can be any sort of function. For example, it may have polynomial transformations of the predictor, such as a $1, x, x^2$ sort of a Taylor expansion, or use a Fourier transformation with the *sine* and *cosine* of the predictor, or a wavelet expansion or a spline. If we think of these as bases, then we can cook up a fairly simple looking additive model that is analogous to a linear model. McElreath says polynomials are awful, splines and GAMs and Gaussian processes are less awful, absent some more mechanistic model.
 
-It seems that a GAM extends linear models. In the base linear model described so far, $\sum \beta_j X_j$ simply multiplies each $X_j$, or a defined transformation of it, by a covariate which is already chosen. In a GAM, there is a similar underlying shape but the covariate is replaced by a function _s_, so that the form is very subtly different $\sum s_j(X_j)$. Instead of simply multiplying X by a constant, requiring the relationship of X to Y to be linear, the functions _s_ can be any sort of function. For example, it may have polynomial transformations of the predictor, such as a $1, x, x^2$ sort of a Taylor expansion, or use a Fourier transformation with the _sine_ and _cosine_ of the predictor, or a wavelet expansion or a spline. If we think of these as bases, then we can cook up a fairly simple looking additive model that is analogous to a linear model. McElreath says polynomials are awful, splines and GAMs and Gaussian processes are less awful, absent some more mechanistic model.
-
-"Polynomials have strange symmetries and explosive uncertainty at the edges". 
+"Polynomials have strange symmetries and explosive uncertainty at the edges".
 
 GAMs aim only for a smooth function, which can be non parametric and so can be very general indeed, which is where the motivating example of a scatterplot smoother is useful. A spline might be something like "for all x less than the knot point v, f(x) = 0, for all x greater than or equal to v, f(x) = x-v", or a version which has more useful mathematical properties by using $1, x, x^2$ terms and avoids zero derivatives at the knots, and so on.
 
-Then the functions can be estimated differently for exposed versus unexposed, assuming nothing about the type of effect that the exposure has. It could be u shaped, hill shaped, and so on, and there could be unlimited variety of modelled relationships such as several non linear and several linear predictors. Then $y = f(x) + Z\beta +\epsilon$ in the context of least squares analysis, or $g(E[y]) = f(x) + Z\beta$ for the generalised linear models. 
+Then the functions can be estimated differently for exposed versus unexposed, assuming nothing about the type of effect that the exposure has. It could be u shaped, hill shaped, and so on, and there could be unlimited variety of modelled relationships such as several non linear and several linear predictors. Then $y = f(x) + Z\beta +\epsilon$ in the context of least squares analysis, or $g(E[y]) = f(x) + Z\beta$ for the generalised linear models.
 
-So far so simple, just extending the idea of linear models. This has been extended even further, treating the parameters or even the bases as random effects with a distribution, say a normal distribution. This means that analytic choices matter much less (number of knots and so on), and mixed models become possible (allowing restricted maximum likelihood to be used to determine the local prediction rather than having to choose how smooth to make the model as a set of choices). 
+So far so simple, just extending the idea of linear models. This has been extended even further, treating the parameters or even the bases as random effects with a distribution, say a normal distribution. This means that analytic choices matter much less (number of knots and so on), and mixed models become possible (allowing restricted maximum likelihood to be used to determine the local prediction rather than having to choose how smooth to make the model as a set of choices).
 
-## Estimate smoothers 
+## Estimate smoothers
 
-See the section on [smoothing](#loess) for more detail on how things are smoothed. Smoothing options are mainly down to local scoring (loess), smoothing splines or regression splines (such as B-spline, P-spline, or thin plate spline). Regression splines can be written as linear combinations of basis functions, which don't depend on the response variable. 
+See the section on [smoothing](#loess) for more detail on how things are smoothed. Smoothing options are mainly down to local scoring (loess), smoothing splines or regression splines (such as B-spline, P-spline, or thin plate spline). Regression splines can be written as linear combinations of basis functions, which don't depend on the response variable.
 
-Polynomials, such as $\mu_i = \alpha + \beta_1 x_i + \beta_2 x_i^2$ for a parabola, can fit all kinds of shapes and are technically linear because they are an additive function of the parameters, but they have "strange and often undesirable symmetries and have explosive uncertainty at the edges". They have no local smoothing, only global smoothing (so that any data point on any part of the x axis can change the curve arbitrarily far from itself). 
+Polynomials, such as $\mu_i = \alpha + \beta_1 x_i + \beta_2 x_i^2$ for a parabola, can fit all kinds of shapes and are technically linear because they are an additive function of the parameters, but they have "strange and often undesirable symmetries and have explosive uncertainty at the edges". They have no local smoothing, only global smoothing (so that any data point on any part of the x axis can change the curve arbitrarily far from itself).
 
-Remember GAMs involve estimating the smoothers for each predictor simultaneously, along with any covariance between the smoothers. 
+Remember GAMs involve estimating the smoothers for each predictor simultaneously, along with any covariance between the smoothers.
 
 The local scoring algorithm is a extension of the backfitting algorithm, which is an extension of the Gauss-Seidel procedure, to solve any messy linear system. First set each function to zero, then use it to estimate each observation, then construct a "pseudo-dependent variable" and smooth that variable using weights which are roughly the variance of each observation, iterating to convergence. This is computationally expensive because the weights change with each iteration.
 
-Otherwise cast the GAM as a large GLM made of linear combinations of basis functions and corresponding coefficients. 
+Otherwise cast the GAM as a large GLM made of linear combinations of basis functions and corresponding coefficients.
 
 The original invention of GAMs was with a local scoring algorithm to estimate them. The modern approach seems to be to solve as a large GLM with random effects, similar to the description of using PIRLS, penalised iterative least squares.
 
-## Penalised likelihood 
+## Penalised likelihood
 
-The object of the GAM is to maximise the penalised likelihood function. In general, this is $2l (\alpha, s_1(x_1), \dots , s_p(x_p)) - \mathrm{penalty}$ where _l_ is the standard log likelihood function. So then for a GAM modelling binary outcomes, with logistic link function, the likelihood is $\sum_{i=1}^n y_i\textrm{ log } \hat p_i + (1-y_i) \textrm{ log} (1- \hat p_i)$. In this case as well, $\hat p_i = P(Y =1|x_1, \dots, x_p) = \bigg(1 + e^{-\hat\alpha - \sum_{j=1}^p s_j(x_{ij})} \bigg)^{-1}$. 
+The object of the GAM is to maximise the penalised likelihood function. In general, this is $2l (\alpha, s_1(x_1), \dots , s_p(x_p)) - \mathrm{penalty}$ where *l* is the standard log likelihood function. So then for a GAM modelling binary outcomes, with logistic link function, the likelihood is $\sum_{i=1}^n y_i\textrm{ log } \hat p_i + (1-y_i) \textrm{ log} (1- \hat p_i)$. In this case as well, $\hat p_i = P(Y =1|x_1, \dots, x_p) = \bigg(1 + e^{-\hat\alpha - \sum_{j=1}^p s_j(x_{ij})} \bigg)^{-1}$.
 
 And the penalty can be $\lambda \int(s''(x))^2 dx$ as in the [section on smoothing](#loess).
 
-## Choose model smoothing parameter 
+## Choose model smoothing parameter
 
-There are various ways of deciding how much smoothing is required (what value for lambda, how many knots, and so on). General cross validation is one, or restricted maximum likelihood (REML) as the modern, parameters-as-distributions approach. 
+There are various ways of deciding how much smoothing is required (what value for lambda, how many knots, and so on). General cross validation is one, or restricted maximum likelihood (REML) as the modern, parameters-as-distributions approach.
 
+# Bayesian Models
 
-# Bayesian Models 
+This is based around Richard McElreath's Statistical Rethinking, which has the best setup for an open public course. Just hands down. As with all models, causal thinking is important to justify the shape of the model using information outside of the data. The causes of the data looking as it does, any assumptions about why future data might not look as the current data does, and how to estimate, predict or explain it, all have to come from outside of the data using generative models, and it's best if these generative models are causal in nature.
 
-This is based around Richard McElreath's Statistical Rethinking, which has the best setup for an open public course. Just hands down. As with all models, causal thinking is important to justify the shape of the model using information outside of the data. The causes of the data looking as it does, any assumptions about why future data might not look as the current data does, and how to estimate, predict or explain it, all have to come from outside of the data using generative models, and it's best if these generative models are causal in nature. 
+## Variables
 
-## Variables 
+Variables are things that are independent or estimated in the model. They can be parameters, and they can also be data. Parameters can be represented by a distribution, and distributions can be represented by a distribution. Mind. Blown.
 
-Variables are things that are independent or estimated in the model. They can be parameters, and they can also be data. Parameters can be represented by a distribution, and distributions can be represented by a distribution. Mind. Blown. 
+## Common transformations
 
-## Common transformations 
+These are best done as pre-processing, before iterating through many instances of the model, to save redoing the processing every time.
 
-These are best done as pre-processing, before iterating through many instances of the model, to save redoing the processing every time. 
-
-Standardisation such as by $\frac{variable-mean}{SD}$ is often useful for polynomial or various other models where squares of large numbers become unbalanced and can even challenge the maths of a computer. 
+Standardisation such as by $\frac{variable-mean}{SD}$ is often useful for polynomial or various other models where squares of large numbers become unbalanced and can even challenge the maths of a computer.
 
 Log transformation stops numbers from being smaller than the floating point arithmetic can handle, and exponentiation then retrieves the original units anyway.
 
+## Parameters
 
-## Parameters 
+The parameters are not independent of each other except under very rare conditions, and so the parameters are not often independently interpretable. Instead of interpreting parameters, instead push out posterior predictions. A good entry to Bayesian estimation is just by re-looking at linear regression. In this paradigm, each of the parameters is modelled by a distribution: there's no one correct value that is being estimated, but a range of values with their associated plausibility.
 
-The parameters are not independent of each other except under very rare conditions, and so the parameters are not often independently interpretable. Instead of interpreting parameters, instead push out posterior predictions. A good entry to Bayesian estimation is just by re-looking at linear regression. In this paradigm, each of the parameters is modelled by a distribution: there's no one correct value that is being estimated, but a range of values with their associated plausibility. 
+The generative model might be that weight is determined by height and some unknown things, or $W = f(H, U)$. A Bayesian statistical model can then accept that every parameter of that model is itself uncertain, and can be modelled by a distribution. This powerful because the distributions can be updated, using a prior and data, and producing posterior predictions. The statistical model might be that $W \sim \mathcal{N}(\mu_i, \sigma)$, where the mean is itself represented by a statistical model $\mu_i = \alpha + \beta H_i$, and each part of that model is also represented by a distribution, each starting with a prior: $\alpha \sim \mathcal{N}(0, 10) \\ \beta \sim \textrm{Uniform }(0,1) \\ \sigma \sim \textrm{Uniform }(0,10)$
 
-The generative model might be that weight is determined by height and some unknown things, or $W = f(H, U)$. A Bayesian statistical model can then accept that every parameter of that model is itself uncertain, and can be modelled by a distribution. This powerful because the distributions can be updated, using a prior and data, and producing posterior predictions. The statistical model might be that $W \sim \mathcal{N}(\mu_i, \sigma)$, where the mean is itself represented by a statistical model $\mu_i = \alpha + \beta H_i$, and each part of that model is also represented by a distribution, each starting with a prior: 
-$\alpha \sim \mathcal{N}(0, 10) \\ \beta \sim \textrm{Uniform }(0,1) \\ \sigma \sim \textrm{Uniform }(0,10)$ 
+## Bayesian model variables
 
-## Bayesian model variables 
+Just a quick note about variables. Continuous variables are easy in this Bayesian style, because they are directly represented by a continuous distribution, transforming each realised value. Categorical variables can be represented by indicator variables (0,1 as in the usual regression), or by index variables (1,2,3,4 ...). Index variables extend from one to many categories with no change in code or concepts, are better for specifying priors, and extend easily to multilevel models (involving clusters, sites, etc). The parameter value is estimated using only those cases where the index matches the value of the desired population. This is similar to using indicator variables, but doesn't make an assumption that one value of the indicator is just null.
 
-Just a quick note about variables. Continuous variables are easy in this Bayesian style, because they are directly represented by a continuous distribution, transforming each realised value. Categorical variables can be represented by indicator variables (0,1 as in the usual regression), or by index variables (1,2,3,4 ...). Index variables extend from one to many categories with no change in code or concepts, are better for specifying priors, and extend easily to multilevel models (involving clusters, sites, etc). The parameter value is estimated using only those cases where the index matches the value of the desired population. This is similar to using indicator variables, but doesn't make an assumption that one value of the indicator is just null. 
+## Priors
 
-## Priors 
-
-Priors are posteriors, posteriors are priors, they are all distributions and there is nothing special about any of them. In linear prediction, the priors are quickly overwhelmed by data so they don't matter all that much, but they are a very good place to practice and to get the justification right for priors. 
+Priors are posteriors, posteriors are priors, they are all distributions and there is nothing special about any of them. In linear prediction, the priors are quickly overwhelmed by data so they don't matter all that much, but they are a very good place to practice and to get the justification right for priors.
 
 There is no correct prior, only justifiable ones, useful ones, agreeable ones, reasonable ones. The preceding section on GAMs shows that a linear model can represent anything, at all (viz von Neumann's statement about elephants).
 
-## Likelihood in Bayesian models 
+## Likelihood in Bayesian models
 
-The posterior is the prior times the likelihood; the likelihood is the number of ways an observation can be produced, with the span of parameters that are chosen, which then acts to convert the observed data into a probability. 
+The posterior is the prior times the likelihood; the likelihood is the number of ways an observation can be produced, with the span of parameters that are chosen, which then acts to convert the observed data into a probability.
 
-## Contrasts 
+## Contrasts
 
-The causal contrast is really what we want to compare between groups, or a group and a hypothesis. It is never legitimate to compare the degree of overlap of two distributions: this means that it's never legitimate to compare their confidence intervals or p values either, but rather their contrast,derived from the posterior distribution (such as is obtained by a Bayesian posterior, or, I suppose, by bootstrapping). 
+The causal contrast is really what we want to compare between groups, or a group and a hypothesis. It is never legitimate to compare the degree of overlap of two distributions: this means that it's never legitimate to compare their confidence intervals or p values either, but rather their contrast,derived from the posterior distribution (such as is obtained by a Bayesian posterior, or, I suppose, by bootstrapping).
 
-The difference in means, or the whole distribution of differences, is something that can be modelled as a posterior distribution, and so can be estimated in light of evidence. 
+The difference in means, or the whole distribution of differences, is something that can be modelled as a posterior distribution, and so can be estimated in light of evidence.
 
 These estimates are whole distributions, not points: points are not estimates, they are decisions.
 
-## Centreing 
+## Centreing
 
-Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define a scientifically meaningful prior, as does standardising. This leans on the behaviour of a linear model as a predictor, rather than on the generative causal model underlying the data, but it works as long as it's possible to recover the natural scale predictions (which look like the untransformed data) from the transformed version used to build the model. This avoids having to build potentially complex, although causally convincing, prior distributions. 
+Centreing, eg $\mu_i = \alpha + \beta(X_i - \bar{X})$, makes it easier to define a scientifically meaningful prior, as does standardising. This leans on the behaviour of a linear model as a predictor, rather than on the generative causal model underlying the data, but it works as long as it's possible to recover the natural scale predictions (which look like the untransformed data) from the transformed version used to build the model. This avoids having to build potentially complex, although causally convincing, prior distributions.
 
-## Posterior predictive effect of a single parameter 
+## Posterior predictive effect of a single parameter
 
-The point, or linear single predictor, of a single parameter is never right unless in the most simple model that has perfectly represented all the variation. The correct estimate uses all of the posterior distribution, from which samples can be taken and used to explain what's going on. The question, what is the effect of X on Y given Z, is best represented as p(Y|do(X)). This can be simply p(Y|X,Z) in the simplest situation of Z as a common cause, but it helps to phrase the eestimand in that causal language because it helps to consider the specific form of the estimator. If Z is a collider, for example, then the effect of X on Y is not estimated by p(Y|X,Z) but better by p(Y|X). 
+The point, or linear single predictor, of a single parameter is never right unless in the most simple model that has perfectly represented all the variation. The correct estimate uses all of the posterior distribution, from which samples can be taken and used to explain what's going on. The question, what is the effect of X on Y given Z, is best represented as p(Y\|do(X)). This can be simply p(Y\|X,Z) in the simplest situation of Z as a common cause, but it helps to phrase the estimand in that causal language because it helps to consider the specific form of the estimator. If Z is a collider, for example, then the effect of X on Y is not estimated by p(Y\|X,Z) but better by p(Y\|X).
 
-The posterior probability at each proposed parameter value can be constructed in a few ways: 
+The posterior probability at each proposed parameter value can be constructed in a few ways:
 
-- grid approximation, directly calculating at each chosen proposal using the entire likelihood (or, plausibility), which gets comutationally intensive quickly 
-- quadratic approximation, assuming that most curves can be reproduced by a quadratic formula 
-- simulation such as MCMC, which assumes very little indeed 
+-   grid approximation, directly calculating at each chosen proposal using the entire likelihood (or, plausibility), which gets comutationally intensive quickly
+-   quadratic approximation, assuming that most curves can be reproduced by a quadratic formula
+-   simulation such as MCMC, which assumes very little indeed
 
-## Bayesian linear model 
+## Bayesian linear model
 
 Just a Bayesian model, where outcome variable is a linear function of (has a constant and additive relationship with) the predictor variable, and of other variables. The model considers all possible values of this constant relationship, with the posterior distribution of plausibility for each combination of relationships being the model output. For example, to predict height from a prior of mean 178, sd 20:
 
-$h_i ~ \textrm{Normal} (\mu_i, \sigma)$
-$\mu_i = \alpha + \beta(x_i - \bar{x})$: Note this is not stochastic. Also that it's not special to make it linear. It's just easy to explain. If another relationship is easy to explain, and makes more sense, then use that. 
-$\alpha ~ \textrm{Normal}(178,20)$ "what is the value of height when $x_i$ at the mean, $\bar{x}$?
-$\beta ~ \textrm{Normal}(0,10)$ "what is the change in height when $\x_i$ changes by one unit?"; this prior allows negative relationships and maybe a log normal, forcing $\beta$ to be positive and allowing log($\beta$) to be normal and centred on zero, like a Gaussian and so quite easy.
-$\sigma ~ \textrm{Uniform}(0,50)$ 
+$h_i \sim \textrm{Normal} (\mu_i, \sigma)$ $\mu_i = \alpha + \beta(x_i - \bar{x})$: Note this is not stochastic. Also that it's not special to make it linear. It's just easy to explain. If another relationship is easy to explain, and makes more sense, then use that. $\alpha \sim \textrm{Normal}(178,20)$ "what is the value of height when $x_i$ at the mean, $\bar{x}$? $\beta \sim \textrm{Normal}(0,10)$"what is the change in height when $\x_i$ changes by one unit?"; this prior allows negative relationships and maybe a log normal, forcing $\beta$ to be positive and allowing log($\beta$) to be normal and centred on zero, like a Gaussian and so quite easy. $\sigma \sim \textrm{Uniform}(0,50)$
 
-Many possible lines (because, we asked for lines) are generated from the infinite number of lines that could be generated. The most plausible of them, meaning the most plausible state of the world which is consistent with the data, is chosen. 
+Many possible lines (because, we asked for lines) are generated from the infinite number of lines that could be generated. The most plausible of them, meaning the most plausible state of the world which is consistent with the data, is chosen.
 
-## Multivariable Bayesian linear model 
+## Multivariable Bayesian linear model
 
-Same as before: in the simple condition, a normal distribution is completely described by its mean and variance, and a multivariate normal is described by a vector of means, and a variance-covariance matrix. 
+Same as before: in the simple condition, a normal distribution is completely described by its mean and variance, and a multivariate normal is described by a vector of means, and a variance-covariance matrix. The mean is modelled as the sum of an intercept and a n additive combination of the products of parameters and predictors.
 
-# Model fit 
+There are various ways to write this down, such as the summation $\mu_i = \alpha + \sum_{j=1}^n \beta_j x_{ji}$ or using matrix notation simply **m=Xb** where m is a vector of predicted means, b is a column vector of parameters, and X is the design matrix with as many rows as the data and as many columns as predictors plus one. That first column has to return the intercept so is filled with 1s, and the others are estimated in the process of building the model.
 
-The fit is assessed internally to produce some kind of optimisation of the way the parameters are estimated. Mean squared error and its pals are common ways to assess that fit, or binary prediction error for binary models, and so on. Generally, though, it's not really the fit of the model to the sample that is important. 
+# Model fit
 
-There's a good heuristic that a less complex model, having the same fit as a more complex one, is preferable. It's not clear what makes this so, apart from a philosophical preference. One thing is the predictive accuracy, or at least the fidelity to an underlying truth. Having fit the model to a training set, we can use a test set to judge its predictive accuracy, and we find that in fairly simple models there is a trade-off between in-sample accuracy, and out-of sample predictive accuracy. 
+The fit is assessed internally to produce some kind of optimisation of the way the parameters are estimated. Mean squared error and its pals are common ways to assess that fit, or binary prediction error for binary models, and so on. Generally, though, it's not really the fit of the model to the sample that is important.
+
+There's a good heuristic that a less complex model, having the same fit as a more complex one, is preferable. It's not clear what makes this so, apart from a philosophical preference. One thing is the predictive accuracy, or at least the fidelity to an underlying truth. Having fit the model to a training set, we can use a test set to judge its predictive accuracy, and we find that in fairly simple models there is a trade-off between in-sample accuracy, and out-of sample predictive accuracy.
 
 Out of sample accuracy is as good a judge of value of a model as any.
 
-## Cross validation 
+## Plotting the model
 
-Leave-one-out (LOO cross validation) is a common way to do this. Take one observation out of the model and re-estimate the parameters; now check how well the model fits all the points, including the one left out. Do that for all the points, 
+Sometimes just looking at the plots really is helpful to think about what's happening.
+
+-   Predictor residual plots show the outcome against residual predictors values, like showing the average prediction error when all of the other predictor variables have been used. The variation that's not expected by the model is then left over as a function of the other predictors.
+-   Posterior prediction plots show model-based vs real data, to check fit. - Countrfactual plots are the implied predictions for imaginary experiments, a subtle difference but taking the final causal step.
+
+## Cross validation
+
+Leave-one-out (LOO cross validation) is a common way to do this. Take one observation out of the model and re-estimate the parameters; now check how well the model fits all the points, including the one left out. Do that for all the points,
 
 # Missing {#missing}
 
@@ -1765,7 +1765,7 @@ Multiple correspondence analysis MCA graph on a "missingness matrix" shows neigh
 
 [EM algorithm], or supplementary Expectation-Minimisation algorithm, allows a model that uses the observed data, then updates with the last estimate and so on. Needs a new process for each assumed underlying model.
 
-Imputation using the mean shrinks the correlation to zero; by the regression line shrinks to 1; can impute by the regression line plus noise (stochastic regression) and preserve both the joint and marginal distribution of the data, so estimation has no bias added to the missingness bias itself. It's an extension of this last to the multivariate case that results in the mice procedure. 
+Imputation using the mean shrinks the correlation to zero; by the regression line shrinks to 1; can impute by the regression line plus noise (stochastic regression) and preserve both the joint and marginal distribution of the data, so estimation has no bias added to the missingness bias itself. It's an extension of this last to the multivariate case that results in the mice procedure.
 
 The [impact of missingness] is related to the difficulty of imputation and for the same reasons: both proportion and structure of the missingness, and of the data itself, are important in determining these. Get signposts to this by cross validation, or PCA, or various other techniques.
 
@@ -1781,17 +1781,17 @@ Low rank structures imply that you can use clusters to infer with greatest effic
 
 Needs accurate identification of strata: if too broad will replicate the confounding, if misclassified could unpredictably increase or decrease the confounding: "residual confounding". If matched by strata, those strata are reported as if unmatched then results pooled somehow. If perfectly matched for the confounder then the groups can't study the effect of the confounder unless they're also perfectly matched for another cause (resulting in tiny fractured groups, for which a solution is Bayesian Borrowing). Stratum specific probabilities are either randomly distributed about the true total population value if there is partially controlled confounding, or are real, and display the effect modification.
 
-## Standardising to a standard population 
+## Standardising to a standard population
 
 Standardisation applies weights to observations in categories according to a standard distribution of observations expected in those categories.
 
-In eg direct standardisation for age, a standard demograph weights crude population mortality for age standardised mortality: the number "deaths per thousand person years of standard population" is the "deaths per thousand person years of actual population" (crude death rate) times comparative mortality figure (CMF, ratio of rates)[^CMF]. 
+In eg direct standardisation for age, a standard demograph weights crude population mortality for age standardised mortality: the number "deaths per thousand person years of standard population" is the "deaths per thousand person years of actual population" (crude death rate) times comparative mortality figure (CMF, ratio of rates)[^17].
 
-[^CMF]:I think the weight here is the area of a histogram where x=age range and y=observations, each of the steps of which are multiplied by a death rate to give a new histogram. The area under this new histogram is the population standardised mortality rate and the ratio of its area to the original is the CMF; clearly the standard matters, especially as they insist on probabilities not odds.
+[^17]: I think the weight here is the area of a histogram where x=age range and y=observations, each of the steps of which are multiplied by a death rate to give a new histogram. The area under this new histogram is the population standardised mortality rate and the ratio of its area to the original is the CMF; clearly the standard matters, especially as they insist on probabilities not odds.
 
-Indirect standardisation for age uses not size but death rates as the standard. It's the basis for the Standard Mortality Rates and hence ratio, SMR. [^SMR]
+Indirect standardisation for age uses not size but death rates as the standard. It's the basis for the Standard Mortality Rates and hence ratio, SMR. [^18]
 
-[^SMR]: "Direct standardisation is subject to less bias"; why? Because true rates are needed and so there's more finely grained data? Maybe, because "indirect may be the only possible" if rates aren't available at each stratum or numbers are small hence standard error high.
+[^18]: "Direct standardisation is subject to less bias"; why? Because true rates are needed and so there's more finely grained data? Maybe, because "indirect may be the only possible" if rates aren't available at each stratum or numbers are small hence standard error high.
 
 So
 
@@ -1819,15 +1819,20 @@ The OR is "Odds of exposure in those with outcome"; the logical flips assumes th
 
 Case definition is: - The method used to identify - The boundaries of cases -- eg cutoff on a continuous measure, ins and outs for categorical - The unit of analysis -- eg community, person, organ, events themselves
 
-## Cohort 
+## Cohort
 
-E(D1) = Y1 \*(D/Y) - Exposure status is not biased by knowledge of outcome - Exposure status is known for all (because it's the definition of who is in) - Time sequence and course of events can be described\
-- More than one outcome or type of outcome can be reported
+E(D1) = Y1 \*(D/Y)
+
+-   Exposure status is not biased by knowledge of outcome
+-   Exposure status is known for all (because it's the definition of who is in)
+-   Time sequence and course of events can be described
+-   More than one outcome or type of outcome can be reported
 
 Consider Source of controls How many types of controls How many controls per case (power gains fall from 4 per case) Should they be matched? Loss to follow up reduces power and certainty Differential loss to follow up (by exposure or outcome) biases irretrievably Information / classification bias if outcomes are not equally accurate by exposure
 
-##  Ecological studies 
-These use population values rather than individual values so n is small Multi-group / Time-trend, descriptive / analytic Cheap, easy, quick, maybe all that's possible, allow population inference But don't allow individual inference and don't control confounders "Ecological Fallacy" is extending ecological inferences to individuals Population average exposures would also have to vary by individual to account for variability in outcomes per individual 
+## Ecological studies
+
+These use population values rather than individual values so n is small Multi-group / Time-trend, descriptive / analytic Cheap, easy, quick, maybe all that's possible, allow population inference But don't allow individual inference and don't control confounders "Ecological Fallacy" is extending ecological inferences to individuals Population average exposures would also have to vary by individual to account for variability in outcomes per individual
 
 Contextual effects of exposures: when grouped, may have effects contingent on others Outcomes can become exposures for other or the same outcomes (also a contextual effect) Summary / environmental / integral measures Confounding is easily hidden by complexity and size and there are no opportunities to adjust Associations, so confounders, may exist at population level that don't at individual level Details of the distribution of confounders is often not available Bias: Information bias is common, often undetectable and severe often due to the use of proxy, secondary or routine data at high risk of misclassification "non-differential misclassification within groups in ecological studies", unlike in individual level studies, "usually leads to bias away from the null" Misclassification is very common and may be severe. A sort of selection bias by examining exposure and (time dependent) outcome in the same slice, eg measuring candidate risk factors and the cancers at time t (not t+latent period).
 
@@ -1840,68 +1845,47 @@ This is something that needs to be expanded here. For now it's just a dumping gr
 
 # Ethics {#ethics}
 
-Beneficence, non-Maleficence, Autonomy, Justice
-Goal-, duty- or rights-based justifications.
-Validity, welfare, dignity (where Dignity = Confidentiality, Consent, Coercion)
-Consequentialism, Deontology, Communitarian schemata
+Beneficence, non-Maleficence, Autonomy, Justice Goal-, duty- or rights-based justifications. Validity, welfare, dignity (where Dignity = Confidentiality, Consent, Coercion) Consequentialism, Deontology, Communitarian schemata
 
 Reseach is not valueless and ethics are not universal: it's a process to ensure the dilemma is continuously resolved.
 
-ICH GCP principles 
-    1. Do it with GCP 
-    2. Benefit \> Risk 
-    3. Rights of subjects \> Society 
-    4. Info supports the trial 
-    5. Protocol 
-    6. Approved by Ethics 
-    7. Supervised by Dr 
-    8. Qualified team 
-    9. Informed consent 
-    10. Data protected 
-    11. Privacy / confidentiality AND GMP manufactured products 
-    12. Quality control in trial
+ICH GCP principles 1. Do it with GCP 2. Benefit \> Risk 3. Rights of subjects \> Society 4. Info supports the trial 5. Protocol 6. Approved by Ethics 7. Supervised by Dr 8. Qualified team 9. Informed consent 10. Data protected 11. Privacy / confidentiality AND GMP manufactured products 12. Quality control in trial
 
-NIH has the... The Eight Ethical Principles 
-    1. Collaborative Partnership 
-    2. Social Value 
-    3. Scientific Validity 
-    4. Fair subject selection 
-    5. Favorable risk-benefit ratio 
-    6. Independent review 
-    7. Informed Consent 
-    8. Respect for human subjects
+NIH has the... The Eight Ethical Principles 1. Collaborative Partnership 2. Social Value 3. Scientific Validity 4. Fair subject selection 5. Favorable risk-benefit ratio 6. Independent review 7. Informed Consent 8. Respect for human subjects
 
 Protocols for the NIH contain
 
-    - Précis 
-    - Introduction 
-    - Objectives 
-    - Inclusion and Exclusion Criteria 
-    - Plan for Monitoring Subjects and Criteria for Withdrawal of Subjects from the Study 
-    - Analysis of the Study 
-    - Human Subject Protections 
-            - Rationale for Subject Selection 
-            - Recruitment Plan and Procedures 
-            - Justify the Exclusion of Women, Minorities and Children (if applicable) 
-            - Evaluation of Benefits and Risks/Discomforts of Participation 
-            - Description of the Consent/Assent Process 
-            - Plan for Maintaining Privacy and Confidentiality of Subject Records and Data 
-    - Data and Safety Monitoring Plan 
-    - Protocol Monitoring Plan 
-    - Data Management Plan 
-    - Plan for Research Use and Storage of Human Samples, Specimens or Data 
-    - Remuneration/Compensation 
-    - Scientific References 
+```         
+- Précis 
+- Introduction 
+- Objectives 
+- Inclusion and Exclusion Criteria 
+- Plan for Monitoring Subjects and Criteria for Withdrawal of Subjects from the Study 
+- Analysis of the Study 
+- Human Subject Protections 
+        - Rationale for Subject Selection 
+        - Recruitment Plan and Procedures 
+        - Justify the Exclusion of Women, Minorities and Children (if applicable) 
+        - Evaluation of Benefits and Risks/Discomforts of Participation 
+        - Description of the Consent/Assent Process 
+        - Plan for Maintaining Privacy and Confidentiality of Subject Records and Data 
+- Data and Safety Monitoring Plan 
+- Protocol Monitoring Plan 
+- Data Management Plan 
+- Plan for Research Use and Storage of Human Samples, Specimens or Data 
+- Remuneration/Compensation 
+- Scientific References 
+```
 
 ## Community Engagement
 
-From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which affect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."[^18] Should never be prefabricated, always negotiated and always actually strengthen participants' ability to control important aspects of their own lives or "empower" them. Find out, acknowledge and reconcile complexities in community attitudes and internal power structures, empower the unempowered[^19]. Pilot or engagement activities may reveal that much more work needs done just to understand the views of the community, before touching the research design. Locoregional administrators or governments, or relevant NGOs in some places, are also necessary[^20] Local health providers are usually just completely necessary for the intervention to work or be measured, and are also advised to be properly engaged for advice and "synergy".
+From Smith Morrow Ross: "community engagement will be defined as the process of the trial team working collaboratively with the community on all aspects of the study which affect the community and its well-being. Overall, engagement should typically involve continuous mutual learning and communication between researchers and a range of community members before and during a trial and after a trial ends."[^19] Should never be prefabricated, always negotiated and always actually strengthen participants' ability to control important aspects of their own lives or "empower" them. Find out, acknowledge and reconcile complexities in community attitudes and internal power structures, empower the unempowered[^20]. Pilot or engagement activities may reveal that much more work needs done just to understand the views of the community, before touching the research design. Locoregional administrators or governments, or relevant NGOs in some places, are also necessary[^21] Local health providers are usually just completely necessary for the intervention to work or be measured, and are also advised to be properly engaged for advice and "synergy".
 
-[^18]: I think there's a little too much of the White Man's Burden in this, where the inherent "good" of engagement is because of the researchers displaying cultural humility. I'm sure it's nice to see but the studied community would get along just as well with nobody coming in to satisfy themselves about their cultural humility. The conduct of a trial does change things and the focus should be on whether those changes are beneficial enough to justify doing the study there.
+[^19]: I think there's a little too much of the White Man's Burden in this, where the inherent "good" of engagement is because of the researchers displaying cultural humility. I'm sure it's nice to see but the studied community would get along just as well with nobody coming in to satisfy themselves about their cultural humility. The conduct of a trial does change things and the focus should be on whether those changes are beneficial enough to justify doing the study there.
 
-[^19]: This can surely cause problems? Breaking the wheel is not without collateral damage.
+[^20]: This can surely cause problems? Breaking the wheel is not without collateral damage.
 
-[^20]: ... and probably evil, I'd guess. Smith adds special interest and religious groups to this, explicitly recommending power games and assessing factions as if it's in fucking Helmand. It's largely motherhood shite otherwise.
+[^21]: ... and probably evil, I'd guess. Smith adds special interest and religious groups to this, explicitly recommending power games and assessing factions as if it's in fucking Helmand. It's largely motherhood shite otherwise.
 
     Frameworks Methodologies Theories Participatory blaaahhhh
 
@@ -1975,26 +1959,27 @@ $R_0 = c\beta t$, that is $R_0$ = contacts \* duration of infectiousness \* prob
 
 Estimation depends on being able to see direct and indirect effects; with some assumptions $VE_s$ and $VE_i$ can be jointly estimated from only the disease rate in vaccinated versus unvaccinated if there are different vaccinated proportions in strata, clusters or times. This joint estimation has a coverage estimate trading $VE_i$ against $VE_s$. If considering a 2nd stage cluster, infection probability $\beta$, $VE_s =0$, proportion infected at time t $I_t$, contact probability *c*, duration of contact *d* then in population of n individuals the hazard rate for infection if vaccinated is $\lambda_{0i}(t) = {c \beta I_{i}t}{n_i}$ and for unvaccinated is that times $1-VE_i$.
 
-
 # Machine Learning {#ML}
 
-    A Perceptron is the smallest form of neural network, with weighted inputs and a bias which feed an activation function to produce a single output.  The output is calibrated repeatedly against appropriate values and the weights altered to improve the closeness of prediction until either accuracy or number of repetition limits are crossed.
+```         
+A Perceptron is the smallest form of neural network, with weighted inputs and a bias which feed an activation function to produce a single output.  The output is calibrated repeatedly against appropriate values and the weights altered to improve the closeness of prediction until either accuracy or number of repetition limits are crossed.
+```
 
 The ideal type of data depends on the intended output. eg Description: whole population Exploratory: many variables on a random sample, up to the whole population Inferential: The right variables in the right population, randomly sampled Prediction: split training and test sets from same population Causal: data from a randomised trial Mechanistic: rich data about all available responses and predictors
 
 # Model fit {#fit}
 
-All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [^21] is common in machine learning, for reasons of overuse of machine learning. [Cross validation] is a powerful way, often for "testing the skill" of a machine learning model.
+All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [^22] is common in machine learning, for reasons of overuse of machine learning. [Cross validation](#cross-validation-1) is a powerful way, often for "testing the skill" of a machine learning model.
 
-[^21]: bias-variance tradeoff
+[^22]: bias-variance tradeoff
 
 The unobserved test set MSE of any model is always reducible to
 
 $$E(y_0 - \hat{f}(x_0))^2 = Var(\hat{f}) + [Bias(\hat{f(x_0)})]^2 + Var(\epsilon)$$
 
-This means, if the error is a property of the population and not the model or the sample, that there is clearly a trade-off between test bias and test variance to minimise MSE[^22].
+This means, if the error is a property of the population and not the model or the sample, that there is clearly a trade-off between test bias and test variance to minimise MSE[^23].
 
-[^22]: The bias-variance trade-off is a condition of life for model builders.
+[^23]: The bias-variance trade-off is a condition of life for model builders.
 
 ## Parameterisation
 
@@ -2019,9 +2004,9 @@ A saturated model exactly fits all the data points. When an objective function d
 
 ## Information Criteria
 
-Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about MSE[^23], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: `penalised error = MSE + k(p+q)` The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
+Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about MSE[^24], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: `penalised error = MSE + k(p+q)` The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
 
-[^23]: mean squared error
+[^24]: mean squared error
 
 Some options are - linear residual distance (may not fit at all, positive and negative cancel), - absolute linear residual distance (may not fit at all, odd behaviour at zero) - sum of squared residuals (SSR or SSQ) is the least squares method $g(x) = \sum_i w_i (E_i(x) - O_i)^2$
 
@@ -2033,11 +2018,11 @@ $D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
 
 Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models. This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the [AIC]. The parameters that lead to the best fit are chosen by a fitting algorithm.
 
-## Cross Validation
+## Cross Validation {#cross-validation-1}
 
-Is a [@resampling] technique often used to check the "skill" of a model, intended to reflect its ability to classify an unseen dataset. [k-Fold cross validation] is a common introduction, giving a less-optimistic estimate of the "skill" than will a simple train-test split. A sample of observations is split into k groups, *after* which any data preparation is done on the sample: - one group is the test set and the remaining k-1 are the training set, the process for generating a model or its parameters is followed and the estimates for the test set are compared to its actual values - the process is repeated k times so each of the k groups is a test set once - the sample thus generated of model evaluation scores is used to estimate the model skill, reported as a mean with variance of the model skill scores - the choice of k is a complex one and integral to the bias-variance tradeoff; of just use k=10 [^24]
+Is a [@resampling] technique often used to check the "skill" of a model, intended to reflect its ability to classify an unseen dataset. [k-Fold cross validation] is a common introduction, giving a less-optimistic estimate of the "skill" than will a simple train-test split. A sample of observations is split into k groups, *after* which any data preparation is done on the sample: - one group is the test set and the remaining k-1 are the training set, the process for generating a model or its parameters is followed and the estimates for the test set are compared to its actual values - the process is repeated k times so each of the k groups is a test set once - the sample thus generated of model evaluation scores is used to estimate the model skill, reported as a mean with variance of the model skill scores - the choice of k is a complex one and integral to the bias-variance tradeoff; of just use k=10 [^25]
 
-[^24]: The data preparation is done after creating the sample for k-fold cross validation, to minimise information leakage where information obtained in the preparation optimises the model subtly for the entire set rather than estimating its behaviour for an unseen set. Note also that each member of the sample serves as a test subject once and a training member k-1 times, to the extreme of leave-one-out cross validation where k=n.
+[^25]: The data preparation is done after creating the sample for k-fold cross validation, to minimise information leakage where information obtained in the preparation optimises the model subtly for the entire set rather than estimating its behaviour for an unseen set. Note also that each member of the sample serves as a test subject once and a training member k-1 times, to the extreme of leave-one-out cross validation where k=n.
 
 # Meta Analysis {#meta-analysis}
 
@@ -2069,12 +2054,10 @@ apply(data, dim, fun) tapply(apply along an index, a function to data) ie tapply
 
 `Hmisc::cut2(data, g)` `reshape2::melt(data, id, measure.vars)` `dcast(melteddata, formula, Aggregation value)` `transformations` `plot` - `coplot` - `hist` `abs`, `sqrt`, `ceiling`, `floor`, `cos`, `sin`, `log`, `log2`, `log10`, `exp`, `round(data, digits=n)`, `signif(data, digits=n)` `p.adjust(method = c("bonferroni", "BH", "BY")`
 
-## Rethinking 
+## Rethinking
 
-`quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. `dens` plots the density of each of the distributions to allow checking for sense and whether it's what you intended. `precis` gives a summary of the posterior distribution (made from the variance-covariance matrix). `extract.samples` can then make up samples from the relevant multidimensional Gaussian distribution. 
-`link()` samples from the posterior distribution of the parameters calculated by quap(). Defaults to using the original dat so pass it a vector of predictor values over which to sample. Then use `mean` or `PI` to compute averages and bounds for each value of the predictor variable (rather than analytically). Then use `line` and `shade` to draw these if it seems like a good idea.  
-`sim()` produces samples from the full posterior model (simulated values), including both uncertainty in parameter values and uncertainty in a sampling process. 
-`splines::bs` can produce the basis functions.
+`quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. `dens` plots the density of each of the distributions to allow checking for sense and whether it's what you intended. `precis` gives a summary of the posterior distribution (made from the variance-covariance matrix). `extract.samples` can then make up samples from the relevant multidimensional Gaussian distribution. `link()` samples from the posterior distribution of the parameters calculated by quap(). Defaults to using the original dat so pass it a vector of predictor values over which to sample. Then use `mean` or `PI` to compute averages and bounds for each value of the predictor variable (rather than analytically). Then use `line` and `shade` to draw these if it seems like a good idea.\
+`sim()` produces samples from the full posterior model (simulated values), including both uncertainty in parameter values and uncertainty in a sampling process. `splines::bs` can produce the basis functions.
 
 ## time series
 
@@ -2196,8 +2179,10 @@ Share data structures, compose simple pieces, embrace functional programming and
 `[by varlist]: command [varlist] [if exp] [in range] [using filename], options` describe summarize describe\
 display Calculator Do Execute a do file lookup Online help save save. To overwrite :save, replace append concatenate new observations into existing columns codebook collapse "aggregate data" count drop delete duplicates tag duplicates return list list the output of the last command, maybe generate new variable egen new variable label define list list values of variables merge some kind of merge reshape maybe some kind of transpose "long to wide or wide to long" sort table two way tables tabulate one and two way frequencies stset strate sts stmh stsplit logit log scale logistic natural scale clogit, or conditional logistic, log scale unless or xtpoisson random effects incidence rate ration poisson regression
 
-    outcome exposure##interactor,
-    exp(denominator follow up time) irr i(cluster) re
+```         
+outcome exposure##interactor,
+exp(denominator follow up time) irr i(cluster) re
+```
 
 mixed mixed effects linear regression, output includes var(\_cons) which is the estimate of between cluster variance. \|\| is the \~ of stata, reml is restricted likelihood kscore arm if covariate==i\|\| cluster:, reml nolong xtlogit random effects, gives icc and clustering chisq. outcome treatment, or re i(cluster) quadchk probably not necessary any more because adaptive quadrature is used to approximate normal likelihood distribution
 
