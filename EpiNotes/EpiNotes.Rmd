@@ -1227,7 +1227,7 @@ Confounders in Classical Epidemiology are
 
 3 not a causal intermediate from exposure to outcome
 
-Confounding is defined quite divergently. As a working definition, it is a nuisance which distorts the estimate of the independent effect of a certain exposure. The confounder will have not change the true magnitude of the effect being estimated, but it will alter the estimate by an independent and possibly unmeasured mechanism. It is identified as the unequal distribution of a further influential risk factor between those exposed and unexposed to the exposure of interest. Confounding is distinguished from bias because it depends on a measurable quantity. The quantity can then potentially be controlled for, such as by comparing strata with and without it, or including it in a model which explains the observed outcome. A variable might be a confounder, but not alter the estimate by very much. In that case it may be safer to ignore it rather than risk introducing bias by conditioning on it. The approach to this depends very much on the amount by which the effect estimate alters with the confounder, and the causal model for generating the data under which the analysis is carried out. 
+Confounding is defined quite divergently. As a working definition, it is a nuisance which distorts the estimate of the independent effect of a certain exposure. The confounder will have not change the true magnitude of the effect being estimated, but it will alter the estimate by an independent and possibly unmeasured mechanism. It is identified as the unequal distribution of a further influential risk factor between those exposed and unexposed to the exposure of interest. Confounding is distinguished from bias because it depends on a measurable quantity. The quantity can then potentially be controlled for, such as by comparing strata with and without it, or including it in a model which explains the observed outcome. A variable might be a confounder, but not alter the estimate by very much. In that case it may be safer to ignore it rather than risk introducing bias by conditioning on it. The approach to this depends very much on the amount by which the effect estimate alters with the confounder, and the causal model for generating the data under which the analysis is carried out.
 
 When things are not confounded they are conditionally independent (eg Y is independent of X, given knowledge of A, or $Y \perp \!\!\! \perp X|A$). Fortunately that conditional dependence structure can be deduced from causal graphs, in the next section. Unfortunately, there may be very many causal pathways that give the same conditional independence structures (these are called a Markov Equivalent Set of DAGs).
 
@@ -1241,9 +1241,9 @@ Acyclic means they don't contain loops. Thus the rules apply more clearly, witho
 
 -   a front door path is all forward arrows eg AC or AEDF,
 
--   a backdoor path is one starting with a "block" or reversed arrow eg EACD 
+-   a backdoor path is one starting with a "block" or reversed arrow eg EACD
 
-Markov Equivalence is when two structurally different DAGs have the same conditional independence structure. The entire Markov Equivalence Set can be generated algorithmically, and the silliest ones then rejectedfor greater confidence.  
+Markov Equivalence is when two structurally different DAGs have the same conditional independence structure. The entire Markov Equivalence Set can be generated algorithmically, and the silliest ones then rejectedfor greater confidence.
 
 ## The elemental confounds
 
@@ -1301,7 +1301,6 @@ dag_fork <- ggdag::dagify(z ~ x,
               coords = coord_dag_descendant)
 ggdag::ggdag(dag_fork) + theme_void()
 ```
-
 
 ## Bias
 
@@ -1668,7 +1667,15 @@ This is based around Richard McElreath's Statistical Rethinking, which has the b
 
 ## Variables
 
-Variables are things that are independent or estimated in the model. They can be parameters, and they can also be data. Parameters can be represented by a distribution, and distributions can be represented by a distribution. Mind. Blown.
+Variables are things that are independent or estimated in the model. They can be parameters, and they can also be data. Parameters can be represented by a distribution, and distributions can be represented by a distribution. Mind. Blown. 
+
+Variables can also be relevant only as things to modify those parameters: indicator or index variables, for example. 
+
+## Categorical variables
+
+This is a subtle and probably advanced realisation and so appears later in Rethinking, but conceptually it belongs here: there are implications in choosing how to specify a model, that aren't always explicit when using pre-made routines. Learning Bayesian analysis requires rethinking all of these routines and so it helps a little to find the way into the models. For example, categorical variables are often specified in models as a single parameter, with a 0 or 1 [indicator variable](#indicator-variable) so that the parameter value is zero, contributing nothing at all, for observations in the "baseline" category. You can extend this to many categories by using k-1 parameters each with a 1/0 indicator variable for k categories, when the uncertainty becomes more similar for each with respect to k-1 others s k increases.
+
+But look: that not only implies normalness of the zero-holding category, but implies greater certainty about that category, as a whole degree of variability has been removed from it. If instead you model it as an [index variable](#index-variable), where the variable is used only to hold the place for different values of a parameter in that place, then you model the same degree of uncertainty for each parameter. Honesty and ontological relevance at the cost of false precision from fewer parameters to be estimated. You can extend this to many categories by using more parameters as before. The only other attraction is that multilevel models depend on this approach.
 
 ## Common transformations
 
@@ -1698,7 +1705,9 @@ There is no correct prior, only justifiable ones, useful ones, agreeable ones, r
 
 The posterior is the prior times the likelihood; the likelihood is the number of ways an observation can be produced, with the span of parameters that are chosen, which then acts to convert the observed data into a probability.
 
-## Contrasts
+## Contrasts 
+
+For a model of height fit to a population of males and females, a linear model will produce parameter estimates; say the mean estimate for the intercept is different by 8. This is not the difference between populations, it's just the amount of variability that appears in the model. If one parameter has a large standard deviation, that uncertainty propagates into the contrast between the groups. The truly interesting value is the difference in posterior prediction at each point, given by the updated model using both prior and posterior; this is the contrast, and let's say it's 5 because of that uncertainty. 
 
 The causal contrast is really what we want to compare between groups, or a group and a hypothesis. It is never legitimate to compare the degree of overlap of two distributions: this means that it's never legitimate to compare their confidence intervals or p values either, but rather their contrast,derived from the posterior distribution (such as is obtained by a Bayesian posterior, or, I suppose, by bootstrapping).
 
@@ -1969,7 +1978,7 @@ The ideal type of data depends on the intended output. eg Description: whole pop
 
 # Model fit {#fit}
 
-All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [^22] is common in machine learning, for reasons of overuse of machine learning. [Cross validation](#cross-validation-1) is a powerful way, often for "testing the skill" of a machine learning model.
+All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [^22] is common in machine learning, for reasons of overuse of machine learning. [Cross validation](#cross-validation-1) is a powerful way, often used, for "testing the skill" of a machine learning model.
 
 [^22]: bias-variance tradeoff
 
