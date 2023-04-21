@@ -850,6 +850,12 @@ Penalised regression splines directly penalise wiggliness. Instead of the linear
 
 $$\underset{\beta}{\mathrm{min}} = \{ ||y - B'\beta ||^2 + \beta' P \beta \}$$ For a P-spline, or penalised spline, the penalty might penalise the difference between adjacent coefficients, and look like $\beta' P \beta = \sum_{l=1}^{K-1}(\beta_{l+1} - \beta_l)^2$.
 
+## Conditional association 
+
+This can happen in different ways. If a set of variables are all predictive of the outcome, and yet all correlated with each other, then a multiple regression will minimise the individual predictive value of each of them. The association, conditional on the other variables, is zero. This is called [#multicollinearity]. 
+
+This among other things is why you don't compare coefficients: the total model will work fine, even while the contributions of the individual coefficients are wildly unstable. The correlations don't matter, nor the univariate association, it's the conditional association. 
+
 # Hypothesis Testing {#nhst}
 
 The confidence interval is the set of observations for which H0 is rejected, that is an inversion of the alpha level under H0 (eg for the Binomial rather than use an asymptotic approximation to the CLT for 0.95 as the Wald interval (too narrow), this can be directly calculated as an exact interval, the Clopper-Pearson interval (too wide) or another procedure the Wilson Score method). Often overlooked is that evidence for a hypothesis is always relative to that for another hypothesis; often it's the same evidence.
@@ -1302,7 +1308,13 @@ dag_fork <- ggdag::dagify(z ~ x,
 ggdag::ggdag(dag_fork) + theme_void()
 ```
 
-## Bias
+## Control of threats to inference:
+
+Discarding information based on potential comparators having parameters that fall outside acceptable ranges: - Restriction is absolute and simple but reduces potential comparisons, hence inferences - Matching - by individual (search for control with Value = case Value +/- acceptable range) - by group aka frequency (distribution in case group matched by that in control group) - re-note Case Definitions: clear method, clear boundaries, defined source population
+
+Or not discarding but instead randomising. - Simple random "needs a whole population list" although of course there are limits. - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample.
+
+# Bias
 
 Bias is any systematic error in design or conduct of a study leading to incorrect conclusions. Any of the other influences in this section will count as a bias, if it is not detected. If it is detected and cannot be controlled for, or controlling for it introduces another influence, then it is also a bias[^9].
 
@@ -1335,6 +1347,12 @@ Response bias is a type of selection bias, the odds ratio among those who respon
 [^11]: This time, or I suppose hazard element subtly differentiates it from the bias in which these may exist but are not looked for in most individuals, which I've called surveillance bias.
 
 [^12]: This can be conceptualised in a few different ways, such as opening up a backdoor path in the causal diagram where none existed before conditioning, or less formally as a selection bias. An example is taking emphysema patients as the controls for lung cancer cases in a study of the association between smoking and lung cancer.
+
+## Selection-Distortion bias 
+
+Also called Berkson's Paradox, this is bias induced by conditioning. An association is created by selection for at least one of two unrelated features. The selection induces the association precisely _because_ the features are unrelated until the moment of selection. 
+
+Adding predictors to a linear regression induces this effect, called here collider bias (not like colliders in DAGs though, which is unhelpful). 
 
 ## Information bias
 
@@ -1374,12 +1392,6 @@ Information bias is present when there is a difference in the accuracy of inform
 [^16]: Why does this work, exactly? It eliminates some forms of observer bias, and it reduces several forms of selection bias. It only reduces those that need for their effect some sort of knowledge of exposure or outcome.
 
 (Cochrane list)
-
-## Control of threats to inference:
-
-Discarding information based on potential comparators having parameters that fall outside acceptable ranges: - Restriction is absolute and simple but reduces potential comparisons, hence inferences - Matching - by individual (search for control with Value = case Value +/- acceptable range) - by group aka frequency (distribution in case group matched by that in control group) - re-note Case Definitions: clear method, clear boundaries, defined source population
-
-Or not discarding but instead randomising. - Simple random "needs a whole population list" although of course there are limits. - Stratified random, multiple stage random, single randomisation of the fixed point of a sample system, called "systematic random". Eg start at a random place in a pseudorandom ordered list and take regular steps through to sample.
 
 # Causal reasoning and the do-calculus {#causality}
 
@@ -1579,7 +1591,11 @@ Extending the line to a plane, or later to an n-dimensional plane. Linear in the
 
 A multivariable regression coefficient is hence the expected change in response for a 1 unit change in the associated predictor, holding all the other values constant (at zero, say, as if regressing through the origin for each predictor).
 
-The model is then $Y_i = \sum_{k=1}^p x_{ik} \beta_k + \epsilon_i$ with fitted responses $\hat Y_i = \sum_{k=1}^p x_{ik} \hat \beta_k$ residuals are $e_i = Y_i - \hat Y_i$ and variance estimate $\hat \sigma^2 = \frac{1}{n-p} \sum_{i=1}^n e_i^2$ coefficients have standard errors $\hat \sigma_{\hat \beta_k}$ and H0:coeff=0 tested by the t-test $\frac{\hat \beta_k - \beta_k}{\hat \sigma_{\hat \beta_k}}$
+The model is then $Y_i = \sum_{k=1}^p x_{ik} \beta_k + \epsilon_i$ with fitted responses $\hat Y_i = \sum_{k=1}^p x_{ik} \hat \beta_k$ residuals are $e_i = Y_i - \hat Y_i$ and variance estimate $\hat \sigma^2 = \frac{1}{n-p} \sum_{i=1}^n e_i^2$ coefficients have standard errors $\hat \sigma_{\hat \beta_k}$ and H0:coeff=0 tested by the t-test $\frac{\hat \beta_k - \beta_k}{\hat \sigma_{\hat \beta_k}}$ 
+
+## Multicollinearity 
+
+This is caused by conditional association; don't use individual association or correlation to diagnose it. The only importance is in conditional association. The overall problem is non-identifiability. 
 
 ## Regression diagnostics
 
@@ -1758,9 +1774,68 @@ Sometimes just looking at the plots really is helpful to think about what's happ
 -   Predictor residual plots show the outcome against residual predictors values, like showing the average prediction error when all of the other predictor variables have been used. The variation that's not expected by the model is then left over as a function of the other predictors.
 -   Posterior prediction plots show model-based vs real data, to check fit. - Countrfactual plots are the implied predictions for imaginary experiments, a subtle difference but taking the final causal step.
 
-## Cross validation
+## Features of a model
 
-Leave-one-out (LOO cross validation) is a common way to do this. Take one observation out of the model and re-estimate the parameters; now check how well the model fits all the points, including the one left out. Do that for all the points,
+-   Fitting = calibration and is parameterisation by selecting models with a "good fit" to data
+-   Validation is checking the model results by some standard (statistical or "face validity", see [@collins_sample_2016])
+-   Discrimination is the ability of a prognostic model to differentiate between people with different outcomes, such that those without the outcome (*eg*, alive) have a lower predicted risk than those with the outcome (*eg*, dead). There are several ways to quote discrimination, such as *c*-indices (including Harrell's *c*-index, the probability that a subject experiencing an event earlier has a lower score in a survival predictor). The D index is the separation between two Cox regression curves, created by ordering all the Predictive Index values, transforming them using standard normal order statistics (then dividing by $\sqrt{8/\pi} \approxeq 1.596$) then fitting this as a single term Cox regression, whose coefficient and standard error are then D and its standard error.
+-   Parametric sensitivity analysis is altering parameters in the model to check the change in results 
+
+## Goodness of Fit
+
+Goodness of fit metric is used to decide whether the model prediction fits the data. Given a set of observations and their accompanying expected values at positions i under a certain model that takes parameter x, a goodness of fit function describes how well the model fits the data for a given value of x. This function might be written g(E1, ... En, O1, On).
+
+The Mean Squared Error is a good generic way to determine Goodness of Fit. Training MSE is almost irrelevant to the purpose of a model, and test MSE is not estimable.
+
+A saturated model exactly fits all the data points. When an objective function describes how the goodness of fit function varies by the choice of x, it can be minimised for some value of x. Formally, we maximise f(x) subject to x $\in$ X, where $f(x) = g(E_1(x), \dots , E_n(x), O_1, \dots , O_n)$. 
+
+## Bias-variance tradeoff 
+
+All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [^22] is common in machine learning, for reasons of overuse of machine learning. [Cross validation](#cross-validation-1) is a powerful way, often used, for "testing the skill" of a machine learning model.
+
+[^22]: bias-variance tradeoff
+
+The unobserved test set MSE of any model is always reducible to
+
+$$E(y_0 - \hat{f}(x_0))^2 = Var(\hat{f}) + [Bias(\hat{f(x_0)})]^2 + Var(\epsilon)$$
+
+This means, if the error is a property of the population and not the model or the sample, that there is clearly a trade-off between test bias and test variance to minimise MSE[^23].
+
+[^23]: The bias-variance trade-off is a condition of life for model builders.
+
+## Multicollinearity 
+
+Non-identifiability of a parameter is when the structure of a model and data do not enable estimation of the parameter's value. 
+
+## Information Criteria
+
+Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about MSE[^24], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: `penalised error = MSE + k(p+q)` The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
+
+[^24]: mean squared error
+
+Some options are - linear residual distance (may not fit at all, positive and negative cancel), - absolute linear residual distance (may not fit at all, odd behaviour at zero) - sum of squared residuals (SSR or SSQ) is the least squares method $g(x) = \sum_i w_i (E_i(x) - O_i)^2$
+
+If the deviances from model are uncorrelated, have equal variance expectation (and so wi = 1) and are normally distributed then uncertainty is not a problem for inferences on whether a model is superior to another model. Under these preconditions the least squares estimate equals the maximum likelihood estimate. On the other hand, there's no absolute statement possible about "how good" a fit is using this method, only that it's better than another one. If variances are not equal they can be weighted, by the reciprocal of the variance at each observation if known, or by the reciprocal of the model value at each observation if not (the latter is Pearson's chi squared technique). Maximum likelihood is another option: choose a likelihood function that expresses the probability of a certain parameter conditional on the data observed and conditional on the likelihood function. For example, the likelihood that the probability of an event is p, given 5 observed successes out of 10, is given by the binomial function and is maximal at p=0.5.
+
+The deviance allows model fit to be compared across models, and gives a sort of "absolute goodness" of fit by comparing the likelihood of a test model with the likelihood of the saturated model. D clearly gives a number less than one, tending to 1 as the model approaches perfection.
+
+$D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
+
+Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models. This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the [AIC]. The parameters that lead to the best fit are chosen by a fitting algorithm. 
+
+## Cross validation {#cross-validation-1}
+
+Leave-one-out (LOO cross validation) is a common way to do this. Take one observation out of the model and re-estimate the parameters; now check how well the model fits all the points, including the one left out. Do that for all the points, 
+
+Is a [@resampling] technique often used to check the "skill" of a model, intended to reflect its ability to classify an unseen dataset. [k-Fold cross validation] is a common introduction, giving a less-optimistic estimate of the "skill" than will a simple train-test split. A sample of observations is split into k groups, *after* which any data preparation is done on the sample: - one group is the test set and the remaining k-1 are the training set, the process for generating a model or its parameters is followed and the estimates for the test set are compared to its actual values - the process is repeated k times so each of the k groups is a test set once - the sample thus generated of model evaluation scores is used to estimate the model skill, reported as a mean with variance of the model skill scores - the choice of k is a complex one and integral to the bias-variance tradeoff; of just use k=10 [^25]
+
+[^25]: The data preparation is done after creating the sample for k-fold cross validation, to minimise information leakage where information obtained in the preparation optimises the model subtly for the entire set rather than estimating its behaviour for an unseen set. Note also that each member of the sample serves as a test subject once and a training member k-1 times, to the extreme of leave-one-out cross validation where k=n.
+
+## Parameterisation
+
+Parameterisation is giving values to parameters in a model by whatever means. This results in a model which generates expectations for the parameters $\hat{E}(X)$ and so, given actual values for those parameters, generates expected values for the outcome. It is confusing that these expectations are not used if the intention is only to generate the expected parameter value, despite using the exact same assumptions.
+
+In any case the predictive index is then the individual result of the predictor for an observation, $PI = \beta_1x_1 + ... \beta_k x_k$, and the D index is closely related to its standard deviation.
 
 # Missing {#missing}
 
@@ -1976,62 +2051,6 @@ A Perceptron is the smallest form of neural network, with weighted inputs and a 
 
 The ideal type of data depends on the intended output. eg Description: whole population Exploratory: many variables on a random sample, up to the whole population Inferential: The right variables in the right population, randomly sampled Prediction: split training and test sets from same population Causal: data from a randomised trial Mechanistic: rich data about all available responses and predictors
 
-# Model fit {#fit}
-
-All models essentially estimate a function *f* relating observations to an outcome. This estimated function $\hat{f}$ can be tested in various ways. Most of these ways must trade bias against variance: the larger the proportion of observations in the training set, the smaller the variance and so the better the precision, but the greater the bias and so the worse the accuracy. This [^22] is common in machine learning, for reasons of overuse of machine learning. [Cross validation](#cross-validation-1) is a powerful way, often used, for "testing the skill" of a machine learning model.
-
-[^22]: bias-variance tradeoff
-
-The unobserved test set MSE of any model is always reducible to
-
-$$E(y_0 - \hat{f}(x_0))^2 = Var(\hat{f}) + [Bias(\hat{f(x_0)})]^2 + Var(\epsilon)$$
-
-This means, if the error is a property of the population and not the model or the sample, that there is clearly a trade-off between test bias and test variance to minimise MSE[^23].
-
-[^23]: The bias-variance trade-off is a condition of life for model builders.
-
-## Parameterisation
-
-Parameterisation is giving values to parameters in a model by whatever means. This results in a model which generates expectations for the parameters $\hat{E}(X)$ and so, given actual values for those parameters, generates expected values for the outcome. It is confusing that these expectations are not used if the intention is only to generate the expected parameter value, despite using the exact same assumptions.
-
-In any case the predictive index is then the individual result of the predictor for an observation, $PI = \beta_1x_1 + ... \beta_k x_k$, and the D index is closely related to its standard deviation.
-
-## Features of a model
-
--   Fitting = calibration and is parameterisation by selecting models with a "good fit" to data
--   Validation is checking the model results by some standard (statistical or "face validity", see [@collins_sample_2016])
--   Discrimination is the ability of a prognostic model to differentiate between people with different outcomes, such that those without the outcome (*eg*, alive) have a lower predicted risk than those with the outcome (*eg*, dead). There are several ways to quote discrimination, such as *c*-indices (including Harrell's *c*-index, the probability that a subject experiencing an event earlier has a lower score in a survival predictor). The D index is the separation between two Cox regression curves, created by ordering all the Predictive Index values, transforming them using standard normal order statistics (then dividing by $\sqrt{8/\pi} \approxeq 1.596$) then fitting this as a single term Cox regression, whose coefficient and standard error are then D and its standard error.
--   Parametric sensitivity analysis is altering parameters in the model to check the change in results
-
-## Goodness of Fit
-
-Goodness of fit metric is used to decide whether the model prediction fits the data. Given a set of observations and their accompanying expected values at positions i under a certain model that takes parameter x, a goodness of fit function describes how well the model fits the data for a given value of x. This function might be written g(E1, ... En, O1, On).
-
-The Mean Squared Error is a good generic way to determine Goodness of Fit. Training MSE is almost irrelevant to the purpose of a model, and test MSE is not estimable.
-
-A saturated model exactly fits all the data points. When an objective function describes how the goodness of fit function varies by the choice of x, it can be minimised for some value of x. Formally, we maximise f(x) subject to x $\in$ X, where $f(x) = g(E_1(x), \dots , E_n(x), O_1, \dots , O_n)$.
-
-## Information Criteria
-
-Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about MSE[^24], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: `penalised error = MSE + k(p+q)` The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
-
-[^24]: mean squared error
-
-Some options are - linear residual distance (may not fit at all, positive and negative cancel), - absolute linear residual distance (may not fit at all, odd behaviour at zero) - sum of squared residuals (SSR or SSQ) is the least squares method $g(x) = \sum_i w_i (E_i(x) - O_i)^2$
-
-If the deviances from model are uncorrelated, have equal variance expectation (and so wi = 1) and are normally distributed then uncertainty is not a problem for inferences on whether a model is superior to another model. Under these preconditions the least squares estimate equals the maximum likelihood estimate. On the other hand, there's no absolute statement possible about "how good" a fit is using this method, only that it's better than another one. If variances are not equal they can be weighted, by the reciprocal of the variance at each observation if known, or by the reciprocal of the model value at each observation if not (the latter is Pearson's chi squared technique). Maximum likelihood is another option: choose a likelihood function that expresses the probability of a certain parameter conditional on the data observed and conditional on the likelihood function. For example, the likelihood that the probability of an event is p, given 5 observed successes out of 10, is given by the binomial function and is maximal at p=0.5.
-
-The deviance allows model fit to be compared across models, and gives a sort of "absolute goodness" of fit by comparing the likelihood of a test model with the likelihood of the saturated model. D clearly gives a number less than one, tending to 1 as the model approaches perfection.
-
-$D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
-
-Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models. This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the [AIC]. The parameters that lead to the best fit are chosen by a fitting algorithm.
-
-## Cross Validation {#cross-validation-1}
-
-Is a [@resampling] technique often used to check the "skill" of a model, intended to reflect its ability to classify an unseen dataset. [k-Fold cross validation] is a common introduction, giving a less-optimistic estimate of the "skill" than will a simple train-test split. A sample of observations is split into k groups, *after* which any data preparation is done on the sample: - one group is the test set and the remaining k-1 are the training set, the process for generating a model or its parameters is followed and the estimates for the test set are compared to its actual values - the process is repeated k times so each of the k groups is a test set once - the sample thus generated of model evaluation scores is used to estimate the model skill, reported as a mean with variance of the model skill scores - the choice of k is a complex one and integral to the bias-variance tradeoff; of just use k=10 [^25]
-
-[^25]: The data preparation is done after creating the sample for k-fold cross validation, to minimise information leakage where information obtained in the preparation optimises the model subtly for the entire set rather than estimating its behaviour for an unseen set. Note also that each member of the sample serves as a test subject once and a training member k-1 times, to the extreme of leave-one-out cross validation where k=n.
 
 # Meta Analysis {#meta-analysis}
 
