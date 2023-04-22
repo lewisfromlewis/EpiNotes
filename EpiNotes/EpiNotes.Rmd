@@ -1805,7 +1805,7 @@ This means, if the error is a property of the population and not the model or th
 
 ## Multicollinearity 
 
-Non-identifiability of a parameter is when the structure of a model and data do not enable estimation of the parameter's value. 
+Non-identifiability of a parameter is when the structure of a model and data do not enable estimation of the parameter's value. Imprecision in the posterior increases with the conditional association between predictor variables. 
 
 ## Information Criteria
 
@@ -1925,21 +1925,46 @@ Is it feasible? Burden of disease Do I have the resources? Big possible changes 
 
 # Utility {#utility}
 
-This is something that needs to be expanded here. For now it's just a dumping ground for some interesting things. Such as:2E: Discrete Choice Experiment (DCE) to determine weighting Data Collection We will use a best-worst discrete choice experiment (BWS DCE; BWS Case 3) to determine the value placed on each dimension of the tool's descriptive system. We will use best practice methods for the design and analysis of choice experiments13 and follow approaches taken previously by CI Ratcliffe14 and CI Viney15, 16. The optimal sample size for a BWS DCE task is dependent upon the final number of dimensions and levels to be included in the tool's descriptive system, as determined by 2B and 2D of our study17. Sociodemographic information, eg age, sex, ill health experience, income, remoteness and family structure will also be collected. AnalysisHREC Application Form Version 13, March 2017 Page 26 The primary analysis will use a mixed multinomial logit (MMNL) model with a panel specification. The MMNL can also identify heterogeneity in responses9; we will also examine alternative model specifications18, as different respondents may trade-off in different ways, reflecting cultural or social norms. From these analyses, we will develop a scoring algorithm for the instrument, based on the ratio of marginal utilities (RMU) approach, below. In valuing health gain, considering quantity of life (survival) separately from characteristics (QOL/wellbeing) of those extra years, and including simple interactions between them, as would usually be done for choice experiment analyses, may not be adequate in capturing this interrelatedness. An additional condition is also required for QALYs: that value of a health profile with zero life expectancy is zero irrespective of the quality of life in that period. The utility function for all models will, initially, be assumed to be linear with respect to time, and levels of QOL/wellbeing enter the utility function as an interaction with life expectancy (the TIME variable). Thus, the utility (U) of health state j in scenario s for individual i is in Equation 1. Thus, if TIME is set at zero, the systematic component of the utility function is also zero. $U_{isj} = \alpha TIME_{isj} + \beta X_{isj} ' TIME_{isj} + \epsilon_{isj}$ Generating a scoring system for QALYs To generate QALY weights for the health states to create the scoring algorithm of the tool, the initial analysis will use a ratio of marginal utilities (RMU) approach, as used by AI Viney15, 16. In a QALY model, ten years in full health provides 10 QALYs. If another health state provides 10 QALYs over a 15 year period, the QALY model values that health state at 10/15 = 0.667. Using Eq1, the systematic component of the utility function can be differentiated with respect to TIME, $\frac{\delta U}{\delta TIME} = \alpha + \beta X′$ The RMU between two health state profiles j and j\* can therefore be estimated as: $RMU_{j,j*} = \frac{\alpha + \beta X_{isj}'}{\alpha + \beta X_{isj*}'}$ This gives a value for a health state with characteristics defined by the betaX isj ' term, relative to another health state defined by characteristics betaX isj ' \* . If betaX isj ' \* is set to full health (ie the best level of each dimension), the value generated using Eq 3 is a QALY weight15, 19.
+This is something that needs to be expanded here. 
 
 # Ethics {#ethics}
 
-Beneficence, non-Maleficence, Autonomy, Justice Goal-, duty- or rights-based justifications. Validity, welfare, dignity (where Dignity = Confidentiality, Consent, Coercion) Consequentialism, Deontology, Communitarian schemata
+Beneficence, non-Maleficence, Autonomy 
+
+Justice, Goal-, duty- or rights-based justifications 
+
+Validity, welfare, dignity (where Dignity = Confidentiality, Consent, Coercion) 
+
+Consequentialism, Deontology, Communitarian schemata
 
 Reseach is not valueless and ethics are not universal: it's a process to ensure the dilemma is continuously resolved.
 
-ICH GCP principles 1. Do it with GCP 2. Benefit \> Risk 3. Rights of subjects \> Society 4. Info supports the trial 5. Protocol 6. Approved by Ethics 7. Supervised by Dr 8. Qualified team 9. Informed consent 10. Data protected 11. Privacy / confidentiality AND GMP manufactured products 12. Quality control in trial
+ICH GCP principles 
+1. Do it with GCP 
+2. Benefit \> Risk 
+3. Rights of subjects \> Society 
+4. Info supports the trial 
+5. Protocol 
+6. Approved by Ethics 
+7. Supervised by Dr 
+8. Qualified team 
+9. Informed consent 
+10. Data protected 
+11. Privacy / confidentiality AND GMP manufactured products 
+12. Quality control in trial 
 
-NIH has the... The Eight Ethical Principles 1. Collaborative Partnership 2. Social Value 3. Scientific Validity 4. Fair subject selection 5. Favorable risk-benefit ratio 6. Independent review 7. Informed Consent 8. Respect for human subjects
+NIH has the... The Eight Ethical Principles 
+1. Collaborative Partnership 
+2. Social Value 
+3. Scientific Validity 
+4. Fair subject selection 
+5. Favorable risk-benefit ratio 
+6. Independent review 
+7. Informed Consent 
+8. Respect for human subjects 
 
 Protocols for the NIH contain
-
-```         
+         
 - Précis 
 - Introduction 
 - Objectives 
@@ -1959,7 +1984,7 @@ Protocols for the NIH contain
 - Plan for Research Use and Storage of Human Samples, Specimens or Data 
 - Remuneration/Compensation 
 - Scientific References 
-```
+
 
 ## Community Engagement
 
@@ -1971,7 +1996,7 @@ From Smith Morrow Ross: "community engagement will be defined as the process of 
 
 [^21]: ... and probably evil, I'd guess. Smith adds special interest and religious groups to this, explicitly recommending power games and assessing factions as if it's in fucking Helmand. It's largely motherhood shite otherwise.
 
-    Frameworks Methodologies Theories Participatory blaaahhhh
+Frameworks Methodologies Theories Participatory blaaahhhh
 
 Apparently visual aids are Participatory.
 
