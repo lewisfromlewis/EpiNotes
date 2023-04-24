@@ -594,123 +594,6 @@ The plausible values of all but the likelihood ratio test depend on the units of
 
 In regression the LRS tests the joint null that all the variables equal their null values and tests any two models where one is a restricted form of the other.
 
-# Robustness {#robust}
-
-Robust objects (estimators, statistics, models...) are ones which are changed little by perturbations in the data; good robust objects retain efficiency while being robust. Efficient objects are ones which need few observations to attain a given performance. Performance is the ability of an object to describe or predict reality, such as to describe variation reliably, reject a false claim or detect a true difference.
-
-# Clusters {#clusters}
-
-Used when there's a direct effect plus indirect (ecological, herd, cooperative, etc) effect on participants, or when it's difficult to allocate individuals. Indirect include, for infections, that which reduces Quantity (herd, reduced carriage, vector death, epidemic periodicity) or Quality (less or more virulent strains, resistance, non-reproducing strains) of infection or the Immunity of victim (immune recency, cross reaction, polyvalency, multi-hit, immune mediated damage). "Direct" + "indirect" = "total"; if all in a cluster participate the effect is "total", otherwise the "overall" effect is the weighted average of direct + indirect on participants and indirect on non-participants. Individually allocated trials measure the Direct effect; cluster trials measure the Overall which depends on participation fraction and HTE combined with differential participation.
-
--   Second stage randomisation of individuals within clusters clarifies direct v indirect.
-
--   Spin the bottle: random direction to walk from centre to border of cluster
-
--   Used by the Expanded Programme on Immunisation, EPI of the WHO as 30 clusters of 7 randomly select units along the line of walk to be cluster centres
-
--   clusters are "next nearest until quota of 7 children reached", no callbacks
-
--   Not probability based ("not self weighting") and
-
--   In vaccine surveys mothers interviewed, Est is +- 10% at 95%CI assuming Design Effect 2
-
--   Probability of choosing a child is awfully roughly $P_i = m \times \frac{M_i}{M} \times \frac{n}{N_i}$
-
--   Where n is the very approximately equal number of children surveyed per cluster, Ni is total children in the ith cluster and others as below and $\hat Var (\hat R) = \frac{1}{m(m-1)} \sum_{i=1}^m{(y_i/n - \hat R)^2}$ so
-
--   CI is $\hat R \pm t_{1-\alpha, m-1} \sqrt{\hat V(\hat R)}$ and the bias is $\bar \rho - R = -\rho_{p, g}\sqrt{\frac{V(p)V(g)}{\bar g}}$ where
-
--   g is the proportional change in population since the census, p is the true vaccinated proportion, rho is the correlation between p and g, C is the number of clusters in the whole population and R is the true ratio $R= \sum_{i=1}^C{\frac{g_i p_i}{C \bar g}}$.
-
-Design effect for clusters all of the same size is $1 + ((b-1) \times ICC)$ where b is the number per cluster and ICC is the correlation coefficient within clusters, as an average across all the clusters.
-
-## Compact segment sampling;
-
-Another cluster method.
-
-Areas are initially chosen with PPS, eg from last census. The areas are divided into equal numbers of segments. Within each segment of a given area are an equal number of houses, sketched and recorded. A segment is randomly chosen from each area, and all houses in the segment are sampled.
-
-The probability of choosing a house in the ith segment, and therefore a child, is very roughly $P_i = \frac{m}{S_i} \times \frac{M_i}{M_{tot}}$ where *m* is the number of selected clusters, Si is the number of segments in the ith cluster, Mtot the census population of all clusters in the sampling frame, Mi census population in the ith cluster. The outcome, *eg* vaccine coverage as a proportion, is estimated by a ratio of two random variables, number vaccinated and number chosen, each of which is weighted for the probability of being chosen, which therefore has to be known to estimate the true values. This is unbiased *IF* the population has changed uniformly since the informative census and segments are exactly chosen.
-
-$\hat{Var} (\hat R) = (\frac{m}{(m-1)\hat N ^2}) \sum_{i=1}^m {\frac{(y_i - n_i \hat R)^2}{P_i^2}}$
-
-$\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$
-
-## Measures of clustering
-
-IntraClass Correlation Coefficient (ICC or rho) is Between Cluster Variance/Total Variance $$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$
-
-, or $\rho = \frac{\sigma^2_B}{\sigma^2_B + \sigma^2_W}$ where $\sigma c$ is the between cluster SD and $\sigma e$ is everything else (here, within-cluster variation).
-
-ICC can be used for means, proportions and counts but is not defined for rates, and so another quantity is defined and the equations rearranged to use it. This is *k*, the Between-Cluster Coefficient of Variation, and is the standard deviation for cluster means divided by the overall mean = $\frac{\sigma_c}{\bar x} = \frac{\sigma_c}{\pi}$. The relationship between k and rho is normally $$\rho = \frac{k^2 \pi}{1-\pi}$$
-
-## Design Factor
-
-Design Factor is SE for design/SE under simple random, terminology analogous to Error Factor. In distinction to this is the Design Effect DEFF, which equals the Sample size using the proposed scheme divided by the sample size by simple random sampling. It almost always therefore is also equal to the Variance as proposed / Variance by SRS.
-
-If the outcome measure of interest is a proportion, DEFF = Design Factor squared. This is then 1 + (Number in each cluster-1) \* rate of homogeneity = $1 + \rho(m - 1)$. DEFF on total N is $1+(\bar{m} - 1) \rho$ where m is number in a cluster. This is appropriate if clusters are fairly close in size but if cluster sizes vary widely will overweight the smaller clusters. In the case of highly variable cluster sizes, the coefficient of variation of cluster size $\frac{sd_m}{\bar m}$ is used and the eventual design effect is $$1+ \rho(\bar m(1 +(\frac{sd_m}{\bar m})^2) - 1)$$
-
-Rate of homogeneity **roh** (here $\rho$) is the ICC for single stage clustering, and an equivalent ration of total variance for multi stage clustering.
-
-k is estimated for power reasons from $\sigma c$ : see below or $m= \frac{N(1-\rho)}{(c - \rho N)}$ for cluster size given total N under simple random and number of clusters c. ICC can't be used when the outcome is a rate (events per time); so k is used here.
-
-## Standard cluster sample size calculations
-
-For two rates:\
-$$n = \frac{(z_{1-\beta} + z_{1-\alpha/2})^2 . (\lambda_1 + \lambda_2)}{(\lambda_1 - \lambda_2)^2}$$\
-As $E(s^2) = \lambda Av(1/y_j) +\sigma_c^2 = \lambda Av(1/y_j) + k^2\lambda^2$ so $\hat \sigma_c^2 = s^2 - r Av(1/y_j)$ and $\hat k = \frac{\hat \sigma_c}{r}$
-
-For two means:\
-$$n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}$$ , where $d = \frac{\delta}{\sigma}$, or $\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$
-
-As $E(s^2) = \sigma^2 Av(1/n_{j}) + \sigma_c^2$, so $\hat \sigma_c^2 = s^2 - \hat \sigma^2 Av(1/n_j)$ across each jth cluster and $\hat k=\frac{\hat \sigma_c}{\bar x}$ where x-bar is the mean of all observations across all clusters combined.
-
-For two proportions, where $q = \frac{\pi_1 + \pi_2}{2}$, then
-
-$$n = \frac{2[z_{1 - \alpha/2}\sqrt{2q(1-q)} + z_{1 - \beta}\sqrt{\pi_1(1-\pi_1) + \pi_2(1 - \pi_2)}]^2}{(\pi_1 - \pi_2)^2}$$
-
-or $$n = \frac{[u\sqrt{\pi_1(1- \pi_1) + \pi_2(1 - \pi_2)} + v \sqrt {2\bar{\pi} (1-\bar{\pi})}]^2} {(\pi_1 - \pi_2)^2}$$
-
-As $E(s^2) = \pi (1 - \pi) Av(1/n_j) + \sigma_c^2$ so $\hat \sigma_c^2 = s^2 - p(1-p) Av(1/n_j)$ and $\hat k = \frac{\hat \sigma_c}{p}$ where p is the combined proportion across all clusters combined.
-
-These look simpler but sacrifice transparency if written for the number of clusters c for rates $c=1 + f\frac{[\frac{\lambda_0 + \lambda_1}{y} + k^2(\lambda_0^2 + \lambda_1^2)]}{(\lambda_0 - \lambda_1)^2}$ or for proportions
-
-$$c=1 + f \frac{\left( \frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 + \pi_1^2 ) \right)}{(\pi_0 - \pi_1)^2}$$
-
-where f is a factor combining z-alpha and z-beta, eg f=7.84 for power 0.8 and alpha 0.05, 10.5 for power 0.9 and alpha 0.05 and k is the assumed true coefficient of variation between clusters; y is the number of person-time follow up per cluster and m is the number of people per cluster, both of whcih are assumed identical.
-
-If SRS but unequal randomisation ratios with size in each group n, then if the smaller group is n1, then alter the size of each group by $k= \frac{n_2}{n_1}$ and $n_1 = \frac{n(k+1)}{2k}$, which converges on $n_1 = \frac{n}{2}$ as the ratio k increases, at the cost of imprecision in estimates of the effect in group 1, and less information on rare events.
-
-1 Was there an effect of treatment in this trial? 2 What was the average effect of treatment in this trial? 3 Was the treatment effect identical for all patients in the trial? 4 What was the effect of treatment for different subgroups of patients? 5 What will be the effect of treatment when used more generally (outside of the trial)?
-
-Because few clusters tend to be randomised and the power calculations nastily fudged, baseline imbalance is common, with instability of the effect size estimates and hence increased false claims in both directions. Balancing of baseline covariates is often thought to limit this.
-
-Balance is achieved by [matching] (add 2 instead of 1 to the RHS of the simplifed equation, k is the average coefficient of variation only between matched pairs), stratifiction or restriction / constraint (reject all random allocations until one is generated with eg 10% difference in any covariate per arm). Among these only matching is random, depends on the matching variables being well chosen and doesn't permit analysis of the main effects of any matching variable.
-
-The estimates are either calculated over the whole study, or combined from cluster-specific estimates. This is not straighforward : if equal weighting of cluster estimates is desired and the clusters were not randomly selected from a well defined target population then cluster estimates are better if they were randomly selected with PPS then the overall estimate is a consistent estimator of the true population value, and is of course easier but it doesn't allow simple t tests.
-
-To derive the standard error the variance of the risk or, interchangeably, the rate ratio, for cluster specific estimates is estimated roughly by working in the log RR scale $Var(\textrm{log} RR ) = Var(\textrm{log} R_1) + Var(\textrm{log} R_0) \approx \frac{Var(R_1)}{R_1^2} + \frac{Var(R_0)}{R_0^2}$, and $Var(R_1) \approx \frac{s_1^2}{c_1}$, where s1 is the observed SD of the cluster specific estimates across the number c of clusters in arm 1 (the intervention, for example). So the estimate accounting for clustering is $\textrm{log RR} \pm 1.96 \sqrt{Var(\textrm{log RR})}$. A simple T or Wilcoxon rank sum test can be used for the summary estimates using these summary values.
-
-## Cluster level analysis
-
-Adjusted estimates of the effect of treatment allocation rely on the differences (residuals) between a model that accounts for all important-seeming covariates (that is, all except for cluster effects and the effect of treatment allocation). These residuals will be randomly distributed across clusters under the null hypothesis, which is then tested by analysing them in place of the cluster level raw estimates. For example, a poisson regression provides estimates; residuals are calculated as the ratios of rate in each cluster to the predicted rate for those individuals under the model; the mean and SD of residuals are calculated for each allocation group; these provide a T test (or equivalent) and the ratio of mean residuals is the estimate of effect size, with Var(RR) calculated analogously to the above, this time for the ratio of residuals.
-
-## Individual level analysis
-
-With linear models, assume the data are all iid but that there is a cluster effect (data are still independent within a cluster but are all drawn from the same independent distribution). Use poisson for rates and a gamma error, giving a negative binomial likelihood. Normal for risk and a normal error, giving a normal likelihood. Binomial for logit and normal error, giving a non analytic likelihood which is converted to a log which is approximated by a log normal using the minimum of a quadratic equation to pass through a certain number of points representing the data. This last might be unstable on changing the number of points to fit, if the approximation likelihood is not a good reflection of the whole data. This is revealed by a quadrature check with \>1% difference in likelihood on changing the number of quadrature points; this is actually probably not necessary now with adaptive quadrature being used at least in Stata. If that's the case:
-
-## Generalised estimating equations
-
-GEE assume that any two points from separate clusters are uncorrelated, but within a cluster all points are identically correlated with each other, represented by an exchangeable correlation matrix derived from the data. This estimate of rho is the primary output; then the regression coefficients and their standard errrors are estimated from it in turn. The regression coefficient is a population average odds ratio, assuming no cluster level random effect but only correlation... I thiink. Overall the buzz words are exchangeable correlation matrices and robust standard errors, with a simple Wald test $z = \frac{\beta}{\textrm{SE}(\beta)}$ once all the hard sums have been written around the robust errors.
-
-## Cluster level t test
-
-Cluster level analysis with a t test is robust and has good coverage even with low cluster numbers (15 or fewer) but can't adjust well. Linear models are efficient, GEE robust. With binary data they differ: random effects models estimate cluster specific - averaged odds ratios and GEE estimate population averaged odds ratios. With 15 clusters in total you can estimate continuous or rate coefficients, with 30 their standard error; or 30 and 50 respectively for binary outcomes.
-
-GEE inflate Type 1 error if few clusters; and vague hand waving about linear modelling's distributional assumptions not being easy to support if there are few clusters.
-
-Moving field: Bayesian, restricted maximum likelihood.
-
 # Variance and error terms {#variance}
 
 For categorical data, variance is p(1-p) and sd therefore $\sqrt{p(1-p)}$ and standard error $\sqrt{\frac{p(1-p)}{n}}$ standard error for the difference in two proportions is $\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$
@@ -872,7 +755,126 @@ Robust standard errors do not affect the calculation of the maximum likelihood a
 
 GEE take account of correlation in the calculation of the effect estimate as well as the standard error. The correlation matrix structure is assumed: independent (iid), exchangeable (observations within a cluster are equally correlated and are not correlated with those outside the cluster) or autocorrelated (the same observation at different times, for example).
 
-Exchangeable correlation is the usual GEE setting, where the effect estimate is a weighted combination of the effect estimates in each cluster and the standard error is derived from the residuals outside the model. A population average effect is estimated: the average odds of an outcome among those exposed, divided by the average odds among those not exposed.
+Exchangeable correlation is the usual GEE setting, where the effect estimate is a weighted combination of the effect estimates in each cluster and the standard error is derived from the residuals outside the model. A population average effect is estimated: the average odds of an outcome among those exposed, divided by the average odds among those not exposed. 
+
+# Robustness {#robust}
+
+Robust objects (estimators, statistics, models...) are ones which are changed little by perturbations in the data; good robust objects retain efficiency while being robust. Efficient objects are ones which need few observations to attain a given performance. Performance is the ability of an object to describe or predict reality, such as to describe variation reliably, reject a false claim or detect a true difference.
+
+# Clusters {#clusters}
+
+Used when there's a direct effect plus indirect (ecological, herd, cooperative, etc) effect on participants, or when it's difficult to allocate individuals. Indirect include, for infections, that which reduces Quantity (herd, reduced carriage, vector death, epidemic periodicity) or Quality (less or more virulent strains, resistance, non-reproducing strains) of infection or the Immunity of victim (immune recency, cross reaction, polyvalency, multi-hit, immune mediated damage). "Direct" + "indirect" = "total"; if all in a cluster participate the effect is "total", otherwise the "overall" effect is the weighted average of direct + indirect on participants and indirect on non-participants. Individually allocated trials measure the Direct effect; cluster trials measure the Overall which depends on participation fraction and HTE combined with differential participation.
+
+-   Second stage randomisation of individuals within clusters clarifies direct v indirect.
+
+-   Spin the bottle: random direction to walk from centre to border of cluster
+
+-   Used by the Expanded Programme on Immunisation, EPI of the WHO as 30 clusters of 7 randomly select units along the line of walk to be cluster centres
+
+-   clusters are "next nearest until quota of 7 children reached", no callbacks
+
+-   Not probability based ("not self weighting") and
+
+-   In vaccine surveys mothers interviewed, Est is +- 10% at 95%CI assuming Design Effect 2
+
+-   Probability of choosing a child is awfully roughly $P_i = m \times \frac{M_i}{M} \times \frac{n}{N_i}$
+
+-   Where n is the very approximately equal number of children surveyed per cluster, Ni is total children in the ith cluster and others as below and $\hat Var (\hat R) = \frac{1}{m(m-1)} \sum_{i=1}^m{(y_i/n - \hat R)^2}$ so
+
+-   CI is $\hat R \pm t_{1-\alpha, m-1} \sqrt{\hat V(\hat R)}$ and the bias is $\bar \rho - R = -\rho_{p, g}\sqrt{\frac{V(p)V(g)}{\bar g}}$ where
+
+-   g is the proportional change in population since the census, p is the true vaccinated proportion, rho is the correlation between p and g, C is the number of clusters in the whole population and R is the true ratio $R= \sum_{i=1}^C{\frac{g_i p_i}{C \bar g}}$.
+
+Design effect for clusters all of the same size is $1 + ((b-1) \times ICC)$ where b is the number per cluster and ICC is the correlation coefficient within clusters, as an average across all the clusters.
+
+## Compact segment sampling;
+
+Another cluster method.
+
+Areas are initially chosen with PPS, eg from last census. The areas are divided into equal numbers of segments. Within each segment of a given area are an equal number of houses, sketched and recorded. A segment is randomly chosen from each area, and all houses in the segment are sampled.
+
+The probability of choosing a house in the ith segment, and therefore a child, is very roughly $P_i = \frac{m}{S_i} \times \frac{M_i}{M_{tot}}$ where *m* is the number of selected clusters, Si is the number of segments in the ith cluster, Mtot the census population of all clusters in the sampling frame, Mi census population in the ith cluster. The outcome, *eg* vaccine coverage as a proportion, is estimated by a ratio of two random variables, number vaccinated and number chosen, each of which is weighted for the probability of being chosen, which therefore has to be known to estimate the true values. This is unbiased *IF* the population has changed uniformly since the informative census and segments are exactly chosen.
+
+$\hat{Var} (\hat R) = (\frac{m}{(m-1)\hat N ^2}) \sum_{i=1}^m {\frac{(y_i - n_i \hat R)^2}{P_i^2}}$
+
+$\hat R = \frac{\sum_{i=1}^m{y_i / P_i}}{\sum_{i=1}^m{n_i / P_i}}$
+
+## Measures of clustering
+
+IntraClass Correlation Coefficient (ICC or rho) is Between Cluster Variance/Total Variance $$\rho = \frac{\sigma_c^2}{\sigma_c^2 + \sigma_e^2}$$, also $\rho = \frac{\sigma_c^2}{\pi (1-\pi)}$
+
+, or $\rho = \frac{\sigma^2_B}{\sigma^2_B + \sigma^2_W}$ where $\sigma c$ is the between cluster SD and $\sigma e$ is everything else (here, within-cluster variation).
+
+ICC can be used for means, proportions and counts but is not defined for rates, and so another quantity is defined and the equations rearranged to use it. This is *k*, the Between-Cluster Coefficient of Variation, and is the standard deviation for cluster means divided by the overall mean = $\frac{\sigma_c}{\bar x} = \frac{\sigma_c}{\pi}$. The relationship between k and rho is normally $$\rho = \frac{k^2 \pi}{1-\pi}$$
+
+## Design Factor
+
+Design Factor is SE for design/SE under simple random, terminology analogous to Error Factor. In distinction to this is the Design Effect DEFF, which equals the Sample size using the proposed scheme divided by the sample size by simple random sampling. It almost always therefore is also equal to the Variance as proposed / Variance by SRS.
+
+If the outcome measure of interest is a proportion, DEFF = Design Factor squared. This is then 1 + (Number in each cluster-1) \* rate of homogeneity = $1 + \rho(m - 1)$. DEFF on total N is $1+(\bar{m} - 1) \rho$ where m is number in a cluster. This is appropriate if clusters are fairly close in size but if cluster sizes vary widely will overweight the smaller clusters. In the case of highly variable cluster sizes, the coefficient of variation of cluster size $\frac{sd_m}{\bar m}$ is used and the eventual design effect is $$1+ \rho(\bar m(1 +(\frac{sd_m}{\bar m})^2) - 1)$$
+
+Rate of homogeneity **roh** (here $\rho$) is the ICC for single stage clustering, and an equivalent ration of total variance for multi stage clustering.
+
+k is estimated for power reasons from $\sigma c$ : see below or $m= \frac{N(1-\rho)}{(c - \rho N)}$ for cluster size given total N under simple random and number of clusters c. ICC can't be used when the outcome is a rate (events per time); so k is used here.
+
+## Standard cluster sample size calculations
+
+For two rates:\
+$$n = \frac{(z_{1-\beta} + z_{1-\alpha/2})^2 . (\lambda_1 + \lambda_2)}{(\lambda_1 - \lambda_2)^2}$$\
+As $E(s^2) = \lambda Av(1/y_j) +\sigma_c^2 = \lambda Av(1/y_j) + k^2\lambda^2$ so $\hat \sigma_c^2 = s^2 - r Av(1/y_j)$ and $\hat k = \frac{\hat \sigma_c}{r}$
+
+For two means:\
+$$n = \frac{4(z_{1 - \alpha/2} + z_{1-\beta})^2}{d^2}$$ , where $d = \frac{\delta}{\sigma}$, or $\frac{(u+v)^2(\sigma_1^2 + \sigma_2^2)}{\delta^2}$
+
+As $E(s^2) = \sigma^2 Av(1/n_{j}) + \sigma_c^2$, so $\hat \sigma_c^2 = s^2 - \hat \sigma^2 Av(1/n_j)$ across each jth cluster and $\hat k=\frac{\hat \sigma_c}{\bar x}$ where x-bar is the mean of all observations across all clusters combined.
+
+For two proportions, where $q = \frac{\pi_1 + \pi_2}{2}$, then
+
+$$n = \frac{2[z_{1 - \alpha/2}\sqrt{2q(1-q)} + z_{1 - \beta}\sqrt{\pi_1(1-\pi_1) + \pi_2(1 - \pi_2)}]^2}{(\pi_1 - \pi_2)^2}$$
+
+or $$n = \frac{[u\sqrt{\pi_1(1- \pi_1) + \pi_2(1 - \pi_2)} + v \sqrt {2\bar{\pi} (1-\bar{\pi})}]^2} {(\pi_1 - \pi_2)^2}$$
+
+As $E(s^2) = \pi (1 - \pi) Av(1/n_j) + \sigma_c^2$ so $\hat \sigma_c^2 = s^2 - p(1-p) Av(1/n_j)$ and $\hat k = \frac{\hat \sigma_c}{p}$ where p is the combined proportion across all clusters combined.
+
+These look simpler but sacrifice transparency if written for the number of clusters c for rates $c=1 + f\frac{[\frac{\lambda_0 + \lambda_1}{y} + k^2(\lambda_0^2 + \lambda_1^2)]}{(\lambda_0 - \lambda_1)^2}$ or for proportions
+
+$$c=1 + f \frac{\left( \frac{\pi_0(1-\pi_0) + \pi_1(1-\pi_1)}{m} + k^2(\pi_0^2 + \pi_1^2 ) \right)}{(\pi_0 - \pi_1)^2}$$
+
+where f is a factor combining z-alpha and z-beta, eg f=7.84 for power 0.8 and alpha 0.05, 10.5 for power 0.9 and alpha 0.05 and k is the assumed true coefficient of variation between clusters; y is the number of person-time follow up per cluster and m is the number of people per cluster, both of whcih are assumed identical.
+
+If SRS but unequal randomisation ratios with size in each group n, then if the smaller group is n1, then alter the size of each group by $k= \frac{n_2}{n_1}$ and $n_1 = \frac{n(k+1)}{2k}$, which converges on $n_1 = \frac{n}{2}$ as the ratio k increases, at the cost of imprecision in estimates of the effect in group 1, and less information on rare events.
+
+1 Was there an effect of treatment in this trial? 2 What was the average effect of treatment in this trial? 3 Was the treatment effect identical for all patients in the trial? 4 What was the effect of treatment for different subgroups of patients? 5 What will be the effect of treatment when used more generally (outside of the trial)?
+
+Because few clusters tend to be randomised and the power calculations nastily fudged, baseline imbalance is common, with instability of the effect size estimates and hence increased false claims in both directions. Balancing of baseline covariates is often thought to limit this.
+
+Balance is achieved by [matching] (add 2 instead of 1 to the RHS of the simplifed equation, k is the average coefficient of variation only between matched pairs), stratifiction or restriction / constraint (reject all random allocations until one is generated with eg 10% difference in any covariate per arm). Among these only matching is random, depends on the matching variables being well chosen and doesn't permit analysis of the main effects of any matching variable.
+
+The estimates are either calculated over the whole study, or combined from cluster-specific estimates. This is not straighforward : if equal weighting of cluster estimates is desired and the clusters were not randomly selected from a well defined target population then cluster estimates are better if they were randomly selected with PPS then the overall estimate is a consistent estimator of the true population value, and is of course easier but it doesn't allow simple t tests.
+
+To derive the standard error the variance of the risk or, interchangeably, the rate ratio, for cluster specific estimates is estimated roughly by working in the log RR scale $Var(\textrm{log} RR ) = Var(\textrm{log} R_1) + Var(\textrm{log} R_0) \approx \frac{Var(R_1)}{R_1^2} + \frac{Var(R_0)}{R_0^2}$, and $Var(R_1) \approx \frac{s_1^2}{c_1}$, where s1 is the observed SD of the cluster specific estimates across the number c of clusters in arm 1 (the intervention, for example). So the estimate accounting for clustering is $\textrm{log RR} \pm 1.96 \sqrt{Var(\textrm{log RR})}$. A simple T or Wilcoxon rank sum test can be used for the summary estimates using these summary values.
+
+## Cluster level analysis
+
+Adjusted estimates of the effect of treatment allocation rely on the differences (residuals) between a model that accounts for all important-seeming covariates (that is, all except for cluster effects and the effect of treatment allocation). These residuals will be randomly distributed across clusters under the null hypothesis, which is then tested by analysing them in place of the cluster level raw estimates. For example, a poisson regression provides estimates; residuals are calculated as the ratios of rate in each cluster to the predicted rate for those individuals under the model; the mean and SD of residuals are calculated for each allocation group; these provide a T test (or equivalent) and the ratio of mean residuals is the estimate of effect size, with Var(RR) calculated analogously to the above, this time for the ratio of residuals.
+
+## Individual level analysis
+
+With linear models, assume the data are all iid but that there is a cluster effect (data are still independent within a cluster but are all drawn from the same independent distribution). Use poisson for rates and a gamma error, giving a negative binomial likelihood. Normal for risk and a normal error, giving a normal likelihood. Binomial for logit and normal error, giving a non analytic likelihood which is converted to a log which is approximated by a log normal using the minimum of a quadratic equation to pass through a certain number of points representing the data. This last might be unstable on changing the number of points to fit, if the approximation likelihood is not a good reflection of the whole data. This is revealed by a quadrature check with \>1% difference in likelihood on changing the number of quadrature points; this is actually probably not necessary now with adaptive quadrature being used at least in Stata. If that's the case:
+
+## Generalised estimating equations
+
+GEE assume that any two points from separate clusters are uncorrelated, but within a cluster all points are identically correlated with each other, represented by an exchangeable correlation matrix derived from the data. This estimate of rho is the primary output; then the regression coefficients and their standard errrors are estimated from it in turn. The regression coefficient is a population average odds ratio, assuming no cluster level random effect but only correlation... I thiink. Overall the buzz words are exchangeable correlation matrices and robust standard errors, with a simple Wald test $z = \frac{\beta}{\textrm{SE}(\beta)}$ once all the hard sums have been written around the robust errors.
+
+## Cluster level t test
+
+Cluster level analysis with a t test is robust and has good coverage even with low cluster numbers (15 or fewer) but can't adjust well. Linear models are efficient, GEE robust. With binary data they differ: random effects models estimate cluster specific - averaged odds ratios and GEE estimate population averaged odds ratios. With 15 clusters in total you can estimate continuous or rate coefficients, with 30 their standard error; or 30 and 50 respectively for binary outcomes.
+
+GEE inflate Type 1 error if few clusters; and vague hand waving about linear modelling's distributional assumptions not being easy to support if there are few clusters.
+
+Moving field: Bayesian, restricted maximum likelihood.
+
+
 
 # Multilevel Modelling and Random Effects models {#mlm}
 
@@ -1807,6 +1809,10 @@ This means, if the error is a property of the population and not the model or th
 
 Non-identifiability of a parameter is when the structure of a model and data do not enable estimation of the parameter's value. Imprecision in the posterior increases with the conditional association between predictor variables. 
 
+## Colliders 
+
+When two parameters are independent of each other, yet share a child, then conditioning on that child renders them conditionally dependent on each other. Coefficients which would be zero are rendered non zero when information about the child is added, because of the common cause. 
+
 ## Information Criteria
 
 Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about MSE[^24], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: `penalised error = MSE + k(p+q)` The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
@@ -2109,7 +2115,7 @@ apply(data, dim, fun) tapply(apply along an index, a function to data) ie tapply
 
 ## Rethinking
 
-`quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. `dens` plots the density of each of the distributions to allow checking for sense and whether it's what you intended. `precis` gives a summary of the posterior distribution (made from the variance-covariance matrix). `extract.samples` can then make up samples from the relevant multidimensional Gaussian distribution. `link()` samples from the posterior distribution of the parameters calculated by quap(). Defaults to using the original dat so pass it a vector of predictor values over which to sample. Then use `mean` or `PI` to compute averages and bounds for each value of the predictor variable (rather than analytically). Then use `line` and `shade` to draw these if it seems like a good idea.\
+`quap()` produces a quadratic approximation of a model specified by an initially non-evaluated `alist` of formula terms. `dens` plots the density of each of the distributions to allow checking for sense and whether it's what you intended. `precis` gives a summary of the posterior distribution (made from the variance-covariance matrix). `extract.samples` can then make up samples from the relevant multidimensional Gaussian distribution. `link()` samples from the posterior distribution of the parameters calculated by quap(). Defaults to using the original dat so pass it a vector of predictor values over which to sample. Then use `mean` or `PI` to compute averages and bounds for each value of the predictor variable (rather than analytically). Then use `line` and `shade` to draw these if it seems like a good idea. 
 `sim()` produces samples from the full posterior model (simulated values), including both uncertainty in parameter values and uncertainty in a sampling process. `splines::bs` can produce the basis functions.
 
 ## time series
