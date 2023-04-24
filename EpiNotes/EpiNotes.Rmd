@@ -1767,7 +1767,7 @@ The fit is assessed internally to produce some kind of optimisation of the way t
 
 There's a good heuristic that a less complex model, having the same fit as a more complex one, is preferable. It's not clear what makes this so, apart from a philosophical preference. One thing is the predictive accuracy, or at least the fidelity to an underlying truth. Having fit the model to a training set, we can use a test set to judge its predictive accuracy, and we find that in fairly simple models there is a trade-off between in-sample accuracy, and out-of sample predictive accuracy.
 
-Out of sample accuracy is as good a judge of value of a model as any.
+Out of sample accuracy is as good a judge of value of a predictive model as any, but no predictive metrics can say anything about whether a causal model is better than another. Predictive models can be made extremely accurate using no causal relationships at all, such as the use of race in predicting outcomes in a racist system. 
 
 ## Plotting the model
 
@@ -1813,9 +1813,12 @@ Non-identifiability of a parameter is when the structure of a model and data do 
 
 When two parameters are independent of each other, yet share a child, then conditioning on that child renders them conditionally dependent on each other. Coefficients which would be zero are rendered non zero when information about the child is added, because of the common cause. 
 
+## Regularising Priors 
+
+
 ## Information Criteria
 
-Let's talk here about Information Criteria, because I'm lost in my own notes. Not a great start. Assuming we are worried about MSE[^24], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: `penalised error = MSE + k(p+q)` The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
+Assuming we are worried about MSE[^24], the MSE goes down the more parameters we put in a model, up to the saturated model. To talk about how good a model is while favouring parsimony, a penalty for the MSE is applied, and we still seek to minimise the resulting penalised error: `penalised error = MSE + k(p+q)` The [Akaike information Criterion] (AIC) uses k = 2, and the [Bayesian Information Criterion] (BIC) uses k = log(n) and so imposes a stricter penalty on the number of parameters.
 
 [^24]: mean squared error
 
@@ -1828,6 +1831,10 @@ The deviance allows model fit to be compared across models, and gives a sort of 
 $D = -2 log \frac{L(\lambda)}{L(\hat \lambda)}$
 
 Then the difference in deviances between to models is chi squared distributed with degrees of freedom equal to the difference in number of parameters between the models. This can be used to construct parametric confidence intervals around the best fitting parameters, form a test statistic and calculate the [AIC]. The parameters that lead to the best fit are chosen by a fitting algorithm. 
+
+## Information criteria from Rethinking 
+
+
 
 ## Cross validation {#cross-validation-1}
 
