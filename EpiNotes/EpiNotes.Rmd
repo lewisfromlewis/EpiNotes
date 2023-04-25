@@ -1761,6 +1761,16 @@ Same as before: in the simple condition, a normal distribution is completely des
 
 There are various ways to write this down, such as the summation $\mu_i = \alpha + \sum_{j=1}^n \beta_j x_{ji}$ or using matrix notation simply **m=Xb** where m is a vector of predicted means, b is a column vector of parameters, and X is the design matrix with as many rows as the data and as many columns as predictors plus one. That first column has to return the intercept so is filled with 1s, and the others are estimated in the process of building the model.
 
+# Information theory 
+
+We want models to identify regular features (which occur in every sample, including future samples), but not to be influenced by irregular features (which are idiosyncratic, maybe represented as "error" or outliers or not repeated in future samples). Overfitting is when a model is so directed to the training set that it predicts test sets poorly, and underfitting is when the model fails to learn from features in the training set, and reflects both training and test sets poorly. 
+
+Underfit models are insensitive to the sample: they are little changed by leaving one observation out. Overfit models change dramatically with exclusion of some observation. 
+
+Bias-variance tradeoff isn't exactly the same distinction but is related, as bias to underfitting is kind of variance to overfitting.
+
+One way of looking at models is as a form of encoding, a lossy compression. Generating predictions or more general estimates of relationships are thus like decompressing. The more parameters, the less this loss; yet learning from the data requires some compression. The [Minimum Description Length]() is one way to select a model. 
+
 # Model fit
 
 The fit is assessed internally to produce some kind of optimisation of the way the parameters are estimated. Mean squared error and its pals are common ways to assess that fit, or binary prediction error for binary models, and so on. Generally, though, it's not really the fit of the model to the sample that is important.
