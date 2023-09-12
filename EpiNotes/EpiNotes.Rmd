@@ -547,6 +547,12 @@ Between these two effects there are "break-even values" for the correlation betw
 
 Matched Odds ratios are derived from MH summary odds ratios where only discordant pairs count: if individually matched then each pair is a stratum, if the tabulation is at pair level then two boxes contain zeroes for each concordant pair. Overall numbers of pairs are tabulated for each combination.
 
+## Positivity 
+
+For causal inference, positivity is assumed. This is when the probability of a givenlevel of exposure, conditional on strata of risk and on all covariates, is greater than zero and less than one: 0<P(A=a|L)<1 for all a in A and L. 
+
+Violations of this mean the causal effect can't be estimated without bias. Structural violations are common in single arm trials, or trying to apply information from individuals with 1 or 0 probability of the exposure to those with an intermediate probability. Random violations (no observations to compare simply by the play of chance) can be dealt with by interpolation from those on either side of the probability of receipt.
+
 ## Randomisation
 
 Randomisation is distinct from random sampling - "In a properly randomised trial any difference between the groups outside that imparted by the intervention are due to chance." - "Any difference between the trial groups should be due to the outcome." - True randomisation depends on randomness of sequence and allocation concealment.
